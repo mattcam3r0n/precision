@@ -19,5 +19,20 @@ describe('Direction', function () {
         expect(Direction.W).to.equal(270);
     })
         
+    it('NE should equal 45 degrees', function() {
+        expect(Direction.NE).to.equal(45);
+      })
+    
+    it('SE should equal 135 degrees', function() {
+        expect(Direction.SE).to.equal(135);
+    })
+
+    it('SW should equal 225 degrees', function() {
+        expect(Direction.SW).to.equal(225);
+    })
+
+    it('NW should equal 315 degrees', function() {
+        expect(Direction.NW).to.equal(315);
+    })
 })
   

@@ -1,12 +1,15 @@
+import StepDelta from '/client/lib/Drill/StepDelta';
 
 class ScriptNode {
-    constructor(stepType, stepCount, direction) {
+    constructor(strideType, stepType, dir, dx, dy) {
+        //this.stepCount = 1; // always 1 for now
+        this.strideType = strideType;
         this.stepType = stepType;
-        this.stepCount = 1; // always 1 for now
-        this.direction = direction;
+        this.direction = dir;
 
-        this.deltaX = 0;
-        this.deltaY = 0;
+        var delta = StepDelta.getDelta(strideType, stepType, dir);
+        this.deltaX = dx || delta.deltaX;
+        this.deltaY = dy || delta.deltaY;
     }
 }
 

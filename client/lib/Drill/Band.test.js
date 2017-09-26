@@ -9,7 +9,4 @@ describe('Band', function () {
       expect(b.members).to.be.an('array');
     })
 
-    it('E should equal 90', function() {
-      expect(Direction.E).to.equal(90);
-    })
   })

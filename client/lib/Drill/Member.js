@@ -1,17 +1,18 @@
-import { Random } from 'meteor/random' 
+import { Random } from 'meteor/random';
+import Direction from '/client/lib/Direction';
 
 class Member {
-    constructor() {
+    constructor(dir, x, y) {
         this.id = Random.id();
         this.initialState = {
-            x: 0,
-            y: 0,
-            direction: 'E'
+            x: x,
+            y: y,
+            direction: dir
         };
 		this.currentState = {
-			x: 6,
-			y: 6,
-			direction: 'E',
+			x: x,
+			y: y,
+			direction: dir,
 			count: 0
         };
         this.script = [];
@@ -19,7 +20,7 @@ class Member {
     }
 
     addStep(stepType, direction, deltaX, deltaY) {
-
+        this.script.push(new ScriptNode(stepType, direction, deltaX, deltaY));
     }
 }
 
