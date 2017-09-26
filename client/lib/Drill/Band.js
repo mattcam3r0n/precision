@@ -1,3 +1,5 @@
+import Direction from '/client/lib/Direction';
+
 class Band {
     constructor() {
         this.members = [];

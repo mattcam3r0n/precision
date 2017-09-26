@@ -1,7 +1,9 @@
+import Band from './Band';
+
 class Drill {
     constructor() {
         this.name = "Test!";
-        this.band = [];
+        this.band = new Band();
     }
 }
 

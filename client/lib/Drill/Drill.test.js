@@ -1,11 +1,10 @@
-import { chai } from 'meteor/practicalmeteor:chai';
+import { chai, expect } from 'meteor/practicalmeteor:chai';
 import Drill from '/client/lib/Drill/Drill';
+import Band from '/client/lib/Drill/Band';
 
-describe('my module', function () {
-    it('does something that should be tested', function () {
-      // This code will be executed by the test driver when the app is started
-      // in the correct mode
+describe('Drill', function () {
+    it('should have a band upon construction', function () {
       var d = new Drill();
-      chai.assert.equal(d.name, 'Test!');
+      expect(d.band).to.be.an('object');
     })
   })
