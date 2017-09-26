@@ -1,5 +1,7 @@
 'use strict';
 
+import Drill from '/client/lib/Drill/Drill';
+
 angular.module('drillApp')
   .component('designSurface', {
     templateUrl: 'client/components/designSurface/design-surface.view.ng.html',
@@ -23,20 +25,28 @@ angular.module('drillApp')
         height: 10,
         cornerColor: 'black',
         transparentCorners: false,
-        cornerSize: 8
+        cornerSize: 8,
+        snapAngle: 45
       });
 
       var triangle = new fabric.Triangle({
+        // cosider center of object the origin. eg, rotate around center.
+        originX: 'center',
+        originY: 'center',
         width: 10, 
         height: 10, 
         fill: 'blue', 
-        left: 5, 
-        top: 5, 
+        left: 60, 
+        top: 60, 
+        angle: 135, // angle of object. correspond to direction.
         cornerColor: 'black',
         borderColor: 'black',
         cornerStyle: 'circle',
         borderDashArray: [3,3]
       });
+
+      d = new Drill();
+      console.log(d.name);
 
       // "add" rectangle onto canvas
       canvas.add(rect, triangle);
@@ -49,8 +59,7 @@ angular.module('drillApp')
 
 function resizeCanvas(canvas) {
   var size = getSize();
-  // canvas.setHeight(size.height);
-  // canvas.setWidth(size.width);
+  // set css size to scale canvas to parent area
   canvas.setDimensions({ height: size.height + 'px', width: size.width + 'px' }, { cssOnly: true });
   canvas.renderAll();
 }
