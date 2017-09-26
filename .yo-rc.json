@@ -1,0 +1,21 @@
+{
+  "generator-angular-meteor": {
+    "filters": {
+      "js": true,
+      "html": true,
+      "css": true,
+      "pagination": true,
+      "framework": "bootstrap",
+      "auth": true,
+      "oauth": true,
+      "googleAuth": true,
+      "facebookAuth": true,
+      "appname": "drillApp",
+      "projectname": "drill",
+      "modules": "'angular-meteor',\n  'ui.router',\n  'ui.bootstrap',\n  'angularUtils.directives.dirPagination',\n  'accounts.ui'",
+      "usedBower": false,
+      "bower": false
+    },
+    "appname": "drill"
+  }
+}
