@@ -34,10 +34,10 @@ class Field {
             return;
 
         members.forEach(m => {
-            var triangle = MarcherFactory.createMarcher(m);
-            this.canvas.add(triangle);    
-        });
-            
+            m.marcher = MarcherFactory.createMarcher(m);
+            m.marcher.member = m;
+            this.canvas.add(m.marcher);    
+        });       
     }
 
 }

@@ -81,6 +81,10 @@ class FieldDimensions {
     static get farSidelineY() {
         return fiveYardsY;
     }
+
+    static get nearSidelineY() {
+        return fieldHeight - (fiveYardsY * 2);
+    }
 }
 
 

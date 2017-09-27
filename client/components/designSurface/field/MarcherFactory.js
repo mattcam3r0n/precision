@@ -12,10 +12,9 @@ class MarcherFactory {
             left: member.initialState.x,
             top: member.initialState.y,
             angle: member.initialState.direction, // angle of object. correspond to direction.
-            cornerColor: 'black',
-            borderColor: 'black',
-            cornerStyle: 'circle',
-            borderDashArray: [3, 3]
+            hasControls: false,
+            lockMovementX: true,
+            lockMovementY: true
         });
         
         return triangle;

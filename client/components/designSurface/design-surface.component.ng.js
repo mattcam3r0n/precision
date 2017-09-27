@@ -20,6 +20,7 @@ angular.module('drillApp')
 
       $scope.$on('memberAdded', function(event, args) {
         console.log('memberAdded', args);
+        field.addMarchers(args.newMembers);
       });
     }
   });
