@@ -40,6 +40,9 @@ var heightInSteps = {
 var oneStepY_6to5 = fieldHeight / heightInSteps[StrideType.SixToFive],
     oneStepX_6to5 = fieldWidth / widthInSteps[StrideType.SixToFive];
 
+var oneStepY_8to5 = fieldHeight / heightInSteps[StrideType.EightToFive],
+    oneStepX_8to5 = fieldWidth / widthInSteps[StrideType.EightToFive];
+
 var fiveYardsX = oneStepX_6to5 * 6,
     fiveYardsY = oneStepY_6to5 * 6;
 
@@ -96,6 +99,20 @@ class FieldDimensions {
     static get nearHashY() {
         return this.nearSidelineY - (oneStepY_6to5 * 22);
     }
+
+    static snapPoint(strideType, point) {
+        if (strideType == StrideType.EightToFive)
+            return {
+                x: Math.floor(point.x / oneStepX_8to5) * oneStepX_8to5,
+                y: Math.floor(point.y / oneStepY_8to5) * oneStepY_8to5
+            };
+
+        return {
+            x: Math.floor(point.x / oneStepX_6to5) * oneStepX_6to5,
+            y: Math.floor(point.y / oneStepY_6to5) * oneStepY_6to5
+        };
+    }
+
 }
 
 

@@ -1,3 +1,4 @@
+import StrideType from '/client/lib/StrideType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import FieldResizer from './FieldResizer';
 import YardLinePainter from './YardLinePainter';
@@ -7,10 +8,13 @@ class Field {
 
     constructor(drill) {
         this.canvas = this.createCanvas();
+        this.positionIndicator = this.createPositionIndicator();
         
         this.drawField();
         this.addMarchers(drill.members);
         this.resize();
+
+        this.wireUpEvents();
     }
 
     createCanvas() {
@@ -29,6 +33,44 @@ class Field {
         FieldResizer.resize(this.canvas);
     }
 
+    wireUpEvents() {
+        var self = this;
+        var canvas = this.canvas;
+        this.canvas.on('mouse:move', function(evt) {
+            console.log(evt);
+            var p = { x: evt.e.layerX, y: evt.e.layerY };
+            console.log('mousePoint', p);
+            console.log('adjusted mousePoint', self.adjustMousePoint(p));
+            console.log('abs mouse point', self.getAbsoluteCoords(p));
+            var snappedPoint = FieldDimensions.snapPoint(StrideType.SixToFive, self.adjustMousePoint(p));
+            console.log('snappedPoint', snappedPoint);
+            self.positionIndicator.set('left', snappedPoint.x);
+            self.positionIndicator.set('top', snappedPoint.y);
+            canvas.renderAll();
+        });
+    }
+
+    createPositionIndicator() {
+        var rect = new fabric.Rect({
+            left: 0,
+            top: 0,
+            width: 15,
+            height: 15,
+            rx: 15,
+            ry: 15,
+            fill: 'darkgray',
+            stroke: 'darkgray',
+            selectable: false,
+            evented: false,
+            strokeWidth: 1,
+            opacity: .75,
+            originX: 'center',
+            originY: 'center'
+        });
+        this.canvas.add(rect);
+        return rect;
+    }
+
     addMarchers(members) {
         if (!members || members.length == 0)
             return;
@@ -39,6 +81,22 @@ class Field {
             this.canvas.add(m.marcher);    
         });       
     }
+
+    adjustMousePoint(point) {
+        var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
+        return {
+            x: point.x * (1 / zoomFactor.x),
+            y: point.y * ( 1/ zoomFactor.y)
+        };
+    }
+
+    // adjustMousePoint(point) {
+    //     var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
+    //     return {
+    //         x: (point.x * zoomFactor.x,
+    //         y: point.y * zoomFactor.y
+    //     };        
+    // }
 
     getAbsoluteCoords(object) {
         var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
