@@ -14,7 +14,8 @@ class MarcherFactory {
             angle: member.initialState.direction, // angle of object. correspond to direction.
             hasControls: false,
             lockMovementX: true,
-            lockMovementY: true
+            lockMovementY: true,
+            hoverCursor: 'pointer'
         });
         
         return triangle;

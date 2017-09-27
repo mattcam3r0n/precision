@@ -6,6 +6,7 @@ class YardLinePainter {
         addSideLines(canvas);
         addYardLines(canvas);
         addYardLineNumbers(canvas);
+        addHashMarks(canvas);
     }
 }
 
@@ -46,12 +47,35 @@ function addYardLines(canvas) {
       }    
 }
 
+function addHashMarks(canvas) {
+    var lineOptions = {
+        fill: 'white',
+        stroke: 'white',
+        strokeWidth: 2,
+        selectable: false,
+        evented: false,
+        opacity: .75
+    };
+	for(var i = 0; i < 21; i++) {
+        var x = FieldDimensions.goallineX + (i * FieldDimensions.fiveYardsX);
+        var farHashCoords = [x - 10, FieldDimensions.farHashY, x + 10, FieldDimensions.farHashY];
+        var nearHashCoords = [x - 10, FieldDimensions.nearHashY, x + 10, FieldDimensions.nearHashY];
+        var farHash = new fabric.Line(farHashCoords, lineOptions);
+        var nearHash = new fabric.Line(nearHashCoords, lineOptions);
+        canvas.add(farHash);    
+        canvas.add(nearHash);    
+        farHash.sendToBack();
+        nearHash.sendToBack();
+      }        
+}
+
 function addYardLineNumbers(canvas) {
 
     let textOptions = {
         fontSize: 24,
         lineHeight: 1,
         originX: 'center',
+        originY: 'center',
         fontFamily: 'Helvetica',
         fontWeight: 'bold',
         stroke: 'white',
@@ -62,8 +86,8 @@ function addYardLineNumbers(canvas) {
         evented: false
       };
 
-    var farY = FieldDimensions.farSidelineY + 35;
-    var nearY = FieldDimensions.nearSidelineY;
+    var farY = FieldDimensions.farSidelineY + FieldDimensions.fiveYardsY;
+    var nearY = FieldDimensions.nearSidelineY - FieldDimensions.fiveYardsY;
     
     for (var i = 0; i < _yardLines.length; i++) {
         let x = FieldDimensions.goallineX + (i * FieldDimensions.fiveYardsX * 2);

@@ -37,8 +37,11 @@ var heightInSteps = {
     [StrideType.EightToFive]: 90
 };
 
-var fiveYardsX = fieldWidth / widthInSteps[StrideType.SixToFive] * 6,
-fiveYardsY = fieldHeight / heightInSteps[StrideType.SixToFive] * 6;
+var oneStepY_6to5 = fieldHeight / heightInSteps[StrideType.SixToFive],
+    oneStepX_6to5 = fieldWidth / widthInSteps[StrideType.SixToFive];
+
+var fiveYardsX = oneStepX_6to5 * 6,
+    fiveYardsY = oneStepY_6to5 * 6;
 
 class FieldDimensions {
     static get width() {
@@ -83,7 +86,15 @@ class FieldDimensions {
     }
 
     static get nearSidelineY() {
-        return fieldHeight - (fiveYardsY * 2);
+        return fieldHeight - fiveYardsY;
+    }
+
+    static get farHashY(){
+        return (oneStepY_6to5 * 22) + this.farSidelineY;
+    }
+
+    static get nearHashY() {
+        return this.nearSidelineY - (oneStepY_6to5 * 22);
     }
 }
 
