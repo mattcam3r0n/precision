@@ -1,3 +1,5 @@
+import FieldDimensions from '/client/lib/FieldDimensions';
+
 class FieldResizer {
 
     static resize(canvas) {
@@ -15,6 +17,14 @@ class FieldResizer {
             width: parentEl.clientWidth
         };
         return size;
+    }
+
+    static getZoomFactor() {
+        var parentEl = angular.element('.design-surface')[0];
+        return {
+            x: parentEl.clientWidth / FieldDimensions.width,
+            y: parentEl.clientWidth * .5 / FieldDimensions.height
+        };     
     }
 }
 

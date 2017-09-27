@@ -12,15 +12,15 @@ angular.module('drillApp')
     controller: function ($scope, $window) {
       var ctrl = this;
 
-      var field = new Field(ctrl.drill);
+      ctrl.field = new Field(ctrl.drill);
 
       angular.element($window).bind('resize', function () {
-        field.resize();
+        ctrl.field.resize();
       });
 
       $scope.$on('memberAdded', function(event, args) {
         console.log('memberAdded', args);
-        field.addMarchers(args.newMembers);
+        ctrl.field.addMarchers(args.newMembers);
       });
     }
   });

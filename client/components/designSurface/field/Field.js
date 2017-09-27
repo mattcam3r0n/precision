@@ -40,6 +40,13 @@ class Field {
         });       
     }
 
+    getAbsoluteCoords(object) {
+        var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
+        return {
+            left: (object.left * zoomFactor.x) + this.canvas._offset.left,
+            top: (object.top * zoomFactor.y) + this.canvas._offset.top
+          };              
+    }
 }
 
 
