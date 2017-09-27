@@ -1,5 +1,5 @@
 import { expect } from 'meteor/practicalmeteor:chai';
-import Member from '/client/lib/Drill/Member';
+import Member from '/client/lib/drill/Member';
 import Direction from '/client/lib/Direction';
 
 describe('Member', function () {

@@ -5,7 +5,7 @@ class StrideType {
         return 0;
     }
 
-    static get EightTOFive(){
+    static get EightToFive(){
         return 1;
     }
 

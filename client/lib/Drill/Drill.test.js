@@ -1,6 +1,6 @@
 import { chai, expect } from 'meteor/practicalmeteor:chai';
-import Drill from '/client/lib/Drill/Drill';
-import Band from '/client/lib/Drill/Band';
+import Drill from '/client/lib/drill/Drill';
+import Band from '/client/lib/drill/Band';
 
 describe('Drill', function () {
     it('should have a band upon construction', function () {

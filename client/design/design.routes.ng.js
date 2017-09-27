@@ -7,10 +7,10 @@ angular.module('drillApp')
     url: '/design',
     templateUrl: 'client/design/design.view.ng.html',
     controller: 'DesignCtrl',
-    resolve: {
-      currentUser: ['$meteor', function($meteor) {
-        return $meteor.requireUser();
-      }]
-    }
+    // resolve: {
+    //   currentUser: ['$meteor', function($meteor) {
+    //     return $meteor.requireUser();
+    //   }]
+    // }
   });
 });

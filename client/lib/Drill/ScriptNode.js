@@ -1,4 +1,4 @@
-import StepDelta from '/client/lib/Drill/StepDelta';
+import StepDelta from '/client/lib/StepDelta';
 
 class ScriptNode {
     constructor(strideType, stepType, dir, dx, dy) {

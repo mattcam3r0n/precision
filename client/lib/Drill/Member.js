@@ -1,5 +1,4 @@
 import { Random } from 'meteor/random';
-import Direction from '/client/lib/Direction';
 
 class Member {
     constructor(dir, x, y) {
@@ -19,8 +18,8 @@ class Member {
         
     }
 
-    addStep(stepType, direction, deltaX, deltaY) {
-        this.script.push(new ScriptNode(stepType, direction, deltaX, deltaY));
+    addStep(strideType, stepType, direction, deltaX, deltaY) {
+        this.script.push(new ScriptNode(strideType, stepType, direction, deltaX, deltaY));
     }
 }
 

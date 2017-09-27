@@ -1,9 +1,9 @@
 import { expect } from 'meteor/practicalmeteor:chai';
-import ScriptNode from '/client/lib/Drill/ScriptNode';
+import ScriptNode from '/client/lib/drill/ScriptNode';
 import Direction from '/client/lib/Direction';
 import StrideType from '/client/lib/StrideType';
 import StepType from '/client/lib/StepType';
-import StepDelta from '/client/lib/Drill/StepDelta';
+import StepDelta from '/client/lib/StepDelta';
 
 describe('ScriptNode', function () {
 

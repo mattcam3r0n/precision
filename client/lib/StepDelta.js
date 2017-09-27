@@ -1,42 +1,16 @@
 import StrideType from '/client/lib/StrideType';
 import StepType from '/client/lib/StepType';
 import Direction from '/client/lib/Direction';
+import FieldDimensions from '/client/lib/FieldDimensions';
 
 // in pixels. size of canvas. should be defined elsewhere.
-var fieldWidth = 1560,
-    fieldHeight = 780;
+var fieldWidth = FieldDimensions.Width,
+    fieldHeight = FieldDimensions.Height;    
 
-/*
-*
-* 6/5 and 8/5 steps across field
-*
-*						  156 / 208
-* -----------------------------------------------------------
-* |                       6 / 8                             |
-* |   ---------------------------------------------------   |
-* |   |    | | | | | | | | | | | | | | | | | | | | |    |   |
-* |   |    | | | | | | | | | | | | | | | | | | | | |    |   |
-* | 6 | 12 |6|6|6|6|6|6|6|6|6|6|6|6|6|6|6|6|6|6|6|6| 12 | 6 | 78
-* |   |    | | | | | | | | | | | | | | | | | | | | |    |   |
-* | 8 | 16 |8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8| 16 | 8 | 90
-* |   |    | | | | | | | | | | | | | | | | | | | | |    |   |
-* |   |    | | | | | | | | | | | | | | | | | | | | |    |   |
-* |   ---------------------------------------------------   |
-* |                       6 / 8                             |   
-* -----------------------------------------------------------
-*
-*/
-    
-
-var sixToFiveFieldStepWidth = 156,
-    sixToFiveFieldStepHeight = 78,
-    eightToFiveFieldStepWidth = 208,
-    eightToFiveFieldStepHeight = 90;
-
-var sixToFiveDeltaX = fieldWidth / sixToFiveFieldStepWidth,
-    sixToFiveDeltaY = fieldHeight / sixToFiveFieldStepHeight,
-    eightToFiveDeltaX = fieldWidth / eightToFiveFieldStepWidth,
-    eightToFiveDeltaY = fieldHeight / eightToFiveFieldStepHeight;
+var sixToFiveDeltaX = fieldWidth / FieldDimensions.widthInSteps(StrideType.SixToFive),
+    sixToFiveDeltaY = fieldHeight / FieldDimensions.heightInSteps(StrideType.SixToFive),
+    eightToFiveDeltaX = fieldWidth / FieldDimensions.widthInSteps(StrideType.EightToFive),
+    eightToFiveDeltaY = fieldHeight / FieldDimensions.heightInSteps(StrideType.EightToFive);
 
 var sixToFiveObliqueDeltaX = sixToFiveDeltaX * 6 / 8,
     sixToFiveObliqueDeltaY = sixToFiveDeltaY * 6 / 8,

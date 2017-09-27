@@ -1,5 +1,5 @@
 import { expect } from 'meteor/practicalmeteor:chai';
-import Band from '/client/lib/Drill/Band';
+import Band from '/client/lib/drill/Band';
 import Direction from '/client/lib/Direction';
 
 describe('Band', function () {
