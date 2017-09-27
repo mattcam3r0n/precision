@@ -9,7 +9,7 @@ class YardLinePainter {
     }
 }
 
-var _yardLines = [ "G   ", "1 0", "2 0", "3 0", "4 0", "5 0", "4 0", "3 0", "2 0", "1 0", "   G" ];
+var _yardLines = [ "G    ", "1 0", "2 0", "3 0", "4 0", "5 0", "4 0", "3 0", "2 0", "1 0", "    G" ];
 
 function addSideLines(canvas) {
     var sidelineRect = FieldDimensions.sidelineRect;
@@ -57,8 +57,8 @@ function addYardLineNumbers(canvas) {
             originX: 'center',
             fontFamily: 'Helvetica',
             fontWeight: 'bold',
-            stroke: 'white',
-            fill: 'white',
+            stroke: 'lightgray',
+            fill: 'lightgray',
             statefullCache: true,
             selectable: false,
             evented: false
@@ -71,8 +71,8 @@ function addYardLineNumbers(canvas) {
             originX: 'center',
             fontFamily: 'Helvetica',
             fontWeight: 'bold',
-            stroke: 'white',
-            fill: 'white',
+            stroke: 'lightgray',
+            fill: 'lightgray',
             statefullCache: true,
             selectable: false,
             evented: false
