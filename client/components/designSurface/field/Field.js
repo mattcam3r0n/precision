@@ -33,7 +33,7 @@ class Field {
             fill: 'blue',
             left: 60,
             top: 60,
-            angle: 135, // angle of object. correspond to direction.
+            //angle: 135, // angle of object. correspond to direction.
             cornerColor: 'black',
             borderColor: 'black',
             cornerStyle: 'circle',

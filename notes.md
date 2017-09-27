@@ -30,3 +30,16 @@ d.band.addMember(dir, x, y);
 d.band.members[0].addStep(stepType, dir)
 or
 d.band.members[0].addStep('gate', dir, dx, dy) // provie dir in degrees, dx, dy
+
+Communication between design view, field, etc
+    * currently selected drill is stored... where? app state service?
+    * current drill is bound to designSurface
+    * drill is passed to field on creation
+        * for each member...
+            * marchers are created
+            * added to field
+            * references between marcher and member are set
+    * when a new member is added, design view sends membersAdded event with new members
+        * marchers are created
+        * added to field
+        * references are set

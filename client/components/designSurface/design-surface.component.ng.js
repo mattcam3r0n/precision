@@ -6,6 +6,9 @@ import Field from './field/Field';
 angular.module('drillApp')
   .component('designSurface', {
     templateUrl: 'client/components/designSurface/design-surface.view.ng.html',
+    bindings: {
+      drill: '<'
+    },
     controller: function ($scope, $window) {
       var ctrl = this;
 
@@ -13,7 +16,10 @@ angular.module('drillApp')
 
       angular.element($window).bind('resize', function () {
         field.resize();
-//        resizeCanvas(canvas);
+      });
+
+      $scope.$on('memberAdded', function(event, args) {
+        console.log('memberAdded', args);
       });
     }
   });

@@ -2,7 +2,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group" role="group">
-            <button id="selectionTool" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Select Members">
+            <button id="selectionTool" ng-click="test()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Select Members">
                 <i class="fa fa-location-arrow fa-rotate-270"></i>&nbsp;Select</button>
             <button id="addMembersTool" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Add Members">
                 <i class="fa fa-play fa-rotate-270"></i>&nbsp;Add Members</button>
@@ -49,7 +49,8 @@
         </div>
     </div>
 
-    <design-surface></design-surface>
+    {{drill.name}}
+    <design-surface drill="drill"></design-surface>
 
 </div>
 
