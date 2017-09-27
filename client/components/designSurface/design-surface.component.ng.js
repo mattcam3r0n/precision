@@ -12,7 +12,7 @@ angular.module('drillApp')
     controller: function ($scope, $window) {
       var ctrl = this;
 
-      var field = new Field();
+      var field = new Field(ctrl.drill);
 
       angular.element($window).bind('resize', function () {
         field.resize();

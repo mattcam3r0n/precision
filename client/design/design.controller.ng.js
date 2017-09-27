@@ -6,7 +6,22 @@ angular.module('drillApp')
 
   var drill = {
     name: "test2",
-    members: []
+    members: [
+      {
+        initialState: {
+          x: 60,
+          y: 60,
+          direction: 90
+        }
+      },
+      {
+        initialState: {
+          x: 60,
+          y: 80,
+          direction: 90
+        }
+      }
+    ]
   };
 
   $scope.helpers({
