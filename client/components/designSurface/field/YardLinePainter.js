@@ -22,7 +22,8 @@ function addSideLines(canvas) {
         selectable: false,
         stroke: 'white',
         strokeWidth: 3,
-        evented: false
+        evented: false,
+        opacity: .75
     });
     canvas.add(rect);
     rect.sendToBack();
@@ -37,7 +38,8 @@ function addYardLines(canvas) {
                 stroke: 'white',
                 strokeWidth: 2,
                 selectable: false,
-                evented: false
+                evented: false,
+                opacity: .75
             });
         canvas.add(line);    
         line.sendToBack();
@@ -46,37 +48,27 @@ function addYardLines(canvas) {
 
 function addYardLineNumbers(canvas) {
 
-    let x = FieldDimensions.goallineX;
+    let textOptions = {
+        fontSize: 24,
+        lineHeight: 1,
+        originX: 'center',
+        fontFamily: 'Helvetica',
+        fontWeight: 'bold',
+        stroke: 'white',
+        fill: 'white',
+        opacity: .75,
+        statefullCache: true,
+        selectable: false,
+        evented: false
+      };
 
+    var farY = FieldDimensions.farSidelineY + 35;
+    var nearY = FieldDimensions.nearSidelineY;
+    
     for (var i = 0; i < _yardLines.length; i++) {
-        var farText = new fabric.Text(_yardLines[i], {
-            fontSize: 24,
-            left: x + (i * FieldDimensions.fiveYardsX * 2),
-            top: FieldDimensions.farSidelineY + 35,
-            lineHeight: 1,
-            originX: 'center',
-            fontFamily: 'Helvetica',
-            fontWeight: 'bold',
-            stroke: 'lightgray',
-            fill: 'lightgray',
-            statefullCache: true,
-            selectable: false,
-            evented: false
-          });
-        var nearText = new fabric.Text(_yardLines[i], {
-            fontSize: 24,
-            left: x + (i * FieldDimensions.fiveYardsX * 2),
-            top: FieldDimensions.nearSidelineY,
-            lineHeight: 1,
-            originX: 'center',
-            fontFamily: 'Helvetica',
-            fontWeight: 'bold',
-            stroke: 'lightgray',
-            fill: 'lightgray',
-            statefullCache: true,
-            selectable: false,
-            evented: false
-          });
+        let x = FieldDimensions.goallineX + (i * FieldDimensions.fiveYardsX * 2);
+        var farText = new fabric.Text(_yardLines[i], Object.assign({ left: x, top: farY }, textOptions));
+        var nearText = new fabric.Text(_yardLines[i], Object.assign({ left: x, top: nearY }, textOptions));
         canvas.add(farText);
         canvas.add(nearText);
         farText.sendToBack();    
