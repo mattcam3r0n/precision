@@ -37,13 +37,8 @@ class Field {
         var self = this;
         var canvas = this.canvas;
         this.canvas.on('mouse:move', function(evt) {
-            console.log(evt);
             var p = { x: evt.e.layerX, y: evt.e.layerY };
-            console.log('mousePoint', p);
-            console.log('adjusted mousePoint', self.adjustMousePoint(p));
-            console.log('abs mouse point', self.getAbsoluteCoords(p));
             var snappedPoint = FieldDimensions.snapPoint(StrideType.SixToFive, self.adjustMousePoint(p));
-            console.log('snappedPoint', snappedPoint);
             self.positionIndicator.set('left', snappedPoint.x);
             self.positionIndicator.set('top', snappedPoint.y);
             canvas.renderAll();
