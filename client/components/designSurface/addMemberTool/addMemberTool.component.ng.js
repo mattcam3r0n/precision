@@ -23,17 +23,20 @@ angular.module('drillApp')
           
       ctrl.sizableRect = new SizableRect(ctrl.field);
       ctrl.group = createMarcherGroup();
+      ctrl.label = createLabel();
 
       ctrl.field.canvas.on('sizableRect:sizing', r => {
         destroyMarcherGroup();
         ctrl.group = createMarcherGroup();
+        updateLabel(r);
         console.log('sizableRect:sizing', r);
       });
 
       ctrl.field.canvas.on('sizableRect:moving', r => {
-        positionTools(r);
+        //positionTools(r);
         ctrl.group.left = r.left;
         ctrl.group.top = r.top;
+        updateLabel(r);
         console.log('sizableRect:moving', r);        
       });
 
@@ -115,6 +118,25 @@ angular.module('drillApp')
         canvas.add(group);
 
         return group;
+      }
+
+      function updateLabel(rect) {
+        var ranks = getRanksInRect(rect),
+            files = getFilesInRect(rect);
+        ctrl.label.setText(`${files} x ${ranks} = ${files * ranks}`);
+        ctrl.label.set('left', rect.left);
+        ctrl.label.set('top', rect.top - 25);
+      }
+
+      function createLabel() {
+        var label = new fabric.Text("", {
+          fontSize: 20,
+          lineHeight: 1,
+          selectable: false,
+          evented: false
+        });
+        ctrl.field.canvas.add(label);
+        return label;
       }
 
     }
