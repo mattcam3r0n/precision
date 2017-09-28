@@ -21,19 +21,24 @@ angular.module('drillApp')
       ctrl.fileSpacing = 2;
       ctrl.rankSpacing = 2;
           
-      // ctrl.group = createGroup(ctrl.field.canvas);
+      ctrl.sizableRect = new SizableRect(ctrl.field);
+      ctrl.group = createMarcherGroup();
+      //ctrl.group = createGroup(ctrl.field.canvas, ctrl.sizableRect);
+  //console.log(ctrl.group);
       // ctrl.sizableRect = createRect(ctrl.field.canvas);
 
-      // addMarchers(ctrl.group);
-
-
-      ctrl.sizableRect = new SizableRect(ctrl.field);
+      //addMarchers();
 
       ctrl.field.canvas.on('sizableRect:sizing', r => {
+        destroyMarcherGroup();
+        ctrl.group = createMarcherGroup();
         console.log('sizableRect:sizing', r);
       });
 
       ctrl.field.canvas.on('sizableRect:moving', r => {
+        positionTools(r);
+        ctrl.group.left = r.left;
+        ctrl.group.top = r.top;
         console.log('sizableRect:moving', r);        
       });
 
@@ -64,108 +69,71 @@ angular.module('drillApp')
         });        
       }
 
-      function addMarchers(group) {
+      function createMarcherGroup() {
         ctrl.marchers = [];
-        var files = getFilesInRect(group);
-        var ranks = getRanksInRect(group);
+        var files = getFilesInRect(ctrl.sizableRect);
+        var ranks = getRanksInRect(ctrl.sizableRect);
         var x, y;
         for(var i = 0; i < files; i++){
           x = i * FieldDimensions.oneStepX_6to5 * ctrl.fileSpacing;
           for (var j = 0; j < ranks; j++){
             y = j * FieldDimensions.oneStepY_6to5 * ctrl.rankSpacing;
             var marcher = MarcherFactory.createMarcher({ 
-              x: x - group.width/2, 
-              y: y - group.height/2, 
+              x: x,
+              y: y,
               direction: ctrl.direction 
             });
-            
+            marcher.originX = 'center';
+            marcher.originY = 'center';
             marcher.lockMovementX = false;
             marcher.lockMovementY = false;
-            marcher.originX = 'left';
-            marcher.originY = 'top';
-            
-            group.add(marcher);
             ctrl.marchers.push(marcher);
           }
         }
+        
         ctrl.files = files;
         ctrl.ranks = ranks;
+
+        var g = new fabric.Group(ctrl.marchers, {
+          left: ctrl.sizableRect.left,
+          top: ctrl.sizableRect.top,
+          selectable: false
+        });
+        ctrl.field.canvas.add(g);
+        ctrl.field.canvas.renderAll();
+        return g;
       }
 
-      function removeMarchers(group) {
+      function destroyMarcherGroup() {
         while (ctrl.marchers.length > 0){
           var m = ctrl.marchers.pop();
-          group.remove(m);
+          ctrl.group.remove(m);
           ctrl.field.canvas.remove(m);
         }
+        ctrl.field.canvas.remove(ctrl.group);
+        ctrl.group = null;
       }
 
       function getFilesInRect(rect) {
-        return Math.ceil(rect.width / (FieldDimensions.oneStepX_6to5) / ctrl.fileSpacing);		
+        return Math.floor(rect.width / (FieldDimensions.oneStepX_6to5) / ctrl.fileSpacing);		
       }
       
       function getRanksInRect(rect) {
-        return Math.ceil(rect.height / (FieldDimensions.oneStepY_6to5) / ctrl.rankSpacing);		
+        return Math.floor(rect.height / (FieldDimensions.oneStepY_6to5) / ctrl.rankSpacing);		
       }
     
-      function createRect(canvas) {
-        var rect = new fabric.Rect({
-          left: 100,
-          top: 100,
-          width: 100,
-          height: 100,
-          fill: 'rgba(0,0,0,0)',
-          stroke: 'black',
-          strokeWidth: 1,
-          opacity: .5,
-          //strokeDashArray: [5, 5],
-          borderColor: 'black',
-          cornerColor: 'black',
-          cornerStyle: 'circle',
-          transparentCorners: false,
-          snapAngle: 45
+      function createGroup(canvas, rect, items) {
+        var group = new fabric.Group(items, {
+          left: rect.left,
+          top: rect.top,
+          width: rect.width,
+          height: rect.height,
+//          fill: 'rgba(0,0,0,0)',
+          selectable: false
         });
-        canvas.add(rect);
-        canvas.setActiveObject(rect);
+        canvas.add(group);
 
-        // canvas.on('object:moving', (evt) => {
-        //   snap(evt);           
-        // });
-        rect.on('moving', (evt) => { 
-          positionTools(rect);
-        });
-
-        return rect;
-      }
-
-      function createGroup(canvas) {
-        var rect = new fabric.Group([], {
-          left: 100,
-          top: 100,
-          width: 100,
-          height: 100,
-          fill: 'rgba(0,0,0,0)',
-          stroke: 'black',
-          strokeWidth: 1,
-          opacity: .5,
-          //strokeDashArray: [5, 5],
-          borderColor: 'black',
-          cornerColor: 'black',
-          cornerStyle: 'circle',
-          transparentCorners: false,
-          snapAngle: 45,
-          selectable: true
-        });
-        canvas.add(rect);
-
-        // canvas.on('object:moving', (evt) => {
-        //   snap(evt);           
-        // });
-        rect.on('moving', (evt) => { 
-          positionTools(rect);
-        });
-
-        return rect;
+        return group;
       }
 
     }

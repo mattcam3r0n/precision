@@ -1,3 +1,4 @@
+import FieldDimensions from '/client/lib/FieldDimensions';
 
 class MarcherFactory {
     static createMarcher(initialState) {
@@ -6,8 +7,8 @@ class MarcherFactory {
             // cosider center of object the origin. eg, rotate around center.
             originX: 'center',
             originY: 'center',
-            width: 12,
-            height: 18,
+            width: FieldDimensions.marcherWidth,
+            height: FieldDimensions.marcherHeight,
             fill: 'blue',
             left: initialState.x,
             top: initialState.y,

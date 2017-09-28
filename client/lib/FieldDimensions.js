@@ -115,6 +115,14 @@ class FieldDimensions {
         return this.nearSidelineY - (oneStepY_6to5 * 22);
     }
 
+    static get marcherWidth() {
+        return 12;
+    }
+
+    static get marcherHeight() {
+        return 18;
+    }
+
     static snapPoint(strideType, point) {
         if (strideType == StrideType.EightToFive)
             return {

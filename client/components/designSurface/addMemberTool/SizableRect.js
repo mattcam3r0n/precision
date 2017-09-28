@@ -1,6 +1,9 @@
 import StrideType from '/client/lib/StrideType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 
+var marcherOffsetX = FieldDimensions.marcherWidth / 2,
+    marcherOffsetY = FieldDimensions.marcherHeight / 2;
+
 class SizableRect {
     constructor(field) {
         this.sizableRect = createRect(field.canvas);
@@ -9,8 +12,8 @@ class SizableRect {
         this.sizableRect.on('moving', evt => {
             // snap rect to step grid
             var p = FieldDimensions.snapPoint(StrideType.SixToFive, { x: this.sizableRect.left, y: this.sizableRect.top });
-            this.sizableRect.set('left', p.x);
-            this.sizableRect.set('top', p.y);
+            this.sizableRect.set('left', p.x - marcherOffsetX);
+            this.sizableRect.set('top', p.y - marcherOffsetY);
             this.sizableRect.setCoords();
 
             // adjust handle position
@@ -30,20 +33,39 @@ class SizableRect {
         });
 
     }
+
+    get left() {
+        return this.sizableRect.left;
+    }
+
+    get top() {
+        return this.sizableRect.top;
+    }
+
+    get width() {
+        return this.sizableRect.width;
+    }
+
+    get height() {
+        return this.sizableRect.height;
+    }
 }
 
 function createSizingHandle(canvas) {
     var rect = new fabric.Rect({
-        left: 300,
-        top: 300,
-        width: 10,
-        height: 10,
-        fill: 'black',
+        left: FieldDimensions.goallineX - marcherOffsetX + 100,
+        top: FieldDimensions.farSidelineY - marcherOffsetY + 100,
+        width: 12,
+        height: 12,
+        fill: 'darkgray',
         stroke: 'black',
         strokeWidth: 1,
         opacity: 1,
         selectable: true,
         hasControls: false,
+        angle: 45,
+        originX: 'center',
+        originY: 'center'
       });
       canvas.add(rect);  
     return rect;
@@ -51,8 +73,8 @@ function createSizingHandle(canvas) {
 
 function createRect(canvas) {
     var rect = new fabric.Rect({
-      left: 200,
-      top: 200,
+      left: FieldDimensions.goallineX - marcherOffsetX,
+      top: FieldDimensions.farSidelineY - marcherOffsetY,
       width: 100,
       height: 100,
       fill: 'rgba(0,0,0,0)',
@@ -64,7 +86,7 @@ function createRect(canvas) {
       hasControls: false
     });
     canvas.add(rect);
-
+    canvas.setActiveObject(rect);
     return rect;
 }
 
