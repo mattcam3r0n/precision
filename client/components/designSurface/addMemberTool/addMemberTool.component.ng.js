@@ -23,11 +23,6 @@ angular.module('drillApp')
           
       ctrl.sizableRect = new SizableRect(ctrl.field);
       ctrl.group = createMarcherGroup();
-      //ctrl.group = createGroup(ctrl.field.canvas, ctrl.sizableRect);
-  //console.log(ctrl.group);
-      // ctrl.sizableRect = createRect(ctrl.field.canvas);
-
-      //addMarchers();
 
       ctrl.field.canvas.on('sizableRect:sizing', r => {
         destroyMarcherGroup();
@@ -41,19 +36,6 @@ angular.module('drillApp')
         ctrl.group.top = r.top;
         console.log('sizableRect:moving', r);        
       });
-
-      // ctrl.field.canvas.on('object:scaling', (obj) => {
-      //   removeMarchers(ctrl.group);
-      //   addMarchers(ctrl.group);
-      //   ctrl.field.canvas.renderAll();
-      // });
-
-      // ctrl.field.canvas.on('object:moving', (evt) => {
-      //   ctrl.group.set('left', evt.target.left);
-      //   ctrl.group.set('top', evt.target.top);
-      //   ctrl.field.canvas.renderAll();
-      // });
-
 
       function positionTools(obj) {
         var absCoords = ctrl.field.getAbsoluteCoords(obj);
@@ -128,7 +110,6 @@ angular.module('drillApp')
           top: rect.top,
           width: rect.width,
           height: rect.height,
-//          fill: 'rgba(0,0,0,0)',
           selectable: false
         });
         canvas.add(group);

@@ -9,7 +9,8 @@ class MarcherFactory {
             originY: 'center',
             width: FieldDimensions.marcherWidth,
             height: FieldDimensions.marcherHeight,
-            fill: 'blue',
+            fill: 'red',
+            stroke: 'black',
             left: initialState.x,
             top: initialState.y,
             angle: initialState.direction, // angle of object. correspond to direction.

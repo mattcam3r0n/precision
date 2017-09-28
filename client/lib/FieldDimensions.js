@@ -116,11 +116,11 @@ class FieldDimensions {
     }
 
     static get marcherWidth() {
-        return 12;
+        return 16;
     }
 
     static get marcherHeight() {
-        return 18;
+        return 16;
     }
 
     static snapPoint(strideType, point) {
