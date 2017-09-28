@@ -12,7 +12,7 @@ angular.module('drillApp')
           initialState: {
             x: 60,
             y: 60,
-            direction: 90
+            direction: 0
           }
         },
         {
@@ -20,6 +20,20 @@ angular.module('drillApp')
             x: 60,
             y: 80,
             direction: 90
+          }
+        },
+        {
+          initialState: {
+            x: 60,
+            y: 100,
+            direction: 180
+          }
+        },
+        {
+          initialState: {
+            x: 60,
+            y: 120,
+            direction: 270
           }
         }
       ]
@@ -47,5 +61,9 @@ angular.module('drillApp')
       $rootScope.$broadcast('memberAdded', { newMembers });
     };
 
+    $scope.$on("$destroy", function(){
+      //$interval.cancel(myInterval);
+      console.log('$destroy design view');
+    });
 
   });

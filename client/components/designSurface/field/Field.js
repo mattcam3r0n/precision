@@ -21,7 +21,8 @@ class Field {
         return new fabric.Canvas('design-surface', {
             backgroundColor: 'green',
             height: FieldDimensions.height,
-            width: FieldDimensions.width
+            width: FieldDimensions.width,
+            uniScaleTransform: true
         });
     }
 
@@ -39,6 +40,9 @@ class Field {
         this.canvas.on('mouse:move', function(evt) {
             var p = { x: evt.e.layerX, y: evt.e.layerY };
             var snappedPoint = FieldDimensions.snapPoint(StrideType.SixToFive, self.adjustMousePoint(p));
+            
+            //console.log(snappedPoint);
+
             self.positionIndicator.set('left', snappedPoint.x);
             self.positionIndicator.set('top', snappedPoint.y);
             canvas.renderAll();
@@ -71,7 +75,7 @@ class Field {
             return;
 
         members.forEach(m => {
-            m.marcher = MarcherFactory.createMarcher(m);
+            m.marcher = MarcherFactory.createMarcher(m.initialState);
             m.marcher.member = m;
             this.canvas.add(m.marcher);    
         });       

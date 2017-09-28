@@ -22,6 +22,13 @@ angular.module('drillApp')
         console.log('memberAdded', args);
         ctrl.field.addMarchers(args.newMembers);
       });
+
+      $scope.$on("$destroy", function(){
+        //$interval.cancel(myInterval);
+        console.log('$destroy design surface component');
+        ctrl.field.canvas.dispose();
+      });
+        
     }
   });
 

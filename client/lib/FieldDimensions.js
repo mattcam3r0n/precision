@@ -76,6 +76,21 @@ class FieldDimensions {
         return fiveYardsX * 3;
     }
 
+    static get oneStepY_6to5() {
+        return oneStepY_6to5;
+    } 
+    static get oneStepX_6to5() {
+        return oneStepX_6to5;
+    }
+
+    static get oneStepY_8to5() {
+        return oneStepY_8to5;
+    }
+
+    static get oneStepX_8to5() {
+        return oneStepX_8to5;
+    }
+
     static get fiveYardsX() {
         return fiveYardsX;
     }
