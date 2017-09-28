@@ -29,9 +29,13 @@ angular.module('drillApp')
 
       ctrl.sizableRect = new SizableRect(ctrl.field);
 
-      // angular.element($window).bind('resize', function () {
-      //   field.resize();
-      // });
+      ctrl.field.canvas.on('sizableRect:sizing', r => {
+        console.log('sizableRect:sizing', r);
+      });
+
+      ctrl.field.canvas.on('sizableRect:moving', r => {
+        console.log('sizableRect:moving', r);        
+      });
 
       // ctrl.field.canvas.on('object:scaling', (obj) => {
       //   removeMarchers(ctrl.group);
@@ -96,12 +100,12 @@ angular.module('drillApp')
         }
       }
 
-      function getFilesInRect(group) {
-        return Math.ceil(group.width / (FieldDimensions.oneStepX_6to5) / ctrl.fileSpacing);		
+      function getFilesInRect(rect) {
+        return Math.ceil(rect.width / (FieldDimensions.oneStepX_6to5) / ctrl.fileSpacing);		
       }
       
-      function getRanksInRect(group) {
-        return Math.ceil(group.height / (FieldDimensions.oneStepY_6to5) / ctrl.rankSpacing);		
+      function getRanksInRect(rect) {
+        return Math.ceil(rect.height / (FieldDimensions.oneStepY_6to5) / ctrl.rankSpacing);		
       }
     
       function createRect(canvas) {

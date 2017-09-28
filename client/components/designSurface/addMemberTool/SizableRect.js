@@ -17,12 +17,16 @@ class SizableRect {
             this.sizingHandle.set('left', this.sizableRect.left + this.sizableRect.width);
             this.sizingHandle.set('top', this.sizableRect.top + this.sizableRect.height);
             this.sizingHandle.setCoords();
+
+            field.canvas.trigger('sizableRect:moving', this.sizableRect);
         });
 
         this.sizingHandle.on('moving', evt => {
             this.sizableRect.set('width', this.sizingHandle.left - this.sizableRect.left);
             this.sizableRect.set('height', this.sizingHandle.top - this.sizableRect.top);
             this.sizableRect.setCoords();
+
+            field.canvas.trigger('sizableRect:sizing', this.sizableRect);
         });
 
     }
