@@ -16,7 +16,6 @@ angular.module('drillApp')
       $timeout(function(){
         ctrl.field = new Field(ctrl.drill);
         $scope.showSpinner = false;
-        console.log('timeout render');
       });
 
       angular.element($window).bind('resize', function () {
@@ -24,22 +23,17 @@ angular.module('drillApp')
       });
 
       $scope.$on('memberAdded', function(event, args) {
-        console.log('memberAdded', args);
         ctrl.field.addMarchers(args.newMembers);
       });
 
       $scope.$on("$destroy", function(){
-        //$interval.cancel(myInterval);
-        console.log('$destroy design surface component');
         ctrl.field.canvas.dispose();
       });
       
       ctrl.$onInit = function() {
-        console.log('design surface onInit');
       }
 
       ctrl.$postLink = function() {
-        console.log('design surface post link');
       }
     }
   });
