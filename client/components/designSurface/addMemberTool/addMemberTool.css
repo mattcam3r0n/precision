@@ -3,10 +3,14 @@
     position: absolute;
 }
 
-.add-member-tool .dropdown-menu {
+.add-member-tool ul.dropdown-menu {
     min-width: 200px;
 }
 
 .add-member-tool .dropdown-menu li {
     width: 40px;
+}
+
+.add-member-tool ul.dropdown-menu.direction-picker {
+    min-width: 160px;
 }

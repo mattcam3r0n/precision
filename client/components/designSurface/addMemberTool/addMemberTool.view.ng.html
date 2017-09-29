@@ -6,11 +6,16 @@
             <button id="setMemberDirection" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-lg" ng-class="getDirectionClass()"></i>
               </button>
-            <ul class="dropdown-menu list-inline">
+            <ul class="dropdown-menu list-inline direction-picker">
+                <li>&nbsp;</li>
                 <li data-value="N"><a href="#" ng-click="setDirection(0)"><i class="fa fa-caret-up fa-lg"></i></a></li>
-                <li data-value="S"><a href="#" ng-click="setDirection(180)"><i class="fa fa-caret-down fa-lg"></i></a></li>
-                <li data-value="E"><a href="#" ng-click="setDirection(90)"><i class="fa fa-caret-right fa-lg"></i></a></li>
+                <li>&nbsp;</li>
                 <li data-value="W"><a href="#" ng-click="setDirection(270)"><i class="fa fa-caret-left fa-lg"></i></a></li>
+                <li>&nbsp;</li>
+                <li data-value="E"><a href="#" ng-click="setDirection(90)"><i class="fa fa-caret-right fa-lg"></i></a></li>
+                <li>&nbsp;</li>
+                <li data-value="S"><a href="#" ng-click="setDirection(180)"><i class="fa fa-caret-down fa-lg"></i></a></li>
+                <li>&nbsp;</li>
             </ul>
         </div>
         <div class="btn-group" data-toggle="tooltip" data-placement="right" title="File Spacing">
