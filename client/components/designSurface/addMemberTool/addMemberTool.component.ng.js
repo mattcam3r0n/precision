@@ -77,6 +77,7 @@ angular.module('drillApp')
         ctrl.labels = createLabels();
 
         positionTools(ctrl.sizableRect);
+        updateLabels(ctrl.sizableRect);
 
         ctrl.field.canvas.on('sizableRect:sizing', r => {
           updateMarchers(r);
@@ -94,7 +95,7 @@ angular.module('drillApp')
         ctrl.isActivated = false;
         destroyMarcherGroup();
         destroySizableRect();
-        destroyLabel();
+        destroyLabels();
       }
 
       function updateMarchers(r) {
@@ -177,9 +178,13 @@ angular.module('drillApp')
         ctrl.group = null;
       }
 
-      function destroyLabel() {
-        ctrl.field.canvas.remove(ctrl.label);
-        ctrl.label = null;
+      function destroyLabels() {
+        ctrl.field.canvas.remove(ctrl.labels.rankLabel);
+        ctrl.field.canvas.remove(ctrl.labels.fileLabel);
+        ctrl.field.canvas.remove(ctrl.labels.totalLabel);
+        ctrl.labels.rankLabel = null;
+        ctrl.labels.fileLabel = null;
+        ctrl.labels.totalLabel = null;
       }
 
       function destroySizableRect() {
@@ -210,6 +215,8 @@ angular.module('drillApp')
         ctrl.labels.totalLabel.setText(`${files * ranks}`);
         ctrl.labels.totalLabel.set('top', rect.top + rect.height + 10);
         ctrl.labels.totalLabel.set('left', rect.left + (rect.width / 2) - 10);
+
+        ctrl.field.canvas.renderAll();
       }
 
       function createLabels() {
