@@ -4,6 +4,14 @@ import FieldDimensions from '/client/lib/FieldDimensions';
 var marcherOffsetX = FieldDimensions.marcherWidth / 2,
     marcherOffsetY = FieldDimensions.marcherHeight / 2;
 
+// limit to min of 1 x 1
+var minWidth = FieldDimensions.marcherWidth + 10,
+    minHeight = FieldDimensions.marcherHeight + 10;
+
+// limit to max of aprox ~16 x 16
+var maxWidth = FieldDimensions.marcherWidth * 20,
+    maxHeight = FieldDimensions.marcherHeight * 20;
+
 class SizableRect {
     constructor(field) {
         this.field = field;
@@ -26,9 +34,22 @@ class SizableRect {
         });
 
         this.sizingHandle.on('moving', evt => {
-            this.rect.set('width', this.sizingHandle.left - this.rect.left);
-            this.rect.set('height', this.sizingHandle.top - this.rect.top);
+            var width = this.sizingHandle.left - this.rect.left;
+            var height = this.sizingHandle.top - this.rect.top;
+
+            // enforce limits
+            width = width < minWidth ? minWidth : width;
+            height = height < minHeight ? minHeight :height;
+            width = width > maxWidth ? maxWidth : width;
+            height = height > maxHeight ? maxHeight : height;
+
+            this.rect.set('width', width);
+            this.rect.set('height', height );
             this.rect.setCoords();
+
+            this.sizingHandle.set('left', this.rect.left + width);
+            this.sizingHandle.set('top', this.rect.top + height);
+            this.sizingHandle.setCoords();
 
             field.canvas.trigger('sizableRect:sizing', this.rect);
         });
