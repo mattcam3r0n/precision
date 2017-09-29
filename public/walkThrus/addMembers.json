@@ -2,18 +2,31 @@
     "steps": [
       { 
         "element": "#addMembersTool",
-        "intro": "Click the <i>Add Members</i> button"
+        "intro": "Click the <i>Add Members</i> button. <br><br> A block of new members will appear on the field."
       },
       {
-        "intro": "This is a tooltip."
+        "intro": "Resize the box to change the size of the block.  <br><br> Drag the block to position it on the field."
       },
       {
-        "element": "#test",
-        "intro": "This is a tooltip."
+        "element": "#setMemberDirection",
+        "intro": "Choose which direction the members initially face."
+      },
+      {
+        "element": "#setFileSpacing",
+        "intro": "Set file spacing."
+      },
+      {
+        "element": "#setRankSpacing",
+        "intro": "Set rank spacing."
+      },
+      {
+        "element": "#saveMembers",
+        "intro": "Click here to finish adding members.",
+        "scrollToElement": "true"
       },
       {
         "element": "#cancelMembers",
-        "intro": "Click here to cancel.",
+        "intro": "Click here to cancel without adding members.",
         "scrollToElement": "true"
       }
     ]

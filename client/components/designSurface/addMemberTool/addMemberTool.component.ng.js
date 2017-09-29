@@ -99,6 +99,7 @@ angular.module('drillApp')
         destroyMarcherGroup();
         destroySizableRect();
         destroyLabels();
+        ctrl.field.canvas.selection = true;
       }
 
       function updateMarchers(r) {
