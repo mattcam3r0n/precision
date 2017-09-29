@@ -50,15 +50,16 @@ angular.module('drillApp')
 
     $scope.addMembers = function () {
       // TEMP
-      var newMembers = [{
-        initialState: {
-          x: 60,
-          y: drill.members[drill.members.length - 1].initialState.y + 20,
-          direction: 90
-        }
-      }];
-      drill.members.push(...newMembers);
-      $rootScope.$broadcast('memberAdded', { newMembers });
+      // var newMembers = [{
+      //   initialState: {
+      //     x: 60,
+      //     y: drill.members[drill.members.length - 1].initialState.y + 20,
+      //     direction: 90
+      //   }
+      // }];
+      // drill.members.push(...newMembers);
+      // $rootScope.$broadcast('memberAdded', { newMembers });
+      $rootScope.$broadcast('activateAddMemberTool');
     };
 
     $scope.$on("$destroy", function(){

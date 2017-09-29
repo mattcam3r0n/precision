@@ -6,48 +6,56 @@ var marcherOffsetX = FieldDimensions.marcherWidth / 2,
 
 class SizableRect {
     constructor(field) {
-        this.sizableRect = createRect(field.canvas);
+        this.field = field;
+        this.rect = createRect(field.canvas);
         this.sizingHandle = createSizingHandle(field.canvas);
 
-        this.sizableRect.on('moving', evt => {
+        this.rect.on('moving', evt => {
             // snap rect to step grid
-            var p = FieldDimensions.snapPoint(StrideType.SixToFive, { x: this.sizableRect.left, y: this.sizableRect.top });
-            this.sizableRect.set('left', p.x - marcherOffsetX);
-            this.sizableRect.set('top', p.y - marcherOffsetY);
-            this.sizableRect.setCoords();
+            var p = FieldDimensions.snapPoint(StrideType.SixToFive, { x: this.rect.left, y: this.rect.top });
+            this.rect.set('left', p.x - marcherOffsetX);
+            this.rect.set('top', p.y - marcherOffsetY);
+            this.rect.setCoords();
 
             // adjust handle position
-            this.sizingHandle.set('left', this.sizableRect.left + this.sizableRect.width);
-            this.sizingHandle.set('top', this.sizableRect.top + this.sizableRect.height);
+            this.sizingHandle.set('left', this.rect.left + this.rect.width);
+            this.sizingHandle.set('top', this.rect.top + this.rect.height);
             this.sizingHandle.setCoords();
 
-            field.canvas.trigger('sizableRect:moving', this.sizableRect);
+            field.canvas.trigger('sizableRect:moving', this.rect);
         });
 
         this.sizingHandle.on('moving', evt => {
-            this.sizableRect.set('width', this.sizingHandle.left - this.sizableRect.left);
-            this.sizableRect.set('height', this.sizingHandle.top - this.sizableRect.top);
-            this.sizableRect.setCoords();
+            this.rect.set('width', this.sizingHandle.left - this.rect.left);
+            this.rect.set('height', this.sizingHandle.top - this.rect.top);
+            this.rect.setCoords();
 
-            field.canvas.trigger('sizableRect:sizing', this.sizableRect);
+            field.canvas.trigger('sizableRect:sizing', this.rect);
         });
 
     }
 
     get left() {
-        return this.sizableRect.left;
+        return this.rect.left;
     }
 
     get top() {
-        return this.sizableRect.top;
+        return this.rect.top;
     }
 
     get width() {
-        return this.sizableRect.width;
+        return this.rect.width;
     }
 
     get height() {
-        return this.sizableRect.height;
+        return this.rect.height;
+    }
+
+    destroy() {
+        this.field.canvas.remove(this.rect);
+        this.field.canvas.remove(this.sizingHandle);
+        this.rect = null;
+        this.sizingHandle = null;
     }
 }
 
@@ -55,8 +63,8 @@ function createSizingHandle(canvas) {
     var rect = new fabric.Rect({
         left: FieldDimensions.goallineX - marcherOffsetX + 100,
         top: FieldDimensions.farSidelineY - marcherOffsetY + 100,
-        width: 12,
-        height: 12,
+        width: 15,
+        height: 15,
         fill: 'darkgray',
         stroke: 'black',
         strokeWidth: 1,
@@ -65,7 +73,9 @@ function createSizingHandle(canvas) {
         hasControls: false,
         angle: 45,
         originX: 'center',
-        originY: 'center'
+        originY: 'center',
+        hoverCursor: 'nwse-resize',
+        moveCursor: 'nwse-resize'
       });
       canvas.add(rect);  
     return rect;
@@ -86,7 +96,7 @@ function createRect(canvas) {
       hasControls: false
     });
     canvas.add(rect);
-    canvas.setActiveObject(rect);
+//    canvas.setActiveObject(rect);
     return rect;
 }
 

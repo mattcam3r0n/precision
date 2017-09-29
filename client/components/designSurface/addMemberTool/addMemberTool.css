@@ -2,3 +2,11 @@
     -visibility: hidden;
     position: absolute;
 }
+
+.add-member-tool .dropdown-menu {
+    min-width: 200px;
+}
+
+.add-member-tool .dropdown-menu li {
+    width: 40px;
+}

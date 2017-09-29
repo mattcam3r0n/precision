@@ -99,10 +99,21 @@ class Field {
 
     getAbsoluteCoords(object) {
         var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
-        return {
-            left: (object.left * zoomFactor.x) + this.canvas._offset.left,
-            top: (object.top * zoomFactor.y) + this.canvas._offset.top
-          };              
+        var coords = {};
+        
+        if (object.left)
+            coords.left = (object.left * zoomFactor.x) + this.canvas._offset.left;
+        
+        if (object.top)
+            coords.top = (object.top * zoomFactor.y) + this.canvas._offset.top;
+
+        if (object.width)
+            coords.width = (object.width * zoomFactor.x); // + this.canvas._offset.left
+        
+        if (object.height)
+            coords.height = (object.height * zoomFactor.y);
+
+        return coords;            
     }
 }
 
