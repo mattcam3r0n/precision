@@ -27,17 +27,14 @@ angular.module('drillApp')
       });
 
       $scope.$onInit = function () {
-
       }
 
       $scope.$onDestroy = function () {
-
       }
 
       $scope.activate = activate;
 
       $scope.deactivate = function () {
-
       }
 
       $scope.setDirection = function (dir) {
@@ -61,7 +58,7 @@ angular.module('drillApp')
       };
 
       $scope.save = function () {
-
+        //TODO
       }
 
       $scope.cancel = deactivate;
@@ -77,7 +74,7 @@ angular.module('drillApp')
 
         ctrl.sizableRect = new SizableRect(ctrl.field);
         ctrl.group = createMarcherGroup();
-        ctrl.label = createLabel();
+        ctrl.labels = createLabels();
 
         positionTools(ctrl.sizableRect);
 
@@ -89,7 +86,7 @@ angular.module('drillApp')
           positionTools(r);
           ctrl.group.left = r.left;
           ctrl.group.top = r.top;
-          updateLabel(r);
+          updateLabels(r);
         });
       }
 
@@ -103,7 +100,7 @@ angular.module('drillApp')
       function updateMarchers(r) {
         destroyMarcherGroup();
         ctrl.group = createMarcherGroup();
-        updateLabel(r);
+        updateLabels(r);
       }
 
       function positionTools(obj) {
@@ -198,23 +195,39 @@ angular.module('drillApp')
         return Math.floor(rect.height / (FieldDimensions.oneStepY_6to5) / ctrl.rankSpacing);
       }
 
-      function updateLabel(rect) {
+      function updateLabels(rect) {
         var ranks = getRanksInRect(rect),
-          files = getFilesInRect(rect);
-        ctrl.label.setText(`${files} x ${ranks} = ${files * ranks}`);
-        ctrl.label.set('left', rect.left);
-        ctrl.label.set('top', rect.top - 25);
+            files = getFilesInRect(rect);
+
+        ctrl.labels.rankLabel.setText(`${ranks}`);
+        ctrl.labels.rankLabel.set('top', rect.top + (rect.height / 2) - 10);
+        ctrl.labels.rankLabel.set('left', rect.left + rect.width + 10);
+
+        ctrl.labels.fileLabel.setText(`${files}`);
+        ctrl.labels.fileLabel.set('top', rect.top - 30);
+        ctrl.labels.fileLabel.set('left', rect.left + (rect.width / 2) - 10);
+
+        ctrl.labels.totalLabel.setText(`${files * ranks}`);
+        ctrl.labels.totalLabel.set('top', rect.top + rect.height + 10);
+        ctrl.labels.totalLabel.set('left', rect.left + (rect.width / 2) - 10);
       }
 
-      function createLabel() {
-        var label = new fabric.Text("", {
+      function createLabels() {
+        var labels = {};
+        var labelOptions = {
           fontSize: 20,
+          fontWeight: 'bold',
           lineHeight: 1,
           selectable: false,
           evented: false
-        });
-        ctrl.field.canvas.add(label);
-        return label;
+        };
+        labels.rankLabel = new fabric.Text("", labelOptions);
+        labels.fileLabel = new fabric.Text("", labelOptions);
+        labels.totalLabel = new fabric.Text("", labelOptions);
+        ctrl.field.canvas.add(labels.rankLabel);
+        ctrl.field.canvas.add(labels.fileLabel);
+        ctrl.field.canvas.add(labels.totalLabel);
+        return labels;
       }
 
     }
