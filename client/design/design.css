@@ -14,3 +14,12 @@
 .design-help .collapsed {
     display: none;
 }
+
+.side-menu {
+    position:relative;
+ }
+ .side-menu li ul {
+   position:absolute;
+   z-index:99;
+   width:100%;
+ }

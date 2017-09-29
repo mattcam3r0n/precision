@@ -1,0 +1,20 @@
+{
+    "steps": [
+      { 
+        "element": "#addMembersTool",
+        "intro": "Click the <i>Add Members</i> button"
+      },
+      {
+        "intro": "This is a tooltip."
+      },
+      {
+        "element": "#test",
+        "intro": "This is a tooltip."
+      },
+      {
+        "element": "#cancelMembers",
+        "intro": "Click here to cancel.",
+        "scrollToElement": "true"
+      }
+    ]
+  }

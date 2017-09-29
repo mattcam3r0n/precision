@@ -1,5 +1,7 @@
 'use strict'
 
+import WalkThru from '/client/lib/walkThru/WalkThru';
+
 angular.module('drillApp')
   .controller('DesignCtrl', function ($scope, $rootScope) {
     $scope.viewName = 'Design';
@@ -15,6 +17,12 @@ angular.module('drillApp')
       $rootScope.$broadcast('designSurface:resize');      
     }
 
+
+    $scope.showIntro = function() {
+      $scope.addMembers();
+      var wt = new WalkThru();
+      wt.start('addMembers');
+    }
 
     // TEMP: need to get this from app state
     var drill = {

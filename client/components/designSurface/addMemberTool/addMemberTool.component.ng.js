@@ -64,6 +64,9 @@ angular.module('drillApp')
       $scope.cancel = deactivate;
 
       function activate() {
+        if (ctrl.isActivated)
+          deactivate();
+
         ctrl.isActivated = true;
         ctrl.field.canvas.selection = false;
 
@@ -110,7 +113,7 @@ angular.module('drillApp')
         if (left < 0) {
           left = absCoords.left + absCoords.width + 20;
         }
-        var top = absCoords.top - 20;
+        var top = absCoords.top - 100;
         toolDiv.style.left = left + 'px';
         toolDiv.style.top = top + 'px';
       }

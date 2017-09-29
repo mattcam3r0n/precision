@@ -52,11 +52,19 @@
     </div>
     <div class="row">
         <div id="design-surface-col" class="col-md-12">
+            <!-- <div id="test" style="position: absolute; left: 250px; top: 100px; width: 0px; height: 0px; z-index: -1; "></div> -->
             <design-surface drill="drill" ng-show="true"></design-surface>
         </div>
         <div class="col-md-1">
             <div class="design-help pull-right" ng-show="isHelpVisible">
-                Help!
+                <ul class="nav">
+                    <li class="nav-header">
+                        Walk Throughs
+                    </li>
+                    <li>
+                        <a ng-click="showIntro()">Add Members</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
