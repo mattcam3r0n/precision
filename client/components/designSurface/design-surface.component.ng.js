@@ -26,6 +26,11 @@ angular.module('drillApp')
         ctrl.field.addMarchers(args.newMembers);
       });
 
+      $scope.$on('designSurface:resize', function(){
+        ctrl.field.resize();
+        console.log('resize');
+      })
+
       $scope.$on("$destroy", function(){
         ctrl.field.canvas.dispose();
       });

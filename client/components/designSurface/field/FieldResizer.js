@@ -7,6 +7,7 @@ class FieldResizer {
         // set css size to scale canvas to parent area
         canvas.setDimensions({ height: size.height + 'px', width: size.width + 'px' }, { cssOnly: true });
         canvas.renderAll();
+    console.log('fieldresizer resize', size);
     }
     
     static getSize() {

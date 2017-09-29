@@ -4,7 +4,8 @@
         <div class="btn-group" role="group">
             <button id="selectionTool" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Select Members">
                 <i class="fa fa-location-arrow fa-rotate-270"></i>&nbsp;Select</button>
-            <button id="addMembersTool" ng-click="addMembers()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Add Members">
+            <button id="addMembersTool" ng-click="addMembers()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                title="Add Members">
                 <i class="fa fa-play fa-rotate-270"></i>&nbsp;Add</button>
             <button id="drawPathTool" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Draw Path">
                 <i class="fa fa-pencil"></i>&nbsp;Draw</button>
@@ -27,9 +28,9 @@
             <button id="stepBackward" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Backward 1 Count">
                 <i class="fa fa-step-backward"></i>
             </button>
-            <button id="currentCount" class="btn btn-default btn-md" data-toggle="tooltip" data-placement="bottom" title="Current count" style="width: 40px;">{{currentCount}}</button>
-            <button id="stepForward" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
-            title="Forward 1 Count">
+            <button id="currentCount" class="btn btn-default btn-md" data-toggle="tooltip" data-placement="bottom" title="Current count"
+                style="width: 40px;">{{currentCount}}</button>
+            <button id="stepForward" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Forward 1 Count">
                 <i class="fa fa-step-forward"></i>
             </button>
         </div>
@@ -46,10 +47,17 @@
         </div>
         <div class="btn-group pull-right" role="group">
             <div>{{cursorPosition}}</div>
+            <button class="btn btn-default" ng-click="showHelp()"><i class="fa fa-question-circle fa-lg"></i></button>
         </div>
     </div>
-
-    <design-surface drill="drill" ng-show="true"></design-surface>
-
+    <div class="row">
+        <div id="design-surface-col" class="col-md-12">
+            <design-surface drill="drill" ng-show="true"></design-surface>
+        </div>
+        <div class="col-md-1">
+            <div class="design-help pull-right" ng-show="isHelpVisible">
+                Help!
+            </div>
+        </div>
+    </div>
 </div>
-

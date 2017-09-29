@@ -7,3 +7,10 @@
     margin-bottom: 10px;
 }
 
+.design-help {
+    transition: margin 0.3s ease;    
+}
+
+.design-help .collapsed {
+    display: none;
+}

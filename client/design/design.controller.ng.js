@@ -4,6 +4,18 @@ angular.module('drillApp')
   .controller('DesignCtrl', function ($scope, $rootScope) {
     $scope.viewName = 'Design';
 
+    $scope.isHelpVisible = false;
+
+    $scope.showHelp = function(){
+      $scope.isHelpVisible = !$scope.isHelpVisible;
+
+      var c = angular.element('#design-surface-col')
+      c.removeClass($scope.isHelpVisible ? 'col-md-12' : 'col-md-11');
+      c.addClass($scope.isHelpVisible ? 'col-md-11' : 'col-md-12');
+      $rootScope.$broadcast('designSurface:resize');      
+    }
+
+
     // TEMP: need to get this from app state
     var drill = {
       name: "test2",
