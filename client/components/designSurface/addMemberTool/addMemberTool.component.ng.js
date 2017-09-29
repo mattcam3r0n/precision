@@ -20,47 +20,47 @@ angular.module('drillApp')
         [Direction.E]: 'fa-caret-right',
         [Direction.S]: 'fa-caret-down',
         [Direction.W]: 'fa-caret-left'
-      };     
+      };
 
-      $scope.$on('activateAddMemberTool', function() {
+      $scope.$on('activateAddMemberTool', function () {
         activate();
       });
 
-      $scope.$onInit = function() {
+      $scope.$onInit = function () {
 
       }
 
-      $scope.$onDestroy = function() {
+      $scope.$onDestroy = function () {
 
       }
 
       $scope.activate = activate;
 
-      $scope.deactivate = function() {
+      $scope.deactivate = function () {
 
       }
 
-      $scope.setDirection = function(dir) {
+      $scope.setDirection = function (dir) {
         ctrl.direction = dir;
         updateMarchers(ctrl.sizableRect);
         console.log(ctrl.direction);
       };
 
-      $scope.setFileSpacing = function(s) {
+      $scope.setFileSpacing = function (s) {
         ctrl.fileSpacing = s;
         updateMarchers(ctrl.sizableRect);
       }
 
-      $scope.setRankSpacing = function(s) {
+      $scope.setRankSpacing = function (s) {
         ctrl.rankSpacing = s;
         updateMarchers(ctrl.sizableRect);
       }
 
-      $scope.getDirectionClass = function() {
+      $scope.getDirectionClass = function () {
         return directionClass[ctrl.direction];
       };
 
-      $scope.save = function() {
+      $scope.save = function () {
 
       }
 
@@ -69,22 +69,22 @@ angular.module('drillApp')
       function activate() {
         ctrl.isActivated = true;
         ctrl.field.canvas.selection = false;
-        
+
         ctrl.marchers = [];
         ctrl.direction = Direction.E;
         ctrl.fileSpacing = 2;
         ctrl.rankSpacing = 2;
-            
+
         ctrl.sizableRect = new SizableRect(ctrl.field);
         ctrl.group = createMarcherGroup();
         ctrl.label = createLabel();
-  
+
         positionTools(ctrl.sizableRect);
-  
+
         ctrl.field.canvas.on('sizableRect:sizing', r => {
           updateMarchers(r);
         });
-    
+
         ctrl.field.canvas.on('sizableRect:moving', r => {
           positionTools(r);
           ctrl.group.left = r.left;
@@ -103,7 +103,7 @@ angular.module('drillApp')
       function updateMarchers(r) {
         destroyMarcherGroup();
         ctrl.group = createMarcherGroup();
-        updateLabel(r);        
+        updateLabel(r);
       }
 
       function positionTools(obj) {
@@ -122,7 +122,7 @@ angular.module('drillApp')
         evt.target.set({
           left: snappedPoint.x,
           top: snappedPoint.y
-        });        
+        });
       }
 
       function createMarcherGroup() {
@@ -130,23 +130,15 @@ angular.module('drillApp')
         var files = getFilesInRect(ctrl.sizableRect);
         var ranks = getRanksInRect(ctrl.sizableRect);
         var x, y;
-        for(var i = 0; i < files; i++){
+        for (var i = 0; i < files; i++) {
           x = i * FieldDimensions.oneStepX_6to5 * ctrl.fileSpacing;
-          for (var j = 0; j < ranks; j++){
+          for (var j = 0; j < ranks; j++) {
             y = j * FieldDimensions.oneStepY_6to5 * ctrl.rankSpacing;
-            var marcher = MarcherFactory.createMarcher({ 
-              x: x,
-              y: y,
-              direction: ctrl.direction 
-            });
-            marcher.originX = 'center';
-            marcher.originY = 'center';
-            marcher.lockMovementX = false;
-            marcher.lockMovementY = false;
+            var marcher = createMarcher(x, y, ctrl.direction);
             ctrl.marchers.push(marcher);
           }
         }
-        
+
         ctrl.files = files;
         ctrl.ranks = ranks;
 
@@ -163,8 +155,23 @@ angular.module('drillApp')
         return g;
       }
 
+      function createMarcher(x, y, dir) {
+        var marcher = MarcherFactory.createMarcher({
+          x: x,
+          y: y,
+          direction: dir
+        });
+        marcher.originX = 'center';
+        marcher.originY = 'center';
+        marcher.lockMovementX = false;
+        marcher.lockMovementY = false;
+        marcher.evented = false;
+        marcher.selectable = false;
+        return marcher;
+      }
+
       function destroyMarcherGroup() {
-        while (ctrl.marchers.length > 0){
+        while (ctrl.marchers.length > 0) {
           var m = ctrl.marchers.pop();
           ctrl.group.remove(m);
           ctrl.field.canvas.remove(m);
@@ -184,16 +191,16 @@ angular.module('drillApp')
       }
 
       function getFilesInRect(rect) {
-        return Math.floor(rect.width / (FieldDimensions.oneStepX_6to5) / ctrl.fileSpacing);		
+        return Math.floor(rect.width / (FieldDimensions.oneStepX_6to5) / ctrl.fileSpacing);
       }
-      
+
       function getRanksInRect(rect) {
-        return Math.floor(rect.height / (FieldDimensions.oneStepY_6to5) / ctrl.rankSpacing);		
+        return Math.floor(rect.height / (FieldDimensions.oneStepY_6to5) / ctrl.rankSpacing);
       }
-    
+
       function updateLabel(rect) {
         var ranks = getRanksInRect(rect),
-            files = getFilesInRect(rect);
+          files = getFilesInRect(rect);
         ctrl.label.setText(`${files} x ${ranks} = ${files * ranks}`);
         ctrl.label.set('left', rect.left);
         ctrl.label.set('top', rect.top - 25);
