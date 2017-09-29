@@ -26,10 +26,10 @@ angular.module('drillApp')
         activate();
       });
 
-      $scope.$onInit = function () {
+      ctrl.$onInit = function () {
       }
 
-      $scope.$onDestroy = function () {
+      ctrl.$onDestroy = function () {
       }
 
       $scope.activate = activate;

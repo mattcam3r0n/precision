@@ -9,10 +9,15 @@ angular.module('drillApp')
     bindings: {
       drill: '<'
     },
-    controller: function ($scope, $window) {
+    controller: function ($scope, $window, $timeout) {
       var ctrl = this;
+      $scope.showSpinner = true;
 
-      ctrl.field = new Field(ctrl.drill);
+      $timeout(function(){
+        ctrl.field = new Field(ctrl.drill);
+        $scope.showSpinner = false;
+        console.log('timeout render');
+      });
 
       angular.element($window).bind('resize', function () {
         ctrl.field.resize();
@@ -28,7 +33,14 @@ angular.module('drillApp')
         console.log('$destroy design surface component');
         ctrl.field.canvas.dispose();
       });
-        
+      
+      ctrl.$onInit = function() {
+        console.log('design surface onInit');
+      }
+
+      ctrl.$postLink = function() {
+        console.log('design surface post link');
+      }
     }
   });
 

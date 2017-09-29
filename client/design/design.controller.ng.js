@@ -8,34 +8,34 @@ angular.module('drillApp')
     var drill = {
       name: "test2",
       members: [
-        {
-          initialState: {
-            x: 60,
-            y: 60,
-            direction: 0
-          }
-        },
-        {
-          initialState: {
-            x: 60,
-            y: 80,
-            direction: 90
-          }
-        },
-        {
-          initialState: {
-            x: 60,
-            y: 100,
-            direction: 180
-          }
-        },
-        {
-          initialState: {
-            x: 60,
-            y: 120,
-            direction: 270
-          }
-        }
+        // {
+        //   initialState: {
+        //     x: 60,
+        //     y: 60,
+        //     direction: 0
+        //   }
+        // },
+        // {
+        //   initialState: {
+        //     x: 60,
+        //     y: 80,
+        //     direction: 90
+        //   }
+        // },
+        // {
+        //   initialState: {
+        //     x: 60,
+        //     y: 100,
+        //     direction: 180
+        //   }
+        // },
+        // {
+        //   initialState: {
+        //     x: 60,
+        //     y: 120,
+        //     direction: 270
+        //   }
+        // }
       ]
     };
 
