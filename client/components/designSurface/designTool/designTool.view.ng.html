@@ -1,30 +1,27 @@
 <div draggable id="designTool" class="design-tool panel panel-default" ng-show="$ctrl.isActivated">
 
-    <div class="panel-heading text-center">
-        <i class="fa fa-bars fa-sm"></i>
+    <div class="panel-heading text-center drag-handle">
+        <i class="fa fa-bars fa-sm drag-handle"></i>
     </div>
     <div class="panel-body">
         <div id="designToolbar" class="floating-toolbar btn-group-vertical">
-            <button ng-click="save()" id="saveMembers" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members"><i class="fa fa-check fa-lg context-button"></i></button>
-            <div class="btn-group" data-toggle="tooltip" data-placement="right" title="File Spacing">
-                <button id="setFileSpacing" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{$ctrl.fileSpacing}}</button>
+            <button ng-click="" id="addMembers" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members"><i class="fa fa-play fa-rotate-270"></i>&nbsp;Add</button>
+            <button id="drawPathTool" ng-click="drawPath()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Draw Path"><i class="fa fa-pencil"></i>&nbsp;Draw</button>
+                <div class="btn-group" data-toggle="tooltip" data-placement="right" title="File Spacing">
+                <button id="setFileSpacing" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">6/5</button>
                 <ul class="dropdown-menu spacing-dropdown list-inline" data-toggle="tooltip" data-placement="right" title="File Spacing">
-                    <li data-value="2"><a href="#" ng-click="setFileSpacing(2)">2</a></li>
-                    <li data-value="3"><a href="#" ng-click="setFileSpacing(3)">3</a></li>
-                    <li data-value="4"><a href="#" ng-click="setFileSpacing(4)">4</a></li>
-                    <li data-value="6"><a href="#" ng-click="setFileSpacing(6)">6</a></li>
+                    <li data-value="2"><a href="#" ng-click="setFileSpacing(2)">6/5</a></li>
+                    <li data-value="3"><a href="#" ng-click="setFileSpacing(3)">8/5</a></li>
                 </ul>
             </div>
-            <div class="btn-group" data-toggle="tooltip" data-placement="right" title="Rank Spacing">
-                <button id="setRankSpacing" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{$ctrl.rankSpacing}}</button>
-                <ul class="dropdown-menu spacing-dropdown list-inline">
-                    <li data-value="2"><a href="#" ng-click="setRankSpacing(2)">2</a></li>
-                    <li data-value="3"><a href="#" ng-click="setRankSpacing(3)">3</a></li>
-                    <li data-value="4"><a href="#" ng-click="setRankSpacing(4)">4</a></li>
-                    <li data-value="6"><a href="#" ng-click="setRankSpacing(6)">6</a></li>
-                </ul>
-            </div>
-            <button ng-click="cancel()" id="cancelMembers" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Cancel"><i class="fa fa-times fa-lg context-button"></i></button>
+            <div class="btn-group" data-toggle="tooltip" data-placement="right" title="File Spacing">
+                    <button id="setFileSpacing" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">FTL</button>
+                    <ul class="dropdown-menu spacing-dropdown list-inline" data-toggle="tooltip" data-placement="right" title="File Spacing">
+                        <li data-value="2"><a href="#" ng-click="setFileSpacing(2)">FTL</a></li>
+                        <li data-value="3"><a href="#" ng-click="setFileSpacing(3)">BLK</a></li>
+                    </ul>
+                </div>
+                <button ng-click="cancel()" id="cancelMembers" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Cancel"><i class="fa fa-times fa-lg"></i></button>
         </div>
 
     </div>

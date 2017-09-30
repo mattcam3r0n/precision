@@ -14,3 +14,7 @@
 .add-member-tool ul.dropdown-menu.direction-picker {
     min-width: 160px;
 }
+
+.add-member-tool .panel-body, .panel-heading {
+    padding: 0;
+}
