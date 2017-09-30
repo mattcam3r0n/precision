@@ -82,7 +82,7 @@ class SizableRect {
 
 function createSizingHandle(canvas) {
     var rect = new fabric.Rect({
-        left: FieldDimensions.goallineX - marcherOffsetX + 100,
+        left: FieldDimensions.fiftyYardlineX - marcherOffsetX + 100,
         top: FieldDimensions.farSidelineY - marcherOffsetY + 100,
         width: 15,
         height: 15,
@@ -99,6 +99,7 @@ function createSizingHandle(canvas) {
         moveCursor: 'nwse-resize'
       });
       canvas.add(rect);  
+      rect.bringToFront();
     return rect;
 }
 

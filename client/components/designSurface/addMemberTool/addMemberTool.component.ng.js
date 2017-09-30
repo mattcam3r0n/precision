@@ -152,7 +152,7 @@ angular.module('drillApp')
 
         ctrl.field.canvas.add(g);
         g.sendBackwards();
-        ctrl.sizableRect.rect.bringForward();
+        ctrl.sizableRect.rect.bringToFront();
         ctrl.field.canvas.renderAll();
         return g;
       }
