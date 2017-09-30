@@ -3,8 +3,8 @@
 }
 
 .design .btn-toolbar {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .design-help {
@@ -23,16 +23,4 @@
    z-index:99;
    width:100%;
  }
-
- /* for overlay */
-.test {
-    position: absolute;
-    left: 75%;
-    width: 100%;   
-    z-index: 2;
-}
-
-.test .side-bar {
-    width: 300px;
-}
 

@@ -1,8 +1,9 @@
 <div class="design">
 
     <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group" role="group">
-            <!-- <button id="selectionTool" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Select Members">
+        <div class="btn-group btn-group-sm" role="group">
+                <div class="btn">New Drill</div>
+                <!-- <button id="selectionTool" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Select Members">
                 <i class="fa fa-location-arrow fa-rotate-270"></i>&nbsp;Select</button> -->
             <button id="addMembersTool" ng-click="addMembers()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                 title="Add Members">
@@ -10,7 +11,7 @@
             <button id="drawPathTool" ng-click="drawPath()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Draw Path">
                 <i class="fa fa-pencil"></i>&nbsp;Draw</button>
         </div>
-        <div class="btn-group" role="group">
+        <div class="btn-group btn-group-sm" role="group">
             <button id="goToBeginning" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Go To Beginning">
                 <i class="fa fa-fast-backward"></i>
             </button>
@@ -24,7 +25,7 @@
                 <i class="fa fa-fast-forward"></i>
             </button>
         </div>
-        <div class="btn-group" role="group">
+        <div class="btn-group btn-group-sm" role="group">
             <button id="stepBackward" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Backward 1 Count">
                 <i class="fa fa-step-backward"></i>
             </button>
@@ -34,8 +35,8 @@
                 <i class="fa fa-step-forward"></i>
             </button>
         </div>
-        <div class="btn-group" role="group">
-            <div class="input-group" style="width: 115px;" data-toggle="tooltip" data-placement="bottom" title="Tempo">
+        <div class="btn-group btn-group-sm" role="group">
+            <div class="input-group input-group-sm" style="width: 100px;" data-toggle="tooltip" data-placement="bottom" title="Tempo">
                 <span class="input-group-btn">
                     <button id="tempoMinus" class="btn btn-default" type="button">-</button>
                 </span>
@@ -45,7 +46,7 @@
                 </span>
             </div>
         </div>
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group btn-group-sm pull-right" role="group">
             <div>{{cursorPosition}}</div>
             <button class="btn btn-default" ng-click="showHelp()"><i class="fa fa-question-circle fa-lg"></i></button>
         </div>

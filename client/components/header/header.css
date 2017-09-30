@@ -1,6 +1,14 @@
 #login-buttons {
-  padding: 10px 15px;
+  padding: 5px;
   line-height: 20px;
+}
+
+.navbar {
+  min-height: 0;
+}
+
+.navbar-brand {
+  padding: 5px;
 }
 
 .navbar-collapse.in {
@@ -11,9 +19,13 @@
   left: 0px!important;
 }
 
+.navbar-nav > li > a {
+  padding: 5px;
+}
+
 @media (min-width: 768px) {
   #login-buttons {
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
 }
