@@ -1,7 +1,7 @@
 {
     "steps": [
       { 
-        "element": "#addMembersTool",
+        "element": "#addMembers",
         "intro": "Click the <i>Add Members</i> button. <br><br> A block of new members will appear on the field."
       },
       {

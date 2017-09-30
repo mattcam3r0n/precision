@@ -1,8 +1,8 @@
 .design-tool {
     position: absolute;
     z-index: 2;
-    top: 5px;
-    left: 5px;
+    top: 10px;
+    left: 15px;
 }
 
 .design-tool .panel-body, .panel-heading {

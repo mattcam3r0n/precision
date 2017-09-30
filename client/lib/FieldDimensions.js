@@ -91,6 +91,14 @@ class FieldDimensions {
         return oneStepX_8to5;
     }
 
+    static get fiftyYardlineX() {
+        return this.goallineX + (10 * this.fiveYardsX);
+    }
+
+    static yardlineX(yardLine, relativeTo50) {
+
+    }
+
     static get fiveYardsX() {
         return fiveYardsX;
     }

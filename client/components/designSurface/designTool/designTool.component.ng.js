@@ -10,11 +10,14 @@ angular.module('drillApp')
     bindings: {
       field: '<'
     },
-    controller: function ($scope, $window) {
+    controller: function ($scope, $window, $rootScope) {
       var ctrl = this;
 
       ctrl.isActivated = true;
 
+      $scope.addMembers = function() {
+        $rootScope.$broadcast('activateAddMemberTool');        
+      }
     }
   });
 

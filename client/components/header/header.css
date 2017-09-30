@@ -23,6 +23,11 @@
   padding: 5px;
 }
 
+.brand-link {
+  /* font-size: 14pt;
+  font-weight: bold; */
+}
+
 @media (min-width: 768px) {
   #login-buttons {
     padding-top: 5px;

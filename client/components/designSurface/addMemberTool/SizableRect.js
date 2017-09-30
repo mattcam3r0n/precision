@@ -104,7 +104,7 @@ function createSizingHandle(canvas) {
 
 function createRect(canvas) {
     var rect = new fabric.Rect({
-      left: FieldDimensions.goallineX - marcherOffsetX,
+      left: FieldDimensions.fiftyYardlineX - marcherOffsetX,
       top: FieldDimensions.farSidelineY - marcherOffsetY,
       width: 100,
       height: 100,
