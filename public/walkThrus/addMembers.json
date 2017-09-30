@@ -5,7 +5,7 @@
         "intro": "Click the <i>Add Members</i> button. <br><br> A block of new members will appear on the field."
       },
       {
-        "intro": "Resize the box to change the size of the block.  <br><br> Drag the block to position it on the field."
+        "intro": "<br><img src='/walkThrus/resizeBlock.gif'/><br>Resize the block to change the number of members.  <br><br> Drag the block to position it on the field."
       },
       {
         "element": "#setMemberDirection",

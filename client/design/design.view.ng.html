@@ -2,12 +2,12 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group" role="group">
-            <button id="selectionTool" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Select Members">
-                <i class="fa fa-location-arrow fa-rotate-270"></i>&nbsp;Select</button>
+            <!-- <button id="selectionTool" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Select Members">
+                <i class="fa fa-location-arrow fa-rotate-270"></i>&nbsp;Select</button> -->
             <button id="addMembersTool" ng-click="addMembers()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                 title="Add Members">
                 <i class="fa fa-play fa-rotate-270"></i>&nbsp;Add</button>
-            <button id="drawPathTool" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Draw Path">
+            <button id="drawPathTool" ng-click="drawPath()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Draw Path">
                 <i class="fa fa-pencil"></i>&nbsp;Draw</button>
         </div>
         <div class="btn-group" role="group">
@@ -52,6 +52,23 @@
     </div>
     <div class="row">
         <div id="design-surface-col" class="col-md-12">
+
+<!-- <div class="test">
+    <div class="side-bar">
+            <div class="list-group">
+                    <a href="#" class="list-group-item active" draggable="true">I'm the Sidebar</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                  </div>
+    </div>
+</div>          -->
+
             <!-- <div id="test" style="position: absolute; left: 250px; top: 100px; width: 0px; height: 0px; z-index: -1; "></div> -->
             <design-surface drill="drill" ng-show="true"></design-surface>
         </div>

@@ -3,7 +3,7 @@
 import WalkThru from '/client/lib/walkThru/WalkThru';
 
 angular.module('drillApp')
-  .controller('DesignCtrl', function ($scope, $rootScope) {
+  .controller('DesignCtrl', function ($scope, $rootScope, $window) {
     $scope.viewName = 'Design';
 
     $scope.isHelpVisible = false;
@@ -80,6 +80,10 @@ angular.module('drillApp')
       // drill.members.push(...newMembers);
       // $rootScope.$broadcast('memberAdded', { newMembers });
       $rootScope.$broadcast('activateAddMemberTool');
+    };
+
+    $scope.drawPath = function() {
+      $window.alert('Not implemented yet!');
     };
 
     $scope.$on("$destroy", function(){
