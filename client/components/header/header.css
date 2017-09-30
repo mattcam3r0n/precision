@@ -34,3 +34,36 @@
     padding-bottom: 5px;
   }
 }
+
+/* login styling */
+.login-link-text {
+  font-size: 14px;
+  line-height: 20px;
+  padding: 5px;
+  color: rgb(157, 157, 157);
+}
+
+#login-buttons {
+  margin-right: 20px;
+  min-width: 150px;
+  text-align: center;
+}
+
+#login-buttons a {
+  text-decoration: none;  
+}
+
+.user-icon {
+  color: white;
+}
+
+#login-buttons a:hover {
+  color: white;
+}
+
+#login-dropdown-list.accounts-dialog {
+  margin-left: -100px;
+  margin-top: 30px;
+  width: 250px;
+  float: right;
+}
