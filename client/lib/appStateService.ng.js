@@ -2,7 +2,7 @@ import Drill from '/client/lib/drill/Drill';
 
 class appStateService {
     constructor($meteor, $rootScope) {
-
+        this.drill = null;
     }
 
     get currentDrill() {
@@ -10,7 +10,6 @@ class appStateService {
             this.drill = new Drill();
             this.drill.name = "New Drill";
         }
-
         return this.drill;
     }
 

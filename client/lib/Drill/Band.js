@@ -5,8 +5,8 @@ class Band {
         this.members = [];
     }
 
-    addMember(dir, x, y) {
-
+    addMembers(newMembers) {
+        this.members.push(...newMembers);
     }
 
 }

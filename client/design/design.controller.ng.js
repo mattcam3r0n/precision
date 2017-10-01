@@ -47,6 +47,10 @@ angular.module('drillApp')
       $window.alert('Not implemented yet!');
     };
 
+    $scope.$on('membersAdded', function(e, args){
+      $scope.drill.band.addMembers(args.members);
+    });
+
     $scope.$on("$destroy", function(){
       // clean up?
       console.log($scope.drill);

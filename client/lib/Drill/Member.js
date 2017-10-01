@@ -1,16 +1,16 @@
 import { Random } from 'meteor/random';
 
 class Member {
-    constructor(dir, x, y) {
+    constructor(dir, point) {
         this.id = Random.id();
         this.initialState = {
-            x: x,
-            y: y,
+            x: point.x,
+            y: point.y,
             direction: dir
         };
 		this.currentState = {
-			x: x,
-			y: y,
+			x: point.x,
+			y: point.y,
 			direction: dir,
 			count: 0
         };

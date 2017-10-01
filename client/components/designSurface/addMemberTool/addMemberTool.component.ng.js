@@ -5,6 +5,7 @@ import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
 import MarcherFactory from '../field/MarcherFactory';
 import SizableRect from './SizableRect';
+import Member from '/client/lib/drill/Member';
 
 angular.module('drillApp')
   .component('addMemberTool', {
@@ -40,7 +41,6 @@ angular.module('drillApp')
       $scope.setDirection = function (dir) {
         ctrl.direction = dir;
         updateMarchers(ctrl.sizableRect);
-        console.log(ctrl.direction);
       };
 
       $scope.setFileSpacing = function (s) {
@@ -58,7 +58,8 @@ angular.module('drillApp')
       };
 
       $scope.save = function () {
-        //TODO
+        $scope.$emit('membersAdded', { members: ctrl.members });
+        deactivate();
       }
 
       $scope.cancel = deactivate;
@@ -71,6 +72,7 @@ angular.module('drillApp')
         ctrl.field.canvas.selection = false;
 
         ctrl.marchers = [];
+        ctrl.members = [];
         ctrl.direction = Direction.E;
         ctrl.fileSpacing = 2;
         ctrl.rankSpacing = 2;
@@ -137,6 +139,7 @@ angular.module('drillApp')
           for (var j = 0; j < ranks; j++) {
             y = j * FieldDimensions.oneStepY_6to5 * ctrl.rankSpacing;
             var marcher = createMarcher(x, y, ctrl.direction);
+            ctrl.members.push(new Member(ctrl.direction, FieldDimensions.toStepPoint({ x, y })));
             ctrl.marchers.push(marcher);
           }
         }
@@ -179,6 +182,7 @@ angular.module('drillApp')
           ctrl.field.canvas.remove(m);
         }
         ctrl.field.canvas.remove(ctrl.group);
+        ctrl.members = [];
         ctrl.group = null;
       }
 
