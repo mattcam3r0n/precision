@@ -14,7 +14,7 @@ angular.module('drillApp')
       $scope.showSpinner = true;
 
       $timeout(function(){
-        ctrl.field = new Field(ctrl.drill);
+        ctrl.field = new Field(ctrl.drill, $scope);
         $scope.showSpinner = false;
       });
 

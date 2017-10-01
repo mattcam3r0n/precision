@@ -3,11 +3,13 @@ import FieldDimensions from '/client/lib/FieldDimensions';
 import FieldResizer from './FieldResizer';
 import YardLinePainter from './YardLinePainter';
 import MarcherFactory from './MarcherFactory';
+import PositionCalculator from '/client/lib/PositionCalculator';
 
 class Field {
 
-    constructor(drill) {
+    constructor(drill, $scope) {
         this.canvas = this.createCanvas();
+        this.$scope = $scope;
         this.positionIndicator = this.createPositionIndicator();
         
         this.drawField();
@@ -28,6 +30,22 @@ class Field {
 
     drawField() {
         YardLinePainter.paint(this.canvas);
+        this.drawFieldLogo();
+    }
+
+    drawFieldLogo() {
+        var scaleFactor = 0.075;
+        var self = this;
+        var img = fabric.Image.fromURL('/nammb-logo.png', function(oImg) {
+            oImg.scale(scaleFactor);
+            console.log(oImg);
+            oImg.selectable = false;
+            oImg.evented = false;
+            oImg.set('left', (FieldDimensions.width  / 2) - (oImg.width * scaleFactor / 2));
+            oImg.set('top', (FieldDimensions.height / 2) - (oImg.height * scaleFactor / 2));
+            oImg.set('opacity', .75);
+            self.canvas.add(oImg);
+        });
     }
 
     resize() {
@@ -46,6 +64,10 @@ class Field {
             self.positionIndicator.set('left', snappedPoint.x);
             self.positionIndicator.set('top', snappedPoint.y);
             canvas.renderAll();
+
+            //self.canvas.fire('positionIndicator', {});
+            var pos = PositionCalculator.getPositionDescription(snappedPoint);
+            self.$scope.$emit('positionIndicator', { position: pos });
         });
     }
 

@@ -144,6 +144,16 @@ class FieldDimensions {
         };
     }
 
+    // TODO: support 8/5
+    // convert field coordinates to step coordinates
+	static toStepPoint(point) { // from field point
+		return {
+			x: Math.floor(point.x / this.oneStepX_6to5),
+			y: Math.floor(point.y / this.oneStepY_6to5)
+		};
+	}
+
+
 }
 
 

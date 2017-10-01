@@ -7,6 +7,12 @@ angular.module('drillApp')
     $scope.viewName = 'Design';
 
     $scope.isHelpVisible = false;
+    $scope.currentPosition = "On the 50";
+
+    $rootScope.$on('positionIndicator', (evt, args) => {
+      $scope.currentPosition = args.position;
+      $scope.$apply();
+    });
 
     $scope.showHelp = function(){
       $scope.isHelpVisible = !$scope.isHelpVisible;
