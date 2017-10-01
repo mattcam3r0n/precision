@@ -38,15 +38,14 @@
   }
 }
 
-/* login styling */
-.login-link-text {
+/* .login-link-text {
   font-size: 14px;
   line-height: 20px;
   padding: 5px;
   color: rgb(157, 157, 157);
-}
+} */
 
-#login-buttons {
+/* #login-buttons {
   margin-right: 20px;
   min-width: 150px;
   text-align: center;
@@ -54,18 +53,44 @@
 
 #login-buttons a {
   text-decoration: none;  
-}
+} */
 
+/* login styling */
+/* override positioning of sign in popup */
+#login-buttons {
+  width: 200px;
+}
+.login-link-text {
+  font-size: 14px;
+  line-height: 20px;
+  padding: 5px;
+  color: rgb(157, 157, 157);
+}
+#login-buttons a {
+  font-weight: 500;
+  text-decoration: none;
+}
+#login-dropdown-list {
+  left: -80px
+}
 .user-icon {
   color: white;
+  margin-right: 10px;
 }
 
-#login-buttons a:hover {
+#login-buttons a.login-link-text:hover {
   color: white;
+}
+
+a.login-close-text {
+}
+
+.accounts-dialog a.login-close-text:hover {
+  color: black;
 }
 
 #login-dropdown-list.accounts-dialog {
-  margin-left: -100px;
+  margin-left: 0px;
   margin-top: 30px;
   width: 250px;
   float: right;
