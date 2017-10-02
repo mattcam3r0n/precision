@@ -9,14 +9,18 @@ class Field {
 
     constructor(drill, $scope) {
         this.canvas = this.createCanvas();
+        this.drill = drill;
         this.$scope = $scope;
         this.positionIndicator = this.createPositionIndicator();
         
+        this.marchers = {};
         this.drawField();
-        this.addMarchers(drill.members);
+        //this.addMarchers(drill.members);
         this.resize();
 
         this.wireUpEvents();
+
+        this.synchronizeMarchers();
     }
 
     createCanvas() {
@@ -47,6 +51,35 @@ class Field {
         });
     }
 
+    update() {
+        this.canvas.renderAll();
+    }
+
+    drillChanged() {
+        this.synchronizeMarchers();
+        this.update();
+    }
+
+    synchronizeMarchers() {
+        for (var id in this.marchers) {
+            let marcher = this.marchers[id];
+            if (!this.drill.band.members.includes(marcher.member)) {
+                this.destroyMarcher(marcher);
+            }
+        }
+        this.drill.band.members.forEach(member => {
+            if (!this.marchers[member.id]) {
+                let newMarcher = MarcherFactory.createMarcher(member.initialState);
+                this.marchers[member.id] = newMarcher;
+                this.canvas.add(newMarcher);    
+            }
+        });
+    }
+
+    destroyMarcher(marcher) {
+        this.canvas.remove(marcher);
+    }
+
     resize() {
         FieldResizer.resize(this.canvas);
     }
@@ -54,20 +87,24 @@ class Field {
     wireUpEvents() {
         var self = this;
         var canvas = this.canvas;
-        this.canvas.on('mouse:move', function(evt) {
-            var p = { x: evt.e.layerX, y: evt.e.layerY };
-            var snappedPoint = FieldDimensions.snapPoint(StrideType.SixToFive, self.adjustMousePoint(p));
-            
-            //console.log(snappedPoint);
 
-            self.positionIndicator.set('left', snappedPoint.x);
-            self.positionIndicator.set('top', snappedPoint.y);
-            canvas.renderAll();
+        this.canvas.on('mouse:move', this.onMouseMove.bind(self));
+    }
 
-            //self.canvas.fire('positionIndicator', {});
-            var pos = PositionCalculator.getPositionDescription(snappedPoint);
-            self.$scope.$emit('positionIndicator', { position: pos });
-        });
+    onMouseMove(evt) {
+        var self = this;
+        var p = { x: evt.e.layerX, y: evt.e.layerY };
+        var snappedPoint = FieldDimensions.snapPoint(StrideType.SixToFive, self.adjustMousePoint(p));
+        
+        //console.log(snappedPoint);
+
+        self.positionIndicator.set('left', snappedPoint.x);
+        self.positionIndicator.set('top', snappedPoint.y);
+        self.canvas.renderAll();
+
+        //self.canvas.fire('positionIndicator', {});
+        var pos = PositionCalculator.getPositionDescription(snappedPoint);
+        self.$scope.$emit('positionIndicator', { position: pos });
     }
 
     createPositionIndicator() {

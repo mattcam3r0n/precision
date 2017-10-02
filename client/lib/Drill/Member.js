@@ -1,17 +1,20 @@
 import { Random } from 'meteor/random';
 
 class Member {
-    constructor(dir, point) {
+    constructor(strideType, dir, point) {
+    
         this.id = Random.id();
         this.initialState = {
             x: point.x,
             y: point.y,
-            direction: dir
+            direction: dir,
+            strideType: strideType
         };
 		this.currentState = {
 			x: point.x,
 			y: point.y,
-			direction: dir,
+            direction: dir,
+            strideType: strideType,
 			count: 0
         };
         this.script = [];

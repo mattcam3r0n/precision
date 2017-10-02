@@ -1,8 +1,8 @@
 import StrideType from '/client/lib/StrideType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 
-var marcherOffsetX = FieldDimensions.marcherWidth / 2,
-    marcherOffsetY = FieldDimensions.marcherHeight / 2;
+var _marcherOffsetX = FieldDimensions.marcherWidth / 2,
+    _marcherOffsetY = FieldDimensions.marcherHeight / 2;
 
 // limit to min of 1 x 1
 var minWidth = FieldDimensions.marcherWidth + 10,
@@ -21,8 +21,8 @@ class SizableRect {
         this.rect.on('moving', evt => {
             // snap rect to step grid
             var p = FieldDimensions.snapPoint(StrideType.SixToFive, { x: this.rect.left, y: this.rect.top });
-            this.rect.set('left', p.x - marcherOffsetX);
-            this.rect.set('top', p.y - marcherOffsetY);
+            this.rect.set('left', p.x - this.marcherOffsetX);
+            this.rect.set('top', p.y - this.marcherOffsetY);
             this.rect.setCoords();
 
             // adjust handle position
@@ -56,6 +56,14 @@ class SizableRect {
 
     }
 
+    get marcherOffsetX() {
+        return FieldDimensions.marcherWidth / 2;
+    }
+
+    get marcherOffsetY() {
+        return FieldDimensions.marcherHeight / 2;
+    }
+
     get left() {
         return this.rect.left;
     }
@@ -82,8 +90,8 @@ class SizableRect {
 
 function createSizingHandle(canvas) {
     var rect = new fabric.Rect({
-        left: FieldDimensions.fiftyYardlineX - marcherOffsetX + 100,
-        top: FieldDimensions.farSidelineY - marcherOffsetY + 100,
+        left: FieldDimensions.fiftyYardlineX - _marcherOffsetX + 100,
+        top: FieldDimensions.farSidelineY - _marcherOffsetY + 100,
         width: 15,
         height: 15,
         fill: 'darkgray',
@@ -105,8 +113,8 @@ function createSizingHandle(canvas) {
 
 function createRect(canvas) {
     var rect = new fabric.Rect({
-      left: FieldDimensions.fiftyYardlineX - marcherOffsetX,
-      top: FieldDimensions.farSidelineY - marcherOffsetY,
+      left: FieldDimensions.fiftyYardlineX - _marcherOffsetX,
+      top: FieldDimensions.farSidelineY - _marcherOffsetY,
       width: 100,
       height: 100,
       fill: 'rgba(0,0,0,0)',

@@ -9,9 +9,10 @@ angular.module('drillApp')
     bindings: {
       drill: '<'
     },
-    controller: function ($scope, $window, $timeout) {
+    controller: function ($scope, $window, $timeout, $rootScope, appStateService) {
       var ctrl = this;
       $scope.showSpinner = true;
+      //$scope.drill = appStateService.currentDrill;
 
       $timeout(function(){
         ctrl.field = new Field(ctrl.drill, $scope);
@@ -20,6 +21,10 @@ angular.module('drillApp')
 
       angular.element($window).bind('resize', function () {
         ctrl.field.resize();
+      });
+
+      $scope.$on('drillChanged', function() {
+        ctrl.field.drillChanged();
       });
 
       $scope.$on('memberAdded', function(event, args) {

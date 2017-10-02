@@ -58,8 +58,11 @@ angular.module('drillApp')
       };
 
       $scope.save = function () {
+        updateMarchers(ctrl.sizableRect);
         $scope.$emit('membersAdded', { members: ctrl.members });
         deactivate();
+
+        console.log(ctrl.field.canvas.getObjects());
       }
 
       $scope.cancel = deactivate;
@@ -71,9 +74,8 @@ angular.module('drillApp')
         ctrl.isActivated = true;
         ctrl.field.canvas.selection = false;
 
-        ctrl.marchers = [];
-        ctrl.members = [];
         ctrl.direction = Direction.E;
+        ctrl.strideType = StrideType.SixToFive; //TODO: get from appState
         ctrl.fileSpacing = 2;
         ctrl.rankSpacing = 2;
 
@@ -131,17 +133,27 @@ angular.module('drillApp')
 
       function createMarcherGroup() {
         ctrl.marchers = [];
+        ctrl.members = [];
         var files = getFilesInRect(ctrl.sizableRect);
         var ranks = getRanksInRect(ctrl.sizableRect);
-        var x, y;
+        var x = 0, y = 0;
         for (var i = 0; i < files; i++) {
-          x = i * FieldDimensions.oneStepX_6to5 * ctrl.fileSpacing;
+          //x = i * FieldDimensions.oneStepX_6to5 * ctrl.fileSpacing;
           for (var j = 0; j < ranks; j++) {
-            y = j * FieldDimensions.oneStepY_6to5 * ctrl.rankSpacing;
-            var marcher = createMarcher(x, y, ctrl.direction);
-            ctrl.members.push(new Member(ctrl.direction, FieldDimensions.toStepPoint({ x, y })));
+            //y = j * FieldDimensions.oneStepY_6to5 * ctrl.rankSpacing;
+            var upperLeftOfRect = { x: ctrl.sizableRect.left + ctrl.sizableRect.marcherOffsetX, y: ctrl.sizableRect.top + ctrl.sizableRect.marcherOffsetY };
+            var upperLeftInSteps = FieldDimensions.toStepPoint(upperLeftOfRect, ctrl.strideType);
+            var stepPoint = { x: upperLeftInSteps.x + x, y: upperLeftInSteps.y + y };
+            var member = new Member(ctrl.strideType, ctrl.direction, stepPoint);
+            ctrl.members.push(member);
+
+            var marcher = createMarcher(ctrl.strideType, stepPoint.x, stepPoint.y, ctrl.direction);            
             ctrl.marchers.push(marcher);
+
+            y += ctrl.rankSpacing;
           }
+          x += ctrl.fileSpacing;
+          y = 0;
         }
 
         ctrl.files = files;
@@ -160,8 +172,9 @@ angular.module('drillApp')
         return g;
       }
 
-      function createMarcher(x, y, dir) {
+      function createMarcher(strideType, x, y, dir) {
         var marcher = MarcherFactory.createMarcher({
+          strideType: strideType,
           x: x,
           y: y,
           direction: dir

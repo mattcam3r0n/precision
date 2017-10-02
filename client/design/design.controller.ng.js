@@ -49,6 +49,7 @@ angular.module('drillApp')
 
     $scope.$on('membersAdded', function(e, args){
       $scope.drill.band.addMembers(args.members);
+      $rootScope.$broadcast('drillChanged');
     });
 
     $scope.$on("$destroy", function(){

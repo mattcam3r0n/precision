@@ -144,15 +144,38 @@ class FieldDimensions {
         };
     }
 
+    static getStepSize(strideType) {
+        if (strideType == StrideType.EightToFive) {
+            return {
+                x: this.oneStepX_8to5,
+                y: this.oneStepY_8to5
+            };
+        }
+
+        return {
+            x: this.oneStepX_6to5,
+            y: this.oneStepY_6to5
+        };
+    }
+
     // TODO: support 8/5
     // convert field coordinates to step coordinates
-	static toStepPoint(point) { // from field point
+    static toStepPoint(fieldPoint, strideType) { // from field point
+        var stepSize = this.getStepSize(strideType || StrideType.SixToFive);
 		return {
-			x: Math.floor(point.x / this.oneStepX_6to5),
-			y: Math.floor(point.y / this.oneStepY_6to5)
+			x: Math.floor(fieldPoint.x / stepSize.x),
+			y: Math.floor(fieldPoint.y / stepSize.y)
 		};
 	}
 
+    // convert stepPoint to field point
+    static toFieldPoint(stepPoint, strideType) {
+        var stepSize = this.getStepSize(strideType || StrideType.SixToFive);
+        return {
+            x: stepPoint.x * stepSize.x,
+            y: stepPoint.y * stepSize.y
+        };
+    }
 
 }
 
