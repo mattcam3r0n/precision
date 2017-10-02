@@ -38,9 +38,9 @@ class Field {
     }
 
     drawFieldLogo() {
-        var scaleFactor = 0.075;
+        var scaleFactor = .75;
         var self = this;
-        var img = fabric.Image.fromURL('/nammb-logo.png', function(oImg) {
+        var img = fabric.Image.fromURL('/field-logo.png', function(oImg) {
             oImg.scale(scaleFactor);
             oImg.selectable = false;
             oImg.evented = false;
