@@ -55,7 +55,7 @@ angular.module('drillApp')
     $scope.$on('membersAdded', function(e, args){
       var builder = new DrillBuilder($scope.drill);
       builder.addMembers(args.members);
-//      $scope.drill.band.addMembers(args.members);
+      appStateService.saveDrill();
       $rootScope.$broadcast('drillChanged');
     });
 
