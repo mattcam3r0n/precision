@@ -1,6 +1,7 @@
 'use strict'
 
 import WalkThru from '/client/lib/walkThru/WalkThru';
+import DrillBuilder from '/client/lib/drill/DrillBuilder';
 
 angular.module('drillApp')
   .controller('DesignCtrl', function ($scope, $rootScope, $window, appStateService) {
@@ -52,7 +53,9 @@ angular.module('drillApp')
     };
 
     $scope.$on('membersAdded', function(e, args){
-      $scope.drill.band.addMembers(args.members);
+      var builder = new DrillBuilder($scope.drill);
+      builder.addMembers(args.members);
+//      $scope.drill.band.addMembers(args.members);
       $rootScope.$broadcast('drillChanged');
     });
 

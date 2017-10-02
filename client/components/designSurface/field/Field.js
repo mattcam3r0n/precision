@@ -63,11 +63,11 @@ class Field {
     synchronizeMarchers() {
         for (var id in this.marchers) {
             let marcher = this.marchers[id];
-            if (!this.drill.band.members.includes(marcher.member)) {
+            if (!this.drill.members.includes(marcher.member)) {
                 this.destroyMarcher(marcher);
             }
         }
-        this.drill.band.members.forEach(member => {
+        this.drill.members.forEach(member => {
             if (!this.marchers[member.id]) {
                 let newMarcher = MarcherFactory.createMarcher(member.initialState);
                 newMarcher.member = member;

@@ -1,4 +1,4 @@
-import Drill from '/client/lib/drill/Drill';
+import DrillBuilder from '/client/lib/drill/DrillBuilder';
 
 class appStateService {
     constructor($meteor, $rootScope) {
@@ -7,8 +7,8 @@ class appStateService {
 
     get currentDrill() {
         if (!this.drill){
-            this.drill = new Drill();
-            this.drill.name = "New Drill";
+            var builder = new DrillBuilder();
+            this.drill = builder.createDrill();
         }
         return this.drill;
     }

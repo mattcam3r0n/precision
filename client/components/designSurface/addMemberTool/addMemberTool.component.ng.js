@@ -5,7 +5,7 @@ import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
 import MarcherFactory from '../field/MarcherFactory';
 import SizableRect from './SizableRect';
-import Member from '/client/lib/drill/Member';
+import DrillBuilder from '/client/lib/drill/DrillBuilder';
 
 angular.module('drillApp')
   .component('addMemberTool', {
@@ -16,6 +16,7 @@ angular.module('drillApp')
     controller: function ($scope, $window) {
       var ctrl = this;
       var toolDiv = angular.element('.add-member-tool')[0];
+      var builder = new DrillBuilder();
       var directionClass = {
         [Direction.N]: 'fa-caret-up',
         [Direction.E]: 'fa-caret-right',
@@ -136,13 +137,11 @@ angular.module('drillApp')
         var ranks = getRanksInRect(ctrl.sizableRect);
         var x = 0, y = 0;
         for (var i = 0; i < files; i++) {
-          //x = i * FieldDimensions.oneStepX_6to5 * ctrl.fileSpacing;
           for (var j = 0; j < ranks; j++) {
-            //y = j * FieldDimensions.oneStepY_6to5 * ctrl.rankSpacing;
             var upperLeftOfRect = { x: ctrl.sizableRect.left + ctrl.sizableRect.marcherOffsetX, y: ctrl.sizableRect.top + ctrl.sizableRect.marcherOffsetY };
             var upperLeftInSteps = FieldDimensions.toStepPoint(upperLeftOfRect, ctrl.strideType);
             var stepPoint = { x: upperLeftInSteps.x + x, y: upperLeftInSteps.y + y };
-            var member = new Member(ctrl.strideType, ctrl.direction, stepPoint);
+            var member = builder.createMember(ctrl.strideType, ctrl.direction, stepPoint);
             ctrl.members.push(member);
 
             var marcher = createMarcher(ctrl.strideType, stepPoint.x, stepPoint.y, ctrl.direction);            

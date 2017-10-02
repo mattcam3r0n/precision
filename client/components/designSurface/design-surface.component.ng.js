@@ -1,6 +1,5 @@
 'use strict';
 
-import Drill from '/client/lib/drill/Drill';
 import Field from './field/Field';
 
 angular.module('drillApp')
@@ -12,7 +11,6 @@ angular.module('drillApp')
     controller: function ($scope, $window, $timeout, $rootScope, appStateService) {
       var ctrl = this;
       $scope.showSpinner = true;
-      //$scope.drill = appStateService.currentDrill;
 
       $timeout(function(){
         ctrl.field = new Field(ctrl.drill, $scope);

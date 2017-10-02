@@ -25,12 +25,6 @@ drill
 
 compress script for storage but expand to arrays for use?
             
-d = new Drill();
-d.band.addMember(dir, x, y);
-d.band.members[0].addStep(stepType, dir)
-or
-d.band.members[0].addStep('gate', dir, dx, dy) // provie dir in degrees, dx, dy
-
 Communication between design view, field, etc
     * currently selected drill is stored... where? app state service?
     * current drill is bound to designSurface
