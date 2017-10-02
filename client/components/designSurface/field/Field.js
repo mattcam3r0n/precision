@@ -70,6 +70,7 @@ class Field {
         this.drill.band.members.forEach(member => {
             if (!this.marchers[member.id]) {
                 let newMarcher = MarcherFactory.createMarcher(member.initialState);
+                newMarcher.member = member;
                 this.marchers[member.id] = newMarcher;
                 this.canvas.add(newMarcher);    
             }
@@ -77,6 +78,7 @@ class Field {
     }
 
     destroyMarcher(marcher) {
+        console.log('destroyMarcher');
         this.canvas.remove(marcher);
     }
 

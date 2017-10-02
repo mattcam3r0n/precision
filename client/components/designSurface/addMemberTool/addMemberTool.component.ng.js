@@ -61,8 +61,6 @@ angular.module('drillApp')
         updateMarchers(ctrl.sizableRect);
         $scope.$emit('membersAdded', { members: ctrl.members });
         deactivate();
-
-        console.log(ctrl.field.canvas.getObjects());
       }
 
       $scope.cancel = deactivate;

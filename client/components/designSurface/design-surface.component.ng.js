@@ -24,6 +24,7 @@ angular.module('drillApp')
       });
 
       $scope.$on('drillChanged', function() {
+        console.log('drillChanged', ctrl.field.drill);
         ctrl.field.drillChanged();
       });
 
@@ -33,7 +34,6 @@ angular.module('drillApp')
 
       $scope.$on('designSurface:resize', function(){
         ctrl.field.resize();
-        console.log('resize');
       })
 
       $scope.$on("$destroy", function(){

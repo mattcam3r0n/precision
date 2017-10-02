@@ -39,6 +39,10 @@ angular.module('drillApp')
       }
     });
 
+    $scope.open = function() {
+      $rootScope.$broadcast('drillChanged');
+    };
+
     $scope.addMembers = function () {
       $rootScope.$broadcast('activateAddMemberTool');
     };
