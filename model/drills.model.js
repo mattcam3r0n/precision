@@ -5,7 +5,7 @@ Drills.allow({
     return userId;
   },
   update: function(userId, drill, fields, modifier) {
-    return userId;
+    return userId && drill.owner == userId;
   },
   remove: function(userId, drill) {
     return userId;

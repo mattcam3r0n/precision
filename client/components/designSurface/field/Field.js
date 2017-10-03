@@ -23,6 +23,12 @@ class Field {
         this.synchronizeMarchers();
     }
 
+    setDrill(drill) {
+        this.drill = drill;
+        this.synchronizeMarchers();
+        this.update();
+    }
+
     createCanvas() {
         return new fabric.Canvas('design-surface', {
             backgroundColor: 'green',
@@ -56,11 +62,14 @@ class Field {
     }
 
     drillChanged() {
+        console.log('drillChanged', this.drill);
         this.synchronizeMarchers();
         this.update();
     }
 
     synchronizeMarchers() {
+        if (!this.drill) return; 
+
         for (var id in this.marchers) {
             let marcher = this.marchers[id];
             if (!this.drill.members.includes(marcher.member)) {

@@ -17,12 +17,17 @@ angular.module('drillApp')
         $scope.showSpinner = false;
       });
 
+      ctrl.$onChanges = function(changes) {
+        // if the drill changed, update field
+        if (!ctrl.field) return;
+        ctrl.field.setDrill(ctrl.drill);        
+      }
+
       angular.element($window).bind('resize', function () {
         ctrl.field.resize();
       });
 
       $scope.$on('drillChanged', function() {
-        console.log('drillChanged', ctrl.field.drill);
         ctrl.field.drillChanged();
       });
 

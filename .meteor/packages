@@ -27,3 +27,5 @@ accounts-facebook
 accounts-google
 practicalmeteor:mocha
 http
+accounts-base
+angular-meteor-auth

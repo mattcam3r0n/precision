@@ -1,5 +1,6 @@
 angular.module('drillApp', [
   'angular-meteor',
+  'angular-meteor.auth',
   'ui.router',
   'ui.bootstrap',
   'angularUtils.directives.dirPagination',
@@ -7,7 +8,10 @@ angular.module('drillApp', [
 ]);
 
 onReady = function() {
-  angular.bootstrap(document, ['drillApp']);
+
+  var appInjector = angular.bootstrap(document, ['drillApp']);
+
+//  var appState = appInjector.get('appStateService');
 };
   
 if(Meteor.isCordova) {

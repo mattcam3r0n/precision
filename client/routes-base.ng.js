@@ -5,7 +5,8 @@ angular.module('drillApp')
 .config(function($urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
   $urlRouterProvider.otherwise('/');
-}).run(['$rootScope', '$state', function($rootScope, $state) {
+  $urlRouterProvider.deferIntercept();
+}).run(['$rootScope', '$state', '$urlRouter', 'appStateService', function($rootScope, $state, $urlRouter, appStateService) {
   $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
     switch(error) {
       case 'AUTH_REQUIRED':
@@ -14,5 +15,9 @@ angular.module('drillApp')
         $state.go('main');
         break;
     }
+  });
+  appStateService.init().then(() => {
+    $urlRouter.sync();
+    $urlRouter.listen();  
   });
 }]);

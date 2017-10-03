@@ -2,14 +2,29 @@
 
 import WalkThru from '/client/lib/walkThru/WalkThru';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
+import { Meteor } from 'meteor/meteor';
 
 angular.module('drillApp')
-  .controller('DesignCtrl', function ($scope, $rootScope, $window, appStateService) {
+  .controller('DesignCtrl', function ($scope, $rootScope, $window, $reactive, appStateService) {
+    $reactive(this).attach($scope);
     $scope.viewName = 'Design';
     $scope.isHelpVisible = false;
-    $scope.currentPosition = "On the 50";
+    $scope.currentPosition = "";
+
+    $scope.drillId = null;
     $scope.drill = appStateService.currentDrill;
 
+    $scope.subscribe('drills');
+
+    $scope.helpers({
+      numberOfDrills: function() {
+        return Counts.get('numberOfDrills');
+      },
+      currentCount: function () {
+        return 0;
+      }
+    });
+    
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {
       $scope.currentPosition = args.position;
@@ -34,14 +49,8 @@ angular.module('drillApp')
       wt.start('addMembers');
     }
 
-    $scope.helpers({
-      currentCount: function () {
-        return 0;
-      }
-    });
-
     $scope.open = function() {
-      $rootScope.$broadcast('drillChanged');
+      triggerDrillChanged();
     };
 
     $scope.addMembers = function () {
@@ -56,12 +65,16 @@ angular.module('drillApp')
       var builder = new DrillBuilder($scope.drill);
       builder.addMembers(args.members);
       appStateService.saveDrill();
-      $rootScope.$broadcast('drillChanged');
+      triggerDrillChanged();
     });
 
     $scope.$on("$destroy", function(){
       // clean up?
       console.log($scope.drill);
     });
+
+    function triggerDrillChanged() {
+      $rootScope.$broadcast('drillChanged');      
+    }
 
   });
