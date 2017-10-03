@@ -29,6 +29,7 @@ angular.module('drillApp')
 
     function keydown(e) {
       console.log('design window', e);      
+      e.preventDefault();
     }
 
     // update position indicator
