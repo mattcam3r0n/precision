@@ -24,12 +24,20 @@ angular.module('drillApp')
         return 0;
       }
     });
-    
+
+    $window.addEventListener('keydown', function(e) {
+      console.log('design window', e);
+    });
+  
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {
       $scope.currentPosition = args.position;
       $scope.$safeApply();
     });
+
+    $scope.keypress = function(e) {
+      console.log(e);
+    }
 
     // show help
     // TODO: Make this an overlay rather than resizing field
