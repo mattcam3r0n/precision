@@ -9,6 +9,7 @@ angular.module('drillApp', [
 .run(function($rootScope, $templateCache) {
   
     $rootScope.$safeApply = function(fn) {
+      if (!this.$root) return;
       var phase = this.$root.$$phase;
       if(phase == '$apply' || phase == '$digest') {
         if(fn && (typeof(fn) === 'function')) {
