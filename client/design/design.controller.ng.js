@@ -25,10 +25,12 @@ angular.module('drillApp')
       }
     });
 
-    $window.addEventListener('keydown', function(e) {
-      console.log('design window', e);
-    });
-  
+    $window.addEventListener('keydown', keydown);  
+
+    function keydown(e) {
+      console.log('design window', e);      
+    }
+
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {
       $scope.currentPosition = args.position;
@@ -77,6 +79,7 @@ angular.module('drillApp')
     });
 
     $scope.$on("$destroy", function(){
+      $window.removeEventListener('keydown', keydown);
       // clean up?
       console.log($scope.drill);
     });
