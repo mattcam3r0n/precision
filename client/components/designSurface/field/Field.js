@@ -12,7 +12,7 @@ class Field {
         this.drill = drill;
         this.$scope = $scope;
         this.positionIndicator = this.createPositionIndicator();
-        
+        this.positionIndicatorEnabled = true;
         this.marchers = {};
         this.drawField();
         //this.addMarchers(drill.members);
@@ -67,6 +67,14 @@ class Field {
         this.update();
     }
 
+    disablePositionIndicator() {
+        this.positionIndicatorEnabled = false;
+    }
+
+    enablePositionIndicator() {
+        this.positionIndicatorEnabled = true;
+    }
+
     synchronizeMarchers() {
         if (!this.drill) return; 
 
@@ -103,6 +111,8 @@ class Field {
     }
 
     onMouseMove(evt) {
+        if (!this.positionIndicatorEnabled) return; 
+
         var self = this;
         var p = { x: evt.e.layerX, y: evt.e.layerY };
         var snappedPoint = FieldDimensions.snapPoint(StrideType.SixToFive, self.adjustMousePoint(p));

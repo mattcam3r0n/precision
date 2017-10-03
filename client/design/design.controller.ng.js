@@ -28,7 +28,7 @@ angular.module('drillApp')
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {
       $scope.currentPosition = args.position;
-      $scope.$apply();
+      $scope.$safeApply();
     });
 
     // show help

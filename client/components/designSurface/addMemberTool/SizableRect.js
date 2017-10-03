@@ -80,6 +80,10 @@ class SizableRect {
         return this.rect.height;
     }
 
+    position() {
+        return { left: this.left + this.marcherOffsetX, top: this.top + this.marcherOffsetY };
+    }
+
     destroy() {
         this.field.canvas.remove(this.rect);
         this.field.canvas.remove(this.sizingHandle);

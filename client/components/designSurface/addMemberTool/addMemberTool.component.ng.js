@@ -6,6 +6,7 @@ import Direction from '/client/lib/Direction';
 import MarcherFactory from '../field/MarcherFactory';
 import SizableRect from './SizableRect';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
+import PositionCalculator from '/client/lib/PositionCalculator';
 
 angular.module('drillApp')
   .component('addMemberTool', {
@@ -84,6 +85,9 @@ angular.module('drillApp')
 
         positionTools(ctrl.sizableRect);
         updateLabels(ctrl.sizableRect);
+        updatePosition(ctrl.sizableRect);
+
+        ctrl.field.disablePositionIndicator();
 
         ctrl.field.canvas.on('sizableRect:sizing', r => {
           updateMarchers(r);
@@ -94,11 +98,13 @@ angular.module('drillApp')
           ctrl.group.left = r.left;
           ctrl.group.top = r.top;
           updateLabels(r);
+          updatePosition(r);
         });
       }
 
       function deactivate() {
         ctrl.isActivated = false;
+        ctrl.field.enablePositionIndicator();
         destroyMarcherGroup();
         destroySizableRect();
         destroyLabels();
@@ -235,6 +241,14 @@ angular.module('drillApp')
         ctrl.labels.totalLabel.set('left', rect.left + (rect.width / 2) - 10);
 
         ctrl.field.canvas.renderAll();
+      }
+
+      function updatePosition(rect) {
+        if (!ctrl.sizableRect) return; 
+
+        var upperLeft = ctrl.sizableRect.position();
+        var p = PositionCalculator.getPositionDescription({ x: upperLeft.left, y: upperLeft.top });
+        $scope.$emit('positionIndicator', { position: p }); 
       }
 
       function createLabels() {

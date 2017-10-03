@@ -45,10 +45,9 @@ var _yardlinePosition = {
 
 class PositionCalculator {
 
-    static getPositionDescription(point) {
-		var stepPoint = FieldDimensions.toStepPoint(point);
-
-		return getYardlinePosition(point, stepPoint) + ", " + getSidelinePosition(point, stepPoint) + " (" + stepPoint.x + ", " + stepPoint.y + ")";
+    static getPositionDescription(fieldPoint) {
+		var stepPoint = FieldDimensions.toStepPoint(fieldPoint);
+		return getYardlinePosition(fieldPoint, stepPoint) + ", " + getSidelinePosition(fieldPoint, stepPoint) + " (" + stepPoint.x + ", " + stepPoint.y + ")";
     }
     
 }

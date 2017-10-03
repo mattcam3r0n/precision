@@ -5,7 +5,21 @@ angular.module('drillApp', [
   'ui.bootstrap',
   'angularUtils.directives.dirPagination',
   'accounts.ui'
-]);
+])
+.run(function($rootScope, $templateCache) {
+  
+    $rootScope.$safeApply = function(fn) {
+      var phase = this.$root.$$phase;
+      if(phase == '$apply' || phase == '$digest') {
+        if(fn && (typeof(fn) === 'function')) {
+          fn();
+        }
+      } else {
+        this.$apply(fn);
+      }
+    };
+      
+});
 
 onReady = function() {
 
