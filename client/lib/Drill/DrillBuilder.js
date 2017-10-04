@@ -1,6 +1,7 @@
 import { Random } from 'meteor/random';
 import StepDelta from '/client/lib/StepDelta';
 import Direction from '/client/lib/Direction';
+import MemberFactory from '/client/lib/drill/MemberFactory';
 
 class DrillBuilder {
     constructor(drill) {
@@ -22,24 +23,7 @@ class DrillBuilder {
     }
 
     createMember(strideType, dir, point) {
-        var newMember = {};
-        newMember.id = Random.id();
-        newMember.initialState = {
-            x: point.x,
-            y: point.y,
-            direction: dir,
-            strideType: strideType
-        };
-		newMember.currentState = {
-			x: point.x,
-			y: point.y,
-            direction: dir,
-            strideType: strideType,
-			count: 0
-        };
-        newMember.script = [];
-        
-        return newMember;
+        return MemberFactory.createMember(strideType, dir, point);
     }
     
     addStep(member, strideType, stepType, direction, deltaX, deltaY) {
