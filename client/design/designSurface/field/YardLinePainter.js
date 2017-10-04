@@ -1,4 +1,3 @@
-import StepDelta from '/client/lib/StepDelta';
 import FieldDimensions from '/client/lib/FieldDimensions';
 
 class YardLinePainter {

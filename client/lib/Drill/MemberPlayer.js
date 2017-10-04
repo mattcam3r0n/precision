@@ -8,7 +8,13 @@ var deltaY = { 0: -1, 90: 0, 180: 1, 270: 0 };
 class MemberPlayer {
 
      static stepForward(member) {
-
+        member.currentState.count++;
+        if (this.isBeyondEndOfDrill(member)) return;
+        var scriptNode = member.script[member.currentState.count - 1];
+        member.currentState.strideType = scriptNode.strideType;
+        member.currentState.direction = scriptNode.direction;
+        member.currentState.x += scriptNode.deltaX;
+        member.currentState.y += scriptNode.deltaY;
      }
 
      static stepBackward(member) {

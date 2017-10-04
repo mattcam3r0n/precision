@@ -3,54 +3,91 @@ import StepType from '/client/lib/StepType';
 import Direction from '/client/lib/Direction';
 import FieldDimensions from '/client/lib/FieldDimensions';
 
-// in pixels. size of canvas. should be defined elsewhere.
-var fieldWidth = FieldDimensions.Width,
-    fieldHeight = FieldDimensions.Height;    
-
-var sixToFiveDeltaX = fieldWidth / FieldDimensions.widthInSteps(StrideType.SixToFive),
-    sixToFiveDeltaY = fieldHeight / FieldDimensions.heightInSteps(StrideType.SixToFive),
-    eightToFiveDeltaX = fieldWidth / FieldDimensions.widthInSteps(StrideType.EightToFive),
-    eightToFiveDeltaY = fieldHeight / FieldDimensions.heightInSteps(StrideType.EightToFive);
-
-var sixToFiveObliqueDeltaX = sixToFiveDeltaX * 6 / 8,
-    sixToFiveObliqueDeltaY = sixToFiveDeltaY * 6 / 8,
-    eightToFiveObliqueDeltaX = eightToFiveDeltaX * 8 / 12,
-    eightToFiveObliqueDeltaY = eightToFiveDeltaY * 8 / 12;
+var sixToFiveObliqueDelta = 6 / 8,
+    eightToFiveObliqueDelta = 8 / 12;
 
 const deltas = {
+        
     [StrideType.SixToFive]: {
         [StepType.Full]: {
             [Direction.N]: {
-                deltaX: 0, deltaY: -sixToFiveDeltaY
+                deltaX: 0, deltaY: -1
             },
             [Direction.E]: {
-                deltaX: sixToFiveDeltaX, deltaY: 0
+                deltaX: 1, deltaY: 0
             },
             [Direction.S]: {
-                deltaX: 0, deltaY: sixToFiveDeltaY
+                deltaX: 0, deltaY: 1
             },
             [Direction.W]: {
-                deltaX: -sixToFiveDeltaX, deltaY: 0
+                deltaX: -1, deltaY: 0
             },
             [Direction.NE]: {
-                deltaX: sixToFiveObliqueDeltaX, deltaY: -sixToFiveObliqueDeltaY
+                deltaX: sixToFiveObliqueDelta, deltaY: -sixToFiveObliqueDelta
             },
             [Direction.SE]: {
-                deltaX: sixToFiveObliqueDeltaX, deltaY: sixToFiveObliqueDeltaY
+                deltaX: sixToFiveObliqueDelta, deltaY: sixToFiveObliqueDelta
             },
             [Direction.SW]: {
-                deltaX: -sixToFiveObliqueDeltaX, deltaY: sixToFiveObliqueDeltaY
+                deltaX: -sixToFiveObliqueDelta, deltaY: sixToFiveObliqueDelta
             },
             [Direction.NW]: {
-                deltaX: -sixToFiveObliqueDeltaX, deltaY: -sixToFiveObliqueDeltaY
+                deltaX: -sixToFiveObliqueDelta, deltaY: -sixToFiveObliqueDelta
             }
         }
     },
 
-    getDelta(strideType, stepType, direction) {
-        // TODO: 8/5
-        return this[strideType][stepType][direction];
-    }
+    [StrideType.EightToFive]: {
+        [StepType.Full]: {
+            [Direction.N]: {
+                deltaX: 0, deltaY: -1
+            },
+            [Direction.E]: {
+                deltaX: 1, deltaY: 0
+            },
+            [Direction.S]: {
+                deltaX: 0, deltaY: 1
+            },
+            [Direction.W]: {
+                deltaX: -1, deltaY: 0
+            },
+            [Direction.NE]: {
+                deltaX: eightToFiveObliqueDelta, deltaY: -eightToFiveObliqueDelta
+            },
+            [Direction.SE]: {
+                deltaX: eightToFiveObliqueDelta, deltaY: eightToFiveObliqueDelta
+            },
+            [Direction.SW]: {
+                deltaX: -eightToFiveObliqueDelta, deltaY: eightToFiveObliqueDelta
+            },
+            [Direction.NW]: {
+                deltaX: -eightToFiveObliqueDelta, deltaY: -eightToFiveObliqueDelta
+            }
+        }
+    },
+
 };
 
-export default deltas;
+class StepDelta {
+
+    static getDelta(strideType, stepType, direction) {
+        if (stepType === StepType.MarkTime || stepType === StepType.Stop) return 0;
+
+        var delta = deltas[strideType][stepType][direction];
+
+        if (stepType === StepType.Half)
+            return { x: delta.x / 2, y: delta.y / 2 };
+
+        return delta;
+    }
+
+    get sixToFiveObliqueDelta() {
+        return sixToFiveObliqueDelta;
+    }
+
+    get eightToFiveObliqueDelta() {
+        return eightToFiveObliqueDelta;
+    }
+}
+
+export default StepDelta;

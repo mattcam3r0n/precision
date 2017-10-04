@@ -2,6 +2,7 @@ import { Random } from 'meteor/random';
 import StepDelta from '/client/lib/StepDelta';
 import Direction from '/client/lib/Direction';
 import MemberFactory from '/client/lib/drill/MemberFactory';
+import StepFactory from '/client/lib/drill/StepFactory';
 
 class DrillBuilder {
     constructor(drill) {
@@ -31,16 +32,7 @@ class DrillBuilder {
     }
 
     createScriptNode(strideType, stepType, dir, dx, dy) {
-        var scriptNode = {};
-        //scriptNode.stepCount = 1; // always 1 for now
-        scriptNode.strideType = strideType;
-        scriptNode.stepType = stepType;
-        scriptNode.direction = dir;
-
-        var delta = StepDelta.getDelta(strideType, stepType, dir);
-        scriptNode.deltaX = dx || delta.deltaX;
-        scriptNode.deltaY = dy || delta.deltaY;
-        return scriptNode;
+        return StepFactory.createStep(strideType, stepType, dir, dx, dy);
     }
 }
 
