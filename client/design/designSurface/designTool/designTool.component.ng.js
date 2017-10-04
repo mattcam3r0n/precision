@@ -6,7 +6,7 @@ import Direction from '/client/lib/Direction';
 
 angular.module('drillApp')
   .component('designTool', {
-    templateUrl: 'client/components/designSurface/designTool/designTool.view.ng.html',
+    templateUrl: 'client/design/designSurface/designTool/designTool.view.ng.html',
     bindings: {
       field: '<'
     },

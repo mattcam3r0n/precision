@@ -4,7 +4,7 @@ import Field from './field/Field';
 
 angular.module('drillApp')
   .component('designSurface', {
-    templateUrl: 'client/components/designSurface/design-surface.view.ng.html',
+    templateUrl: 'client/design/designSurface/design-surface.view.ng.html',
     bindings: {
       drill: '<'
     },

@@ -10,7 +10,7 @@ import PositionCalculator from '/client/lib/PositionCalculator';
 
 angular.module('drillApp')
   .component('addMemberTool', {
-    templateUrl: 'client/components/designSurface/addMemberTool/addMemberTool.view.ng.html',
+    templateUrl: 'client/design/designSurface/addMemberTool/addMemberTool.view.ng.html',
     bindings: {
       field: '<'
     },
