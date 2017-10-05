@@ -7,7 +7,7 @@ var deltaY = { 0: -1, 90: 0, 180: 1, 270: 0 };
 
 class MemberPlayer {
 
-     static stepForward(member) {
+    static stepForward(member) {
         member.currentState.count++;
         if (this.isBeyondEndOfDrill(member)) return;
         var scriptNode = member.script[member.currentState.count - 1];
@@ -15,32 +15,42 @@ class MemberPlayer {
         member.currentState.direction = scriptNode.direction;
         member.currentState.x += scriptNode.deltaX;
         member.currentState.y += scriptNode.deltaY;
-     }
+    }
 
-     static stepBackward(member) {
+    static stepBackward(member) {
+        if (this.isBeginningOfDrill(member)) return;
+        if (this.isBeyondEndOfDrill(member)) {
+            member.currentState.count--;
+            return;
+        }
+        var scriptNode = member.script[member.currentState.count - 1];
+    
+        member.currentState.x -= scriptNode.deltaX;
+        member.currentState.y -= scriptNode.deltaY;
+        member.currentState.count--;
+        member.currentState.direction = member.currentState.count == 0 ? member.initialState.direction : member.script[member.currentState.count - 1].direction;
+    }
 
-     }
+    static isBeginningOfDrill(member) {
+        return member.currentState.count === 0;
+    }
 
-     static isBeginningOfDrill(member) {
+    static isEndOfDrill(member) {
+        return member.currentState.count >= member.script.length;
+    }
 
-     }
+    static isBeyondEndOfDrill(member) {
+        return member.currentState.count > member.script.length;        
+    }
 
-     static isEndOfDrill(member) {
-
-     }
-
-     static isBeyondEndOfDrill(member) {
-
-     }
-
-     getDeltaX(direction, stepType) {
+    getDeltaX(direction, stepType) {
         return deltaX[direction] * stepType;
     };
-    
+
     getDeltaY(direction, stepType) {
         return deltaY[direction] * stepType;
     };
-         
+
 }
 
- export default MemberPlayer;
+export default MemberPlayer;

@@ -7,7 +7,7 @@ class StepFactory {
             strideType: strideType,
             stepType: stepType,
             direction: direction,
-            stepCount: 1, // always 1 for now
+            stepCount: 1, // always 1 for now. someday, might allow multiple steps per node.
             deltaX: deltaX || delta.deltaX,
             deltaY: deltaY || delta.deltaY
         };
