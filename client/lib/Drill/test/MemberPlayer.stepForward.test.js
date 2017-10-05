@@ -12,7 +12,6 @@ describe('MemberPlayer', function () {
     var member;
 
     beforeEach(function () {
-        console.log('beforeEach');
         member = MemberFactory.createMember(StrideType.SixToFive, Direction.E, { x: 0, y: 0 });
     });
 
@@ -60,6 +59,25 @@ describe('MemberPlayer', function () {
             // assumes we're starting from 0,0
             expect(member.currentState.x).to.equal(-1);
             expect(member.currentState.y).to.equal(0);
+        })
+
+        it('stepping beyond script end increments count but not position', function(){
+            var step = StepFactory.createStep(StrideType.SixToFive, StepType.Full, Direction.W);
+            member.script.push(step);
+
+            MemberPlayer.stepForward(member);
+
+            expect(member.currentState.x).to.equal(-1);
+            expect(member.currentState.y).to.equal(0);
+
+            MemberPlayer.stepForward(member);
+            
+            // count should be at 2
+            expect(member.currentState.count).to.equal(2);
+            // but position should still be the same as after first step
+            expect(member.currentState.x).to.equal(-1);
+            expect(member.currentState.y).to.equal(0);
+
         })
 
     })

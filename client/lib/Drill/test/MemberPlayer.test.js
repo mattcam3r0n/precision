@@ -12,9 +12,20 @@ describe('MemberPlayer', function () {
     var member;
 
     beforeEach(function () {
-        console.log('beforeEach');
         member = MemberFactory.createMember(StrideType.SixToFive, Direction.E, { x: 0, y: 0 });
     });
+
+    describe('goToBeginning', function() {
+        it('should return to initial state', function() {
+            var step = StepFactory.createStep(StrideType.SixToFive, StepType.Full, Direction.S);
+            member.script.push(step);
+            MemberPlayer.stepForward(member);
+            MemberPlayer.goToBeginning(member);
+            expect(member.currentState.x).to.equal(member.initialState.x);
+            expect(member.currentState.y).to.equal(member.initialState.y);   
+            expect(member.currentState.direction).to.equal(member.initialState.direction); 
+        })
+    })
 
     describe('isBeginningOfDrill', function() {
         beforeEach(function() {

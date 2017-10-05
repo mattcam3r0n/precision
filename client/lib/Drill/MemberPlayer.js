@@ -43,14 +43,12 @@ class MemberPlayer {
         return member.currentState.count > member.script.length;        
     }
 
-    getDeltaX(direction, stepType) {
-        return deltaX[direction] * stepType;
-    };
-
-    getDeltaY(direction, stepType) {
-        return deltaY[direction] * stepType;
-    };
-
+    static goToBeginning(member) {
+        member.currentState.count = 0;
+        member.currentState.direction = member.initialState.direction;
+        member.currentState.x = member.initialState.x;
+        member.currentState.y = member.initialState.y;            
+    }
 }
 
 export default MemberPlayer;

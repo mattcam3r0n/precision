@@ -12,7 +12,6 @@ describe('MemberPlayer', function () {
     var member;
 
     beforeEach(function () {
-        console.log('beforeEach');
         member = MemberFactory.createMember(StrideType.SixToFive, Direction.E, { x: 0, y: 0 });
     });
 
@@ -42,7 +41,7 @@ describe('MemberPlayer', function () {
             expect(member.currentState.y).to.equal(0);
         })
 
-        it('should stepBackward one full step S', function () {
+        it('rewind one full step S', function () {
             var step = StepFactory.createStep(StrideType.SixToFive, StepType.Full, Direction.S);
             member.script.push(step);
 
@@ -54,7 +53,7 @@ describe('MemberPlayer', function () {
             expect(member.currentState.y).to.equal(0);
         })
 
-        it('should stepBackward one full step W', function () {
+        it('rewind one full step W', function () {
             var step = StepFactory.createStep(StrideType.SixToFive, StepType.Full, Direction.W);
             member.script.push(step);
 
@@ -66,6 +65,20 @@ describe('MemberPlayer', function () {
             expect(member.currentState.y).to.equal(0);
         })
 
+        it('should not rewind beyond beginning', function () {
+            var step = StepFactory.createStep(StrideType.SixToFive, StepType.Full, Direction.N);
+            member.script.push(step);
+            
+            MemberPlayer.stepForward(member);
+            MemberPlayer.stepBackward(member);
+            MemberPlayer.stepBackward(member); // try stepping back too far
+            
+            // assumes we're starting from 0,0, end up back at 0,0
+            expect(member.currentState.x).to.equal(member.initialState.x);
+            expect(member.currentState.y).to.equal(member.initialState.y);
+            expect(member.currentState.direction).to.equal(member.initialState.direction);
+        })
+        
     })
 
     /**
