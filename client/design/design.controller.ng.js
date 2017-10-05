@@ -28,8 +28,13 @@ angular.module('drillApp')
     $window.addEventListener('keydown', keydown);  
 
     function keydown(e) {
-      console.log('design window', e);      
-      e.preventDefault();
+      //console.log('design window', e.target, e);
+      // prevent default when BODY is source, to 
+      // prevent movement of body/document in browser
+      // when arrow keys are pressed
+      // TODO: limit to body + arrow keys?
+      if(e.target.tagName == 'BODY')      
+        e.preventDefault();
     }
 
     // update position indicator
