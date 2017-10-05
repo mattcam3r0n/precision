@@ -8,10 +8,12 @@ class appStateService {
     }
 
     init() {
-        // return a promise
-        return this.$meteor.subscribe('drills').then(() => {
-            // console.log('drills ready', arguments);
-        });
+        // TODO: do I need this subscription here?
+        //return a promise
+        // return this.$meteor.subscribe('drills').then(() => {
+        //     console.log('drills ready', arguments);
+        // });
+        return Promise.resolve();
     }
 
     get currentDrill() {

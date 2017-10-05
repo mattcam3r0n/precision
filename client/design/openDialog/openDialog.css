@@ -1,0 +1,20 @@
+.drill-img {
+    padding: 5px;
+}
+
+.drill-desc {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.drill-title {
+    margin: 0;
+}
+
+.open-dialog .list-group-item {
+    padding: 5px;
+}
+
+.open-dialog .pagination {
+    display: block;
+}

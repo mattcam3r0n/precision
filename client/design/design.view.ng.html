@@ -7,7 +7,7 @@
             <div class="input-group input-group-sm" style="width: 200px">
                 <input type="text" class="form-control" placeholder="Drill Name" ng-model="drill.name" />
                 <span class="input-group-btn">
-                        <button ng-click="open()" class="btn btn-default" type="button">
+                        <button ng-click="open()" class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal">
                                 <i class="fa fa-folder-open"></i>                               
                         </button>
                     </span>
@@ -84,6 +84,7 @@
 
             <!-- <div id="test" style="position: absolute; left: 250px; top: 100px; width: 0px; height: 0px; z-index: -1; "></div> -->
             <design-surface drill="drill" ng-show="true"></design-surface>
+            <open-dialog on-open="onOpen(drill)"></open-dialog>
         </div>
         <div class="col-md-1">
             <div class="design-help pull-right" ng-show="isHelpVisible">

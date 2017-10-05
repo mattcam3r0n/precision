@@ -6,15 +6,14 @@ import { Meteor } from 'meteor/meteor';
 
 angular.module('drillApp')
   .controller('DesignCtrl', function ($scope, $rootScope, $window, $reactive, appStateService) {
-    $reactive(this).attach($scope);
+
     $scope.viewName = 'Design';
     $scope.isHelpVisible = false;
     $scope.currentPosition = "";
-
-    $scope.drillId = null;
     $scope.drill = appStateService.currentDrill;
 
-    $scope.subscribe('drills');
+    // TODO: do i need this? seems to interfere with subscription in open dialog
+    //$scope.subscribe('drills');
 
     $scope.helpers({
       numberOfDrills: function() {
@@ -24,6 +23,11 @@ angular.module('drillApp')
         return 0;
       }
     });
+
+    $scope.onOpen = function(drill) {
+      $scope.drill = appStateService.currentDrill = drill;
+      triggerDrillChanged();
+    };
 
     $window.addEventListener('keydown', keydown);  
 
@@ -42,10 +46,6 @@ angular.module('drillApp')
       $scope.currentPosition = args.position;
       $scope.$safeApply();
     });
-
-    $scope.keypress = function(e) {
-      console.log(e);
-    }
 
     // show help
     // TODO: Make this an overlay rather than resizing field
