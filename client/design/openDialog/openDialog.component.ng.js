@@ -34,7 +34,6 @@ angular.module('drillApp')
       });
 
       $scope.open = function(drill) {
-        console.log('open', drill);
         ctrl.onOpen({ drill: drill });
       }
 
@@ -51,7 +50,6 @@ angular.module('drillApp')
       });
 
       ctrl.$onInit = function () {
-        console.log('opendialog init');
       }
 
       ctrl.$onDestroy = function () {

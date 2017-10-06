@@ -26,13 +26,11 @@ angular.module('drillApp')
 
     $scope.onOpen = function(drill) {
       $scope.drill = appStateService.currentDrill = drill;
-      triggerDrillChanged();
     };
 
     $window.addEventListener('keydown', keydown);  
 
     function keydown(e) {
-      //console.log('design window', e.target, e);
       // prevent default when BODY is source, to 
       // prevent movement of body/document in browser
       // when arrow keys are pressed
@@ -87,7 +85,6 @@ angular.module('drillApp')
     $scope.$on("$destroy", function(){
       $window.removeEventListener('keydown', keydown);
       // clean up?
-      console.log($scope.drill);
     });
 
     function triggerDrillChanged() {

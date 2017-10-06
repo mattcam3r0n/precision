@@ -9,6 +9,7 @@
 
 .drill-title {
     margin: 0;
+    cursor: pointer;
 }
 
 .open-dialog .list-group-item {
@@ -17,4 +18,9 @@
 
 .open-dialog .pagination {
     display: block;
+}
+
+.open-dialog .small-text {
+    font-style: italic;
+    font-size: 10pt;
 }

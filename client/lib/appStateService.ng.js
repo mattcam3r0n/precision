@@ -68,6 +68,12 @@ class appStateService {
 
     updateDrill() {
         var id = this.currentDrill._id;
+
+        this.currentDrill.updatedDate = new Date();
+        this.currentDrill.name_sort = this.currentDrill.name.toLowerCase();
+        this.currentDrill.userId = Meteor.userId();
+        this.currentDrill.owner = Meteor.user().emails[0].address;
+
         //delete this.currentDrill._id;
         var r = Drills.update({
             _id: id

@@ -15,7 +15,6 @@ class Field {
         this.positionIndicatorEnabled = true;
         this.marchers = {};
         this.drawField();
-        //this.addMarchers(drill.members);
         this.resize();
 
         this.wireUpEvents();
@@ -62,7 +61,6 @@ class Field {
     }
 
     drillChanged() {
-        console.log('drillChanged', this.drill);
         this.synchronizeMarchers();
         this.update();
     }
@@ -78,24 +76,23 @@ class Field {
     synchronizeMarchers() {
         if (!this.drill) return; 
 
+
         for (var id in this.marchers) {
             let marcher = this.marchers[id];
-            if (!this.drill.members.includes(marcher.member)) {
-                this.destroyMarcher(marcher);
-            }
+            this.destroyMarcher(marcher);
         }
+        this.marchers = {};
+        
         this.drill.members.forEach(member => {
-            if (!this.marchers[member.id]) {
-                let newMarcher = MarcherFactory.createMarcher(member.initialState);
-                newMarcher.member = member;
-                this.marchers[member.id] = newMarcher;
-                this.canvas.add(newMarcher);    
-            }
+            let newMarcher = MarcherFactory.createMarcher(member.initialState);
+            newMarcher.member = member;
+            this.marchers[member.id] = newMarcher;
+            this.canvas.add(newMarcher);    
         });
     }
 
     destroyMarcher(marcher) {
-        console.log('destroyMarcher');
+        marcher.member = null;
         this.canvas.remove(marcher);
     }
 
@@ -117,13 +114,10 @@ class Field {
         var p = { x: evt.e.layerX, y: evt.e.layerY };
         var snappedPoint = FieldDimensions.snapPoint(StrideType.SixToFive, self.adjustMousePoint(p));
         
-        //console.log(snappedPoint);
-
         self.positionIndicator.set('left', snappedPoint.x);
         self.positionIndicator.set('top', snappedPoint.y);
         self.canvas.renderAll();
 
-        //self.canvas.fire('positionIndicator', {});
         var pos = PositionCalculator.getPositionDescription(snappedPoint);
         self.$scope.$emit('positionIndicator', { position: pos });
     }
@@ -168,13 +162,6 @@ class Field {
         };
     }
 
-    // adjustMousePoint(point) {
-    //     var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
-    //     return {
-    //         x: (point.x * zoomFactor.x,
-    //         y: point.y * zoomFactor.y
-    //     };        
-    // }
 
     getAbsoluteCoords(object) {
         var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas

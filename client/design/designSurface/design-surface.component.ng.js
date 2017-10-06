@@ -20,7 +20,7 @@ angular.module('drillApp')
       ctrl.$onChanges = function(changes) {
         // if the drill changed, update field
         if (!ctrl.field) return;
-        ctrl.field.setDrill(ctrl.drill);        
+        ctrl.field.setDrill(ctrl.drill);
       }
 
       angular.element($window).bind('resize', function () {
