@@ -2,47 +2,78 @@
 
 import WalkThru from '/client/lib/walkThru/WalkThru';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
+import DrillPlayer from '/client/lib/drill/DrillPlayer';
+import DesignKeyboardHandler from './DesignKeyboardHandler';
+
 import { Meteor } from 'meteor/meteor';
 
 angular.module('drillApp')
   .controller('DesignCtrl', function ($scope, $rootScope, $window, $reactive, appStateService) {
 
     $scope.viewName = 'Design';
-    $scope.isHelpVisible = false;
-    $scope.currentPosition = "";
-    $scope.drill = appStateService.currentDrill;
+
+    var drillBuilder,
+        drillPlayer,
+        keyboardHandler;
+
+    init();
+
+    function init() {
+      openDrill(appStateService.currentDrill);  
+      $window.addEventListener('keydown', keydown);  
+    }
 
     // TODO: do i need this? seems to interfere with subscription in open dialog
     //$scope.subscribe('drills');
 
     $scope.helpers({
-      numberOfDrills: function() {
-        return Counts.get('numberOfDrills');
-      },
       currentCount: function () {
         return 0;
       }
     });
 
-    $scope.onOpen = function(drill) {
+    function openDrill(drill) {
       $scope.drill = appStateService.currentDrill = drill;
-    };
-
-    $window.addEventListener('keydown', keydown);  
-
-    function keydown(e) {
-      // prevent default when BODY is source, to 
-      // prevent movement of body/document in browser
-      // when arrow keys are pressed
-      // TODO: limit to body + arrow keys?
-      if(e.target.tagName == 'BODY')      
-        e.preventDefault();
+      drillBuilder = new DrillBuilder(drill);
+      drillPlayer = new DrillPlayer(drill);
+      keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer);
     }
 
+    function keydown(e) {
+      keyboardHandler.handle(e);
+    }
+
+    function triggerDrillChanged() {
+      $rootScope.$broadcast('drillChanged');      
+    }
+
+    $scope.onOpen = function(drill) {
+      openDrill(drill);
+    };
+    
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {
       $scope.currentPosition = args.position;
       $scope.$safeApply();
+    });
+
+    $scope.addMembers = function () {
+      $rootScope.$broadcast('activateAddMemberTool');
+    };
+
+    $scope.drawPath = function() {
+      $window.alert('Not implemented yet!');
+    };
+
+    $scope.$on('membersAdded', function(e, args){
+      drillBuilder.addMembers(args.members);
+      appStateService.saveDrill();
+      triggerDrillChanged();
+    });
+
+    $scope.$on("$destroy", function(){
+      $window.removeEventListener('keydown', keydown);
+      // clean up?
     });
 
     // show help
@@ -62,33 +93,5 @@ angular.module('drillApp')
       var wt = new WalkThru();
       wt.start('addMembers');
     }
-
-    $scope.open = function() {
-      triggerDrillChanged();
-    };
-
-    $scope.addMembers = function () {
-      $rootScope.$broadcast('activateAddMemberTool');
-    };
-
-    $scope.drawPath = function() {
-      $window.alert('Not implemented yet!');
-    };
-
-    $scope.$on('membersAdded', function(e, args){
-      var builder = new DrillBuilder($scope.drill);
-      builder.addMembers(args.members);
-      appStateService.saveDrill();
-      triggerDrillChanged();
-    });
-
-    $scope.$on("$destroy", function(){
-      $window.removeEventListener('keydown', keydown);
-      // clean up?
-    });
-
-    function triggerDrillChanged() {
-      $rootScope.$broadcast('drillChanged');      
-    }
-
+    
   });
