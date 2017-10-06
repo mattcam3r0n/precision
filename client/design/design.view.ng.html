@@ -1,27 +1,20 @@
 <div class="design">
-{{currentUser}}
-{{drill.name}}
-{{numberOfDrills}}
+    {{currentUser}} {{drill.name}} {{numberOfDrills}}
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group btn-group-sm" role="group">
             <div class="input-group input-group-sm" style="width: 200px">
-                <input type="text" class="form-control" placeholder="Drill Name" ng-model="drill.name" />
+                <input type="text" class="form-control" placeholder="Drill Name" ng-model="drill.name" title="Drill Name" />
                 <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal">
-                                <i class="fa fa-folder-open"></i>                               
+                        <button class="btn btn-default" type="button" title="Drill Settings">
+                                <i class="fa fa-cog"></i>                               
                         </button>
                     </span>
-                </div>
-            <!-- <button class="btn btn-default">My Snazzy New Drill</button>
-            <button id="openDrill" ng-click="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Draw Path">
-                    <i class="fa fa-folder-open"></i></button> -->
-            <!-- <button id="selectionTool" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Select Members">
-                <i class="fa fa-location-arrow fa-rotate-270"></i>&nbsp;Select</button> -->
-            <!-- <button id="addMembersTool" ng-click="addMembers()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
-                title="Add Members">
-                <i class="fa fa-play fa-rotate-270"></i>&nbsp;Add</button>
-            <button id="drawPathTool" ng-click="drawPath()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Draw Path">
-                <i class="fa fa-pencil"></i>&nbsp;Draw</button> -->
+                <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal" title="Open Drill">
+                                    <i class="fa fa-folder-open"></i>                               
+                            </button>
+                        </span>
+            </div>
         </div>
         <div class="btn-group btn-group-sm" role="group">
             <button id="goToBeginning" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Go To Beginning">
