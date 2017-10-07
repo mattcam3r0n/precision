@@ -7,6 +7,7 @@ class DrillPlayer {
     constructor(drill) {
         this.drill = drill;
         this.tempo = 120;
+        this.drill.count = this.drill.count || 0; // ensure there is a count
     }
 
     play() {
@@ -23,14 +24,12 @@ class DrillPlayer {
             MemberPlayer.stepForward(m);
         });
         this.drill.count++;
-        //this.triggerDrillStateChanged();    
     }
 
     stepBackward() {
         if (this.isBeginningOfDrill()) return;
         this.drill.members.forEach(m => MemberPlayer.stepBackward(m));
         this.drill.count--;
-        //this.triggerDrillStateChanged();
     }
 
     isBeginningOfDrill() {

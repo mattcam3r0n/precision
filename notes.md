@@ -37,3 +37,11 @@ Communication between design view, field, etc
         * marchers are created
         * added to field
         * references are set
+
+Field, Marcher, FieldController
+
+Marcher - fabricjs subclass that renders a marcher and handles/raises events
+
+Field - fabricjs subclass that renders field and handles/raises events
+
+FieldController - app class that controls canvas, field, marchers, etc. ?

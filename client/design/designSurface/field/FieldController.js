@@ -1,25 +1,41 @@
 import StrideType from '/client/lib/StrideType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import FieldResizer from './FieldResizer';
-import YardLinePainter from './YardLinePainter';
+import FieldPainter from './FieldPainter';
 import MarcherFactory from './MarcherFactory';
 import PositionCalculator from '/client/lib/PositionCalculator';
+import Marcher from './Marcher';
 
-class Field {
+class FieldController {
 
     constructor(drill, $scope) {
-        this.canvas = this.createCanvas();
         this.drill = drill;
+        this.canvas = this.createCanvas();
         this.$scope = $scope;
+        this.marchers = {};
+        
+        this.draw();
+        this.resize();
+        this.wireUpEvents();
+        this.synchronizeMarchers();
+
         this.positionIndicator = this.createPositionIndicator();
         this.positionIndicatorEnabled = true;
-        this.marchers = {};
-        this.drawField();
-        this.resize();
+        
+        this.test();
+    }
 
-        this.wireUpEvents();
-
-        this.synchronizeMarchers();
+    test() {
+        var m = new Marcher({
+            top: 100,
+            left: 100,
+            height: FieldDimensions.marcherHeight,
+            width: FieldDimensions.marcherWidth,
+            angle: 90
+        });
+        this.canvas.add(m);
+        //this.canvas.renderAll();
+        console.log(this.canvas);
     }
 
     setDrill(drill) {
@@ -37,31 +53,27 @@ class Field {
         });
     }
 
-    drawField() {
-        YardLinePainter.paint(this.canvas);
-        this.drawFieldLogo();
-    }
-
-    drawFieldLogo() {
-        var scaleFactor = .75;
-        var self = this;
-        var img = fabric.Image.fromURL('/field-logo.png', function(oImg) {
-            oImg.scale(scaleFactor);
-            oImg.selectable = false;
-            oImg.evented = false;
-            oImg.set('left', (FieldDimensions.width  / 2) - (oImg.width * scaleFactor / 2));
-            oImg.set('top', (FieldDimensions.height / 2) - (oImg.height * scaleFactor / 2));
-            oImg.set('opacity', .75);
-            self.canvas.add(oImg);
-        });
+    draw() {
+        FieldPainter.paint(this.canvas);        
     }
 
     update() {
         this.canvas.renderAll();
     }
 
-    drillChanged() {
+    /**
+     * members added or removed, so recreate marchers
+     */
+    membersChanged() {
         this.synchronizeMarchers();
+        this.update();
+    }
+
+    /**
+     * drill state has changed, update marcher positions
+     */
+    drillStateChanged() {
+        this.updateMarcherPositions();
         this.update();
     }
 
@@ -73,9 +85,21 @@ class Field {
         this.positionIndicatorEnabled = true;
     }
 
+    updateMarcherPositions() {
+        if (!this.drill || !this.marchers) return;
+
+        for (var id in this.marchers) {
+            let marcher = this.marchers[id];
+            let member = marcher.member;
+
+            var fieldPoint = FieldDimensions.toFieldPoint({ x: member.currentState.x, y: member.currentState.y }, member.currentState.strideType || StrideType.SixToFive);
+            marcher.set('left', fieldPoint.x);
+            marcher.set('top', fieldPoint.y);
+        }
+    }
+
     synchronizeMarchers() {
         if (!this.drill) return; 
-
 
         for (var id in this.marchers) {
             let marcher = this.marchers[id];
@@ -143,17 +167,6 @@ class Field {
         return rect;
     }
 
-    addMarchers(members) {
-        if (!members || members.length == 0)
-            return;
-
-        members.forEach(m => {
-            m.marcher = MarcherFactory.createMarcher(m.initialState);
-            m.marcher.member = m;
-            this.canvas.add(m.marcher);    
-        });       
-    }
-
     adjustMousePoint(point) {
         var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
         return {
@@ -184,4 +197,4 @@ class Field {
 }
 
 
-export default Field;
+export default FieldController;

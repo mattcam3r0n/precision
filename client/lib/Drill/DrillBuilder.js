@@ -27,8 +27,13 @@ class DrillBuilder {
         return MemberFactory.createMember(strideType, dir, point);
     }
     
-    addStep(member, strideType, stepType, direction, deltaX, deltaY) {
-        member.script.push(this.createScriptNode(ScriptNode(strideType, stepType, direction, deltaX, deltaY)));
+    addStep(members, strideType, stepType, direction, deltaX, deltaY) {
+        members = members || this.drill.members;
+
+        members.forEach(m => {
+            let step = StepFactory.createStep(strideType, stepType, direction);
+            m.script.push(step);
+        });
     }
 
     createScriptNode(strideType, stepType, dir, dx, dy) {

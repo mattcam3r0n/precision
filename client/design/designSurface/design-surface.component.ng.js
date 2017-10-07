@@ -1,6 +1,6 @@
 'use strict';
 
-import Field from './field/Field';
+import FieldController from './field/FieldController';
 
 angular.module('drillApp')
   .component('designSurface', {
@@ -13,7 +13,7 @@ angular.module('drillApp')
       $scope.showSpinner = true;
 
       $timeout(function(){
-        ctrl.field = new Field(ctrl.drill, $scope);
+        ctrl.field = new FieldController(ctrl.drill, $scope);
         $scope.showSpinner = false;
       });
 
@@ -27,12 +27,12 @@ angular.module('drillApp')
         ctrl.field.resize();
       });
 
-      $scope.$on('drillChanged', function() {
-        ctrl.field.drillChanged();
+      $scope.$on('design:drillStateChanged', function() {
+        ctrl.field.drillStateChanged();
       });
 
-      $scope.$on('memberAdded', function(event, args) {
-        ctrl.field.addMarchers(args.newMembers);
+      $scope.$on('design:membersAdded', function(event, args) {
+        ctrl.field.membersChanged(args.newMembers);
       });
 
       $scope.$on('designSurface:resize', function(){

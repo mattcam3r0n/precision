@@ -61,7 +61,7 @@ angular.module('drillApp')
 
       $scope.save = function () {
         updateMarchers(ctrl.sizableRect);
-        $scope.$emit('membersAdded', { members: ctrl.members });
+        $scope.$emit('addMembersTool:membersAdded', { members: ctrl.members });
         deactivate();
       }
 

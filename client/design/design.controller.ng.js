@@ -41,10 +41,15 @@ angular.module('drillApp')
 
     function keydown(e) {
       keyboardHandler.handle(e);
+      triggerDrillStateChanged();
     }
 
-    function triggerDrillChanged() {
-      $rootScope.$broadcast('drillChanged');      
+    function triggerDrillStateChanged() {
+      $scope.$broadcast('design:drillStateChanged');      
+    }
+
+    $scope.debug = function() {
+      console.log('drill', $scope.drill);
     }
 
     $scope.onOpen = function(drill) {
@@ -57,18 +62,11 @@ angular.module('drillApp')
       $scope.$safeApply();
     });
 
-    $scope.addMembers = function () {
-      $rootScope.$broadcast('activateAddMemberTool');
-    };
-
-    $scope.drawPath = function() {
-      $window.alert('Not implemented yet!');
-    };
-
-    $scope.$on('membersAdded', function(e, args){
+    $scope.$on('addMembersTool:membersAdded', function(e, args){
       drillBuilder.addMembers(args.members);
+      $scope.$broadcast('design:membersAdded', args);
       appStateService.saveDrill();
-      triggerDrillChanged();
+      triggerDrillStateChanged();
     });
 
     $scope.$on("$destroy", function(){

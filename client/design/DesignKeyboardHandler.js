@@ -1,3 +1,6 @@
+import StrideType from '/client/lib/StrideType';
+import Direction from '/client/lib/Direction';
+import StepType from '/client/lib/StepType';
 
 class DesignKeyboardHandler {
     constructor(drillBuilder, drillPlayer) {
@@ -8,19 +11,25 @@ class DesignKeyboardHandler {
     handlers = {
         "ArrowUp": (e) => {
             if (e.altKey) {
-                console.log('arrow up, alt key.  add step N');
+                this.drillBuilder.addStep(null, StrideType.SixToFive, StepType.Full, Direction.N);
+                this.drillPlayer.stepForward();
+                return;
             }
         },
 
         "ArrowDown": (e) => {
             if (e.altKey) {
-                console.log('arrow dn, alt key.  add step S');
+                this.drillBuilder.addStep(null, StrideType.SixToFive, StepType.Full, Direction.S);
+                this.drillPlayer.stepForward();
+                return;
             }
         },
 
         "ArrowLeft": (e) => {
             if (e.altKey) {
-                console.log('arrow left, alt key.  add step W');
+                this.drillBuilder.addStep(null, StrideType.SixToFive, StepType.Full, Direction.W);
+                this.drillPlayer.stepForward();
+                return;
             }
 
             this.drillPlayer.stepBackward();
@@ -28,7 +37,9 @@ class DesignKeyboardHandler {
 
         "ArrowRight": (e) => {
             if (e.altKey) {
-                console.log('arrow right, alt key.  add step E');
+                this.drillBuilder.addStep(null, StrideType.SixToFive, StepType.Full, Direction.E);
+                this.drillPlayer.stepForward();
+                return;
             }
 
             this.drillPlayer.stepForward();
