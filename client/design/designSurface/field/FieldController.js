@@ -95,6 +95,7 @@ class FieldController {
             var fieldPoint = FieldDimensions.toFieldPoint({ x: member.currentState.x, y: member.currentState.y }, member.currentState.strideType || StrideType.SixToFive);
             marcher.set('left', fieldPoint.x);
             marcher.set('top', fieldPoint.y);
+            marcher.set('angle', member.currentState.direction);
         }
     }
 
