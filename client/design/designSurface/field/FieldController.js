@@ -22,20 +22,6 @@ class FieldController {
         this.positionIndicator = this.createPositionIndicator();
         this.positionIndicatorEnabled = true;
         
-        this.test();
-    }
-
-    test() {
-        var m = new Marcher({
-            top: 100,
-            left: 100,
-            height: FieldDimensions.marcherHeight,
-            width: FieldDimensions.marcherWidth,
-            angle: 90
-        });
-        this.canvas.add(m);
-        //this.canvas.renderAll();
-        console.log(this.canvas);
     }
 
     setDrill(drill) {
