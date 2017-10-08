@@ -69,6 +69,14 @@ angular.module('drillApp')
       openDrill(drill);
     };
 
+    $scope.onPlay = function() {
+      drillPlayer.play(triggerDrillStateChanged);
+    }
+
+    $scope.onStop = function() {
+      drillPlayer.stop();
+    }
+
     $scope.onGoToBeginning = function() {
       drillPlayer.goToBeginning();
       triggerDrillStateChanged();
