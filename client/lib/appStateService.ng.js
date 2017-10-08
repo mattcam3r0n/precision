@@ -61,19 +61,34 @@ class appStateService {
     }
 
     insertDrill() {
+        this.currentDrill.createdDate = new Date();
+        this.currentDrill.updatedDate = new Date();
+        this.currentDrill.userId = Meteor.userId();
+        this.currentDrill.owner = getOwnerEmail(Meteor.user());
+        this.currentDrill.name_sort = this.currentDrill.name.toLowerCase();
         this.currentDrill.owner = Meteor.userId();
-        var id = Drills.insert(angular.copy(this.currentDrill));
-        this.currentDrill._id = id;
+        Drills.insert(angular.copy(this.currentDrill), (err, id) => {
+            if (err) {
+                console.log('unable to insert', err, this.currentDrill);
+                return;
+            }
+            this.currentDrill._id = id;
+        });
         this.setCurrentDrill();
     }
 
     updateDrill() {
         var id = this.currentDrill._id;
 
+        if (!id) {
+            console.log('Unable to update. No _id.');
+            return;
+        }
+
         this.currentDrill.updatedDate = new Date();
         this.currentDrill.name_sort = this.currentDrill.name.toLowerCase();
         this.currentDrill.userId = Meteor.userId();
-        this.currentDrill.owner = Meteor.user().emails[0].address;
+        this.currentDrill.owner = getOwnerEmail(Meteor.user());
 
         //delete this.currentDrill._id;
         var r = Drills.update({
@@ -106,6 +121,13 @@ class appStateService {
                 console.log('Unable to update user', err);
         });
     }
+}
+
+function getOwnerEmail(user) {
+    if (!user || !user.emails || user.emails.length == 0)
+      return 'unknown';
+    
+    return user.emails[0].address;
 }
 
 angular.module('drillApp')
