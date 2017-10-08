@@ -21,6 +21,7 @@ class DrillBuilder {
             this.drill.members = [];
 
         this.drill.members.push(...newMembers);
+        this.drill.isDirty = true;
     }
 
     createMember(strideType, dir, point) {
@@ -34,6 +35,7 @@ class DrillBuilder {
             let step = StepFactory.createStep(strideType, stepType, direction);
             m.script.push(step);
         });
+        this.drill.isDirty = true;
     }
 
     createScriptNode(strideType, stepType, dir, dx, dy) {

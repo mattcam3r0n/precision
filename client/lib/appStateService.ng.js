@@ -52,6 +52,7 @@ class appStateService {
 
     saveDrill() {
         var id = this.currentDrill._id;
+        this.currentDrill.isDirty = false;
         if (!id) {
             this.insertDrill();
         } else {

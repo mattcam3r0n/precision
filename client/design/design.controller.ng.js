@@ -8,13 +8,14 @@ import DesignKeyboardHandler from './DesignKeyboardHandler';
 import { Meteor } from 'meteor/meteor';
 
 angular.module('drillApp')
-  .controller('DesignCtrl', function ($scope, $rootScope, $window, $reactive, appStateService) {
+  .controller('DesignCtrl', function ($scope, $rootScope, $timeout, $window, $reactive, appStateService) {
 
     $scope.viewName = 'Design';
 
     var drillBuilder,
         drillPlayer,
-        keyboardHandler;
+        keyboardHandler,
+        saveTimeout;
 
     init();
 
@@ -42,10 +43,21 @@ angular.module('drillApp')
     function keydown(e) {
       keyboardHandler.handle(e);
       triggerDrillStateChanged();
+      save();
     }
 
     function triggerDrillStateChanged() {
       $scope.$broadcast('design:drillStateChanged');      
+    }
+
+    function save() {
+      if (!$scope.drill.isDirty) return;
+
+      if (saveTimeout) {
+        $timeout.cancel(saveTimeout)
+      }
+
+      saveTimeout = $timeout(() => appStateService.saveDrill(), 5000);
     }
 
     $scope.debug = function() {
@@ -65,7 +77,7 @@ angular.module('drillApp')
     $scope.$on('addMembersTool:membersAdded', function(e, args){
       drillBuilder.addMembers(args.members);
       $scope.$broadcast('design:membersAdded', args);
-      appStateService.saveDrill();
+      save();
       triggerDrillStateChanged();
     });
 
