@@ -156,12 +156,12 @@ class FieldController {
             height: 15,
             rx: 15,
             ry: 15,
-            fill: 'darkgray',
-            stroke: 'darkgray',
+            fill: 'yellow',
+            stroke: 'yellow',
             selectable: false,
             evented: false,
             strokeWidth: 1,
-            opacity: .75,
+            opacity: .5,
             originX: 'center',
             originY: 'center'
         });
