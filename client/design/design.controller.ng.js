@@ -38,6 +38,7 @@ angular.module('drillApp')
       drillBuilder = new DrillBuilder(drill);
       drillPlayer = new DrillPlayer(drill);
       keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer);
+      drillPlayer.goToBeginning();
     }
 
     function keydown(e) {
@@ -67,6 +68,16 @@ angular.module('drillApp')
     $scope.onOpen = function(drill) {
       openDrill(drill);
     };
+
+    $scope.onGoToBeginning = function() {
+      drillPlayer.goToBeginning();
+      triggerDrillStateChanged();
+    }
+
+    $scope.onGoToEnd = function() {
+      drillPlayer.goToEnd();
+      triggerDrillStateChanged();
+    }
     
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {

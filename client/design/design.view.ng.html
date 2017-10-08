@@ -21,7 +21,7 @@
                 </div>
         </div>
         <div class="btn-group btn-group-sm" role="group">
-            <button id="goToBeginning" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Go To Beginning">
+            <button id="goToBeginning" ng-click="onGoToBeginning()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Go To Beginning">
                 <i class="fa fa-fast-backward"></i>
             </button>
             <button id="play" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Play">
@@ -30,7 +30,7 @@
             <button id="stop" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Stop">
                 <i class="fa fa-stop"></i>
             </button>
-            <button id="goToEnd" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Go To End">
+            <button id="goToEnd" ng-click="onGoToEnd()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Go To End">
                 <i class="fa fa-fast-forward"></i>
             </button>
         </div>
@@ -62,22 +62,6 @@
     </div>
     <div class="row">
         <div id="design-surface-col" class="col-md-12">
-
-            <!-- <div class="test">
-    <div class="side-bar">
-            <div class="list-group">
-                    <a href="#" class="list-group-item active" draggable="true">I'm the Sidebar</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                  </div>
-    </div>
-</div>          -->
 
             <!-- <div id="test" style="position: absolute; left: 250px; top: 100px; width: 0px; height: 0px; z-index: -1; "></div> -->
             <design-surface drill="drill" ng-show="true"></design-surface>
