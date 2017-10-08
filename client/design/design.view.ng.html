@@ -35,12 +35,12 @@
             </button>
         </div>
         <div class="btn-group btn-group-sm" role="group">
-            <button id="stepBackward" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Backward 1 Count">
+            <button id="stepBackward" ng-click="onStepBackward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Backward 1 Count">
                 <i class="fa fa-step-backward"></i>
             </button>
             <button id="currentCount" class="btn btn-default btn-md" data-toggle="tooltip" data-placement="bottom" title="Current count"
-                style="width: 40px;">{{currentCount}}</button>
-            <button id="stepForward" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Forward 1 Count">
+                style="width: 40px;">{{drill.count}}</button>
+            <button id="stepForward" ng-click="onStepForward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Forward 1 Count">
                 <i class="fa fa-step-forward"></i>
             </button>
         </div>

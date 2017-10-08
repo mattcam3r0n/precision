@@ -27,12 +27,6 @@ angular.module('drillApp')
     // TODO: do i need this? seems to interfere with subscription in open dialog
     //$scope.subscribe('drills');
 
-    $scope.helpers({
-      currentCount: function () {
-        return 0;
-      }
-    });
-
     function openDrill(drill) {
       $scope.drill = appStateService.currentDrill = drill;
       drillBuilder = new DrillBuilder(drill);
@@ -49,6 +43,7 @@ angular.module('drillApp')
 
     function triggerDrillStateChanged() {
       $scope.$broadcast('design:drillStateChanged');      
+      $scope.$safeApply();
     }
 
     function save() {
@@ -86,7 +81,17 @@ angular.module('drillApp')
       drillPlayer.goToEnd();
       triggerDrillStateChanged();
     }
+
+    $scope.onStepBackward = function() {
+      drillPlayer.stepBackward();
+      triggerDrillStateChanged();
+    }
     
+    $scope.onStepForward = function() {
+      drillPlayer.stepForward();
+      triggerDrillStateChanged();      
+    }
+
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {
       $scope.currentPosition = args.position;
