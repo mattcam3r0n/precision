@@ -96,6 +96,7 @@ class FieldController {
             marcher.set('left', fieldPoint.x);
             marcher.set('top', fieldPoint.y);
             marcher.set('angle', member.currentState.direction);
+            marcher.setCoords();
         }
     }
 
