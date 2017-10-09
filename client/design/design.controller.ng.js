@@ -42,7 +42,7 @@ angular.module('drillApp')
     }
 
     function triggerDrillStateChanged() {
-      $scope.$broadcast('design:drillStateChanged');      
+      $scope.$broadcast('design:drillStateChanged');
       $scope.$safeApply();
     }
 
@@ -91,6 +91,23 @@ angular.module('drillApp')
       drillPlayer.stepForward();
       triggerDrillStateChanged();      
     }
+
+    // handle selection event
+    $scope.$on('membersSelected', (evt, args) => {
+      console.log('membersSelected', args);
+      drillBuilder.select(args.members);
+      triggerDrillStateChanged();
+    });
+
+    $scope.$on('designTool:deselectAll', (evt, args) => {
+      drillBuilder.deselectAll();
+      triggerDrillStateChanged();
+    });
+
+    $scope.$on('designTool:selectAll', (evt, args) => {
+      drillBuilder.selectAll();
+      triggerDrillStateChanged();
+    });
 
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {

@@ -25,7 +25,7 @@ angular.module('drillApp')
         [Direction.W]: 'fa-caret-left'
       };
 
-      $scope.$on('activateAddMemberTool', function () {
+      $scope.$on('designTool:activateAddMemberTool', function () {
         activate();
       });
 

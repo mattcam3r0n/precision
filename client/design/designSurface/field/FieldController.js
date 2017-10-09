@@ -59,7 +59,7 @@ class FieldController {
      * drill state has changed, update marcher positions
      */
     drillStateChanged() {
-        this.updateMarcherPositions();
+        this.updateMarchers();
         this.update();
     }
 
@@ -71,7 +71,7 @@ class FieldController {
         this.positionIndicatorEnabled = true;
     }
 
-    updateMarcherPositions() {
+    updateMarchers() {
         if (!this.drill || !this.marchers) return;
 
         for (var id in this.marchers) {
@@ -79,9 +79,14 @@ class FieldController {
             let member = marcher.member;
 
             var fieldPoint = FieldDimensions.toFieldPoint({ x: member.currentState.x, y: member.currentState.y }, member.currentState.strideType || StrideType.SixToFive);
+
+            // set position and direction
             marcher.set('left', fieldPoint.x);
             marcher.set('top', fieldPoint.y);
             marcher.set('angle', member.currentState.direction);
+            // set selection 
+            marcher.set('stroke', member.isSelected ? 'yellow' : 'black');
+            
             marcher.setCoords();
         }
     }
@@ -117,10 +122,49 @@ class FieldController {
         var canvas = this.canvas;
 
         this.canvas.on('mouse:move', this.onMouseMove.bind(self));
+
+        this.canvas.on('selection:created', this.onSelectionCreated.bind(self));
+
+        //this.canvas.on('selection:cleared', this.onSelectionCleared.bind(self));
+
+        this.canvas.on('object:selected', this.onObjectSelected.bind(self));
     }
+
+    onSelectionCreated(evt) {
+        evt.target.set({
+            lockRotation: true,
+            hasControls: false
+        });
+        var marchers = this.canvas.getActiveGroup().getObjects();
+        var members = marchers.map(marcher => marcher.member);
+        
+        this.canvas.discardActiveGroup(); // import to call this BEFORE emitting event, causes strange effect on position
+
+        this.$scope.$emit('membersSelected', { members: members, marchers: marchers });
+       
+        // console.log(marchers);
+    }
+
+    onObjectSelected(evt) {
+        // ignore if triggered by group selection
+        if (!this.canvas.getActiveObject()) return;
+
+        var member = evt.target.member;
+        this.canvas.discardActiveObject();
+        this.$scope.$emit('membersSelected', { members: [member] });
+    }
+
+    // onSelectionCleared(evt) {
+    //     console.log('selection cleared');
+    // }
 
     onMouseMove(evt) {
         if (!this.positionIndicatorEnabled) return; 
+
+        if (evt.target == null)
+            this.positionIndicator.set('visible', true);
+        else    
+            this.positionIndicator.set('visible', false);
 
         var self = this;
         var p = { x: evt.e.layerX, y: evt.e.layerY };

@@ -16,7 +16,15 @@ angular.module('drillApp')
       ctrl.isActivated = true;
 
       $scope.addMembers = function() {
-        $rootScope.$broadcast('activateAddMemberTool');        
+        $rootScope.$broadcast('designTool:activateAddMemberTool');        
+      }
+
+      $scope.deselectAll = function() {
+        $rootScope.$broadcast('designTool:deselectAll');
+      }
+
+      $scope.selectAll = function() {
+        $rootScope.$broadcast('designTool:selectAll');
       }
     }
   });

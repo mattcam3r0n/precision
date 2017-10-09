@@ -41,6 +41,30 @@ class DrillBuilder {
     createScriptNode(strideType, stepType, dir, dx, dy) {
         return StepFactory.createStep(strideType, stepType, dir, dx, dy);
     }
+
+    select(members) {
+        if (!members) return;
+        
+        members.forEach(m => {
+            m.isSelected = !m.isSelected;
+        });
+    }
+
+    selectAll() {
+        if (!this.drill || !this.drill.members) return;
+
+        this.drill.members.forEach(m => {
+            m.isSelected = true;
+        });
+    }
+
+    deselectAll() {
+        if (!this.drill || !this.drill.members) return;
+
+        this.drill.members.forEach(m => {
+            m.isSelected = false;
+        });
+    }
 }
 
 export default DrillBuilder;

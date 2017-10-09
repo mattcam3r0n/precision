@@ -10,3 +10,26 @@
 }
 
 
+.select-all i:nth-child(1){
+    color: lightgray;    
+    font-size: 34px;
+    top: -3px;
+    left: 1px;
+}
+
+.select-all i:nth-child(2){
+    color: yellow;    
+}
+
+.select-all i:nth-child(3){
+    color: red;    
+    left: -2px;
+    font-size: 18px;
+}
+
+.deselect-all i:nth-child(2){
+    color: red;
+    left: -2px;
+    font-size: 18px;
+}
+

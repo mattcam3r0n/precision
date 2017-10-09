@@ -18,16 +18,25 @@ var Marcher = fabric.util.createClass(fabric.Triangle, {
 
     initialize: function(options) {
       this.callSuper('initialize', options);
+      
       this.on('mouseover', function() {
         this.set('height', this.height + 4);
         this.set('width', this.width + 4);
         this.set('strokeWidth', 2);
       });
+
       this.on('mouseout', function() {
         this.set('height', this.height - 4);
         this.set('width', this.width - 4);          
         this.set('strokeWidth', 1);
-      })
+      });
+
+      // this.on('selected', function() {
+      //   this.set('stroke', 'yellow');
+      // });
+      // this.on('deselected', function() {
+      //   this.set('stroke', 'black');
+      // });
     },
 
     _render: function(ctx) {

@@ -21,7 +21,19 @@
                         <li data-value="3"><a href="#" ng-click="setFileSpacing(3)">BLK</a></li>
                     </ul>
                 </div>
-                <button ng-click="cancel()" id="cancelMembers" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Cancel"><i class="fa fa-times fa-lg"></i></button>
+                <button ng-click="selectAll()" class="btn btn-default select-all" title="Select All">
+                    <span class="fa-stack" >
+                        <i class="fa fa-play fa-stack-2x" ></i>
+                        <i class="fa fa-play fa-stack-2x" ></i>
+                        <i class="fa fa-play fa-stack-1x" ></i>
+                      </span>                    
+                </button>
+                <button ng-click="deselectAll()" class="btn btn-default deselect-all" title="Deselect All">
+                    <span class="fa-stack" >
+                        <i class="fa fa-play fa-stack-2x" ></i>
+                        <i class="fa fa-play fa-stack-1x"></i>
+                    </span>                    
+                </button>
         </div>
 
     </div>
