@@ -65,6 +65,10 @@ class DrillBuilder {
             m.isSelected = false;
         });
     }
+
+    getSelectedMembers() {
+        return this.drill.members.filter(m => m.isSelected);
+    }
 }
 
 export default DrillBuilder;

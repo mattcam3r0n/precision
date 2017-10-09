@@ -11,7 +11,8 @@ class DesignKeyboardHandler {
     handlers = {
         "ArrowUp": (e) => {
             if (e.altKey) {
-                this.drillBuilder.addStep(null, StrideType.SixToFive, StepType.Full, Direction.N);
+                let members = this.drillBuilder.getSelectedMembers();
+                this.drillBuilder.addStep(members, StrideType.SixToFive, StepType.Full, Direction.N);
                 this.drillPlayer.stepForward();
                 return;
             }
@@ -19,7 +20,8 @@ class DesignKeyboardHandler {
 
         "ArrowDown": (e) => {
             if (e.altKey) {
-                this.drillBuilder.addStep(null, StrideType.SixToFive, StepType.Full, Direction.S);
+                let members = this.drillBuilder.getSelectedMembers();
+                this.drillBuilder.addStep(members, StrideType.SixToFive, StepType.Full, Direction.S);
                 this.drillPlayer.stepForward();
                 return;
             }
@@ -27,7 +29,8 @@ class DesignKeyboardHandler {
 
         "ArrowLeft": (e) => {
             if (e.altKey) {
-                this.drillBuilder.addStep(null, StrideType.SixToFive, StepType.Full, Direction.W);
+                let members = this.drillBuilder.getSelectedMembers();
+                this.drillBuilder.addStep(members, StrideType.SixToFive, StepType.Full, Direction.W);
                 this.drillPlayer.stepForward();
                 return;
             }
@@ -37,7 +40,8 @@ class DesignKeyboardHandler {
 
         "ArrowRight": (e) => {
             if (e.altKey) {
-                this.drillBuilder.addStep(null, StrideType.SixToFive, StepType.Full, Direction.E);
+                let members = this.drillBuilder.getSelectedMembers();
+                this.drillBuilder.addStep(members, StrideType.SixToFive, StepType.Full, Direction.E);
                 this.drillPlayer.stepForward();
                 return;
             }

@@ -94,7 +94,6 @@ angular.module('drillApp')
 
     // handle selection event
     $scope.$on('membersSelected', (evt, args) => {
-      console.log('membersSelected', args);
       drillBuilder.select(args.members);
       triggerDrillStateChanged();
     });
