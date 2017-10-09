@@ -10,18 +10,45 @@
 }
 
 
-.select-all i:nth-child(1){
+/* .select-all i:nth-child(1){
     color: lightgray;    
     font-size: 34px;
     top: -3px;
     left: 1px;
+} */
+
+.select-all {
+    font-size: 10px;
 }
 
-.select-all i:nth-child(2){
+.select-all-background {
+    color: lightgray;    
+    font-size: 26px;
+    top: -3px;
+    left: -1px;
+}
+
+.select-all-outline {
     color: yellow;    
+    left: -1px;
+    top: -1px;
+    font-size: 22px;
 }
 
-.select-all i:nth-child(3){
+.deselect-all-outline {
+    color: black;
+    left: -1px;
+    top: -1px;
+    font-size: 22px;
+}
+
+.select-all-inner {
+    color: red;
+    left: -2px;
+    font-size: 14px;
+}
+
+/* .select-all i:nth-child(3){
     color: red;    
     left: -2px;
     font-size: 18px;
@@ -31,5 +58,5 @@
     color: red;
     left: -2px;
     font-size: 18px;
-}
+} */
 
