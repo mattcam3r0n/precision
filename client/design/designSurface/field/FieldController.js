@@ -160,8 +160,9 @@ class FieldController {
 
     onMouseMove(evt) {
         if (!this.positionIndicatorEnabled) return; 
-
-        if (evt.target == null)
+        
+        var isSelecting = !!this.canvas._groupSelector; // sneaky way of determinig if dragging selection box
+        if (evt.target == null && !isSelecting)
             this.positionIndicator.set('visible', true);
         else    
             this.positionIndicator.set('visible', false);

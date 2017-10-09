@@ -44,8 +44,8 @@ class DrillBuilder {
 
     select(members) {
         if (!members) return;
-        
         members.forEach(m => {
+            if (!m) return;
             m.isSelected = !m.isSelected;
         });
     }
