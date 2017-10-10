@@ -2,10 +2,10 @@ import { expect } from 'meteor/practicalmeteor:chai';
 
 import FileSelector from '/client/lib/drill/FileSelector';
 
-import StepFactory from '/client/lib/drill/StepFactory';
-import Direction from '/client/lib/Direction';
-import StrideType from '/client/lib/StrideType';
-import StepType from '/client/lib/StepType';
+// import StepFactory from '/client/lib/drill/StepFactory';
+// import Direction from '/client/lib/Direction';
+// import StrideType from '/client/lib/StrideType';
+// import StepType from '/client/lib/StepType';
 
 describe('FileSelector', function () {
 

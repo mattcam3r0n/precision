@@ -105,21 +105,21 @@ describe('MemberPositionCalculator', function () {
     //     })
     // })
 
-    // describe('stepBackward', function() {
-    //     beforeEach(function() {
-    //         var step = StepFactory.createStep(StrideType.SixToFive, StepType.Full, Direction.E);
-    //         member.script.push(step);
-    //         member.currentState.count = 1;
-    //         member.currentState.x = 1;
-    //     })
+    describe('stepBackward', function() {
+        beforeEach(function() {
+            var step = StepFactory.createStep(StrideType.SixToFive, StepType.Full, Direction.E);
+            member.script.push(step);
+            member.currentState.count = 1;
+            member.currentState.x = 1;
+        })
 
-    //     it('should step backward one step E', function() {
-    //         var pos = MemberPositionCalculator.stepBackward(member);
-    //         expect(member.currentState.x).to.equal(1); // should not change state
-    //         expect(member.currentState.count).to.equal(1); // should not change state
-    //         expect(pos.x).to.equal(member.initialState.x); 
-    //     })
-    // })
+        it('should step backward one step E', function() {
+            var pos = MemberPositionCalculator.stepBackward(member);
+            expect(member.currentState.x).to.equal(1); // should not change state
+            expect(member.currentState.count).to.equal(1); // should not change state
+            expect(pos.x).to.equal(member.initialState.x); 
+        })
+    })
     
     // describe('goToBeginning', function() {
     //     beforeEach(function() {

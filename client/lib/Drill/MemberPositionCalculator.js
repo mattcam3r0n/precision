@@ -11,23 +11,29 @@ class MemberPositionCalculator {
     static stepForward(member) {
         var position = Object.assign({}, member.currentState);
 
-        position.count = member.currentState.count++;
-        if (this.isBeyondEndOfDrill(member)) return;
-        var scriptNode = member.script[member.currentState.count - 1];
+        position.count++; // = member.currentState.count++;
+        
+        if (this.isBeyondEndOfDrill(member, position)) 
+            return position;
+
+        var scriptNode = member.script[position.count - 1];
         position.strideType = scriptNode.strideType;
         position.direction = scriptNode.direction;
         position.x += scriptNode.deltaX;
         position.y += scriptNode.deltaY;
+
         return position;
     }
 
     static stepBackward(member) {
         var position = Object.assign({}, member.currentState);
 
-        if (this.isBeginningOfDrill(member)) return;
-        if (this.isBeyondEndOfDrill(member)) {
+        if (this.isBeginningOfDrill(member, position)) 
+            return position;
+
+        if (this.isBeyondEndOfDrill(member, position)) {
             position.count--;
-            return;
+            return position;
         }
         var scriptNode = member.script[position.count - 1];
     
@@ -38,16 +44,16 @@ class MemberPositionCalculator {
         return position;
     }
 
-    static isBeginningOfDrill(member) {
-        return member.currentState.count === 0;
+    static isBeginningOfDrill(member, position) {
+        return position.count === 0;
     }
 
-    static isEndOfDrill(member) {
-        return member.currentState.count >= member.script.length;
+    static isEndOfDrill(member, position) {
+        return position.count >= member.script.length;
     }
 
-    static isBeyondEndOfDrill(member) {
-        return member.currentState.count > member.script.length;        
+    static isBeyondEndOfDrill(member, position) {
+        return position.count > member.script.length;        
     }
 
     static goToBeginning(member) {

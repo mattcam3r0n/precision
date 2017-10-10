@@ -45,3 +45,8 @@ Marcher - fabricjs subclass that renders a marcher and handles/raises events
 Field - fabricjs subclass that renders field and handles/raises events
 
 FieldController - app class that controls canvas, field, marchers, etc. ?
+
+File Finder
+* create a [x][y] map of all selected members
+* create function that calculates x,y of all points around member
+* look in map for member at that point
