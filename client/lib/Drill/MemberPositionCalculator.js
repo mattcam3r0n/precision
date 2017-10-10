@@ -8,11 +8,11 @@ var deltaY = { 0: -1, 90: 0, 180: 1, 270: 0 };
 
 class MemberPositionCalculator {
 
-    static stepForward(member) {
-        var position = Object.assign({}, member.currentState);
+    static stepForward(member, position) {
+        var position = position || Object.assign({}, member.currentState);
 
-        position.count++; // = member.currentState.count++;
-        
+        position.count++; 
+
         if (this.isBeyondEndOfDrill(member, position)) 
             return position;
 
@@ -25,8 +25,8 @@ class MemberPositionCalculator {
         return position;
     }
 
-    static stepBackward(member) {
-        var position = Object.assign({}, member.currentState);
+    static stepBackward(member, position) {
+        var position = position || Object.assign({}, member.currentState);
 
         if (this.isBeginningOfDrill(member, position)) 
             return position;
@@ -65,6 +65,23 @@ class MemberPositionCalculator {
         position.y = member.initialState.y;
         
         return position;
+    }
+
+    static goToCount(member, goToCount, position) {
+        var position = position || Object.assign({}, member.currentState);
+
+        if (goToCount < member.currentState.count) {
+            while (goToCount < position.count) {
+                position = this.stepBackward(member, position);
+            }
+        } else {
+            while (goToCount > position.count) {
+                position = this.stepForward(member, position);
+            }
+        }
+
+        return position;
+
     }
 }
 
