@@ -24,7 +24,6 @@ angular.module('drillApp')
 
     function init() {
       $window.addEventListener('keydown', keydown);  
-      //openDrill(appStateService.currentDrill);  
       appStateService.getLastDrillId()
         .then(openDrill);
     }
@@ -45,13 +44,7 @@ angular.module('drillApp')
           triggerDrillStateChanged(); // to force repaint
         });
 
-      // $scope.drill = appStateService.currentDrill = drill;
-      // drillBuilder = new DrillBuilder(drill);
-      // drillPlayer = new DrillPlayer(drill);
-      // keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer);
-      // drillPlayer.goToBeginning();
-      // drillBuilder.deselectAll();
-    }
+      }
 
     function keydown(e) {
       keyboardHandler.handle(e);
