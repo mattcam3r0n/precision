@@ -33,6 +33,7 @@ angular.module('drillApp')
 
     function openDrill(drillId) {
 
+      //TODO: what if there is no last drillId?
       appStateService.getDrill(drillId)
         .then(drill => {
           $scope.drill = drill;
@@ -44,7 +45,7 @@ angular.module('drillApp')
           triggerDrillStateChanged(); // to force repaint
         });
 
-      }
+    }
 
     function keydown(e) {
       keyboardHandler.handle(e);
