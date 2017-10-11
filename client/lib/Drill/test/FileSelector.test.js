@@ -222,8 +222,7 @@ describe('FileSelector', function () {
             expect(positions).to.eql([{ x: 4, y: 6 },
                                       { x: 2, y: 6 },
                                       { x: 2, y: 4 },
-                                      { x: 0, y: 4 }
-                                    ]);
+                                      { x: 0, y: 4 }]);
         })
 
         it('file 0 should have 4 members', function() {
@@ -271,28 +270,28 @@ describe('FileSelector', function () {
         })
     })
 
-    describe('getFollower', function () {
+    describe('getFollowedBy', function () {
         it('member[3] at (6, 0) is followed by member[2] at (4, 0)', function () {
             var member = members[3];
-            var follower = fileSelector.getFollower(member);
+            var follower = fileSelector.getFollowedBy(member);
             expect({ x: follower.currentState.x, y: follower.currentState.y }).to.eql({ x: 4, y: 0 });
         })
 
         it('member[3] at (6, 0) is NOT followed by member[1] at (2, 0)', function () {
             var member = members[3];
-            var follower = fileSelector.getFollower(member);
+            var follower = fileSelector.getFollowedBy(member);
             expect({ x: follower.currentState.x, y: follower.currentState.y }).not.to.eql({ x: 2, y: 0 });
         })
 
         it('member[7] at (4, 4) is followed by member[6] at (4, 2)', function () {
             var member = members[7];
-            var follower = fileSelector.getFollower(member);
+            var follower = fileSelector.getFollowedBy(member);
             expect({ x: follower.currentState.x, y: follower.currentState.y }).to.eql({ x: 4, y: 2 });
         })
 
         it('member[10] at (2, 6) is followed by member[9] at (2, 4)', function () {
             var member = members[10];
-            var follower = fileSelector.getFollower(member);
+            var follower = fileSelector.getFollowedBy(member);
             expect({ x: follower.currentState.x, y: follower.currentState.y }).to.eql({ x: 2, y: 4 });
         })
     })
