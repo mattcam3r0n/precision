@@ -3,6 +3,7 @@ import StepDelta from '/client/lib/StepDelta';
 import Direction from '/client/lib/Direction';
 import MemberFactory from '/client/lib/drill/MemberFactory';
 import StepFactory from '/client/lib/drill/StepFactory';
+import FileSelector from './FileSelector';
 
 class DrillBuilder {
     constructor(drill) {
@@ -68,6 +69,15 @@ class DrillBuilder {
 
     getSelectedMembers() {
         return this.drill.members.filter(m => m.isSelected);
+    }
+
+    getFiles(members) {
+        var fileSelector = new FileSelector(members);
+        return fileSelector.findFiles();
+    }
+
+    getSelectedFiles() {
+        return this.getFiles(this.getSelectedMembers());
     }
 }
 

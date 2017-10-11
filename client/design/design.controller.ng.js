@@ -33,6 +33,7 @@ angular.module('drillApp')
       drillPlayer = new DrillPlayer(drill);
       keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer);
       drillPlayer.goToBeginning();
+      drillBuilder.deselectAll();
     }
 
     function keydown(e) {
@@ -96,6 +97,8 @@ angular.module('drillApp')
     $scope.$on('membersSelected', (evt, args) => {
       drillBuilder.select(args.members);
       triggerDrillStateChanged();
+
+      console.log(drillBuilder.getSelectedFiles());
     });
 
     $scope.$on('designTool:deselectAll', (evt, args) => {
