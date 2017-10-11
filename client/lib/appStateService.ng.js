@@ -13,29 +13,17 @@ class appStateService {
         // return this.$meteor.subscribe('drills').then(() => {
         //     console.log('drills ready', arguments);
         // });
+
+        // TODO: do i need this anymore? remove route delay?
         return Promise.resolve();
     }
 
     get currentDrill() {
-        if (!this.drill) {
-            this.drill = this.loadLastDrillOrNew();
-        }
-
         return this.drill;
     }
 
     set currentDrill(drill) {
         this.drill = drill;
-    }
-
-    loadLastDrillOrNew() {
-        var lastDrillId = this.getLastDrillId();
-        if (!lastDrillId){
-            var builder = new DrillBuilder();
-            return builder.createDrill();
-        }
-
-        return this.loadDrill(lastDrillId);
     }
 
     getLastDrillId() {        
@@ -46,8 +34,30 @@ class appStateService {
         return Meteor.callPromise('getDrill', id);
     }
 
-    loadDrill(drillId) {
-        return Drills.findOne({ _id: drillId });
+    openLastDrillOrNew() {
+        return this.getLastDrillId()
+            .then(drillId => {
+                console.log('openLastDrillOrNew', drillId);
+
+                if (!drillId) 
+                    return this.newDrill();
+
+                return this.openDrill(drillId);
+            });
+    }
+
+    openDrill(id) {
+        return this.getDrill(id)
+            .then(drill => {
+                this.currentDrill = drill;
+                return drill;
+            });
+    }
+
+    newDrill() {
+        var builder = new DrillBuilder();
+        this.currentDrill = builder.createDrill();
+        return this.currentDrill;   
     }
 
     saveDrill() {

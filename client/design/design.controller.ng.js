@@ -29,18 +29,17 @@ angular.module('drillApp')
         if (drillPlayer)
           drillPlayer.setTempo($scope.tempo);
       });
-      appStateService.getLastDrillId()
+      appStateService.openLastDrillOrNew()
         .then(openDrill);
     }
 
     // TODO: do i need this? seems to interfere with subscription in open dialog
     //$scope.subscribe('drills');
 
-    function openDrill(drillId) {
+    function openDrill(drill) {
 
-      //TODO: what if there is no last drillId?
-      appStateService.getDrill(drillId)
-        .then(drill => {
+      console.log(drill);
+      
           $scope.drill = drill;
           drillBuilder = new DrillBuilder(drill);
           drillPlayer = new DrillPlayer(drill);
@@ -48,7 +47,6 @@ angular.module('drillApp')
           drillPlayer.goToBeginning();
           drillBuilder.deselectAll();
           triggerDrillStateChanged(); // to force repaint
-        });
 
     }
 

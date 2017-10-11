@@ -28,6 +28,7 @@ angular.module('drillApp')
       });
 
       $scope.$on('design:drillStateChanged', function() {
+        if (!ctrl.field) return;
         ctrl.field.drillStateChanged();
       });
 
@@ -44,9 +45,11 @@ angular.module('drillApp')
       });
       
       ctrl.$onInit = function() {
+        console.log('design-surface oninit');
       }
 
       ctrl.$postLink = function() {
+        console.log('design-surface postlink');
       }
     }
   });
