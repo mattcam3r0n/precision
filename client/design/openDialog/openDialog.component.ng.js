@@ -37,6 +37,10 @@ angular.module('drillApp')
         ctrl.onOpen({ drill: drill });
       }
 
+      $scope.delete = function(drill) {
+        appStateService.deleteDrill(drill._id);
+      }
+
       $scope.pageChanged = function (newPage) {
         $scope.page = newPage;
       };

@@ -25,3 +25,8 @@
     font-style: italic;
     font-size: 10pt;
 }
+
+.open-dialog .delete-button {
+    color: red;
+    cursor: pointer;
+}

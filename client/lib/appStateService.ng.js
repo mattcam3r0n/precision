@@ -106,6 +106,11 @@ class appStateService {
         this.setCurrentDrill();
     }
 
+    deleteDrill(id) {
+        Drills.remove(id);
+    }
+
+
     setCurrentDrill() {
         if (!this.currentDrill._id)
             return;
