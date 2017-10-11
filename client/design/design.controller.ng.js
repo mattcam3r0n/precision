@@ -14,40 +14,38 @@ angular.module('drillApp')
     $reactive(ctrl).attach($scope);
     $scope.viewName = 'Design';
 
-    
+
     var drillBuilder,
-        drillPlayer,
-        keyboardHandler,
-        saveTimeout;
+      drillPlayer,
+      keyboardHandler,
+      saveTimeout;
 
     init();
 
     function init() {
       $scope.tempo = 120;
-      $window.addEventListener('keydown', keydown);  
-      $scope.$watch('tempo', function() {
+      $window.addEventListener('keydown', keydown);
+
+      $scope.$watch('tempo', function () {
         if (drillPlayer)
           drillPlayer.setTempo($scope.tempo);
       });
-      appStateService.openLastDrillOrNew()
+
+      $scope.$watch('currentUser', function(newValue, oldValue) {
+        if ($scope.currentUser === undefined) return;
+        appStateService.openLastDrillOrNew()
         .then(openDrill);
+      });
     }
 
-    // TODO: do i need this? seems to interfere with subscription in open dialog
-    //$scope.subscribe('drills');
-
     function openDrill(drill) {
-
-      console.log(drill);
-      
-          $scope.drill = drill;
-          drillBuilder = new DrillBuilder(drill);
-          drillPlayer = new DrillPlayer(drill);
-          keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer);
-          drillPlayer.goToBeginning();
-          drillBuilder.deselectAll();
-          triggerDrillStateChanged(); // to force repaint
-
+      $scope.drill = drill;
+      drillBuilder = new DrillBuilder(drill);
+      drillPlayer = new DrillPlayer(drill);
+      keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer);
+      drillPlayer.goToBeginning();
+      drillBuilder.deselectAll();
+      triggerDrillStateChanged(); // to force repaint
     }
 
     function keydown(e) {
@@ -71,40 +69,40 @@ angular.module('drillApp')
       saveTimeout = $timeout(() => appStateService.saveDrill(), 5000);
     }
 
-    $scope.debug = function() {
+    $scope.debug = function () {
       console.log('drill', $scope.drill);
     }
 
-    $scope.onOpen = function(drillId) {
+    $scope.onOpen = function (drillId) {
       openDrill(drillId);
     };
 
-    $scope.onPlay = function() {
+    $scope.onPlay = function () {
       drillPlayer.play(triggerDrillStateChanged);
     }
 
-    $scope.onStop = function() {
+    $scope.onStop = function () {
       drillPlayer.stop();
     }
 
-    $scope.onGoToBeginning = function() {
+    $scope.onGoToBeginning = function () {
       drillPlayer.goToBeginning();
       triggerDrillStateChanged();
     }
 
-    $scope.onGoToEnd = function() {
+    $scope.onGoToEnd = function () {
       drillPlayer.goToEnd();
       triggerDrillStateChanged();
     }
 
-    $scope.onStepBackward = function() {
+    $scope.onStepBackward = function () {
       drillPlayer.stepBackward();
       triggerDrillStateChanged();
     }
-    
-    $scope.onStepForward = function() {
+
+    $scope.onStepForward = function () {
       drillPlayer.stepForward();
-      triggerDrillStateChanged();      
+      triggerDrillStateChanged();
     }
 
     // handle selection event
@@ -131,34 +129,34 @@ angular.module('drillApp')
       $scope.$safeApply();
     });
 
-    $scope.$on('addMembersTool:membersAdded', function(e, args){
+    $scope.$on('addMembersTool:membersAdded', function (e, args) {
       drillBuilder.addMembers(args.members);
       $scope.$broadcast('design:membersAdded', args);
       save();
       triggerDrillStateChanged();
     });
 
-    $scope.$on("$destroy", function(){
+    $scope.$on("$destroy", function () {
       $window.removeEventListener('keydown', keydown);
       // clean up?
     });
 
     // show help
     // TODO: Make this an overlay rather than resizing field
-    $scope.showHelp = function(){
+    $scope.showHelp = function () {
       $scope.isHelpVisible = !$scope.isHelpVisible;
 
       var c = angular.element('#design-surface-col')
       c.removeClass($scope.isHelpVisible ? 'col-md-12' : 'col-md-11');
       c.addClass($scope.isHelpVisible ? 'col-md-11' : 'col-md-12');
-      $rootScope.$broadcast('designSurface:resize');      
+      $rootScope.$broadcast('designSurface:resize');
     }
 
     // show the "add members" walkthrough. make sure addMembers tool is displayed first.
-    $scope.showIntro = function() {
+    $scope.showIntro = function () {
       $scope.addMembers();
       var wt = new WalkThru();
       wt.start('addMembers');
     }
-    
+
   });

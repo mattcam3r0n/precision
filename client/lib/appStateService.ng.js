@@ -54,6 +54,10 @@ class appStateService {
             });
     }
 
+    closeDrill() {
+        this.newDrill();
+    }
+
     newDrill() {
         var builder = new DrillBuilder();
         this.currentDrill = builder.createDrill();
