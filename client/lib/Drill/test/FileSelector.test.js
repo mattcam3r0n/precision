@@ -152,18 +152,18 @@ describe('FileSelector', function () {
          *      s e
          */
         members = [
-            { currentState: { x: 0, y: 0, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } },
-            { currentState: { x: 2, y: 0, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } },
-            { currentState: { x: 4, y: 0, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } },
-            { currentState: { x: 6, y: 0, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } },
-            { currentState: { x: 0, y: 2, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } },
-            { currentState: { x: 2, y: 2, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } },
-            { currentState: { x: 4, y: 2, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } },
-            { currentState: { x: 4, y: 4, direction: Direction.S, count: 8, strideType: StrideType.SixToFive } },
-            { currentState: { x: 0, y: 4, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } },
-            { currentState: { x: 2, y: 4, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } },
-            { currentState: { x: 2, y: 6, direction: Direction.S, count: 8, strideType: StrideType.SixToFive } },
-            { currentState: { x: 4, y: 6, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } }
+            { id: 1 , currentState: { x: 0, y: 0, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
+            { id: 2 , currentState: { x: 2, y: 0, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
+            { id: 3 , currentState: { x: 4, y: 0, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
+            { id: 4 , currentState: { x: 6, y: 0, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
+            { id: 5 , currentState: { x: 0, y: 2, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
+            { id: 6 , currentState: { x: 2, y: 2, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
+            { id: 7 , currentState: { x: 4, y: 2, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
+            { id: 8 , currentState: { x: 4, y: 4, direction: Direction.S, count: 8, strideType: StrideType.SixToFive} },
+            { id: 9 , currentState: { x: 0, y: 4, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
+            { id: 10, currentState: { x: 2, y: 4, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } },
+            { id: 11, currentState: { x: 2, y: 6, direction: Direction.S, count: 8, strideType: StrideType.SixToFive } },
+            { id: 12, currentState: { x: 4, y: 6, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } }
         ];
 
 
@@ -296,5 +296,10 @@ describe('FileSelector', function () {
 
     })
 
-
+    describe('findFiles', function() {
+        it('should', function() {
+            let files = fileSelector.findFiles();
+            console.log(files);
+        })
+    })
 });

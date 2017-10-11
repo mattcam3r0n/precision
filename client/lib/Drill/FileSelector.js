@@ -1,4 +1,5 @@
 import FileMember from './FileMember';
+import File from './File';
 import StepDelta from '/client/lib/StepDelta';
 import StepType from '/client/lib/StepType';
 import Direction from '/client/lib/Direction';
@@ -10,7 +11,7 @@ var followingDirs = {
     [Direction.W]: [Direction.W, Direction.S, Direction.N]
 };
 
-var followerDirs = {
+var followedByDirs = {
     [Direction.N]: [Direction.S, Direction.E, Direction.W],
     [Direction.E]: [Direction.W, Direction.S, Direction.N],
     [Direction.S]: [Direction.N, Direction.E, Direction.W],
@@ -25,16 +26,34 @@ class FileSelector {
     }
 
     findFiles() {
-        // loop thru band
+        var fileMembers = {};
+
+        // build FileMember for each member, and a map of them
         this.members.forEach(m => {
             var fm = new FileMember(m);
-            // look for leader, and look for follower, assign to current state
-            fm.following = this.getFollowing(m);
-            fm.followedBy = this.getFollowedBy(m);
-            // if leader, add to leader collection		
-            if (!m.currentState.following)
-                this.leaders.push(m);
+            fileMembers[m.id] = fm;
         });
+
+        // wire up folowers
+        this.members.forEach(m => {
+            let fm = fileMembers[m.id];
+            let following = this.getFollowing(m);
+            let followedBy = this.getFollowedBy(m);
+            fm.following = following ? fileMembers[following.id] : null;
+            fm.followedBy = followedBy ? fileMembers[followedBy.id] : null;
+
+            // if leader, add to leader collection		
+            if (!fm.following)
+                this.leaders.push(fm);
+        });
+
+        // build files
+        var files = [];
+        this.leaders.forEach(l => {
+            let file = new File(l);
+            files.push(file);
+        });
+
         return files;
     }
 
@@ -53,17 +72,17 @@ class FileSelector {
         return null;
     }
 
-    getFollower(m) {
-        var dirsToCheck = followerDirs[m.currentState.direction];
+    getFollowedBy(m) {
+        var dirsToCheck = followedByDirs[m.currentState.direction];
 
         for (var i = 0; i < dirsToCheck.length; i++) {
             let dir = dirsToCheck[i];
             let pos = this.getRelativePosition(m.currentState, dir, 2);
-            let follower = this.positionMap.getMemberAtPosition(pos.x, pos.y);
-            
-            // see if (potential) follower is following m
-            if (follower && this.getFollowing(follower) == m) {
-                return follower;
+            let followedBy = this.positionMap.getMemberAtPosition(pos.x, pos.y);
+
+            // see if (potential) followedBy is following m
+            if (followedBy && this.getFollowing(followedBy) == m) {
+                return followedBy;
             }
         }
 
