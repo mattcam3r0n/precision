@@ -22,6 +22,10 @@ class DrillPlayer {
         this.drill.count = this.drill.count || 0; // ensure there is a count
     }
 
+    setTempo(tempo) {
+        this.tempo = tempo;
+    }
+    
     play(stateChangedCallback) {
         this.stateChangedCallback = stateChangedCallback;
         this.animationHandle = requestAnimationFrame(this.animate.bind(this));

@@ -47,11 +47,11 @@
         <div class="btn-group btn-group-sm" role="group">
             <div class="input-group input-group-sm" style="width: 100px;" data-toggle="tooltip" data-placement="bottom" title="Tempo">
                 <span class="input-group-btn">
-                    <button id="tempoMinus" class="btn btn-default" type="button">-</button>
+                    <button id="tempoMinus" ng-click="tempo = tempo - 1" class="btn btn-default" type="button">-</button>
                 </span>
-                <input id="tempo" type="text" class="form-control" aria-label="Tempo" value="120">
+                <input id="tempo" type="text" class="form-control" aria-label="Tempo" ng-model="tempo">
                 <span class="input-group-btn">
-                    <button id="tempoPlus" class="btn btn-default" type="button">+</button>
+                    <button id="tempoPlus" ng-click="tempo = tempo + 1" class="btn btn-default" type="button">+</button>
                 </span>
             </div>
         </div>
@@ -62,7 +62,6 @@
     </div>
     <div class="row">
         <div id="design-surface-col" class="col-md-12">
-
             <!-- <div id="test" style="position: absolute; left: 250px; top: 100px; width: 0px; height: 0px; z-index: -1; "></div> -->
             <design-surface drill="drill" ng-show="true"></design-surface>
             <open-dialog on-open="onOpen(drillId)"></open-dialog>

@@ -23,7 +23,12 @@ angular.module('drillApp')
     init();
 
     function init() {
+      $scope.tempo = 120;
       $window.addEventListener('keydown', keydown);  
+      $scope.$watch('tempo', function() {
+        if (drillPlayer)
+          drillPlayer.setTempo($scope.tempo);
+      });
       appStateService.getLastDrillId()
         .then(openDrill);
     }
