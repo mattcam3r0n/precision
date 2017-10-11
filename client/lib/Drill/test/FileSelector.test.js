@@ -170,8 +170,65 @@ describe('FileSelector', function () {
         fileSelector = new FileSelector(members);
     });
 
-    describe('findFiles', function () {
+    var files = null;
 
+    describe('findFiles', function () {
+        beforeEach(function() {
+            files = fileSelector.findFiles();
+        })
+
+        it('should find 3 files', function() {
+            expect(files.length).to.equal(3);
+        })
+
+        it('file 0 should be (6, 0), (4, 0), (2, 0), (0, 0)', function() {
+            var file = files[0];
+            var positions = file.fileMembers.map(fm => {
+                return {
+                    x: fm.member.currentState.x,
+                    y: fm.member.currentState.y
+                };
+            });
+            expect(positions).to.eql([{ x: 6, y: 0 },
+                                      { x: 4, y: 0 },
+                                      { x: 2, y: 0 },
+                                      { x: 0, y: 0}
+                                    ]);
+        })
+
+        it('file 1 should be (4, 4), (4, 2), (2, 2), (0, 2)', function() {
+            var file = files[1];
+            var positions = file.fileMembers.map(fm => {
+                return {
+                    x: fm.member.currentState.x,
+                    y: fm.member.currentState.y
+                };
+            });
+            expect(positions).to.eql([{ x: 4, y: 4 },
+                                      { x: 4, y: 2 },
+                                      { x: 2, y: 2 },
+                                      { x: 0, y: 2 }
+                                    ]);
+        })
+
+        it('file 2 should be (4, 6), (2, 6), (2, 4), (0, 4)', function() {
+            var file = files[2];
+            var positions = file.fileMembers.map(fm => {
+                return {
+                    x: fm.member.currentState.x,
+                    y: fm.member.currentState.y
+                };
+            });
+            expect(positions).to.eql([{ x: 4, y: 6 },
+                                      { x: 2, y: 6 },
+                                      { x: 2, y: 4 },
+                                      { x: 0, y: 4 }
+                                    ]);
+        })
+
+        it('file 0 should have 4 members', function() {
+            expect(files[0].fileMembers.length).to.equal(4);
+        })
     })
 
     describe('getFollowing', function () {
@@ -296,10 +353,4 @@ describe('FileSelector', function () {
 
     })
 
-    describe('findFiles', function() {
-        it('should', function() {
-            let files = fileSelector.findFiles();
-            console.log(files);
-        })
-    })
 });
