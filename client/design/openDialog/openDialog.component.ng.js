@@ -34,7 +34,7 @@ angular.module('drillApp')
       });
 
       $scope.open = function(drill) {
-        ctrl.onOpen({ drill: drill });
+        ctrl.onOpen({ drillId: drill._id });
       }
 
       $scope.delete = function(drill) {

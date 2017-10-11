@@ -10,8 +10,11 @@ import { Meteor } from 'meteor/meteor';
 angular.module('drillApp')
   .controller('DesignCtrl', function ($scope, $rootScope, $timeout, $window, $reactive, appStateService) {
 
+    var ctrl = this;
+    $reactive(ctrl).attach($scope);
     $scope.viewName = 'Design';
 
+    
     var drillBuilder,
         drillPlayer,
         keyboardHandler,
@@ -20,20 +23,34 @@ angular.module('drillApp')
     init();
 
     function init() {
-      openDrill(appStateService.currentDrill);  
       $window.addEventListener('keydown', keydown);  
+      //openDrill(appStateService.currentDrill);  
+      appStateService.getLastDrillId()
+        .then(openDrill);
     }
 
     // TODO: do i need this? seems to interfere with subscription in open dialog
     //$scope.subscribe('drills');
 
-    function openDrill(drill) {
-      $scope.drill = appStateService.currentDrill = drill;
-      drillBuilder = new DrillBuilder(drill);
-      drillPlayer = new DrillPlayer(drill);
-      keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer);
-      drillPlayer.goToBeginning();
-      drillBuilder.deselectAll();
+    function openDrill(drillId) {
+
+      appStateService.getDrill(drillId)
+        .then(drill => {
+          $scope.drill = drill;
+          drillBuilder = new DrillBuilder(drill);
+          drillPlayer = new DrillPlayer(drill);
+          keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer);
+          drillPlayer.goToBeginning();
+          drillBuilder.deselectAll();
+          triggerDrillStateChanged(); // to force repaint
+        });
+
+      // $scope.drill = appStateService.currentDrill = drill;
+      // drillBuilder = new DrillBuilder(drill);
+      // drillPlayer = new DrillPlayer(drill);
+      // keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer);
+      // drillPlayer.goToBeginning();
+      // drillBuilder.deselectAll();
     }
 
     function keydown(e) {
@@ -61,8 +78,8 @@ angular.module('drillApp')
       console.log('drill', $scope.drill);
     }
 
-    $scope.onOpen = function(drill) {
-      openDrill(drill);
+    $scope.onOpen = function(drillId) {
+      openDrill(drillId);
     };
 
     $scope.onPlay = function() {

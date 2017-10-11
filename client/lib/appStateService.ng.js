@@ -38,12 +38,12 @@ class appStateService {
         return this.loadDrill(lastDrillId);
     }
 
-    getLastDrillId() {
-        var user = Meteor.user();
-        if (!user || !user.profile || !user.profile.currentDrillId) 
-            return null;
+    getLastDrillId() {        
+        return Meteor.callPromise('getLastDrillId');    
+    }
 
-        return user.profile.currentDrillId;
+    getDrill(id) {
+        return Meteor.callPromise('getDrill', id);
     }
 
     loadDrill(drillId) {
