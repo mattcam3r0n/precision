@@ -27,9 +27,9 @@ angular.module('drillApp')
         ctrl.field.resize();
       });
 
-      $scope.$on('design:drillStateChanged', function() {
+      $scope.$on('design:drillStateChanged', function(evt, args) {
         if (!ctrl.field) return;
-        ctrl.field.drillStateChanged();
+        ctrl.field.drillStateChanged(args);
       });
 
       $scope.$on('design:membersAdded', function(event, args) {

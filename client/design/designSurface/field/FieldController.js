@@ -5,6 +5,7 @@ import FieldPainter from './FieldPainter';
 import MarcherFactory from './MarcherFactory';
 import PositionCalculator from '/client/lib/PositionCalculator';
 import Marcher from './Marcher';
+import FileIndicator from './FileIndicator';
 
 class FieldController {
 
@@ -22,7 +23,18 @@ class FieldController {
         this.positionIndicator = this.createPositionIndicator();
         this.positionIndicatorEnabled = true;
         
+        // this.test();
     }
+
+    // test() {            
+    //       var i = new FileIndicator([{ x: 60, y: 60 }, { x: 120, y: 60 }, { x: 120, y: 120 }], {
+    //           left: 100,
+    //           top: 100
+    //       });
+    //       this.canvas.add(i);
+    //       this.canvas.bringToFront(i);
+    //       //this.canvas.add(line);
+    // }
 
     setDrill(drill) {
         this.drill = drill;
@@ -58,8 +70,8 @@ class FieldController {
     /**
      * drill state has changed, update marcher positions
      */
-    drillStateChanged() {
-        this.updateMarchers();
+    drillStateChanged(args) {
+        this.updateMarchers(args);
         this.update();
     }
 
@@ -71,14 +83,14 @@ class FieldController {
         this.positionIndicatorEnabled = true;
     }
 
-    updateMarchers() {
+    updateMarchers(args) {
         if (!this.drill || !this.marchers) return;
 
         for (var id in this.marchers) {
             let marcher = this.marchers[id];
             let member = marcher.member;
 
-            var fieldPoint = FieldDimensions.toFieldPoint({ x: member.currentState.x, y: member.currentState.y }, member.currentState.strideType || StrideType.SixToFive);
+            let fieldPoint = FieldDimensions.toFieldPoint({ x: member.currentState.x, y: member.currentState.y }, member.currentState.strideType || StrideType.SixToFive);
 
             // set position and direction
             marcher.set('left', fieldPoint.x);
@@ -89,6 +101,39 @@ class FieldController {
             
             marcher.setCoords();
         }
+
+        // TODO: refactor to separate functions
+        if (args && args.selectedFiles) {
+            if (this.fileIndicators) {
+                this.fileIndicators.forEach(fi => {
+                    this.canvas.remove(fi);
+                });
+            }
+            this.fileIndicators = [];
+            args.selectedFiles.forEach(f => {
+                let dir = f.leader.member.currentState.direction;
+                let leaderPoint = FieldDimensions.toFieldPoint({ x: f.leader.member.currentState.x, y: f.leader.member.currentState.y }, f.leader.member.currentState.strideType || StrideType.SixToFive);
+                let linePoints = f.getLinePoints().map(p => {
+                    return FieldDimensions.toFieldPoint({ x: p.x, y: p.y }, f.leader.member.currentState.strideType || StrideType.SixToFive);
+                });
+                var adj = { 0: { x: 0, y: 2 }, 90: { x: -2, y: 0 }, 180: { x: 0, y: -2 }, 270: { x: 2, y: 0 } };
+                // hack to adjust points
+                linePoints.forEach(p => {
+                    p.x += adj[dir].x;
+                    p.y += adj[dir].y;
+                });
+                var i = new FileIndicator(linePoints, f.leader.member.currentState.direction, {
+                    // left: leaderPoint.x,
+                    // top: leaderPoint.y
+                });
+                console.log(i);
+                this.fileIndicators.push(i);
+                this.canvas.add(i);
+                //this.canvas.sendToBack(i);    
+            });
+        }
+
+        
     }
 
     synchronizeMarchers() {
@@ -148,6 +193,8 @@ class FieldController {
     onObjectSelected(evt) {
         // ignore if triggered by group selection
         if (!this.canvas.getActiveObject()) return;
+
+        if (this.canvas.getActiveObject().type != 'Marcher') return;
 
         var member = evt.target.member;
         this.canvas.discardActiveObject();

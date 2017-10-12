@@ -54,8 +54,8 @@ angular.module('drillApp')
       save();
     }
 
-    function triggerDrillStateChanged() {
-      $scope.$broadcast('design:drillStateChanged');
+    function triggerDrillStateChanged(args) {
+      $scope.$broadcast('design:drillStateChanged', args);
       $scope.$safeApply();
     }
 
@@ -108,9 +108,18 @@ angular.module('drillApp')
     // handle selection event
     $scope.$on('membersSelected', (evt, args) => {
       drillBuilder.select(args.members);
-      triggerDrillStateChanged();
 
-      console.log(drillBuilder.getSelectedFiles());
+      triggerDrillStateChanged({
+        selectedMembers: args.members,
+        selectedFiles: drillBuilder.getSelectedFiles(),
+        selectedRanks: []
+      });
+
+      drillBuilder.getSelectedFiles().forEach(f => {
+        console.log(f);
+        console.log(f.getLinePoints());
+      });
+//      console.log(drillBuilder.getSelectedFiles());
     });
 
     $scope.$on('designTool:deselectAll', (evt, args) => {

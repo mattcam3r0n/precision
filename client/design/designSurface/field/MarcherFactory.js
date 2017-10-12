@@ -15,23 +15,6 @@ class MarcherFactory {
             top: fieldPoint.y,
             angle: initialState.direction, // angle of object. correspond to direction.
         });
-
-        // var triangle = new fabric.Triangle({
-        //     // cosider center of object the origin. eg, rotate around center.
-        //     originX: 'center',
-        //     originY: 'center',
-        //     width: FieldDimensions.marcherWidth,
-        //     height: FieldDimensions.marcherHeight,
-        //     fill: 'red',
-        //     stroke: 'black',
-        //     left: fieldPoint.x,
-        //     top: fieldPoint.y,
-        //     angle: initialState.direction, // angle of object. correspond to direction.
-        //     hasControls: false,
-        //     lockMovementX: true,
-        //     lockMovementY: true,
-        //     hoverCursor: 'pointer'
-        // });
         
         return marcher;
     }

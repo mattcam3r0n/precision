@@ -12,7 +12,16 @@ class File {
             this.fileMembers.push(m);
             m = m.followedBy;
         }
-    }    
+    }
+
+    getLinePoints() {
+        return this.fileMembers.map(fm => {
+            return {
+                x: fm.member.currentState.x,
+                y: fm.member.currentState.y
+            };
+        });
+    }
 
 }
 
