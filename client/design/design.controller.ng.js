@@ -115,10 +115,10 @@ angular.module('drillApp')
         selectedRanks: []
       });
 
-      drillBuilder.getSelectedFiles().forEach(f => {
-        console.log(f);
-        console.log(f.getLinePoints());
-      });
+      // drillBuilder.getSelectedFiles().forEach(f => {
+      //   console.log(f);
+      //   console.log(f.getLinePoints());
+      // });
 //      console.log(drillBuilder.getSelectedFiles());
     });
 

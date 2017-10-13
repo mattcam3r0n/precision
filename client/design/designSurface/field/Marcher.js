@@ -1,6 +1,6 @@
 
 var Marcher = fabric.util.createClass(fabric.Triangle, {
-    type: "marcher",
+    type: "Marcher",
     // cosider center of object the origin. eg, rotate around center.
     originX: 'center',
     originY: 'center',

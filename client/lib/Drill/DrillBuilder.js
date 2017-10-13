@@ -61,7 +61,6 @@ class DrillBuilder {
             var files = this.selectedFiles;
             files.forEach(f => {
                 f.addStep(step);
-                console.log(f);
             });
         } else {
             var members = this.selectedMembers;

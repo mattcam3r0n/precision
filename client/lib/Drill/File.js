@@ -18,7 +18,6 @@ class File {
         var lastStep = step;
         this.fileMembers.forEach(m => {
             lastStep = m.addStep(lastStep);
-            console.log(m);
         });
     }
 

@@ -44,13 +44,11 @@ angular.module('drillApp')
         ctrl.field.canvas.dispose();
       });
       
-      ctrl.$onInit = function() {
-        console.log('design-surface oninit');
-      }
+      // ctrl.$onInit = function() {
+      // }
 
-      ctrl.$postLink = function() {
-        console.log('design-surface postlink');
-      }
+      // ctrl.$postLink = function() {
+      // }
     }
   });
 
