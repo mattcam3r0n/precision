@@ -14,6 +14,14 @@ class File {
         }
     }
 
+    addStep(step) {
+        var lastStep = step;
+        this.fileMembers.forEach(m => {
+            lastStep = m.addStep(lastStep);
+            console.log(m);
+        });
+    }
+
     getLinePoints() {
         return this.fileMembers.map(fm => {
             return {

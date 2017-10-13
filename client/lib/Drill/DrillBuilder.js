@@ -5,11 +5,36 @@ import MemberFactory from '/client/lib/drill/MemberFactory';
 import StepFactory from '/client/lib/drill/StepFactory';
 import FileSelector from './FileSelector';
 
+class AddMode {
+    static get Block() {
+        return 'BLOCK';
+    }
+
+    static get File() {
+        return 'FILE';
+    }
+}
+
 class DrillBuilder {
     constructor(drill) {
         this.drill = drill || {};
+        this._addMode = AddMode.File; // default to FTL
+        this.selectedMembers = [];
+        this.selectedFiles = [];
     }
 
+    set addMode(mode) {
+        if (mode != AddMode.Block || mode != AddMode.File)
+            return;
+
+        this._addMode = mode;
+    }
+
+    get addMode() {
+        return this._addMode;
+    }
+
+    
     createDrill() {
         return {
             name: 'New Drill',
@@ -29,13 +54,22 @@ class DrillBuilder {
         return MemberFactory.createMember(strideType, dir, point);
     }
     
-    addStep(members, strideType, stepType, direction, deltaX, deltaY) {
-        members = members || this.drill.members;
+    addStep(strideType, stepType, direction, deltaX, deltaY) {
+        var step = StepFactory.createStep(strideType, stepType, direction);
 
-        members.forEach(m => {
-            let step = StepFactory.createStep(strideType, stepType, direction);
-            m.script.push(step);
-        });
+        if (this.addMode == AddMode.File) {
+            var files = this.selectedFiles;
+            files.forEach(f => {
+                f.addStep(step);
+                console.log(f);
+            });
+        } else {
+            var members = this.selectedMembers;
+            members.forEach(m => {
+                m.script.push(step);
+            });    
+        }
+
         this.drill.isDirty = true;
     }
 
@@ -49,6 +83,9 @@ class DrillBuilder {
             if (!m) return;
             m.isSelected = !m.isSelected;
         });
+
+        this.selectedMembers = [...members];
+        this.selectedFiles = this.getSelectedFiles();
     }
 
     selectAll() {
@@ -57,6 +94,10 @@ class DrillBuilder {
         this.drill.members.forEach(m => {
             m.isSelected = true;
         });
+
+        this.selectedMembers = [];
+        this.selectedMembers.push(...this.drill.members);
+        this.selectedFiles = this.getSelectedFiles();
     }
 
     deselectAll() {
@@ -65,6 +106,9 @@ class DrillBuilder {
         this.drill.members.forEach(m => {
             m.isSelected = false;
         });
+
+        this.selectedMembers = [];
+        this.selectedFiles = [];
     }
 
     getSelectedMembers() {

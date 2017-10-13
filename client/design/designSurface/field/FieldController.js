@@ -103,35 +103,35 @@ class FieldController {
         }
 
         // TODO: refactor to separate functions
-        if (args && args.selectedFiles) {
-            if (this.fileIndicators) {
-                this.fileIndicators.forEach(fi => {
-                    this.canvas.remove(fi);
-                });
-            }
-            this.fileIndicators = [];
-            args.selectedFiles.forEach(f => {
-                let dir = f.leader.member.currentState.direction;
-                let leaderPoint = FieldDimensions.toFieldPoint({ x: f.leader.member.currentState.x, y: f.leader.member.currentState.y }, f.leader.member.currentState.strideType || StrideType.SixToFive);
-                let linePoints = f.getLinePoints().map(p => {
-                    return FieldDimensions.toFieldPoint({ x: p.x, y: p.y }, f.leader.member.currentState.strideType || StrideType.SixToFive);
-                });
-                var adj = { 0: { x: 0, y: 2 }, 90: { x: -2, y: 0 }, 180: { x: 0, y: -2 }, 270: { x: 2, y: 0 } };
-                // hack to adjust points
-                linePoints.forEach(p => {
-                    p.x += adj[dir].x;
-                    p.y += adj[dir].y;
-                });
-                var i = new FileIndicator(linePoints, f.leader.member.currentState.direction, {
-                    // left: leaderPoint.x,
-                    // top: leaderPoint.y
-                });
-                console.log(i);
-                this.fileIndicators.push(i);
-                this.canvas.add(i);
-                //this.canvas.sendToBack(i);    
-            });
-        }
+        // if (args && args.selectedFiles) {
+        //     if (this.fileIndicators) {
+        //         this.fileIndicators.forEach(fi => {
+        //             this.canvas.remove(fi);
+        //         });
+        //     }
+        //     this.fileIndicators = [];
+        //     args.selectedFiles.forEach(f => {
+        //         let dir = f.leader.member.currentState.direction;
+        //         let leaderPoint = FieldDimensions.toFieldPoint({ x: f.leader.member.currentState.x, y: f.leader.member.currentState.y }, f.leader.member.currentState.strideType || StrideType.SixToFive);
+        //         let linePoints = f.getLinePoints().map(p => {
+        //             return FieldDimensions.toFieldPoint({ x: p.x, y: p.y }, f.leader.member.currentState.strideType || StrideType.SixToFive);
+        //         });
+        //         var adj = { 0: { x: 0, y: 2 }, 90: { x: -2, y: 0 }, 180: { x: 0, y: -2 }, 270: { x: 2, y: 0 } };
+        //         // hack to adjust points
+        //         linePoints.forEach(p => {
+        //             p.x += adj[dir].x;
+        //             p.y += adj[dir].y;
+        //         });
+        //         var i = new FileIndicator(linePoints, f.leader.member.currentState.direction, {
+        //             // left: leaderPoint.x,
+        //             // top: leaderPoint.y
+        //         });
+        //         console.log(i);
+        //         this.fileIndicators.push(i);
+        //         this.canvas.add(i);
+        //         //this.canvas.sendToBack(i);    
+        //     });
+        // }
 
         
     }
