@@ -114,7 +114,8 @@ angular.module('drillApp')
         selectedFiles: drillBuilder.getSelectedFiles(),
         selectedRanks: []
       });
-
+console.log('fire activate add steps');
+      $rootScope.$broadcast('design:activateAddStepsTool');
       // drillBuilder.getSelectedFiles().forEach(f => {
       //   console.log(f);
       //   console.log(f.getLinePoints());
