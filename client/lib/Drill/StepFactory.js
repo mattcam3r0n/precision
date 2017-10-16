@@ -1,13 +1,14 @@
 import StepDelta from '/client/lib/StepDelta';
+import StepType from '/client/lib/StepType';
+import StrideType from '/client/lib/StrideType';
 
 class StepFactory {
     static createStep(strideType, stepType, direction, deltaX, deltaY){
         var delta = StepDelta.getDelta(strideType, stepType, direction);
         var scriptNode = {
-            strideType: strideType,
-            stepType: stepType,
+            strideType: strideType || StrideType.SixToFive,
+            stepType: stepType || StepType.Full,
             direction: direction,
-            stepCount: 1, // always 1 for now. someday, might allow multiple steps per node.
             deltaX: deltaX || delta.deltaX,
             deltaY: deltaY || delta.deltaY
         };

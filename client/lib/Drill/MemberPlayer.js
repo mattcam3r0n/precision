@@ -18,11 +18,14 @@ class MemberPlayer {
     }
 
     static isEndOfDrill(member) {
-        return member.currentState.count >= member.script.length;
+        // TODO: when one (or all?) member is on edge of field?
+        //return member.currentState.count >= member.script.length;
+        return MemberPositionCalculator.isEndOfDrill(member);
     }
 
     static isBeyondEndOfDrill(member) {
-        return member.currentState.count > member.script.length;        
+        //return member.currentState.count > member.script.length;        
+        return MemberPositionCalculator.isBeyondEndOfDrill(member);
     }
 
     static goToBeginning(member) {

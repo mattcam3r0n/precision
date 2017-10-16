@@ -71,6 +71,9 @@ const deltas = {
 class StepDelta {
 
     static getDelta(strideType, stepType, direction) {
+        strideType = strideType || StrideType.SixToFive;
+        stepType = stepType || StepType.Full;
+        
         if (stepType === StepType.MarkTime || stepType === StepType.Stop) return 0;
 
         var delta = deltas[strideType][stepType][direction];
@@ -79,6 +82,13 @@ class StepDelta {
             return { x: delta.x / 2, y: delta.y / 2 };
 
         return delta;
+    }
+
+    static getStepsBetweenPoints(strideType, stepType, a, b) {
+        var delta = { x: a.x - b.x, y: a.y - b.y };
+        var steps = Math.sqrt(Math.pow(delta.x, 2) + Math.pow(delta.y, 2));
+        steps = (strideType == StrideType.EightToFive) ? Math.ceil(steps) : Math.floor(steps);
+        return stepType == StepType.Half ? steps * 2 : steps;
     }
 
     get sixToFiveObliqueDelta() {

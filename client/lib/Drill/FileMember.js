@@ -43,23 +43,15 @@ class FileMember {
         var leader = this.following.member;
         var leaderPos = Object.assign({}, leader.currentState); // important! use copy of current state
         var myPos = me.currentState;
-
-        var count = leader.currentState.count;
-        var stepQueue = [];
+        var steps = 0;
         while (!this.arePositionsEqual(myPos, leaderPos)){
-            stepQueue.unshift(leader.script[count - 1]); // add to front of queue, because we're going backwards
-            leaderPos = MemberPositionCalculator.stepBackward(leader, leaderPos); 
-            count--;
-            if (stepQueue.length > 6) {
-                stepQueue = null;
-                break; // opt out if not within 6 steps?? return null? or empty?     
-            }
-        }
+            myPos = MemberPositionCalculator.stepForward(me, myPos); 
+            steps++;
+            if (steps > 6)
+                return null;
+        }            
 
-        if (!stepQueue)
-            return this.interpolateStepsToLeader();
-
-        return stepQueue;
+        return steps;
     }
 
     interpolateStepsToLeader() {

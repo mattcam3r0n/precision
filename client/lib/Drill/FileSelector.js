@@ -3,6 +3,7 @@ import File from './File';
 import StepDelta from '/client/lib/StepDelta';
 import StepType from '/client/lib/StepType';
 import Direction from '/client/lib/Direction';
+import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
 
 var followingDirs = {
     [Direction.N]: [Direction.N, Direction.E, Direction.W],
@@ -38,9 +39,11 @@ class FileSelector {
         this.members.forEach(m => {
             let fm = fileMembers[m.id];
             let following = this.getFollowing(m);
-            let followedBy = this.getFollowedBy(m);
+//            let followedBy = this.getFollowedBy(m);
             fm.following = following ? fileMembers[following.id] : null;
-            fm.followedBy = followedBy ? fileMembers[followedBy.id] : null;
+//            fm.followedBy = followedBy ? fileMembers[followedBy.id] : null;
+            if (fm.following)
+                fm.following.followedBy = fm;
 
             // if leader, add to leader collection		
             if (!fm.following)
@@ -58,15 +61,11 @@ class FileSelector {
     }
 
     getFollowing(m) {
-        var dirsToCheck = followingDirs[m.currentState.direction];
-
-        for (var i = 0; i < dirsToCheck.length; i++) {
-            let dir = dirsToCheck[i];
-            let pos = this.getRelativePosition(m.currentState, dir, 2);
-            let following = this.positionMap.getMemberAtPosition(pos.x, pos.y);
-            if (following && following.currentState.direction == dir) {
+        for (var i = 2; i <= 6; i += 2) {
+            var pos = MemberPositionCalculator.stepForward(m, m.currentState, i);
+            var following = this.positionMap.getMemberAtPosition(pos.x, pos.y);
+            if (following)
                 return following;
-            }
         }
 
         return null;

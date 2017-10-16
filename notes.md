@@ -50,3 +50,44 @@ File Finder
 * create a [x][y] map of all selected members
 * create function that calculates x,y of all points around member
 * look in map for member at that point
+
+Field Markings -- mark where turns occur
+* block mode or FTL mode
+* in FTL mode, show who the leaers are
+* choose type of turn to make from palette
+* place on field in front of leaders/block
+* only show valid places for it. ie, only directly in front of block/file
+* show current path for N counts (maybe 12?)
+    * allow this to be turned on/off? tweak how many counts forward to show?
+* when a turn is placed, extend current path forward N counts?
+* can place next turn, but only in path of last
+
+New FTL algo
+* create x/y map of members
+* to find who a member is following, calc position in 2/4/6 counts. 
+    * check each to see if in same place as another member
+
+
+  *
+
+A B C       A   A   A
+A B C       B   B   B
+A B C       C   C   C
+
+
+  A
+  A A
+B B B  * 
+C C C
+
+    A
+    A
+  B A
+  B B  * 
+C C C
+
+A A A  *
+  B B
+  B C
+    C
+    C

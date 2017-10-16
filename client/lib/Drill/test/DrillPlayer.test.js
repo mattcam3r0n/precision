@@ -19,13 +19,19 @@ describe('DrillPlayer', function () {
                 {
                     initialState: {
                         strideType: StrideType.SixToFive,
+                        stepType: StepType.Full,
                         direction: Direction.E,
+                        deltaX: 1,
+                        deltaY: 0,
                         x: 0,
                         y: 0
                     },
                     currentState: {
                         strideType: StrideType.SixToFive,
+                        stepType: StepType.Full,
                         direction: Direction.E,
+                        deltaX: 1,
+                        deltaY: 0,
                         x: 0,
                         y: 0,
                         count: 0
@@ -33,6 +39,7 @@ describe('DrillPlayer', function () {
                     script: [
                         {
                             strideType: StrideType.SixToFive,
+                            stepType: StepType.Full,
                             direction: Direction.E,
                             deltaX: 1,
                             deltaY: 0
@@ -42,13 +49,19 @@ describe('DrillPlayer', function () {
                 {
                     initialState: {
                         strideType: StrideType.SixToFive,
+                        stepType: StepType.Full,
                         direction: Direction.E,
+                        deltaX: 1,
+                        deltaY: 0,
                         x: 0,
                         y: 0
                     },
                     currentState: {
                         strideType: StrideType.SixToFive,
+                        stepType: StepType.Full,
                         direction: Direction.E,
+                        deltaX: 1,
+                        deltaY: 0,
                         x: 0,
                         y: 0,
                         count: 0                       
@@ -56,12 +69,14 @@ describe('DrillPlayer', function () {
                     script: [
                         {
                             strideType: StrideType.SixToFive,
+                            stepType: StepType.Full,
                             direction: Direction.E,
                             deltaX: 1,
                             deltaY: 0
                         },
                         {
                             strideType: StrideType.SixToFive,
+                            stepType: StepType.Full,
                             direction: Direction.E,
                             deltaX: 1,
                             deltaY: 0
@@ -91,9 +106,9 @@ describe('DrillPlayer', function () {
         })
     
         it('should return true when all members are at end of drill', function() {
-            // move one member to a non-zero count
-            drill.members[0].currentState.count = 2;
-            drill.members[1].currentState.count = 2;
+            drill.members.forEach(m => {
+                m.currentState.count = 2;
+            });
             expect(drillPlayer.isEndOfDrill()).to.be.true;
         })
     })
@@ -125,6 +140,7 @@ describe('DrillPlayer', function () {
 
     describe('goToEnd', function() {
         it('should set all members to count 2', function() {
+            
             drillPlayer.goToEnd();
             
             expect(drill.count).to.equal(2);
@@ -145,7 +161,10 @@ describe('DrillPlayer', function () {
 
     describe('stepBackward', function() {
         it('should decrement drill count', function() {
-            drillPlayer.goToEnd();
+            drill.count = 2;
+            drill.members.forEach(m => {
+                m.currentState.count = 2;
+            });
             expect(drill.count).to.equal(2);
             drillPlayer.stepBackward();
             expect(drill.count).to.equal(1);

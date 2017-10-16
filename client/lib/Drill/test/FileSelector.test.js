@@ -2,6 +2,10 @@ import { expect } from 'meteor/practicalmeteor:chai';
 
 import FileSelector from '/client/lib/drill/FileSelector';
 
+import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
+import MemberPlayer from '/client/lib/drill/MemberPlayer';
+
+import MemberFactory from '/client/lib/drill/MemberFactory';
 import StepFactory from '/client/lib/drill/StepFactory';
 import Direction from '/client/lib/Direction';
 import StrideType from '/client/lib/StrideType';
@@ -147,25 +151,29 @@ describe('FileSelector', function () {
          *  3 files, 4 ranks, in this configuration: 
          * 
          *    e e e e  
-         *    E E E
-         *    e e S
-         *      s e
+         *    E E E E
+         *    e e e e
+         * 
          */
+        var strideType = StrideType.SixToFive;
+        var stepType = StepType.Full;
+        var dir = Direction.E;
         members = [
-            { id: 1 , currentState: { x: 0, y: 0, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
-            { id: 2 , currentState: { x: 2, y: 0, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
-            { id: 3 , currentState: { x: 4, y: 0, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
-            { id: 4 , currentState: { x: 6, y: 0, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
-            { id: 5 , currentState: { x: 0, y: 2, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
-            { id: 6 , currentState: { x: 2, y: 2, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
-            { id: 7 , currentState: { x: 4, y: 2, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
-            { id: 8 , currentState: { x: 4, y: 4, direction: Direction.S, count: 8, strideType: StrideType.SixToFive} },
-            { id: 9 , currentState: { x: 0, y: 4, direction: Direction.E, count: 8, strideType: StrideType.SixToFive} },
-            { id: 10, currentState: { x: 2, y: 4, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } },
-            { id: 11, currentState: { x: 2, y: 6, direction: Direction.S, count: 8, strideType: StrideType.SixToFive } },
-            { id: 12, currentState: { x: 4, y: 6, direction: Direction.E, count: 8, strideType: StrideType.SixToFive } }
-        ];
+            MemberFactory.createMember(strideType, dir, { x: 0, y: 0 }),
+            MemberFactory.createMember(strideType, dir, { x: 2, y: 0 }),
+            MemberFactory.createMember(strideType, dir, { x: 4, y: 0 }),
+            MemberFactory.createMember(strideType, dir, { x: 6, y: 0 }),
 
+            MemberFactory.createMember(strideType, dir, { x: 0, y: 2 }),
+            MemberFactory.createMember(strideType, dir, { x: 2, y: 2 }),
+            MemberFactory.createMember(strideType, dir, { x: 4, y: 2 }),
+            MemberFactory.createMember(strideType, dir, { x: 6, y: 2 }),
+
+            MemberFactory.createMember(strideType, dir, { x: 0, y: 4 }),
+            MemberFactory.createMember(strideType, dir, { x: 2, y: 4 }),
+            MemberFactory.createMember(strideType, dir, { x: 4, y: 4 }),
+            MemberFactory.createMember(strideType, dir, { x: 6, y: 4 }),
+        ];
 
         fileSelector = new FileSelector(members);
     });
@@ -173,15 +181,15 @@ describe('FileSelector', function () {
     var files = null;
 
     describe('findFiles', function () {
-        beforeEach(function() {
+        beforeEach(function () {
             files = fileSelector.findFiles();
         })
 
-        it('should find 3 files', function() {
+        it('should find 3 files', function () {
             expect(files.length).to.equal(3);
         })
 
-        it('file 0 should be (6, 0), (4, 0), (2, 0), (0, 0)', function() {
+        it('file 0 should be (6, 0), (4, 0), (2, 0), (0, 0)', function () {
             var file = files[0];
             var positions = file.fileMembers.map(fm => {
                 return {
@@ -190,13 +198,13 @@ describe('FileSelector', function () {
                 };
             });
             expect(positions).to.eql([{ x: 6, y: 0 },
-                                      { x: 4, y: 0 },
-                                      { x: 2, y: 0 },
-                                      { x: 0, y: 0}
-                                    ]);
+            { x: 4, y: 0 },
+            { x: 2, y: 0 },
+            { x: 0, y: 0 }
+            ]);
         })
 
-        it('file 1 should be (4, 4), (4, 2), (2, 2), (0, 2)', function() {
+        it('file 1 should be (6, 2), (4, 2), (2, 2), (0, 2)', function () {
             var file = files[1];
             var positions = file.fileMembers.map(fm => {
                 return {
@@ -204,14 +212,14 @@ describe('FileSelector', function () {
                     y: fm.member.currentState.y
                 };
             });
-            expect(positions).to.eql([{ x: 4, y: 4 },
-                                      { x: 4, y: 2 },
-                                      { x: 2, y: 2 },
-                                      { x: 0, y: 2 }
-                                    ]);
+            expect(positions).to.eql([{ x: 6, y: 2 },
+            { x: 4, y: 2 },
+            { x: 2, y: 2 },
+            { x: 0, y: 2 }
+            ]);
         })
 
-        it('file 2 should be (4, 6), (2, 6), (2, 4), (0, 4)', function() {
+        it('file 2 should be (6, 4), (4, 4), (4, 2), (4, 0)', function () {
             var file = files[2];
             var positions = file.fileMembers.map(fm => {
                 return {
@@ -219,55 +227,81 @@ describe('FileSelector', function () {
                     y: fm.member.currentState.y
                 };
             });
-            expect(positions).to.eql([{ x: 4, y: 6 },
-                                      { x: 2, y: 6 },
-                                      { x: 2, y: 4 },
-                                      { x: 0, y: 4 }]);
+            expect(positions).to.eql([{ x: 6, y: 4 },
+            { x: 4, y: 4 },
+            { x: 2, y: 4 },
+            { x: 0, y: 4 }]);
         })
 
-        it('file 0 should have 4 members', function() {
+        it('file 0 should have 4 members', function () {
             expect(files[0].fileMembers.length).to.equal(4);
         })
     })
 
     describe('getFollowing', function () {
 
-        it('member[1] at (2, 0) is following member[2] at (4, 0)', function () {
-            var member = members[1]; // at (2,0)
-            var following = fileSelector.getFollowing(member);
-            expect({ x: following.currentState.x, y: following.currentState.y }).to.eql({ x: 4, y: 0 });
+        beforeEach(function () {
+            var strideType = StrideType.SixToFive;
+            var stepType = StepType.Full;
+            var dir = Direction.E;
+            members = [
+                MemberFactory.createMember(strideType, dir, { x: 0, y: 0 }),
+                MemberFactory.createMember(strideType, dir, { x: 2, y: 0 })
+            ];
+
+            members[1].script[0] = {
+                strideType: StrideType.SixToFive,
+                stepType: StepType.Full,
+                direction: Direction.S
+            };
+            members[1].script[2] = {
+                strideType: StrideType.SixToFive,
+                stepType: StepType.Full,
+                direction: Direction.E
+            };
+
+            members[0].script[2] = {
+                strideType: StrideType.SixToFive,
+                stepType: StepType.Full,
+                direction: Direction.S
+            };
+
+            members[0].script[4] = {
+                strideType: StrideType.SixToFive,
+                stepType: StepType.Full,
+                direction: Direction.E
+            };
+
+            fileSelector = new FileSelector(members);
+
         })
 
-        it('member[6] at (4, 2) is following member[7] at (4, 4)', function () {
-            var member = members[6];
-            var following = fileSelector.getFollowing(member);
-            expect(following).to.equal(members[7], 'expected member[7]');
-            expect({ x: following.currentState.x, y: following.currentState.y }).to.eql({ x: 4, y: 4 });
+        it('at count 0, member[0] should be following member[1]', function () {
+            var following0 = fileSelector.getFollowing(members[0]);
+            expect(following0.id).to.equal(members[1].id);
         })
 
-        it('member[7] at (4, 4) is following no one', function () {
-            var member = members[7];
-            var following = fileSelector.getFollowing(member);
+        it('at count 0, member[1] should be following null', function () {
+            var following = fileSelector.getFollowing(members[1]);
             expect(following).to.be.null;
         })
 
-        it('member[11] at (4, 6) is following no one', function () {
-            var member = members[11];
-            var following = fileSelector.getFollowing(member);
+        it('at count 1, member[0] should be following member[1]', function () {
+            MemberPlayer.stepForward(members[0]);
+            MemberPlayer.stepForward(members[1]);
+            fileSelector = new FileSelector(members);
+            var following = fileSelector.getFollowing(members[0]);
+            expect(following.id).to.equal(members[1].id);
+        })
+
+        it('at count 1, member[1] should be following null', function () {
+            MemberPlayer.stepForward(members[0]);
+            MemberPlayer.stepForward(members[1]);
+            fileSelector = new FileSelector(members);
+            var following = fileSelector.getFollowing(members[1]);
             expect(following).to.be.null;
         })
 
-        it('member[3] at (6, 0) is following no one', function () {
-            var member = members[3];
-            var following = fileSelector.getFollowing(member);
-            expect(following).to.be.null;
-        })
-
-        it('member[10] at (2, 6) is following member[11] at (4, 6)', function () {
-            var member = members[10];
-            var following = fileSelector.getFollowing(member);
-            expect(following).to.equal(members[11], 'expected member[11]');
-        })
     })
 
     describe('getFollowedBy', function () {

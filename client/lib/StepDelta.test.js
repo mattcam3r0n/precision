@@ -94,4 +94,43 @@ describe('StepDelta', function () {
         expect(d).to.eql({ deltaX: -8/12, deltaY: -8/12 });
     })
 
+    describe('getStepsBetweenPoints', function(){
+
+        it('should equal 6', function() {
+            var a = { x: 0, y: 0 };
+            var b = { x: 6, y: 0 };
+            var steps = StepDelta.getStepsBetweenPoints(StrideType.SixToFive, StepType.Full, a, b);
+            expect(steps).to.equal(6);
+        })    
+
+        it('should equal 6', function() {
+            var a = { x: 0, y: 0 };
+            var b = { x: 0, y: 6 };
+            var steps = StepDelta.getStepsBetweenPoints(StrideType.SixToFive, StepType.Full, a, b);
+            expect(steps).to.equal(6);
+        })    
+
+        it('should equal 3', function() {
+            var a = { x: 0, y: 3 };
+            var b = { x: 0, y: 0 };
+            var steps = StepDelta.getStepsBetweenPoints(StrideType.SixToFive, StepType.Full, a, b);
+            expect(steps).to.equal(3);
+        })    
+
+        it('6/5 oblique: should equal 8', function() {
+            var a = { x: 0, y: 0 };
+            var b = { x: 6, y: 6 };
+            var steps = StepDelta.getStepsBetweenPoints(StrideType.SixToFive, StepType.Full, a, b);
+            expect(steps).to.equal(8);
+        })
+
+        it('6/5 oblique: should equal 4', function() {
+            var a = { x: 0, y: 0 };
+            var b = { x: 3, y: 3 };
+            var steps = StepDelta.getStepsBetweenPoints(StrideType.SixToFive, StepType.Full, a, b);
+            expect(steps).to.equal(4);
+        })
+
+    })
+
 });

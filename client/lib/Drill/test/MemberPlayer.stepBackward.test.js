@@ -20,13 +20,19 @@ describe('MemberPlayer', function () {
         it('rewind one full step N', function () {
             var step = StepFactory.createStep(StrideType.SixToFive, StepType.Full, Direction.N);
             member.script.push(step);
-            
-            MemberPlayer.stepForward(member);
-            MemberPlayer.stepBackward(member);
 
+            MemberPlayer.stepForward(member);
+            expect(member.currentState.x).to.equal(0);
+            expect(member.currentState.y).to.equal(-1);
+            // and back to initial direction
+            expect(member.currentState.direction).to.equal(Direction.N);
+
+            MemberPlayer.stepBackward(member);            
             // assumes we're starting from 0,0, end up back at 0,0
             expect(member.currentState.x).to.equal(0);
             expect(member.currentState.y).to.equal(0);
+            // and back to initial direction
+            expect(member.currentState.direction).to.equal(member.initialState.direction);
         })
 
         it('rewind one full step E', function () {
