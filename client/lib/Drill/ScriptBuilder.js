@@ -1,5 +1,8 @@
+import Direction from '/client/lib/Direction';
 import StepDelta from '/client/lib/StepDelta';
 import FieldPoint from '/client/lib/FieldPoint';
+import StrideType from '/client/lib/StrideType';
+import StepType from '/client/lib/StepType';
 import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
 
 /**
@@ -53,6 +56,30 @@ class ScriptBuilder {
             this.addActionAtCount(member, action, member.currentState.count + stepCount);
         }
     }
+
+    static fromShorthand(script) {
+        // expect something like 'E E E E E E S S S S S S'
+
+        var dirs = script.split(' ');
+        var action = {};
+        var newScript = [];
+        for (var i = 0; i < dirs.length; i++) {
+            let dir = Direction[dirs[i]];
+            if (action.direction !== dir) {
+                let delta = StepDelta.getDelta(StrideType.SixToFive, StepType.Full, dir);
+                action = {
+                    direction: dir,
+                    strideType: StrideType.SixToFive,
+                    stepType: StepType.Full,
+                    deltaX: delta.deltaX,
+                    deltaY: delta.deltaY    
+                };
+                newScript[i] = action;
+            }
+        }
+        return newScript;
+    }
+
 }
 
 export default ScriptBuilder;

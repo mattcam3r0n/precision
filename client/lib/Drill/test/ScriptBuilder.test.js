@@ -103,5 +103,20 @@ describe('ScriptBuilder', function () {
 
     })
 
+    describe('fromShorthand', function() {
+        it('should add only one action (E), at position 0', function() {
+            var script = ScriptBuilder.fromShorthand('E E E');
+            expect(script.length).to.equal(1);
+            expect(script[0].direction).to.equal(Direction.E);
+        })
+
+        it('E 6 steps, then S', function() {
+            var script = ScriptBuilder.fromShorthand('E E E E E E S S S');
+            // actions at [0] and [6], length 7
+            expect(script.length).to.equal(7); 
+            expect(script[0].direction).to.equal(Direction.E);
+            expect(script[6].direction).to.equal(Direction.S);
+        })
+    })
 
 })
