@@ -76,7 +76,7 @@ class DrillPlayer {
 
     isEndOfDrill() {
         // true if all members are at end
-        return this.drill.members.every(m => MemberPlayer.isEndOfDrill(m));
+        return this.drill.members.some(m => MemberPlayer.isEndOfDrill(m));
     }
 
     goToBeginning() {

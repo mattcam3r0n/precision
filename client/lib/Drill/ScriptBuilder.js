@@ -30,7 +30,14 @@ class ScriptBuilder {
     
     static addActionAtCount(member, action, count) {
         // TODO: ensure action has deltas?
+
+        // don't need to add if member is already in that state
+        var state = MemberPositionCalculator.getStateAtCount(member, count);
+        if (MemberPositionCalculator.areStatesSame(state, action))
+            return;
+
         member.script[count - 1] = action;
+        return true;
     }
 
     static addActionAtPoint(member, action, stepPoint) {
@@ -53,8 +60,10 @@ class ScriptBuilder {
         }
 
         if (arePointsEqual) {
-            this.addActionAtCount(member, action, member.currentState.count + stepCount);
+            return this.addActionAtCount(member, action, member.currentState.count + stepCount);
         }
+
+        return false;
     }
 
     static fromShorthand(script) {

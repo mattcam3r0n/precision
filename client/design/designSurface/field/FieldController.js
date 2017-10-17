@@ -6,6 +6,7 @@ import MarcherFactory from './MarcherFactory';
 import PositionCalculator from '/client/lib/PositionCalculator';
 import Marcher from './Marcher';
 import FileIndicator from './FileIndicator';
+import TurnMarker from './TurnMarker';
 
 class FieldController {
 
@@ -23,7 +24,26 @@ class FieldController {
         this.positionIndicator = this.createPositionIndicator();
         this.positionIndicatorEnabled = true;
         
-        // this.test();
+        this.testTurnMarker();
+        //this.test();
+    }
+
+    testTurnMarker() {
+        var m = new TurnMarker();
+        var p = FieldDimensions.toFieldPoint({ x: 18, y: 6}, StrideType.SixToFive);
+        console.log(p);
+        m.set('top', p.y);
+        m.set('left', p.x);
+        this.canvas.add(m);
+
+        var m = new TurnMarker();
+        var p = FieldDimensions.toFieldPoint({ x: 18, y: 8}, StrideType.SixToFive);
+        console.log(p);
+        m.set('top', p.y);
+        m.set('left', p.x);
+        this.canvas.add(m);
+
+        this.update();
     }
 
     // test() {            

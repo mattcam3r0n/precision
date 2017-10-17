@@ -114,7 +114,7 @@ angular.module('drillApp')
         selectedFiles: drillBuilder.getSelectedFiles(),
         selectedRanks: []
       });
-console.log('fire activate add steps');
+
       $rootScope.$broadcast('design:activateAddStepsTool');
       // drillBuilder.getSelectedFiles().forEach(f => {
       //   console.log(f);
@@ -135,6 +135,11 @@ console.log('fire activate add steps');
 
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {
+
+      // console.log(args);
+      //drillBuilder.selection
+
+
       $scope.currentPosition = args.position;
       $scope.$safeApply();
     });

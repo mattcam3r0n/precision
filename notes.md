@@ -91,3 +91,17 @@ A A A  *
   B C
     C
     C
+
+
+Turn Markers algo
+
+* given selected members, turns
+* advance members one count
+*  check for intersection with turns (position map of turns, position map of members)
+*  if turn is block mode, add to all members at that count, remove from turns list (so it doesn't get done again)
+*  if turn is FTL mode, add to intersecting member at that count
+
+alternative algo
+* add all FTL turns to members using addActionAtPoint()
+* use above algo for only block turns
+

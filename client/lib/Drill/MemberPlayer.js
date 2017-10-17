@@ -20,6 +20,7 @@ class MemberPlayer {
     static isEndOfDrill(member) {
         // TODO: when one (or all?) member is on edge of field?
         //return member.currentState.count >= member.script.length;
+        
         return MemberPositionCalculator.isEndOfDrill(member);
     }
 

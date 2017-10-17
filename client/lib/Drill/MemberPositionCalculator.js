@@ -12,6 +12,14 @@ var deltaY = { 0: -1, 90: 0, 180: 1, 270: 0 };
 
 class MemberPositionCalculator {
 
+    static areStatesSame(state1, state2) {
+        return state1.strideType == state2.strideType
+            && state1.stepType == state2.stepType
+            && state1.direction == state2.direction
+            && state1.deltaX == state2.deltaX
+            && state1.deltaY == state2.deltaY;
+    }
+    
     static getStateAtCount(member, count) {
         var i = count - 1;
         var state = member.script[i];
@@ -99,7 +107,12 @@ class MemberPositionCalculator {
 
     static isEndOfDrill(member, currentState) {
         currentState = currentState || member.currentState;
-        return currentState.count >= member.script.length;
+
+//        return currentState.count >= member.script.length;
+        return currentState.x >= 156 
+            || currentState.y >= 78
+            || currentState.x <= 0
+            || currentState.y <= 0;
     }
 
     static isBeyondEndOfDrill(member, currentState) {

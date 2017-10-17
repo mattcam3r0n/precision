@@ -4,6 +4,7 @@ import StepDelta from '/client/lib/StepDelta';
 import StepType from '/client/lib/StepType';
 import Direction from '/client/lib/Direction';
 import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
+import PositionMap from './PositionMap';
 
 var followingDirs = {
     [Direction.N]: [Direction.N, Direction.E, Direction.W],
@@ -61,6 +62,7 @@ class FileSelector {
     }
 
     getFollowing(m) {
+        // TODO: do this by projecting member position, rather than fixed intervals?
         for (var i = 2; i <= 6; i += 2) {
             var pos = MemberPositionCalculator.stepForward(m, m.currentState, i);
             var following = this.positionMap.getMemberAtPosition(pos.x, pos.y);
@@ -103,33 +105,6 @@ class FileSelector {
         };
     }
 
-}
-
-class PositionMap {
-    constructor(members) {
-        this.members = members;
-        this.map = this.buildPositionMap();
-    }
-
-    getMemberAtPosition(x, y) {
-        if (!this.map[x] || !this.map[x][y])
-            return null;
-
-        return this.map[x][y];
-    }
-
-    buildPositionMap() {
-        var map = {};
-        this.members.forEach(m => {
-            let { x, y } = { x: m.currentState.x, y: m.currentState.y };
-
-            if (!map[x])
-                map[x] = {};
-
-            map[x][y] = m;
-        });
-        return map;
-    }
 }
 
 export default FileSelector;

@@ -4,6 +4,7 @@ import Direction from '/client/lib/Direction';
 import MemberFactory from '/client/lib/drill/MemberFactory';
 import StepFactory from '/client/lib/drill/StepFactory';
 import FileSelector from './FileSelector';
+import MemberSelection from './MemberSelection';
 
 class AddMode {
     static get Block() {
@@ -78,11 +79,15 @@ class DrillBuilder {
 
     select(members) {
         if (!members) return;
+
         members.forEach(m => {
             if (!m) return;
             m.isSelected = !m.isSelected;
         });
 
+        this.selection = new MemberSelection(members);
+
+        // remove?
         this.selectedMembers = [...members];
         this.selectedFiles = this.getSelectedFiles();
     }
@@ -94,6 +99,8 @@ class DrillBuilder {
             m.isSelected = true;
         });
 
+        // use member selection
+        
         this.selectedMembers = [];
         this.selectedMembers.push(...this.drill.members);
         this.selectedFiles = this.getSelectedFiles();
