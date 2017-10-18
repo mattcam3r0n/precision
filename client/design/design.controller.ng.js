@@ -36,6 +36,11 @@ angular.module('drillApp')
         appStateService.openLastDrillOrNew()
         .then(openDrill);
       });
+
+      // appStateService.testInsertDrill();
+      // appStateService.getDrill('jS3yAf6qLAhXWr4sf').then((d) => {
+      //   console.log(d);
+      // });
     }
 
     function openDrill(drill) {

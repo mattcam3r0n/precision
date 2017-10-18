@@ -46,13 +46,13 @@ var TurnMarker = fabric.util.createClass(fabric.Group, {
 
         this.callSuper('initialize', children, options);
 
-        this.on('moving', function(evt) {
-            console.log(evt);
-            var point = { x: self.left, y: self.top };
-            var snappedPoint = FieldDimensions.snapPoint(StrideType.SixToFive, point);
-            self.set('left', snappedPoint.x);
-            self.set('top', snappedPoint.y);
-        });
+        // this.on('moving', function(evt) {
+        //     console.log(evt);
+        //     var point = { x: self.left, y: self.top };
+        //     var snappedPoint = FieldDimensions.snapPoint(StrideType.SixToFive, point);
+        //     self.set('left', snappedPoint.x);
+        //     self.set('top', snappedPoint.y);
+        // });
 
         // this.on('mouseover', function () {
         //     this.set('height', this.height + 4);

@@ -33,6 +33,10 @@ class MemberPositionCalculator {
         return state;
     }
 
+    static getPositionAtCount(member, count) {
+        return this.goToCount(member, count);
+    }
+
     static getState(member, count) {   
         var newState; 
 

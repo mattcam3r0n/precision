@@ -64,6 +64,8 @@ class Direction {
     static isLineDirection(from, to, dir) {
         return this.getLineDirection(from, to) === dir;
     }
+
+    
 }
 
 var slope = {

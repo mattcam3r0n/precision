@@ -7,6 +7,7 @@ import PositionCalculator from '/client/lib/PositionCalculator';
 import Marcher from './Marcher';
 import FileIndicator from './FileIndicator';
 import TurnMarker from './TurnMarker';
+import MemberPath from './MemberPath';
 
 class FieldController {
 
@@ -24,8 +25,18 @@ class FieldController {
         this.positionIndicator = this.createPositionIndicator();
         this.positionIndicatorEnabled = true;
         
-        this.testTurnMarker();
+        // this.testTurnMarker();
+        // this.testPath();
+        this.testMemberPath();
         //this.test();
+    }
+
+    testMemberPath() {
+        var p = new MemberPath(this);
+        //this.canvas.add(p.path);
+        p.turnMarkers.forEach(m => {
+            this.canvas.add(m);
+        });
     }
 
     testTurnMarker() {
@@ -41,9 +52,30 @@ class FieldController {
         console.log(p);
         m.set('top', p.y);
         m.set('left', p.x);
+        //m.set('flipX', true); // flipX,flipY to change direction
         this.canvas.add(m);
 
         this.update();
+    }
+
+    testPath() {
+        var pathExpr = "M 0 0 L 60 0 ";
+        var p = new fabric.Path(pathExpr, {
+            strokeDashArray: [2,2],
+            stroke: 'black',
+            strokeWidth: 2,
+            fill: false,
+            left: 120, 
+            top: 80,
+            selectable: false
+        });
+        this.canvas.add(p);
+        p.on('mouseup', function(evt){
+            var p = { x: evt.e.x, y: evt.e.y };
+            var sp = FieldDimensions.snapPoint(StrideType.SixToFive, p);
+            console.log(evt);
+            console.log(sp);
+        });
     }
 
     // test() {            

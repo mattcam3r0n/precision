@@ -1,6 +1,6 @@
 import Direction from '/client/lib/Direction';
 import StepDelta from '/client/lib/StepDelta';
-import FieldPoint from '/client/lib/FieldPoint';
+import { FieldPoint } from '/client/lib/Point';
 import StrideType from '/client/lib/StrideType';
 import StepType from '/client/lib/StepType';
 import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';

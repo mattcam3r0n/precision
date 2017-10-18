@@ -74,6 +74,26 @@ class appStateService {
         }
     }
 
+    // testInsertDrill() {
+    //     class Drill {
+    //         constructor() {
+    //             this.count = 0;
+    //         }
+
+    //         play() {
+    //             this.count = this.count + 1;
+    //         }
+    //     }
+
+    //     Drills.insert(angular.copy(new Drill()), (err, id) => {
+    //         if (err) {
+    //             console.log('unable to insert', err, this.currentDrill);
+    //             return;
+    //         }
+    //         // this.currentDrill._id = id;
+    //     });
+    // }
+
     insertDrill() {
         this.currentDrill.createdDate = new Date();
         this.currentDrill.updatedDate = new Date();

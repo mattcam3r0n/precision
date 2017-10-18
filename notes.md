@@ -105,3 +105,66 @@ alternative algo
 * add all FTL turns to members using addActionAtPoint()
 * use above algo for only block turns
 
+Turn Markers tool
+* button click triggers activateTurnPainter event, args include turnType, selected members
+* FieldController catches event and activates tool
+* cursor changes to crosshair (or drag around turn marker)?
+* find closest member (leader?) to cursor
+* if cursor is on member path, draw a line, show steps
+
+alternative
+* for each leader, draw their path (out to N steps)
+    * each path is a fabric object
+* if cursor intersects path (or is clicked on), it is a valid point for a turn
+    * but can we tell where they clicked, in order to get proper snap point?
+* 
+
+paths
+members
+turns
+
+MemberPath
+    (member, countsToProject)
+    segments
+        from, to, dir
+    turns
+
+MemberPath takes a member, counts to project (N), and calculates segments from the members currentState out N counts. can build a path expr that can be used by fabric.
+
+path is basically a script?
+
+Drill
+    Members
+        Script
+
+Script
+    initialState    
+        x,y
+        action
+    currentState
+        x,y
+        action
+    actions
+
+Action
+    strideType
+    stepType
+    direction
+    deltaX
+    deltaY
+
+MemberPath - takes a member. can get path from any count to any other
+    (member) - 
+    origin - current state of leader
+        x,y
+    segments - build segments from actions/script
+        stride, step, dir, counts
+    actions - relative to origin
+    getPoints(fromCount, toCount)
+
+MemberPositionCalculator.getPathSegments(member, fromCount, toCount)
+    returns a list of segment objects, with action, count, lengthInCounts, x,y
+MemberPositionCalculator.getPathPoints(member, fromCount, toCount)
+    returns a list of points that draw the path fromCount toCount
+MemberPositionCalculator.getActions(member, fromCount, toCount)
+    returns a list of actions and the point and count they occur at

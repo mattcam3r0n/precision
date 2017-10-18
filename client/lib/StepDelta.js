@@ -70,16 +70,35 @@ const deltas = {
 
 class StepDelta {
 
-    static getDelta(strideType, stepType, direction) {
+    /**
+     * 
+     * @param {*} strideType 
+     * @param {*} stepType 
+     * @param {*} direction 
+     * @param {*} steps 
+     */
+    static getDelta(strideType, stepType, direction, steps) {
         strideType = strideType || StrideType.SixToFive;
         stepType = stepType || StepType.Full;
+        steps = steps || 1;
         
         if (stepType === StepType.MarkTime || stepType === StepType.Stop) return 0;
 
         var delta = deltas[strideType][stepType][direction];
 
-        if (stepType === StepType.Half)
-            return { x: delta.x / 2, y: delta.y / 2 };
+        // convert to half steps
+        if (stepType === StepType.Half) {
+            delta = { 
+                deltaX: delta.x / 2, 
+                deltaY: delta.y / 2 
+            };
+        }
+
+        // multiply by steps
+        delta = {
+            deltaX: delta.deltaX * steps,
+            deltaY: delta.deltaY * steps
+        };
 
         return delta;
     }
