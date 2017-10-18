@@ -1,3 +1,4 @@
+import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
 import StepDelta from '/client/lib/StepDelta';
 import StepType from '/client/lib/StepType';
@@ -18,12 +19,56 @@ class MemberPath {
         //     }
         // };
 
-        this.origin = { x: 180, y: 60 };
-        this.points = [
-            { x: 180, y: 60 },
-            { x: 240, y: 60 },
-//            { x: 240, y: 120}
+        this.segments = [
+            {
+                strideType: StrideType.SixToFive,
+                stepType: StepType.Full,
+                direction: Direction.E,
+                counts: 6,
+                point: new Point(180, 60)
+            },
+            {
+                strideType: StrideType.SixToFive,
+                stepType: StepType.Full,
+                direction: Direction.S,
+                counts: 6,
+                point: new Point(240, 60)
+            },
+            {
+                strideType: StrideType.SixToFive,
+                stepType: StepType.Full,
+                direction: Direction.E,
+                counts: 6,
+                point: new Point(240, 120)
+            },
+            {
+                strideType: StrideType.SixToFive,
+                stepType: StepType.Full,
+                direction: Direction.S,
+                counts: 6,
+                point: new Point(300, 120)
+            },
+            {
+                strideType: StrideType.SixToFive,
+                stepType: StepType.Full,
+                direction: Direction.W,
+                counts: 6,
+                point: new Point(300, 180)
+            },
+            {
+                strideType: StrideType.SixToFive,
+                stepType: StepType.Full,
+                direction: Direction.S,
+                counts: 6,
+                point: new Point(240, 180)
+            },
         ];
+        // this.points = [
+        //     new Point(180, 60),
+        //     new Point(240, 60),
+        //     new Point(240, 120),
+        //     new Point(300, 120)
+        // ];
 
         // // get segments for next N counts?
         // this.segments = [{
@@ -67,6 +112,10 @@ class MemberPath {
     //     return points.map(p => p.toFieldPoint());
     // }
 
+    get points() {
+        return this.segments.map(s => s.point);
+    }
+
     createPathExpression(points) {
         var pathExpr = "M ";
         this.points.forEach(p => {
@@ -83,7 +132,7 @@ class MemberPath {
         var pathExpr = this.createPathExpression(this.points);
         var path = new fabric.Path(pathExpr, {
             stroke: "black",
-            strokeWidth: 1,
+            strokeWidth: 2,
             strokeDashArray: [3, 3],
             fill: false,
             selectable: false,
@@ -114,35 +163,45 @@ class MemberPath {
     }
 
     createTurnMarkers() {
-        var points = this.points.slice(1);
+        var self = this;
+        var points = self.points.slice(1); //.map(s => s.point);
         var markers = [];
 
         points.forEach((p, i) => {
-            let m = new TurnMarker();
+            let lineDir = self.segments[i].direction;
+            let strideType = self.segments[i].strideType;
+            let turnDir = self.segments[i + 1].direction;
+
+            let m = new TurnMarker(turnDir, lineDir);
             m.set('left', p.x);
             m.set('top', p.y);
-            //m.set('lockMovementY', true);
             m.point = p;
             m.pointIndex = i + 1;
+            m.direction = lineDir;
             markers.push(m);
 
             var throttledUpdatePath = _.throttle(this.updatePath, 250).bind(this);
             m.on('moving', evt => {
-                // let delta = new Point(m.left, m.top).difference(m.point);
-                
-                // snap line / point to direction?
-                
-                // m.point.x += delta.x;
-                // m.point.y += delta.y;
-
-                // m.point.x = m.left;
-                // m.point.y = m.top;
-
                 var endPoint = new Point(m.left, m.top);
-                var snappedEndPoint = this.snapLineToDirection(this.points[m.pointIndex-1], endPoint, Direction.N);
-//console.log(snappedEndPoint);
+
+                var snappedEndPoint = this.snapLineToDirection(this.points[m.pointIndex-1], endPoint, m.direction);
+                snappedEndPoint = new Point(FieldDimensions.snapPoint(strideType, snappedEndPoint));
+                var delta = snappedEndPoint.difference(m.point);
+
+                // update this point
                 m.point.x = snappedEndPoint.x;
                 m.point.y = snappedEndPoint.y;
+
+                // update following points
+                for(let i = m.pointIndex + 1; i < self.points.length; i++) {
+                    self.points[i].add(delta);
+                }
+                // update following turns
+                for(let i = m.pointIndex; i < self.turnMarkers.length; i++) {
+                    self.turnMarkers[i].left += delta.x;
+                    self.turnMarkers[i].top += delta.y;
+                    self.turnMarkers[i].setCoords();
+                }
                 
                 m.left = snappedEndPoint.x;
                 m.top = snappedEndPoint.y;
@@ -156,34 +215,32 @@ class MemberPath {
     }
 
     snapLineToDirection(from, to, dir) {
-        console.log('from', from);
-        console.log('to', to);
         if (dir == Direction.E || dir == Direction.W) {
-            return {
+            return new Point({
                 x: to.x,
                 y: from.y
-            };
+            });
         }
 
         if (dir == Direction.S || dir == Direction.N) {
-            return {
+            return new Point({
                 x: from.x,
                 y: to.y
-            };
+            });
         }
 
         if (dir == Direction.NE || dir == Direction.SW) {
-            return { // y = mx + b  
+            return new Point({ // y = mx + b  
                 x: to.x,
                 y: from.y - (to.x - from.x) 
-            };
+            });
         }
 
         if (dir == Direction.NW || dir == Direction.SE) {
-            return { // y = mx + b  
+            return new Point({ // y = mx + b  
                 x: to.x,
                 y: from.y + (to.x - from.x)
-            };
+            });
         }
 
     }
