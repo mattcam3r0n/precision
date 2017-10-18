@@ -50,7 +50,10 @@ class StepPoint extends Point {
     }
 
     toFieldPoint() {
-        return FieldDimensions.toFieldPoint(this, this.strideType);
+        var fieldPoint = FieldDimensions.toFieldPoint(this, this.strideType);
+        return new FieldPoint(fieldPoint.x, fieldPoint.y);
+//        return new FieldPoint(FieldDimensions.toFieldPoint(this, this.strideType));
+        
     }
 }
 

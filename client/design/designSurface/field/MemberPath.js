@@ -41,27 +41,27 @@ class MemberPath {
                 counts: 6,
                 point: new Point(240, 120)
             },
-            {
-                strideType: StrideType.SixToFive,
-                stepType: StepType.Full,
-                direction: Direction.S,
-                counts: 6,
-                point: new Point(300, 120)
-            },
-            {
-                strideType: StrideType.SixToFive,
-                stepType: StepType.Full,
-                direction: Direction.W,
-                counts: 6,
-                point: new Point(300, 180)
-            },
-            {
-                strideType: StrideType.SixToFive,
-                stepType: StepType.Full,
-                direction: Direction.S,
-                counts: 6,
-                point: new Point(240, 180)
-            },
+            // {
+            //     strideType: StrideType.SixToFive,
+            //     stepType: StepType.Full,
+            //     direction: Direction.S,
+            //     counts: 6,
+            //     point: new Point(300, 120)
+            // },
+            // {
+            //     strideType: StrideType.SixToFive,
+            //     stepType: StepType.Full,
+            //     direction: Direction.W,
+            //     counts: 6,
+            //     point: new Point(300, 180)
+            // },
+            // {
+            //     strideType: StrideType.SixToFive,
+            //     stepType: StepType.Full,
+            //     direction: Direction.S,
+            //     counts: 6,
+            //     point: new Point(240, 180)
+            // },
         ];
         // this.points = [
         //     new Point(180, 60),
@@ -92,7 +92,6 @@ class MemberPath {
         this.turnMarkers = this.createTurnMarkers();
         this.path = this.createPath();
         
-        console.log(this.path);
         // create turn marker for each segment  (except first)
     }
 
@@ -113,15 +112,24 @@ class MemberPath {
     // }
 
     get points() {
-        return this.segments.map(s => s.point);
+        var points = this.segments.map(s => s.point);
+        return points;
+    }
+
+    getTailPoint() {
+        var lastSegment = this.segments[this.segments.length - 1];
+        var deltaInSteps = StepDelta.getDelta(lastSegment.strideType, lastSegment.stepType, lastSegment.direction, 6);
+        var stepPoint = new StepPoint(lastSegment.strideType, deltaInSteps.deltaX, deltaInSteps.deltaY );
+        var fieldPoint = stepPoint.toFieldPoint();
+        fieldPoint.add(lastSegment.point);
+        return fieldPoint;
     }
 
     createPathExpression(points) {
         var pathExpr = "M ";
-        this.points.forEach(p => {
+        points.forEach(p => {
             pathExpr += p.x + ' ' + p.y + ' L ';
         });
-
         return pathExpr.slice(0, -2);
     }
 
@@ -129,7 +137,10 @@ class MemberPath {
         if (this.path)
             this.field.canvas.remove(this.path);
 
-        var pathExpr = this.createPathExpression(this.points);
+        var points = this.points;
+        points.push(this.getTailPoint());
+        var pathExpr = this.createPathExpression(points);
+
         var path = new fabric.Path(pathExpr, {
             stroke: "black",
             strokeWidth: 2,
