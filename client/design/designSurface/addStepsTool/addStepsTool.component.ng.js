@@ -60,9 +60,6 @@ angular.module('drillApp')
       function deactivate() {
         ctrl.isActivated = false;
         ctrl.field.enablePositionIndicator();
-        destroyMarcherGroup();
-        destroySizableRect();
-        destroyLabels();
         ctrl.field.canvas.selection = true;
       }
 
