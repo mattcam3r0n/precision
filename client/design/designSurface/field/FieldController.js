@@ -32,7 +32,41 @@ class FieldController {
     }
 
     testMemberPath() {
-        var p = new MemberPath(this);
+        var m = {
+            initialState: {
+                strideType: StrideType.SixToFive,
+                stepType: 0,
+                direction: 90,
+                x: 18,
+                y: 6,
+                deltaX: 1,
+                deltaY: 0
+            },
+            currentState: {
+                strideType: StrideType.SixToFive,
+                stepType: 0,
+                direction: 90,
+                x: 18,
+                y: 6,
+                deltaX: 1,
+                deltaY: 0,
+                count: 0                
+            },
+            script: [{
+                strideType: StrideType.SixToFive,
+                stepType: 0,
+                direction: 90,
+                deltaX: 1,
+                deltaY: 0                
+            }, null, null, null, null, null, {
+                strideType: StrideType.SixToFive,
+                stepType: 0,
+                direction: 180,
+                deltaX: 0,
+                deltaY: 1                                
+            }]
+        };
+        var p = new MemberPath(this, m, 24);
         //this.canvas.add(p.path);
         p.turnMarkers.forEach(m => {
             this.canvas.add(m);

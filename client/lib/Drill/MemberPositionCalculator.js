@@ -13,7 +13,8 @@ var deltaY = { 0: -1, 90: 0, 180: 1, 270: 0 };
 class MemberPositionCalculator {
 
     static areStatesSame(state1, state2) {
-        return state1.strideType == state2.strideType
+        return state1 && state2
+            && state1.strideType == state2.strideType
             && state1.stepType == state2.stepType
             && state1.direction == state2.direction
             && state1.deltaX == state2.deltaX

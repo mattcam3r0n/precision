@@ -5,40 +5,41 @@ import StepType from '/client/lib/StepType';
 import StrideType from '/client/lib/StrideType';
 import { Point, StepPoint, FieldPoint } from '/client/lib/Point';
 import TurnMarker from './TurnMarker';
+import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
 
 class MemberPath {
-    constructor(field) {
+    constructor(field, member, counts) {
         this.field = field;
+        this.member = member;
+        this.counts = counts;
 
-        this.segments = [
-            {
-                strideType: StrideType.SixToFive,
-                stepType: StepType.Full,
-                direction: Direction.E,
-                counts: 6,
-                point: new Point(180, 60)
-            },
-            {
-                strideType: StrideType.SixToFive,
-                stepType: StepType.Full,
-                direction: Direction.S,
-                counts: 6,
-                point: new Point(240, 60)
-            },
-            {
-                strideType: StrideType.SixToFive,
-                stepType: StepType.Full,
-                direction: Direction.E,
-                counts: 6,
-                point: new Point(240, 120)
-            },
-        ];
+        this.segments = this.getSegments(member, counts);
         
         // create a path for segments
         this.turnMarkers = this.createTurnMarkers();
         this.path = this.createPath();
         
-        // create turn marker for each segment  (except first)
+    }
+
+    getSegments(member, counts) {
+        var segments = [];
+        var currentState = member.currentState;
+        var lastState = null;
+        var lastPoint = new StepPoint(currentState.strideType, currentState.x, currentState.y).toFieldPoint();
+        for(var i = 0; i < counts; i++) {
+            if (!MemberPositionCalculator.areStatesSame(lastState, currentState)) {
+                segments.push({
+                    strideType: currentState.strideType,
+                    stepType: currentState.stepType,
+                    direction: currentState.direction,
+                    point: lastPoint
+                });
+            }
+            lastState = currentState;
+            lastPoint = new StepPoint(currentState.strideType, currentState.x, currentState.y).toFieldPoint();
+            currentState = MemberPositionCalculator.stepForward(member, currentState);
+        }
+        return segments;
     }
 
     get points() {
@@ -98,6 +99,7 @@ class MemberPath {
             let turnDir = self.segments[i + 1].direction;
 
             let m = new TurnMarker(turnDir, lineDir);
+
             m.set('left', p.x);
             m.set('top', p.y);
             m.point = p;
@@ -171,7 +173,10 @@ class MemberPath {
     }
 
     dispose() {
-
+        this.field.canvas.remove(path);
+        this.turnMarkers.forEach(m => {
+            this.field.canvas.remove(m);            
+        });
     }
 }
 
