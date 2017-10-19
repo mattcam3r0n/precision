@@ -341,7 +341,6 @@ class FieldController {
         };
     }
 
-
     getAbsoluteCoords(object) {
         var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
         var coords = {};
