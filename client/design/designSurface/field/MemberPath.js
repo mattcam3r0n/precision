@@ -9,15 +9,6 @@ import TurnMarker from './TurnMarker';
 class MemberPath {
     constructor(field) {
         this.field = field;
-        // set origin (need this in field points)
-        // this.origin = {
-        //     count: 0,
-        //     stepPoint: {
-        //         strideType: StrideType.SixToFive,
-        //         x: 18,
-        //         y: 6
-        //     }
-        // };
 
         this.segments = [
             {
@@ -41,52 +32,7 @@ class MemberPath {
                 counts: 6,
                 point: new Point(240, 120)
             },
-            // {
-            //     strideType: StrideType.SixToFive,
-            //     stepType: StepType.Full,
-            //     direction: Direction.S,
-            //     counts: 6,
-            //     point: new Point(300, 120)
-            // },
-            // {
-            //     strideType: StrideType.SixToFive,
-            //     stepType: StepType.Full,
-            //     direction: Direction.W,
-            //     counts: 6,
-            //     point: new Point(300, 180)
-            // },
-            // {
-            //     strideType: StrideType.SixToFive,
-            //     stepType: StepType.Full,
-            //     direction: Direction.S,
-            //     counts: 6,
-            //     point: new Point(240, 180)
-            // },
         ];
-        // this.points = [
-        //     new Point(180, 60),
-        //     new Point(240, 60),
-        //     new Point(240, 120),
-        //     new Point(300, 120)
-        // ];
-
-        // // get segments for next N counts?
-        // this.segments = [{
-        //     strideType: StrideType.SixToFive,
-        //     stepType: StepType.Full,
-        //     direction: Direction.E,
-        //     counts: 6
-        // }, {
-        //     strideType: StrideType.SixToFive,
-        //     stepType: StepType.Full,
-        //     direction: Direction.S,
-        //     counts: 6
-        // }, {
-        //     strideType: StrideType.SixToFive,
-        //     stepType: StepType.Full,
-        //     direction: Direction.E,
-        //     counts: 6
-        // }];
         
         // create a path for segments
         this.turnMarkers = this.createTurnMarkers();
@@ -94,22 +40,6 @@ class MemberPath {
         
         // create turn marker for each segment  (except first)
     }
-
-    // getPathPoints() {
-    //     var origin = new StepPoint(this.origin.stepPoint.strideType, 
-    //                                         this.origin.stepPoint.x, 
-    //                                         this.origin.stepPoint.y);
-        
-    //     var point = origin;
-    //     var points = [point];
-    //     this.segments.forEach(s => {
-    //         let delta = StepDelta.getDelta(s.strideType, s.stepType, s.direction, s.counts);
-    //         point = new StepPoint(s.strideType, point.x + delta.deltaX, point.y + delta.deltaY);
-    //         points.push( point );
-    //     });
-
-    //     return points.map(p => p.toFieldPoint());
-    // }
 
     get points() {
         var points = this.segments.map(s => s.point);
@@ -154,23 +84,7 @@ class MemberPath {
     }
 
     updatePath() {
-        // this.path.path = [];
-        // this.path.path.push(['M', this.points[0].x, this.points[0].y]);
-        // for(var i = 1; i < this.points.length; i++) {
-        //     this.path.path.push(['L', this.points[i].x, this.points[i].y]);
-        // }
-
-        // var canvas = this.field.canvas;
-        // canvas.remove(this.path);
-        // this.path = null;
-
         this.path = this.createPath();
-        // canvas.add(this.path);
-
-        //canvas.renderAll();
-        // console.log(this.path);
-        // this.path.setCoords();
-        // this.path.canvas.renderAll();
     }
 
     createTurnMarkers() {

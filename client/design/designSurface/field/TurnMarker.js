@@ -101,13 +101,7 @@ var TurnMarker = fabric.util.createClass(fabric.Group, {
     originX: 'center',
     originY: 'center',
     angle: 0,
-    // left: fieldPoint.x,
-    // top: fieldPoint.y,
-    // angle: initialState.direction, // angle of object. correspond to direction.
     hasControls: false,
-    // lockMovementX: true,
-    // lockMovementY: true,
-    // hoverCursor: 'pointer',
 
     initialize: function (turnDir, lineDir, options) {
         options = options || {};
@@ -115,27 +109,19 @@ var TurnMarker = fabric.util.createClass(fabric.Group, {
         var children = [];
 
         var rotation = rotationMap[lineDir][turnDir];
-    console.log(lineDir, turnDir, rotation);
+
         options.angle = rotation.angle;
         options.flipX = rotation.flipX;
         options.flipY = rotation.flipY;
 
         var rect = new fabric.Rect({
             fill: false,
-//             stroke: 'black',
             stroke: 'rgba(0,0,0,0)',
             strokeWidth: 1,
             height: 30,
             width: 30            
         });
         children.push(rect);
-        // var pathExpr = "M 0 0 L 20 0";
-        // var path = new fabric.Path(pathExpr, {
-        //     fill: false,
-        //     stroke: 'rgba(0,0,0,0)',
-        //     strokeWidth: 5,
-        // });
-        // children.push(path);
 
         var pathExpr = "M 0 15 L 15 15 L 15 30 M 15 30 L 10 20 M 15 30 L 20 20";
         var path = new fabric.Path(pathExpr, {
