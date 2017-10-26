@@ -4,6 +4,7 @@ import WalkThru from '/client/lib/walkThru/WalkThru';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
 import DrillPlayer from '/client/lib/drill/DrillPlayer';
 import DesignKeyboardHandler from './DesignKeyboardHandler';
+import MemberSelection from '/client/lib/drill/MemberSelection';
 
 import { Meteor } from 'meteor/meteor';
 
@@ -47,7 +48,7 @@ angular.module('drillApp')
       $scope.drill = drill;
       drillBuilder = new DrillBuilder(drill);
       drillPlayer = new DrillPlayer(drill);
-      keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer);
+      keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer, $rootScope);
       drillPlayer.goToBeginning();
       drillBuilder.deselectAll();
       triggerDrillStateChanged(); // to force repaint
@@ -114,13 +115,15 @@ angular.module('drillApp')
     $scope.$on('membersSelected', (evt, args) => {
       drillBuilder.select(args.members);
 
+      var memberSelection = new MemberSelection(args.members);
+
       triggerDrillStateChanged({
         selectedMembers: args.members,
         selectedFiles: drillBuilder.getSelectedFiles(),
         selectedRanks: []
       });
 
-      $rootScope.$broadcast('design:activateAddStepsTool');
+      $rootScope.$broadcast('design:activateAddTurnsTool', { memberSelection });
       // drillBuilder.getSelectedFiles().forEach(f => {
       //   console.log(f);
       //   console.log(f.getLinePoints());

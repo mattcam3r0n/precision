@@ -1,8 +1,8 @@
-<div draggable class="add-steps-tool panel panel-default" ng-show="$ctrl.isActivated">
+<div draggable class="add-turns-tool panel panel-default" ng-show="$ctrl.isActivated">
     <div class="panel-heading text-center drag-handle">
         <i class="fa fa-bars fa-sm drag-handle"></i>
     </div>
-    <div id="addStepsToolbar" class="panel-body floating-toolbar btn-group-vertical">
+    <div id="addTurnsToolbar" class="panel-body floating-toolbar btn-group-vertical">
         <!-- <div> -->
             <table>
                 <tr>
@@ -41,52 +41,52 @@
             <table>
                 <tr>
                     <td>
-                        <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members">
+                        <button ng-click="setTurnDirection('NW')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
                             <i class="fa fa-caret-up fa-lg fa-rotate-NW context-button"></i>
                         </button>
                     </td>
                     <td>
-                        <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members">
+                        <button ng-click="setTurnDirection('N')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
                             <i class="fa fa-caret-up fa-lg context-button"></i>
                         </button>
                     </td>
                     <td>
-                        <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members">
+                        <button ng-click="setTurnDirection('NE')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
                             <i class="fa fa-caret-up fa-lg fa-rotate-NE context-button"></i>
                         </button>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members">
+                        <button ng-click="setTurnDirection('W')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
                             <i class="fa fa-caret-left fa-lg context-button"></i>
                         </button>
                     </td>
                     <td>
-                        <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members">
+                        <button ng-click="setTurnDirection('CM')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
                             <i class="fa fa-long-arrow-up fa-sm context-button"></i>
                             <i class="fa fa-long-arrow-down fa-sm context-button"></i>
                         </button>
                     </td>
                     <td>
-                        <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members">
+                        <button ng-click="setTurnDirection('E')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
                             <i class="fa fa-caret-right fa-lg context-button"></i>
                         </button>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members">
+                        <button ng-click="setTurnDirection('SW')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
                             <i class="fa fa-caret-up fa-lg fa-rotate-SW context-button"></i>
                         </button>
                     </td>
                     <td>
-                        <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members">
+                        <button ng-click="setTurnDirection('S')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
                             <i class="fa fa-caret-down fa-lg context-button"></i>
                         </button>
                     </td>
                     <td>
-                        <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members">
+                        <button ng-click="setTurnDirection('SE')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
                             <i class="fa fa-caret-up fa-lg fa-rotate-SE context-button"></i>
                         </button>
                     </td>

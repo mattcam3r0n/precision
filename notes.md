@@ -168,3 +168,21 @@ MemberPositionCalculator.getPathPoints(member, fromCount, toCount)
     returns a list of points that draw the path fromCount toCount
 MemberPositionCalculator.getActions(member, fromCount, toCount)
     returns a list of actions and the point and count they occur at
+
+Turn Markers -- naive approach
+* to get started, just let them place markers in path of members. don't worry too much 
+about guidelines, editing, etc. lets just get steps in to the drill.
+* place markers, then project members through them to add to script
+* place as many markers as needed, click a save button to apply
+
+
+Turn Painter
+* clicking one of the turn buttons sends message to activate turn painter
+* FieldController catches message
+* event args indicate turn type and direction
+* cursor changes to crosshair (eventually turn type)
+* catch clicks on field canvas, create turn marker at that point
+* keep list of new turns / points
+* turns can be moved and deleted. need to catch these events and update turn list
+* click apply/save to apply changes
+* possibly have a preview button?

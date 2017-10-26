@@ -3,12 +3,18 @@ import Direction from '/client/lib/Direction';
 import StepType from '/client/lib/StepType';
 
 class DesignKeyboardHandler {
-    constructor(drillBuilder, drillPlayer) {
+    constructor(drillBuilder, drillPlayer, $rootScope) {
         this.drillBuilder = drillBuilder;
         this.drillPlayer = drillPlayer;
+        this.rootScope = $rootScope
     }
 
     handlers = {
+        "Backspace": (e) => {
+            // broadcast delete key event?
+            this.rootScope.$broadcast('design:backspacePressed');
+        },
+
         "ArrowUp": (e) => {
             if (e.altKey) {
                 this.drillBuilder.addStep(StrideType.SixToFive, StepType.Full, Direction.N);

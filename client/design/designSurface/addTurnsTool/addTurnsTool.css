@@ -1,29 +1,29 @@
-.add-steps-tool {
+.add-turns-tool {
     -visibility: hidden;
     position: absolute;
 }
 
-.add-steps-tool ul.dropdown-menu {
+.add-turns-tool ul.dropdown-menu {
     min-width: 200px;
 }
 
-.add-steps-tool .dropdown-menu li {
+.add-turns-tool .dropdown-menu li {
     width: 40px;
 }
 
-.add-steps-tool ul.dropdown-menu.direction-picker {
+.add-turns-tool ul.dropdown-menu.direction-picker {
     min-width: 160px;
 }
 
-.add-steps-tool .panel-body, .panel-heading {
+.add-turns-tool .panel-body, .panel-heading {
     padding: 0;
 }
 
-/* .add-steps-tool table {
+/* .add-turns-tool table {
     width: 100%;
 } */
 
-.add-steps-tool .direction-button button {
+.add-turns-tool .direction-button button {
     height: 32px;
     width: 32px;
     padding: 0;
