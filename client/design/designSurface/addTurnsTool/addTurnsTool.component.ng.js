@@ -74,6 +74,7 @@ angular.module('drillApp')
         ctrl.field.canvas.defaultCursor = 'default';
         destroyGuideline();
         destroyGuidePaths();
+        destroyTurnMarkers();
       }
 
       function initGuidePaths() {
@@ -183,8 +184,8 @@ angular.module('drillApp')
 
       function addTurnMarker(stepPoint) {
         var guidePath = findGuidePath(stepPoint);
-        var turnDirection = ctrl.turnDirection || guidePath.firstPoint.direction;
-
+        var turnDirection = ctrl.turnDirection == undefined ? guidePath.firstPoint.direction : ctrl.turnDirection;
+        
         // don't allow turn to be added if not on a guidepath
         if (!guidePath) return;
         guidePath.add({
@@ -195,7 +196,7 @@ angular.module('drillApp')
 
         var fp = stepPoint.toFieldPoint();
 
-        var tm = new TurnMarker(turnDirection, Direction.N, {
+        var tm = new TurnMarker(turnDirection, {
           left: fp.x,
           top: fp.y
         });
@@ -234,6 +235,14 @@ angular.module('drillApp')
         }
 
         ctrl.field.canvas.remove(target);
+      }
+
+      function destroyTurnMarkers() {
+        if (!newTurns) return;
+        newTurns.forEach(t => {
+          ctrl.field.canvas.remove(t.turnMarker);
+          t.turnMarker = null;
+        });
       }
 
       function positionTools(obj) {

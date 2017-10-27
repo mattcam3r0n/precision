@@ -2,98 +2,6 @@ import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
 import StrideType from '/client/lib/StrideType';
 
-// line dir, turn dir
-var rotationMap = {
-    [Direction.N]: {
-        [Direction.W]: {
-            angle: 90,
-            flipX: false,
-            flipY: true
-        },
-        [Direction.E]: {
-            angle: 90,
-            flipX: true,
-            flipY: true            
-        },
-        [Direction.S]: {
-            angle: 0,
-            flipX: false,
-            flipY: false            
-        },
-        [Direction.N]: {
-            angle: 0,
-            flipX: false,
-            flipY: false            
-        }
-    },
-    [Direction.S]: {
-        [Direction.W]: {
-            angle: 90,
-            flipX: false,
-            flipY: false
-        },
-        [Direction.E]: {
-            angle: 90,
-            flipX: false,
-            flipY: true
-        },
-        [Direction.S]: {
-            angle: 0,
-            flipX: false,
-            flipY: false            
-        },
-        [Direction.N]: {
-            angle: 0,
-            flipX: false,
-            flipY: false            
-        }
-    },
-    [Direction.E]: {
-        [Direction.W]: {
-            angle: 90,
-            flipX: false,
-            flipY: false
-        },
-        [Direction.E]: {
-            angle: 270,
-            flipX: false,
-            flipY: true            
-        },
-        [Direction.S]: {
-            angle: 0,
-            flipX: false,
-            flipY: false            
-        },
-        [Direction.N]: {
-            angle: 0,
-            flipX: false,
-            flipY: false            
-        }
-    },
-    [Direction.W]: {
-        [Direction.W]: {
-            angle: 90,
-            flipX: false,
-            flipY: false
-        },
-        [Direction.E]: {
-            angle: 270,
-            flipX: false,
-            flipY: true            
-        },
-        [Direction.S]: {
-            angle: 0,
-            flipX: true,
-            flipY: false            
-        },
-        [Direction.N]: {
-            angle: 0,
-            flipX: true,
-            flipY: true            
-        }
-    },
-};
-
 
 var TurnMarker = fabric.util.createClass(fabric.Group, {
     type: "TurnMarker",
@@ -103,16 +11,12 @@ var TurnMarker = fabric.util.createClass(fabric.Group, {
     angle: 0,
     hasControls: false,
 
-    initialize: function (turnDir, lineDir, options) {
+    initialize: function (turnDir, options) {
         options = options || {};
         var self = this;
         var children = [];
 
-        var rotation = rotationMap[lineDir][turnDir];
-
-        options.angle = rotation.angle;
-        options.flipX = rotation.flipX;
-        options.flipY = rotation.flipY;
+        options.angle = turnDir;
 
         var rect = new fabric.Rect({
             fill: false,
@@ -123,11 +27,11 @@ var TurnMarker = fabric.util.createClass(fabric.Group, {
         });
         children.push(rect);
 
-        var pathExpr = "M 0 15 L 15 15 L 15 30 M 15 30 L 10 20 M 15 30 L 20 20";
+        var pathExpr = "M 15 15 L 15 0 L 10 5 M 15 0 L 20 5 "; //L 15 30 M 15 30 L 10 20 M 15 30 L 20 20";
         var path = new fabric.Path(pathExpr, {
             fill: false,
             stroke: 'black',
-            strokeWidth: 2,
+            strokeWidth: 3,
         });
         children.push(path);
 
