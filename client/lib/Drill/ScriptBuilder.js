@@ -46,7 +46,7 @@ class ScriptBuilder {
             // problem: member may not currently be facing that dir, but eventually will
         // var lineDir = Direction.getLineDirection({ x: member.currentState.x, y: member.currentState.y }, stepPoint );
         // as a temporary solution, calc a rough number of steps and use that as limit?
-        var limit = (Math.abs(member.currentState.x - stepPoint.x) || Math.abs(member.currentState.y - stepPoint.y)) + 2;
+        var limit = 100; //(Math.abs(member.currentState.x - stepPoint.x) || Math.abs(member.currentState.y - stepPoint.y)) + 2;
 
         // advance member until at that point (failsafe to prevent infinite loop?)
         //  then add action
@@ -64,6 +64,10 @@ class ScriptBuilder {
         }
 
         return false;
+    }
+
+    static deleteActionAtCount(member, count) {
+        member.script[count - 1] = null;
     }
 
     static fromShorthand(script) {

@@ -32,7 +32,7 @@ class FileMember {
     getStepsToLeader() {
         var me = this.member;
         if (!this.following) 
-            return null;
+            return 0;
         var leader = this.following.member;
         var leaderPos = Object.assign({}, leader.currentState); // important! use copy of current state
         var myPos = me.currentState;

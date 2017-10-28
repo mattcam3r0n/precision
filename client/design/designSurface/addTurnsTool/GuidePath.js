@@ -1,11 +1,14 @@
 import StrideType from '/client/lib/StrideType';
+import StepType from '/client/lib/StepType';
+import StepDelta from '/client/lib/StepDelta';
 import Direction from '/client/lib/Direction';
 import { FieldPoint, StepPoint } from '/client/lib/Point';
 
 class GuidePath {
-    constructor(initialPoint) {
+    constructor(file, initialPoint) {
         this.initialPoint = initialPoint;
         this.points = [initialPoint];
+        this.file = file;
     }
 
     get firstPoint() {
@@ -17,7 +20,10 @@ class GuidePath {
     }
 
     add(point) {
+        var prevPoint = this.lastPoint;
+        point.stepsFromPrevious = StepDelta.getStepsBetweenPoints(prevPoint.strideType || StrideType.SixToFive, prevPoint.stepType || StepType.Full, point, prevPoint);
         this.points.push(point);
+console.log(this.points);
     }
 
     isInPath(point) {
