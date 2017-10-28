@@ -186,3 +186,6 @@ Turn Painter
 * turns can be moved and deleted. need to catch these events and update turn list
 * click apply/save to apply changes
 * possibly have a preview button?
+
+Tools
+* drop downs on menu? context menu? foating palettes?

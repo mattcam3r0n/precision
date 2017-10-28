@@ -115,20 +115,13 @@ angular.module('drillApp')
     $scope.$on('membersSelected', (evt, args) => {
       drillBuilder.select(args.members);
 
-      var memberSelection = new MemberSelection(args.members);
+      var memberSelection = new MemberSelection(drillBuilder.getSelectedMembers());
 
       triggerDrillStateChanged({
-        selectedMembers: args.members,
-        selectedFiles: drillBuilder.getSelectedFiles(),
-        selectedRanks: []
+        memberSelection: memberSelection
       });
 
       $rootScope.$broadcast('design:activateAddTurnsTool', { memberSelection });
-      // drillBuilder.getSelectedFiles().forEach(f => {
-      //   console.log(f);
-      //   console.log(f.getLinePoints());
-      // });
-//      console.log(drillBuilder.getSelectedFiles());
     });
 
     $scope.$on('designTool:deselectAll', (evt, args) => {
