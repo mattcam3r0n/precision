@@ -189,3 +189,26 @@ Turn Painter
 
 Tools
 * drop downs on menu? context menu? foating palettes?
+* show path tool
+    * shows paths for all members? just selected?
+* show/hide unselected members (to get them out of the way when editing)
+    * 
+
+Context Menu
+* Add Members
+* Delete Members
+* Show Paths
+* Hide Paths
+* Selection
+    * select all
+    * deselect all
+    * select followers
+    * every other?
+* 
+
+Path Editing
+* turn on path forecasting (can adjust how far out to show)
+    * only for leaders, or everyone?
+* can delete or move turns
+* can add turns in front of or on path
+* only for selected members? or everybody? is it necessary to select? (need it for file detection?)

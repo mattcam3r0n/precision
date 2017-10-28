@@ -5,6 +5,8 @@ import MemberFactory from '/client/lib/drill/MemberFactory';
 import StepFactory from '/client/lib/drill/StepFactory';
 import FileSelector from './FileSelector';
 import MemberSelection from './MemberSelection';
+import ScriptBuilder from './ScriptBuilder';
+import Action from './Action';
 
 class AddMode {
     static get Block() {
@@ -56,19 +58,32 @@ class DrillBuilder {
     }
     
     addStep(strideType, stepType, direction, deltaX, deltaY) {
-        var step = StepFactory.createStep(strideType, stepType, direction);
+        // var step = StepFactory.createStep(strideType, stepType, direction);
 
-        if (this.addMode == AddMode.File) {
-            var files = this.selectedFiles;
-            files.forEach(f => {
-                f.addStep(step);
-            });
-        } else {
-            var members = this.selectedMembers;
-            members.forEach(m => {
-                m.script.push(step);
-            });    
-        }
+        // if (this.addMode == AddMode.File) {
+        //     var files = this.selectedFiles;
+        //     files.forEach(f => {
+        //         f.addStep(step);
+        //     });
+        // } else {
+        //     var members = this.selectedMembers;
+        //     members.forEach(m => {
+        //         m.script.push(step);
+        //     });    
+        // }
+
+        var action = new Action({
+            strideType: strideType,
+            stepType: stepType,
+            direction: direction,
+            deltaX: deltaX,
+            deltaY: deltaY
+        });
+
+        var members = this.selectedMembers;
+        members.forEach(m => {
+            ScriptBuilder.addActionAtCount(m, action, this.drill.count + 1);
+        });
 
         this.drill.isDirty = true;
     }

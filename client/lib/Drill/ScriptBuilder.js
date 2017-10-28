@@ -67,6 +67,7 @@ class ScriptBuilder {
     }
 
     static deleteActionAtCount(member, count) {
+        // TODO: ?? is this needed??
         member.script[count - 1] = null;
     }
 
