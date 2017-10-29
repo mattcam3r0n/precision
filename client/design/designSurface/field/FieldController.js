@@ -264,6 +264,21 @@ class FieldController {
 
         return coords;            
     }
+
+    getLeftmostMarcherPosition() {
+        var sorted = _.sortBy(this.marchers, m => {
+            return m.left;
+        });
+        
+        var leftmost = _.first(sorted);
+
+        return {
+            x: leftmost.left,
+            y: leftmost.top,
+            left: leftmost.left,
+            top: leftmost.top
+        };
+    }
 }
 
 

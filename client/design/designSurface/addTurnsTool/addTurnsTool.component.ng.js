@@ -285,14 +285,21 @@ angular.module('drillApp')
 
       function positionTools(obj) {
         // TODO
-        // var absCoords = ctrl.field.getAbsoluteCoords(obj);
-        // var left = absCoords.left - 50;
-        // if (left < 0) {
-        //   left = absCoords.left + absCoords.width + 20;
-        // }
-        // var top = absCoords.top - 100;
-        toolDiv.style.left = 100 + 'px';
-        toolDiv.style.top = 100 + 'px';
+        // * make this better
+        // * take selected members in to account?
+
+        // get leftmost marcher
+        var leftmost = ctrl.field.getLeftmostMarcherPosition();
+
+        var absCoords = ctrl.field.getAbsoluteCoords(leftmost);
+        var left = absCoords.left - 100;
+        if (left < 0) {
+          left = absCoords.left + absCoords.width + 20;
+        }
+        var top = absCoords.top - 100;
+
+        toolDiv.style.left = left + 'px';
+        toolDiv.style.top = top + 'px';
       }
 
 
