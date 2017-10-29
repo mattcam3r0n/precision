@@ -20,6 +20,10 @@ angular.module('drillApp')
         $rootScope.$broadcast('designTool:activateAddMemberTool');        
       }
 
+      $scope.deleteSelectedMembers = function() {
+        $rootScope.$broadcast('designTool:deleteSelectedMembers');
+      }
+
       $scope.drawPath = function() {
         $rootScope.$broadcast('designTool:activateAddTurnsTool');                
       }

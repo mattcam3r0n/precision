@@ -53,6 +53,18 @@ class DrillBuilder {
         this.drill.isDirty = true;
     }
 
+    deleteSelectedMembers() {
+        if (!this.drill.members)
+            return;
+
+        this.getSelectedMembers().forEach(m => {
+            let i = this.drill.members.indexOf(m);
+            if (i > -1) {
+                this.drill.members.splice(i, 1);
+            }
+        });
+    }
+
     createMember(strideType, dir, point) {
         return MemberFactory.createMember(strideType, dir, point);
     }

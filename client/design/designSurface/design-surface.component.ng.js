@@ -33,7 +33,7 @@ angular.module('drillApp')
       });
 
       $scope.$on('design:membersAdded', function(event, args) {
-        ctrl.field.membersChanged(args.newMembers);
+        ctrl.field.membersChanged();
       });
 
       $scope.$on('designSurface:resize', function(){

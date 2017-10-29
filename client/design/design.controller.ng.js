@@ -38,12 +38,8 @@ angular.module('drillApp')
         .then(openDrill);
       });
 
+      // bootstrap follow toggle button
       $("[name='follow-switch']").bootstrapSwitch();
-
-      // appStateService.testInsertDrill();
-      // appStateService.getDrill('jS3yAf6qLAhXWr4sf').then((d) => {
-      //   console.log(d);
-      // });
     }
 
     function openDrill(drill) {
@@ -128,6 +124,12 @@ angular.module('drillApp')
 
     $scope.$on('designTool:activateAddTurnsTool', (evt, args) => {      
       $rootScope.$broadcast('design:activateAddTurnsTool', { memberSelection: drillBuilder.getMemberSelection() }); 
+    });
+
+    $scope.$on('designTool:deleteSelectedMembers', (evt, args) => {
+      drillBuilder.deleteSelectedMembers();
+      $scope.$broadcast('design:membersAdded', args);      
+      triggerDrillStateChanged();
     });
 
     $scope.$on('designTool:selectAll', (evt, args) => {
