@@ -11,7 +11,12 @@ class DesignKeyboardHandler {
 
     handlers = {
         "Backspace": (e) => {
-            // broadcast delete key event?
+            if (e.altKey) {
+                this.rootScope.$broadcast('designTool:deleteBackspace');
+                return;
+            }
+
+            // re-broadcast delete key event
             this.rootScope.$broadcast('design:backspacePressed');
         },
 

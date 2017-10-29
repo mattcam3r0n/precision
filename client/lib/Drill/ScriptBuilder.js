@@ -80,6 +80,13 @@ class ScriptBuilder {
         }
     }
 
+    static deleteBackspace(member, count) {
+        if (count >= member.script.length)
+            return;
+
+        member.script[count] = null;
+    }
+
     static fromShorthand(script) {
         // expect something like 'E E E E E E S S S S S S'
 

@@ -111,7 +111,20 @@ class DrillBuilder {
 
         this.drill.isDirty = true;        
     }
-    
+
+        /**
+     * Backup one step and delete
+     */
+    deleteBackspace(deleteCount) {
+        var members = this.getSelectedMembers();
+
+        members.forEach(m => {
+            ScriptBuilder.deleteBackspace(m, deleteCount - 1);
+        });
+
+        this.drill.isDirty = true;        
+    }
+
     createScriptNode(strideType, stepType, dir, dx, dy) {
         return StepFactory.createStep(strideType, stepType, dir, dx, dy);
     }

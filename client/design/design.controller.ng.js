@@ -142,6 +142,13 @@ angular.module('drillApp')
       triggerDrillStateChanged();
     });
 
+    $scope.$on('designTool:deleteBackspace', (evt, args) => {
+      var deleteCount = $scope.drill.count;
+      drillPlayer.stepBackward();
+      drillBuilder.deleteBackspace(deleteCount);
+      triggerDrillStateChanged();
+    });
+
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {
 

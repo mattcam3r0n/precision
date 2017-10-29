@@ -36,6 +36,10 @@ angular.module('drillApp')
         $rootScope.$broadcast('designTool:selectAll');
       }
 
+      $scope.deleteBackspace = function() {
+        $rootScope.$broadcast('designTool:deleteBackspace');
+      }
+
       $scope.deleteForward = function() {
         $rootScope.$broadcast('designTool:deleteForward');
       }
