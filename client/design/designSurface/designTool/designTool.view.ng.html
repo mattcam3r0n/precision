@@ -5,48 +5,73 @@
     </div>
     <div class="panel-body">
         <div id="designToolbar" class="floating-toolbar btn-group-vertical">
-            <button ng-click="addMembers()" id="addMembers" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members"><i class="fa fa-play fa-rotate-270"></i>&nbsp;Add</button>
-            <button id="drawPathTool" ng-click="drawPath()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Draw Path"><i class="fa fa-pencil"></i>&nbsp;Draw</button>
-            <div class="btn-group" data-toggle="tooltip" data-placement="right" title="File Spacing">
-                <button id="setFileSpacing" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">6/5</button>
-                <ul class="dropdown-menu spacing-dropdown list-inline" data-toggle="tooltip" data-placement="right" title="File Spacing">
-                    <li data-value="2"><a href="#" ng-click="setFileSpacing(2)">6/5</a></li>
-                    <li data-value="3"><a href="#" ng-click="setFileSpacing(3)">8/5</a></li>
+            <!-- <button ng-click="addMembers()" id="addMembers" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members">
+                <i class="fa fa-play fa-rotate-270"></i>&nbsp;Add</button> -->
+
+            <div class="btn-group" style="display: flex;">
+                <button ng-click="addMembers()" id="addMembers" type="button" class="btn btn-default">
+                    <i class="fa fa-play fa-rotate-270"></i>&nbsp;Add</button>
+                </button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    style="width: 50px;">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#">Add Members</a>
+                    </li>
+                    <li>
+                        <a href="#">Delete Selected Members</a>
+                    </li>
                 </ul>
             </div>
-            <div class="btn-group" data-toggle="tooltip" data-placement="right" title="File Spacing">
-                    <button id="setFileSpacing" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">FTL</button>
-                    <ul class="dropdown-menu spacing-dropdown list-inline" data-toggle="tooltip" data-placement="right" title="File Spacing">
-                        <li data-value="2"><a href="#" ng-click="setFileSpacing(2)">FTL</a></li>
-                        <li data-value="3"><a href="#" ng-click="setFileSpacing(3)">BLK</a></li>
-                    </ul>
-                </div>
-                <button ng-click="selectAll()" class="btn btn-default select-all" title="Select All">
-                    <img src="./selectAll.png"/>
-                    <!-- <span class="fa-stack" >
-                        <i class="fa fa-play fa-stack-2x select-all-background" ></i>
-                        <i class="fa fa-play fa-stack-2x select-all-outline" ></i>
-                        <i class="fa fa-play fa-stack-1x select-all-inner" ></i>
-                      </span>                    
-                      <span class="fa-stack" >
-                        <i class="fa fa-play fa-stack-2x select-all-background" ></i>
-                        <i class="fa fa-play fa-stack-2x select-all-outline" ></i>
-                        <i class="fa fa-play fa-stack-1x select-all-inner" ></i>
-                      </span>                     -->
+
+            <div class="btn-group" style="display: flex;">
+                <button id="drawPathTool" ng-click="drawPath()" type="button" class="btn btn-default">
+                    <i class="fa fa-pencil"></i>&nbsp;Paths
                 </button>
-                <button ng-click="deselectAll()" class="btn btn-default select-all" title="Deselect All">
-                        <img src="./deselectAll.png"/>
-                        <!-- <span class="fa-stack" >
-                        <i class="fa fa-play fa-stack-2x select-all-background" ></i>
-                        <i class="fa fa-play fa-stack-2x deselect-all-outline" ></i>
-                        <i class="fa fa-play fa-stack-1x select-all-inner" ></i>
-                    </span>                    
-                    <span class="fa-stack" >
-                        <i class="fa fa-play fa-stack-2x select-all-background" ></i>
-                        <i class="fa fa-play fa-stack-2x deselect-all-outline" ></i>
-                        <i class="fa fa-play fa-stack-1x select-all-inner" ></i>
-                    </span>                     -->
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    style="width: 50px;">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
                 </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#">Edit Paths</a>
+                    </li>
+                    <li>
+                        <a href="#">Show/Hide Paths</a>
+                    </li>
+                    <li>
+                        <a href="#">Add Steps</a>
+                    </li>
+                    <li>
+                        <a href="#">Delete Forward</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="btn-group" style="display: flex;">
+                <button type="button" class="btn btn-default">Select</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    style="width: 50px;">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li data-value="">
+                        <a href="#" ng-click="selectAll()">Select All</a>
+                    </li>
+                    <li data-value="">
+                        <a href="#" ng-click="deselectAll()">Deselect All</a>
+                    </li>
+                    <li data-value="">
+                        <a href="#" ng-click="">Select Followers</a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
 
     </div>

@@ -38,6 +38,8 @@ angular.module('drillApp')
         .then(openDrill);
       });
 
+      $("[name='follow-switch']").bootstrapSwitch();
+
       // appStateService.testInsertDrill();
       // appStateService.getDrill('jS3yAf6qLAhXWr4sf').then((d) => {
       //   console.log(d);

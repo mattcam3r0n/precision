@@ -80,7 +80,7 @@ class DrillBuilder {
             deltaY: deltaY
         });
 
-        var members = this.selectedMembers;
+        var members = this.getSelectedMembers();
         members.forEach(m => {
             ScriptBuilder.addActionAtCount(m, action, this.drill.count + 1);
         });

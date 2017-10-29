@@ -13,6 +13,7 @@ angular.module('drillApp')
     controller: function ($scope, $window, $rootScope) {
       var ctrl = this;
 
+      $("[name='follow-switch']").bootstrapSwitch();
       ctrl.isActivated = true;
 
       $scope.addMembers = function() {
