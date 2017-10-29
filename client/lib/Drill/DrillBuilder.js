@@ -132,6 +132,10 @@ class DrillBuilder {
         this.selectedFiles = [];
     }
 
+    getMemberSelection() {
+        return new MemberSelection(this.getSelectedMembers());
+    }
+
     getSelectedMembers() {
         return this.drill.members.filter(m => m.isSelected);
     }

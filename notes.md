@@ -204,6 +204,8 @@ Context Menu
     * deselect all
     * select followers
     * every other?
+    * Hide Unselected
+    * Show Unselected
 * 
 
 Path Editing

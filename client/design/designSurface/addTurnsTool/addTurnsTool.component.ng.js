@@ -191,6 +191,9 @@ angular.module('drillApp')
 
       function addTurnMarker(stepPoint) {
         var guidePath = findGuidePath(stepPoint);
+
+        if (!guidePath) return;
+        
         var turnDirection = ctrl.turnDirection == undefined ? guidePath.firstPoint.direction : ctrl.turnDirection;
         
         // don't allow turn to be added if not on a guidepath

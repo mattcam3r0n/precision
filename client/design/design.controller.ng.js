@@ -114,19 +114,18 @@ angular.module('drillApp')
     // handle selection event
     $scope.$on('membersSelected', (evt, args) => {
       drillBuilder.select(args.members);
-
-      var memberSelection = new MemberSelection(drillBuilder.getSelectedMembers());
-
       triggerDrillStateChanged({
-        memberSelection: memberSelection
+        memberSelection: drillBuilder.getMemberSelection()
       });
-
-      $rootScope.$broadcast('design:activateAddTurnsTool', { memberSelection });
     });
 
     $scope.$on('designTool:deselectAll', (evt, args) => {
       drillBuilder.deselectAll();
       triggerDrillStateChanged();
+    });
+
+    $scope.$on('designTool:activateAddTurnsTool', (evt, args) => {      
+      $rootScope.$broadcast('design:activateAddTurnsTool', { memberSelection: drillBuilder.getMemberSelection() }); 
     });
 
     $scope.$on('designTool:selectAll', (evt, args) => {
