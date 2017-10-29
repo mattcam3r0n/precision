@@ -18,3 +18,11 @@
 .add-member-tool .panel-body, .panel-heading {
     padding: 0;
 }
+
+.add-member-tool .save-button {
+    color: green;
+}
+
+.add-member-tool .cancel-button {
+    color: red;
+}

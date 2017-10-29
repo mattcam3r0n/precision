@@ -3,7 +3,8 @@
         <i class="fa fa-bars fa-sm drag-handle"></i>            
     </div>
     <div id="addMembersToolbar" class="panel-body floating-toolbar btn-group-vertical">
-        <button ng-click="save()" id="saveMembers" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Members"><i class="fa fa-check fa-lg context-button"></i></button>
+        <button ng-click="save()" id="saveMembers" class="btn btn-default save-button" data-toggle="tooltip" data-placement="bottom" title="Save Members"><i class="fa fa-check fa-lg context-button"></i></button>
+        
         <div class="btn-group floating-toolbar" data-toggle="tooltip" data-placement="right" title="Direction">
             <button id="setMemberDirection" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-lg" ng-class="getDirectionClass()"></i>
@@ -38,7 +39,7 @@
                 <li data-value="6"><a href="#" ng-click="setRankSpacing(6)">6</a></li>
             </ul>
         </div>
-        <button ng-click="cancel()" id="cancelMembers" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Cancel"><i class="fa fa-times fa-lg context-button"></i></button>
+        <button ng-click="cancel()" id="cancelMembers" class="btn btn-default cancel-button" data-toggle="tooltip" data-placement="right" title="Cancel"><i class="fa fa-times fa-lg context-button"></i></button>
     </div>
 
 </div>

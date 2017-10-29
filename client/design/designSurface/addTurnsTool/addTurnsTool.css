@@ -41,6 +41,14 @@
     padding: 0;
 }
 
+.add-turns-tool .save-button {
+    color: green;    
+}
+
+.add-turns-tool .cancel-button {
+    color: red;    
+}
+
 .fa-rotate-NE {
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
