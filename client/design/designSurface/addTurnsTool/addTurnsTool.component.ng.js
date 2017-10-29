@@ -21,6 +21,9 @@ angular.module('drillApp')
       var toolDiv = angular.element('.add-turns-tool')[0];
       var newTurns = [];
 
+      // bootstrap follow toggle button
+      $("[name='follow-switch']").bootstrapSwitch();      
+
       $scope.$on('design:activateAddTurnsTool', function (evt, args) {
         console.log('design:activateAddTurnsTool', evt, args);
         activate(args.memberSelection);

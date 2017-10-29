@@ -38,8 +38,8 @@ angular.module('drillApp')
         .then(openDrill);
       });
 
-      // bootstrap follow toggle button
-      $("[name='follow-switch']").bootstrapSwitch();
+      // // bootstrap follow toggle button
+      // $("[name='follow-switch']").bootstrapSwitch();
     }
 
     function openDrill(drill) {

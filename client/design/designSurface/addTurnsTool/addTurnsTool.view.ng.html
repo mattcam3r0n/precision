@@ -6,10 +6,7 @@
         <table class="turn-mode-button">
             <tr>
                 <td>
-                    <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Block Mode">BLK</button>
-                </td>
-                <td>
-                    <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Follow Mode">FTL</button>
+                    <input type="checkbox" name="follow-switch" checked data-label-text="Follow" data-size="mini" data-label-width="52px">
                 </td>
             </tr>
         </table>
@@ -70,12 +67,14 @@
         <table class="save-cancel-button">
             <tr>
                 <td>
-                    <button ng-click="save()" id="cancelMembers" class="btn btn-default save-button" data-toggle="tooltip" data-placement="right" title="Save">
+                    <button ng-click="save()" id="cancelMembers" class="btn btn-default save-button" data-toggle="tooltip" data-placement="right"
+                        title="Save">
                         <i class="fa fa-check fa-lg context-button"></i>
                     </button>
                 </td>
                 <td>
-                    <button ng-click="cancel()" id="cancelMembers" class="btn btn-default cancel-button" data-toggle="tooltip" data-placement="right" title="Cancel">
+                    <button ng-click="cancel()" id="cancelMembers" class="btn btn-default cancel-button" data-toggle="tooltip" data-placement="right"
+                        title="Cancel">
                         <i class="fa fa-times fa-lg context-button"></i>
                     </button>
                 </td>
