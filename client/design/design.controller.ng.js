@@ -117,11 +117,6 @@ angular.module('drillApp')
       });
     });
 
-    $scope.$on('designTool:deselectAll', (evt, args) => {
-      drillBuilder.deselectAll();
-      triggerDrillStateChanged();
-    });
-
     $scope.$on('designTool:activateAddTurnsTool', (evt, args) => {      
       $rootScope.$broadcast('design:activateAddTurnsTool', { memberSelection: drillBuilder.getMemberSelection() }); 
     });
@@ -134,6 +129,16 @@ angular.module('drillApp')
 
     $scope.$on('designTool:selectAll', (evt, args) => {
       drillBuilder.selectAll();
+      triggerDrillStateChanged();
+    });
+
+    $scope.$on('designTool:deselectAll', (evt, args) => {
+      drillBuilder.deselectAll();
+      triggerDrillStateChanged();
+    });
+
+    $scope.$on('designTool:deleteForward', (evt, args) => {
+      drillBuilder.deleteForward();
       triggerDrillStateChanged();
     });
 

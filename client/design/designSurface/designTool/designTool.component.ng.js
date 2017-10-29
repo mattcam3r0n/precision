@@ -35,6 +35,10 @@ angular.module('drillApp')
       $scope.selectAll = function() {
         $rootScope.$broadcast('designTool:selectAll');
       }
+
+      $scope.deleteForward = function() {
+        $rootScope.$broadcast('designTool:deleteForward');
+      }
     }
   });
 

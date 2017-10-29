@@ -71,6 +71,15 @@ class ScriptBuilder {
         member.script[count - 1] = null;
     }
 
+    static deleteForward(member, count) {
+        if (count >= member.script.length)
+            return;
+
+        for (var i = count; i < member.script.length; i++) {
+            member.script[i] = null;
+        }
+    }
+
     static fromShorthand(script) {
         // expect something like 'E E E E E E S S S S S S'
 

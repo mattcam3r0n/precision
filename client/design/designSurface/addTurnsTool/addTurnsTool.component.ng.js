@@ -287,6 +287,7 @@ angular.module('drillApp')
         // TODO
         // * make this better
         // * take selected members in to account?
+        // * handle error when no members
 
         // get leftmost marcher
         var leftmost = ctrl.field.getLeftmostMarcherPosition();

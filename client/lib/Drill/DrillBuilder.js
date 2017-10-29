@@ -100,6 +100,18 @@ class DrillBuilder {
         this.drill.isDirty = true;
     }
 
+    /**
+     * Delete all state changes from current count forward
+     */
+    deleteForward() {
+        var members = this.getSelectedMembers();
+        members.forEach(m => {
+            ScriptBuilder.deleteForward(m, this.drill.count);
+        });
+
+        this.drill.isDirty = true;        
+    }
+    
     createScriptNode(strideType, stepType, dir, dx, dy) {
         return StepFactory.createStep(strideType, stepType, dir, dx, dy);
     }
