@@ -41,6 +41,10 @@
     padding: 0;
 }
 
+.add-turns-tool .reset-button button {
+    width: 96px;
+}
+
 .add-turns-tool .save-button {
     color: green;    
 }

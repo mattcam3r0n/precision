@@ -49,6 +49,10 @@ angular.module('drillApp')
 
       $scope.cancel = deactivate;
 
+      $scope.reset = function() {
+        reset();
+      }
+
       $scope.setTurnDirection = function (dir) {
         ctrl.turnDirection = Direction[dir];
       }
@@ -348,6 +352,12 @@ angular.module('drillApp')
         });
       
         $scope.$emit('addTurnsTool:save');
+      }
+
+      function reset() {
+        console.log('reset');
+        deactivate();
+        activate(ctrl.memberSelection);
       }
 
       function positionTools(obj) {
