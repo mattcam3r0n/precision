@@ -65,8 +65,30 @@ class GuidePath {
         if (sourcePoint.direction == Direction.W && point.y == sourcePoint.y && point.x < sourcePoint.x)
             return true;
 
-        // TODO: obliques
+        // obliques
+        if (sourcePoint.direction == Direction.NE && this.isOnLine(sourcePoint, -1, point) && point.y < sourcePoint.y)
+            return true;
+
+        if (sourcePoint.direction == Direction.SE && this.isOnLine(sourcePoint, 1, point) && point.y > sourcePoint.y)
+            return true;
+
+        if (sourcePoint.direction == Direction.SW && this.isOnLine(sourcePoint, -1, point) && point.y > sourcePoint.y)
+            return true;
+        
+        if (sourcePoint.direction == Direction.NW && this.isOnLine(sourcePoint, 1, point) && point.y < sourcePoint.y)
+            return true;
+
         return null;
+    }
+
+    // Move these to a line utils class?
+    yIntercept(point, slope) {
+        return point.y - (slope * point.x); // b = y - mx
+    }
+
+    isOnLine(knownPoint, knownSlope, testPoint) {
+        var b = this.yIntercept(knownPoint, knownSlope);
+        return testPoint.y == (knownSlope * testPoint.x) + b; // y = mx + b
     }
 
     get pathExpr() {
