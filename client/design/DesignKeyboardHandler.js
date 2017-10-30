@@ -37,6 +37,11 @@ class DesignKeyboardHandler {
         },
 
         "ArrowLeft": (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                this.drillPlayer.goToBeginning();
+                return;
+            }
+
             if (e.altKey) {
                 this.drillBuilder.addStep(StrideType.SixToFive, StepType.Full, Direction.W);
                 this.drillPlayer.stepForward();
@@ -47,6 +52,11 @@ class DesignKeyboardHandler {
         },
 
         "ArrowRight": (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                this.drillPlayer.goToEnd();
+                return;
+            }
+
             if (e.altKey) {
                 this.drillBuilder.addStep(StrideType.SixToFive, StepType.Full, Direction.E);
                 this.drillPlayer.stepForward();
