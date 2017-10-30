@@ -346,6 +346,8 @@ angular.module('drillApp')
             });
           }
         });
+      
+        $scope.$emit('addTurnsTool:save');
       }
 
       function positionTools(obj) {

@@ -164,6 +164,11 @@ angular.module('drillApp')
       triggerDrillStateChanged();
     });
 
+    $scope.$on('addTurnsTool:save', (evt, args) => {
+      $scope.drill.isDirty = true;
+      save();
+    });
+
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {
 
