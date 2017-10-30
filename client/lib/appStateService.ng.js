@@ -50,6 +50,7 @@ class appStateService {
         return this.getDrill(id)
             .then(drill => {
                 this.currentDrill = drill;
+        console.log('openDrill', this.currentDrill);
                 return drill;
             });
     }
@@ -73,26 +74,6 @@ class appStateService {
             this.updateDrill();
         }
     }
-
-    // testInsertDrill() {
-    //     class Drill {
-    //         constructor() {
-    //             this.count = 0;
-    //         }
-
-    //         play() {
-    //             this.count = this.count + 1;
-    //         }
-    //     }
-
-    //     Drills.insert(angular.copy(new Drill()), (err, id) => {
-    //         if (err) {
-    //             console.log('unable to insert', err, this.currentDrill);
-    //             return;
-    //         }
-    //         // this.currentDrill._id = id;
-    //     });
-    // }
 
     insertDrill() {
         this.currentDrill.createdDate = new Date();
@@ -146,9 +127,11 @@ class appStateService {
 
 
     setCurrentDrill() {
+console.log('setCurrentDrill');
         if (!this.currentDrill._id)
             return;
-
+console.log('update profile', this.currentDrill._id);
+            
         // update user profile with id of current drill
         Meteor.users.update({ _id: Meteor.userId() }, {
             $set: {
@@ -159,6 +142,7 @@ class appStateService {
             if (err)
                 console.log('Unable to update user', err);
         });
+console.log('updated profile', this.currentDrill._id);
     }
 }
 

@@ -43,13 +43,15 @@ angular.module('drillApp')
     }
 
     function openDrill(drill) {
-      $scope.drill = drill;
-      drillBuilder = new DrillBuilder(drill);
-      drillPlayer = new DrillPlayer(drill);
-      keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer, $rootScope);
-      drillPlayer.goToBeginning();
-      drillBuilder.deselectAll();
-      triggerDrillStateChanged(); // to force repaint
+      appStateService.openDrill(drill._id).then(openedDrill => {
+        $scope.drill = openedDrill;
+        drillBuilder = new DrillBuilder(openedDrill);
+        drillPlayer = new DrillPlayer(openedDrill);
+        keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer, $rootScope);
+        drillPlayer.goToBeginning();
+        drillBuilder.deselectAll();
+        triggerDrillStateChanged(); // to force repaint  
+      });
     }
 
     function keydown(e) {
