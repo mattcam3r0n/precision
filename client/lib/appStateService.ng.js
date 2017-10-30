@@ -132,10 +132,8 @@ class appStateService {
 
 
     setCurrentDrill() {
-console.log('setCurrentDrill');
         if (!this.currentDrill._id)
             return;
-console.log('update profile', this.currentDrill._id);
             
         // update user profile with id of current drill
         Meteor.users.update({ _id: Meteor.userId() }, {
@@ -147,7 +145,6 @@ console.log('update profile', this.currentDrill._id);
             if (err)
                 console.log('Unable to update user', err);
         });
-console.log('updated profile', this.currentDrill._id);
     }
 }
 
