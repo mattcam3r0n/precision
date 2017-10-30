@@ -10,6 +10,13 @@ class DesignKeyboardHandler {
     }
 
     handlers = {
+        "a": (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                this.rootScope.$broadcast('designTool:selectAll');
+                return;
+            }
+        },
+
         "Backspace": (e) => {
             if (e.altKey) {
                 this.rootScope.$broadcast('designTool:deleteBackspace');

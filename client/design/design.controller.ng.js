@@ -33,7 +33,13 @@ angular.module('drillApp')
       });
 
       $scope.$watch('currentUser', function(newValue, oldValue) {
-        if ($scope.currentUser === undefined) return;
+        if ($scope.currentUser === undefined) return; // user not available yet
+
+        if ($scope.currentUser === null) { // signed out
+          newDrill();
+          return;
+        }
+
         appStateService.openLastDrillOrNew()
         .then(openDrill);
       });
@@ -57,6 +63,7 @@ angular.module('drillApp')
       $scope.drill = drill;
       drillBuilder = new DrillBuilder(drill);
       drillPlayer = new DrillPlayer(drill);
+      drillPlayer.setTempo($scope.tempo || 120);
       keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer, $rootScope);
       drillPlayer.goToBeginning();
       drillBuilder.deselectAll();
