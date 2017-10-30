@@ -9,3 +9,4 @@
 * FIXED: set tempo after opening drill
 * NEW: on sign out, close current drill
 * NEW: Reset button on path tool. Clears all paths to start over, without having to cancel and reopen path too.
+* 
