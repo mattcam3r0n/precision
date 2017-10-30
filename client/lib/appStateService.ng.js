@@ -60,12 +60,17 @@ class appStateService {
     }
 
     newDrill() {
+        // save current drill before starting new drill
+        this.saveDrill();
+        
         var builder = new DrillBuilder();
         this.currentDrill = builder.createDrill();
         return this.currentDrill;   
     }
 
     saveDrill() {
+        if (!this.currentDrill) return;
+
         var id = this.currentDrill._id;
         this.currentDrill.isDirty = false;
         if (!id) {

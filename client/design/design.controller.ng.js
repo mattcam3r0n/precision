@@ -42,16 +42,25 @@ angular.module('drillApp')
       // $("[name='follow-switch']").bootstrapSwitch();
     }
 
+    function newDrill() {
+      var newDrill = appStateService.newDrill();
+      setDrill(newDrill);
+    }
+
     function openDrill(drill) {
       appStateService.openDrill(drill._id).then(openedDrill => {
-        $scope.drill = openedDrill;
-        drillBuilder = new DrillBuilder(openedDrill);
-        drillPlayer = new DrillPlayer(openedDrill);
-        keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer, $rootScope);
-        drillPlayer.goToBeginning();
-        drillBuilder.deselectAll();
-        triggerDrillStateChanged(); // to force repaint  
+        setDrill(openedDrill);
       });
+    }
+
+    function setDrill(drill) {
+      $scope.drill = drill;
+      drillBuilder = new DrillBuilder(drill);
+      drillPlayer = new DrillPlayer(drill);
+      keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer, $rootScope);
+      drillPlayer.goToBeginning();
+      drillBuilder.deselectAll();
+      triggerDrillStateChanged(); // to force repaint  
     }
 
     function keydown(e) {
@@ -77,6 +86,10 @@ angular.module('drillApp')
 
     $scope.debug = function () {
       console.log('drill', $scope.drill);
+    }
+
+    $scope.onNew = function() {
+      newDrill();
     }
 
     $scope.onOpen = function (drillId) {
