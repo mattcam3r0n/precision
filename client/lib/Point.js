@@ -55,6 +55,14 @@ class StepPoint extends Point {
 //        return new FieldPoint(FieldDimensions.toFieldPoint(this, this.strideType));
         
     }
+
+    isEvenPoint() {
+        return this.x % 2 == 0 && this.y % 2 == 0;
+    }
+
+    isOddPoint() {
+        return !this.isEvenPoint();
+    }
 }
 
 export {

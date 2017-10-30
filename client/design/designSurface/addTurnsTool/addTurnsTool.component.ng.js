@@ -3,9 +3,11 @@
 import { FieldPoint, StepPoint } from '/client/lib/Point';
 import StrideType from '/client/lib/StrideType';
 import StepType from '/client/lib/StepType';
+import StepDelta from '/client/lib/StepDelta';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
 import TurnMarker from '../field/TurnMarker';
+import CounterMarch from '../field/CounterMarch';
 import GuidePath from './GuidePath';
 import ScriptBuilder from '/client/lib/drill/ScriptBuilder';
 import Action from '/client/lib/drill/Action';
@@ -22,7 +24,7 @@ angular.module('drillApp')
       var newTurns = [];
 
       // bootstrap follow toggle button
-      $("[name='follow-switch']").bootstrapSwitch();      
+      $("[name='follow-switch']").bootstrapSwitch();
 
       $scope.$on('design:activateAddTurnsTool', function (evt, args) {
         console.log('design:activateAddTurnsTool', evt, args);
@@ -49,7 +51,6 @@ angular.module('drillApp')
 
       $scope.setTurnDirection = function (dir) {
         ctrl.turnDirection = Direction[dir];
-        console.log(ctrl.turnDirection);
       }
 
       function activate(memberSelection) {
@@ -80,7 +81,7 @@ angular.module('drillApp')
         ctrl.field.canvas.off('mouse:move', onMouseMove);
         ctrl.field.canvas.defaultCursor = 'default';
         destroyGuideline();
-        destroyGuidePaths();
+        destroyGuidePathLines();
         destroyTurnMarkers();
       }
 
@@ -90,9 +91,11 @@ angular.module('drillApp')
 
         files.forEach(f => {
           let gp = new GuidePath(f, {
+            strideType: f.leader.member.currentState.strideType,
+            stepType: f.leader.member.currentState.stepType,
             direction: f.leader.member.currentState.direction,
             x: f.leader.member.currentState.x,
-            y: f.leader.member.currentState.y            
+            y: f.leader.member.currentState.y
           });
           ctrl.guidePaths.push(gp);
         });
@@ -166,15 +169,15 @@ angular.module('drillApp')
         ctrl.guideline = null;
       }
 
-      function createGuidePaths() {
+      function createGuidePathLines() {
         if (!ctrl.guidePaths) return;
 
-        destroyGuidePaths();
+        destroyGuidePathLines();
         ctrl.guidePaths.forEach(gp => {
           gp.path = new fabric.Path(gp.pathExpr, {
             stroke: 'black',
             strokeWidth: 2,
-            strokeDashArray: [3,3],
+            strokeDashArray: [3, 3],
             fill: false,
             selectable: false,
             evented: false
@@ -183,7 +186,7 @@ angular.module('drillApp')
         });
       }
 
-      function destroyGuidePaths() {
+      function destroyGuidePathLines() {
         if (!ctrl.guidePaths) return;
 
         ctrl.guidePaths.forEach(gp => {
@@ -196,25 +199,31 @@ angular.module('drillApp')
         var guidePath = findGuidePath(stepPoint);
 
         if (!guidePath) return;
-        
-        var turnDirection = ctrl.turnDirection == undefined ? guidePath.firstPoint.direction : ctrl.turnDirection;
-        
+
+        var turnDirection = ctrl.turnDirection == undefined ? guidePath.lastPoint.direction : ctrl.turnDirection;
+
         // don't allow turn to be added if not on a guidepath
         if (!guidePath) return;
+
+        if (turnDirection == Direction.CM) {
+          return addCounterMarchMarker(guidePath, stepPoint);
+        }
+
         guidePath.add({
           x: stepPoint.x,
           y: stepPoint.y,
           direction: turnDirection,
           strideType: StrideType.SixToFive,
           stepType: StepType.Full
-        }); // add turn to guidepath
+        }); // add turn to guidepath  
 
         var fp = stepPoint.toFieldPoint();
 
         var tm = new TurnMarker(turnDirection, {
-          left: fp.x,
-          top: fp.y
-        });
+            left: fp.x,
+            top: fp.y
+          });
+
         ctrl.field.canvas.add(tm);
 
         var t = {
@@ -231,8 +240,62 @@ angular.module('drillApp')
         });
 
         newTurns.push(t);
+        createGuidePathLines();
 
-        createGuidePaths();
+        return t;
+      }
+
+      function addCounterMarchMarker(guidePath, stepPoint) {
+
+        var isLeftTurn = guidePath.getEndCount(stepPoint) % 2 == 0 ? true : false;
+
+        var currentDir = guidePath.lastPoint.direction;
+        var firstTurnDirection = isLeftTurn ? Direction.leftTurnDirection(currentDir) : Direction.rightTurnDirection(currentDir); 
+        var secondTurnDirection = isLeftTurn ? Direction.leftTurnDirection(firstTurnDirection) : Direction.rightTurnDirection(firstTurnDirection); 
+        var firstDelta = StepDelta.getDelta(StrideType.SixToFive, StepType.Half, firstTurnDirection, 2);
+        
+        guidePath.add({
+          x: stepPoint.x,
+          y: stepPoint.y,
+          direction: firstTurnDirection,
+          strideType: StrideType.SixToFive,
+          stepType: StepType.Half
+        }); 
+
+        var secondDelta = StepDelta.getDelta(StrideType.SixToFive, StepType.Full, secondTurnDirection, 1);
+
+        guidePath.add({
+          x: stepPoint.x + firstDelta.deltaX,
+          y: stepPoint.y + firstDelta.deltaY,
+          direction: secondTurnDirection,
+          strideType: StrideType.SixToFive,
+          stepType: StepType.Full
+        }); 
+
+        var fp = stepPoint.toFieldPoint();
+
+        var tm = new CounterMarch(currentDir, isLeftTurn, {
+            left: fp.x,
+            top: fp.y
+          });
+
+        ctrl.field.canvas.add(tm);
+
+        var t = {
+          turnMarker: tm,
+          point: stepPoint
+        };
+        tm.turn = t;
+
+        tm.on('moving', evt => {
+          let adjustedPoint = ctrl.field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
+          let newStepPoint = new FieldPoint(adjustedPoint).toStepPoint(StrideType.SixToFive);
+          // update turn point
+          tm.turn.point = newStepPoint;
+        });
+
+        newTurns.push(t);
+        createGuidePathLines();
 
         return t;
       }
@@ -267,20 +330,19 @@ angular.module('drillApp')
           if (gp.points.length > 1) {
             // for each file member
             gp.file.fileMembers.forEach(fm => {
-                // get current count + offset from leader (in counts)
-                let count = fm.member.currentState.count + fm.getStepsToLeader();
-                // for each point in guide path
-                gp.points.slice(1).forEach(p => { // skip first point, since it is current position
-                  // add turn to member script at count + steps
-                  // fm.member.script[count + p.stepsFromPrevious] = {
-                  //   strideType: p.strideType,
-                  //   stepType: p.stepType,
-                  //   direction: p.direction
-                  // };
-                  let action = new Action(p);
-                  let added = ScriptBuilder.addActionAtPoint(fm.member, action, p);
-                  console.log('adding action', fm.member, action, added);
-                });
+              // get current count + offset from leader (in counts)
+              let count = fm.member.currentState.count + fm.getStepsToLeader();
+              // for each point in guide path
+              gp.points.slice(1).forEach(p => { // skip first point, since it is current position
+                // add turn to member script at count + steps
+                // fm.member.script[count + p.stepsFromPrevious] = {
+                //   strideType: p.strideType,
+                //   stepType: p.stepType,
+                //   direction: p.direction
+                // };
+                let action = new Action(p);
+                let added = ScriptBuilder.addActionAtPoint(fm.member, action, p);
+              });
             });
           }
         });

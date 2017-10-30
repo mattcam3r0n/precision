@@ -1,5 +1,10 @@
 
 class Direction {
+    // a special case for countermarch
+    static get CM(){
+        return -1;
+    }
+
     static get N(){
         return 0;
     }
@@ -65,6 +70,15 @@ class Direction {
         return this.getLineDirection(from, to) === dir;
     }
 
+    static leftTurnDirection(from) {
+        var newDir = from - 90;
+        return newDir < 0 ? 360 + newDir : newDir;
+    }
+
+    static rightTurnDirection(from) {
+        var newDir = (from + 90);
+        return newDir >= 360 ? newDir - 360 : newDir;
+    }
     
 }
 

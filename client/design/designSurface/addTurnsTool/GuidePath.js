@@ -9,6 +9,7 @@ class GuidePath {
         this.initialPoint = initialPoint;
         this.points = [initialPoint];
         this.file = file;
+        this.startCount = file.leader.member.currentState.count;
     }
 
     get firstPoint() {
@@ -23,7 +24,31 @@ class GuidePath {
         var prevPoint = this.lastPoint;
         point.stepsFromPrevious = StepDelta.getStepsBetweenPoints(prevPoint.strideType || StrideType.SixToFive, prevPoint.stepType || StepType.Full, point, prevPoint);
         this.points.push(point);
-console.log(this.points);
+    }
+
+    getEndCount(stepPoint) {
+        if (!stepPoint)
+            return this.startCount + this.getLengthInCounts();
+    
+        var steps = StepDelta.getStepsBetweenPoints(stepPoint.strideType, stepPoint.stepType, this.lastPoint, stepPoint);
+
+        return this.startCount + this.getLengthInCounts() + steps;
+    }
+
+    getLengthInCounts() {
+        var counts = 0;
+        if (this.points.length < 2)
+            return 0;
+        for (var i = 0; i < this.points.length - 1; i++) {
+            let a = this.points[i];
+            let b = this.points[i + 1];
+            counts += StepDelta.getStepsBetweenPoints(a.strideType, a.stepType, a, b);
+        }
+        return counts;
+    }
+
+    getStepsFromLastPoint(stepPoint) {
+        return StepDelta.getStepsBetweenPoints(this.lastPoint, stepPoint);
     }
 
     isInPath(point) {
