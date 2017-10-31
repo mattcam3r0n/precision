@@ -9,4 +9,8 @@
 * FIXED: set tempo after opening drill
 * NEW: on sign out, close current drill
 * NEW: Reset button on path tool. Clears all paths to start over, without having to cancel and reopen path too.
-* 
+
+10-31-17
+* big refactor of addTurnsTool and guidePaths.
+* NEW: moving turn points when drawing paths
+* NEW: deleting turn points when drawing paths. 
