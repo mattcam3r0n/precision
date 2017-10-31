@@ -164,6 +164,7 @@ angular.module('drillApp')
           evented: false
         });
         ctrl.field.canvas.add(ctrl.guideline);
+        bringTurnMarkersToFront();
       }
 
       function destroyGuideline() {
@@ -187,6 +188,7 @@ angular.module('drillApp')
             evented: false
           });
           ctrl.field.canvas.add(gp.path);
+          bringTurnMarkersToFront();
         });
       }
 
@@ -196,6 +198,12 @@ angular.module('drillApp')
         ctrl.guidePaths.forEach(gp => {
           ctrl.field.canvas.remove(gp.path);
           gp.path = null;
+        });
+      }
+
+      function bringTurnMarkersToFront() {
+        newTurns.forEach(t => {
+          ctrl.field.canvas.bringToFront(t.turnMarker);
         });
       }
 

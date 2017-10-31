@@ -22,15 +22,17 @@ var TurnMarker = fabric.util.createClass(fabric.Group, {
             fill: false,
             stroke: 'rgba(0,0,0,0)',
             strokeWidth: 1,
-            height: 30,
-            width: 30            
+            height: 15,
+            width: 15            
         });
         children.push(rect);
 
-        var pathExpr = "M 15 15 L 15 0 L 10 5 M 15 0 L 20 5 "; //L 15 30 M 15 30 L 10 20 M 15 30 L 20 20";
+//        var pathExpr = "M 15 15 L 15 0 L 10 5 M 15 0 L 20 5 "; 
+//        var pathExpr = "M 7.5 7.5 L 7.5 0 L 5 2.5 M 7.5 0 L 10 2.5 "; 
+        var pathExpr = "M 7.5 15 L 7.5 0 L 0 5 M 7.5 0 L 15 5 "; 
         var path = new fabric.Path(pathExpr, {
             fill: false,
-            stroke: 'black',
+            stroke: 'whitesmoke',
             strokeWidth: 3,
         });
         children.push(path);

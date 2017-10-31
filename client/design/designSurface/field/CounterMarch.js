@@ -23,15 +23,16 @@ var CounterMarch = fabric.util.createClass(fabric.Group, {
             fill: false,
             stroke: 'rgba(0,0,0,0)',
             strokeWidth: 1,
-            height: 30,
-            width: 30            
+            height: 16,
+            width: 16            
         });
         children.push(rect);
 
-        var pathExpr = "M 15 30 L 15 15 L 25 15 L 25 30 L 20 23 M 25 30 L 30 23"; //L 15 30 M 15 30 L 10 20 M 15 30 L 20 20";
+        // var pathExpr = "M 15 30 L 15 15 L 25 15 L 25 30 L 20 23 M 25 30 L 30 23"; //L 15 30 M 15 30 L 10 20 M 15 30 L 20 20";
+        var pathExpr = "M 8 16 L 8 8 L 16 8 L 16 16"; //L 15 30 M 15 30 L 10 20 M 15 30 L 20 20";
         var path = new fabric.Path(pathExpr, {
             fill: false,
-            stroke: 'black',
+            stroke: 'whitesmoke',
             strokeWidth: 3,
         });
         children.push(path);
