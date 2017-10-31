@@ -253,6 +253,7 @@ angular.module('drillApp')
 
         newTurns.push(t);
         createGuidePathLines();
+        ctrl.field.canvas.renderAll();
 
         return t;
       }
