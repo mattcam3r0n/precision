@@ -18,4 +18,4 @@
 11-1-17
 * show/hide unselected members, to make it easier to focus on drawing paths for selected members
 * began "show/hide paths" tool, but still buggy
-* 
+* made members a little smaller to make fine detail editing easier. sometimes you couldn't place a turn because a member was in the way.
