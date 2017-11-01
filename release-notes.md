@@ -14,3 +14,8 @@
 * big refactor of addTurnsTool and guidePaths.
 * NEW: moving turn points when drawing paths
 * NEW: deleting turn points when drawing paths. 
+
+11-1-17
+* show/hide unselected members, to make it easier to focus on drawing paths for selected members
+* began "show/hide paths" tool, but still buggy
+* 
