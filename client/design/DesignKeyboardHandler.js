@@ -17,6 +17,13 @@ class DesignKeyboardHandler {
             }
         },
 
+        "d": (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                this.rootScope.$broadcast('designTool:deselectAll');
+                return;
+            }
+        },
+
         "Backspace": (e) => {
             if (e.altKey) {
                 this.rootScope.$broadcast('designTool:deleteBackspace');
