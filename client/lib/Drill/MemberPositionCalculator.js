@@ -158,8 +158,8 @@ class MemberPositionCalculator {
         }
 
         return currentState;
-
     }
+
 }
 
 export default MemberPositionCalculator;

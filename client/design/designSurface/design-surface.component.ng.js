@@ -43,6 +43,10 @@ angular.module('drillApp')
       $scope.$on("$destroy", function(){
         ctrl.field.canvas.dispose();
       });
+
+      $scope.$on('designTool:showPaths', function() {
+        ctrl.field.showPaths();
+      });
       
       // ctrl.$onInit = function() {
       // }

@@ -8,6 +8,8 @@ import Marcher from './Marcher';
 import FileIndicator from './FileIndicator';
 import TurnMarker from './TurnMarker';
 import MemberPath from './MemberPath';
+import { StepPoint, FieldPoint } from '/client/lib/Point';
+import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
 
 class FieldController {
 
@@ -16,6 +18,8 @@ class FieldController {
         this.canvas = this.createCanvas();
         this.$scope = $scope;
         this.marchers = {};
+        this.paths = [];
+        this.arePathsVisible = false;
         
         this.draw();
         this.resize();
@@ -48,6 +52,78 @@ class FieldController {
 
     update() {
         this.canvas.renderAll();
+    }
+
+    showPaths(counts) {
+        if (this.arePathsVisible) {
+            this.hidePaths();
+            return;            
+        }
+        this.arePathsVisible = true;
+    console.log(this.paths);
+        _.each(this.marchers, m => {
+            let p = this.createMemberPath(m.member);
+            if (p) {
+                this.paths.push(p);
+                this.canvas.add(p);
+            }
+        });
+    console.log(this.paths);
+    }
+
+    hidePaths() {
+        if (!this.paths) return;
+        this.arePathsVisible = false;
+        this.paths.forEach(p => {
+            this.canvas.remove(p);
+        });
+        this.paths = [];
+    }
+
+    createMemberPath(member) {
+        let points = this.getMemberPathPoints(member);
+    console.log(points);
+        let pathExpr = this.getPathFromPoints(points);
+
+        if (!points || points.length == 0)
+            return null;
+
+        return new fabric.Path(pathExpr, {
+            left: points[0].x,
+            top: points[0].y,
+            stroke: 'black',
+            strokeWidth: 2,
+            opacity: .6,
+            fill: false
+        });
+    }
+
+    getMemberPathPoints(member) {
+        var points = [];
+        points.push(new StepPoint(member.initialState.strideType, member.initialState.x, member.initialState.y).toFieldPoint());
+
+        var pos = null;
+        for(var i = 0; i < 30; i++) {
+            pos = MemberPositionCalculator.stepForward(member, pos);
+            let p = new StepPoint(pos.strideType, pos.x, pos.y).toFieldPoint();
+            points.push(p);
+        }
+        // member.script.forEach(a => {
+        //     if (a) {
+        //         console.log(a);
+        //         let p = new StepPoint(a.strideType, a.x, a.y).toFieldPoint();
+        //         points.push(p);
+        //     }
+        // });
+        return points;
+    }
+
+    getPathFromPoints(points) {
+        var pathExpr = "M ";
+        points.forEach(p => {
+            pathExpr += p.x + ' ' + p.y + ' L ';
+        });
+        return pathExpr.slice(0, -2);    
     }
 
     /**
@@ -92,38 +168,6 @@ class FieldController {
             
             marcher.setCoords();
         }
-
-        // TODO: refactor to separate functions
-        // if (args && args.selectedFiles) {
-        //     if (this.fileIndicators) {
-        //         this.fileIndicators.forEach(fi => {
-        //             this.canvas.remove(fi);
-        //         });
-        //     }
-        //     this.fileIndicators = [];
-        //     args.selectedFiles.forEach(f => {
-        //         let dir = f.leader.member.currentState.direction;
-        //         let leaderPoint = FieldDimensions.toFieldPoint({ x: f.leader.member.currentState.x, y: f.leader.member.currentState.y }, f.leader.member.currentState.strideType || StrideType.SixToFive);
-        //         let linePoints = f.getLinePoints().map(p => {
-        //             return FieldDimensions.toFieldPoint({ x: p.x, y: p.y }, f.leader.member.currentState.strideType || StrideType.SixToFive);
-        //         });
-        //         var adj = { 0: { x: 0, y: 2 }, 90: { x: -2, y: 0 }, 180: { x: 0, y: -2 }, 270: { x: 2, y: 0 } };
-        //         // hack to adjust points
-        //         linePoints.forEach(p => {
-        //             p.x += adj[dir].x;
-        //             p.y += adj[dir].y;
-        //         });
-        //         var i = new FileIndicator(linePoints, f.leader.member.currentState.direction, {
-        //             // left: leaderPoint.x,
-        //             // top: leaderPoint.y
-        //         });
-        //         console.log(i);
-        //         this.fileIndicators.push(i);
-        //         this.canvas.add(i);
-        //         //this.canvas.sendToBack(i);    
-        //     });
-        // }
-
         
     }
 

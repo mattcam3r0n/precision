@@ -43,6 +43,10 @@ angular.module('drillApp')
       $scope.deleteForward = function() {
         $rootScope.$broadcast('designTool:deleteForward');
       }
+
+      $scope.showPaths = function() {
+        $rootScope.$broadcast('designTool:showPaths');
+      }
     }
   });
 
