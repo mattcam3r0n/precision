@@ -37,7 +37,6 @@ class appStateService {
     openLastDrillOrNew() {
         return this.getLastDrillId()
             .then(drillId => {
-                console.log('openLastDrillOrNew', drillId);
 
                 if (!drillId) 
                     return this.newDrill();
@@ -50,7 +49,6 @@ class appStateService {
         return this.getDrill(id)
             .then(drill => {
                 this.currentDrill = drill;
-        console.log('openDrill', this.currentDrill);
                 return drill;
             });
     }

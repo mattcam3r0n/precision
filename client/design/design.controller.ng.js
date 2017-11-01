@@ -44,8 +44,6 @@ angular.module('drillApp')
         .then(openDrill);
       });
 
-      // // bootstrap follow toggle button
-      // $("[name='follow-switch']").bootstrapSwitch();
     }
 
     function newDrill() {
@@ -54,6 +52,11 @@ angular.module('drillApp')
     }
 
     function openDrill(drill) {
+      if (!drill) {
+        newDrill();
+        return;
+      }
+
       appStateService.openDrill(drill._id).then(openedDrill => {
         setDrill(openedDrill);
       });
