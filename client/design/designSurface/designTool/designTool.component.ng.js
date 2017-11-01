@@ -48,8 +48,12 @@ angular.module('drillApp')
         $rootScope.$broadcast('designTool:showPaths');
       }
 
-      $scope.toggleHideUnselected = function() {
-        $rootScope.$broadcast('designTool:toggleHideUnselected');
+      $scope.hideUnselected = function() {
+        $rootScope.$broadcast('designTool:hideUnselected');
+      }
+
+      $scope.showAll = function() {
+        $rootScope.$broadcast('designTool:showAll');
       }
     }
   });

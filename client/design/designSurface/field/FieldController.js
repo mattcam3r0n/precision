@@ -165,14 +165,25 @@ class FieldController {
             marcher.set('angle', member.currentState.direction);
             // set selection 
             marcher.set('stroke', member.isSelected ? 'yellow' : 'black');
-            // hack to ensure isVisible prop is present
-            member.isVisible = member.isVisible === undefined ? true : member.isVisible;
-            marcher.set('visible', member.isVisible ? true : false);
-            
+
+            this.showMarcherIfVisible(marcher);
+
             marcher.setCoords();
         }
         
     }
+
+    showMarcherIfVisible(marcher) {
+        // hide/show logic
+        var member = marcher.member;
+        // hack to ensure isVisible prop is present
+        member.isVisible = member.isVisible === undefined ? true : member.isVisible;
+        //marcher.set('visible', member.isVisible ? true : false);
+        marcher.set('opacity', member.isVisible ? 1 : .15);
+        marcher.set('selectable', member.isVisible ? true : false);
+        marcher.set('evented', member.isVisible ? true : false);
+    }
+
 
     synchronizeMarchers() {
         if (!this.drill) return; 
@@ -235,6 +246,9 @@ class FieldController {
         if (this.canvas.getActiveObject().type != 'Marcher') return;
 
         var member = evt.target.member;
+
+        if (!member || !member.isVisible) return; 
+
         this.canvas.discardActiveObject();
         this.$scope.$emit('membersSelected', { members: [member] });
     }
