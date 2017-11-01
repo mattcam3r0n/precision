@@ -27,6 +27,8 @@ class MemberFactory {
 			count: 0
         };
         newMember.script = [];
+        newMember.isVisible = true;
+        newMember.isSelected = false;
         
         return newMember;
     }

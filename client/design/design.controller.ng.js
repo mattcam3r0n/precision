@@ -162,6 +162,11 @@ angular.module('drillApp')
       triggerDrillStateChanged();
     });
 
+    $scope.$on('designTool:toggleHideUnselected', (evt, args) => {
+      drillBuilder.toggleHideUnselected();
+      triggerDrillStateChanged();
+    });
+    
     $scope.$on('designTool:deleteForward', (evt, args) => {
       drillBuilder.deleteForward();
       triggerDrillStateChanged();

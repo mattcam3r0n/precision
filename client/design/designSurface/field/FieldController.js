@@ -165,6 +165,9 @@ class FieldController {
             marcher.set('angle', member.currentState.direction);
             // set selection 
             marcher.set('stroke', member.isSelected ? 'yellow' : 'black');
+            // hack to ensure isVisible prop is present
+            member.isVisible = member.isVisible === undefined ? true : member.isVisible;
+            marcher.set('visible', member.isVisible ? true : false);
             
             marcher.setCoords();
         }

@@ -169,6 +169,17 @@ class DrillBuilder {
         this.selectedFiles = [];
     }
 
+    toggleHideUnselected() {
+        this.drill.members.forEach(m => {
+            if (m.isVisible === undefined) {
+                m.isVisible = true;
+            }
+            if (!m.isSelected) {
+                m.isVisible = !m.isVisible;                
+            }
+        });
+    }
+
     getMemberSelection() {
         return new MemberSelection(this.getSelectedMembers());
     }
