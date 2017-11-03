@@ -29,6 +29,22 @@ class FieldController {
         this.positionIndicator = this.createPositionIndicator();
         this.positionIndicatorEnabled = true;
         
+        this.test();
+
+    }
+
+    test() {
+        var b = new fabric.Rect({
+            left: 100,
+            top: 100,
+            height: 100,
+            width: 100,
+            fill: 'rgba(0,0,0,0)',
+            stroke: 'black',
+            strokeWidth: 2,
+            strokeDashArray: [2,2]
+        });
+        this.canvas.add(b);
     }
 
     setDrill(drill) {

@@ -70,6 +70,7 @@ angular.module('drillApp')
       keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer, $rootScope);
       drillPlayer.goToBeginning();
       drillBuilder.deselectAll();
+      drillBuilder.showAll();
       triggerDrillStateChanged(); // to force repaint  
     }
 
