@@ -249,7 +249,7 @@ angular.module('drillApp')
         var leftmost = ctrl.field.getLeftmostMarcherPosition();
 
         var absCoords = ctrl.field.getAbsoluteCoords(leftmost);
-        var left = absCoords.left - 100;
+        var left = absCoords.left - 200;
         if (left < 0) {
           left = absCoords.left + absCoords.width + 20;
         }
