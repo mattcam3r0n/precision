@@ -214,3 +214,45 @@ Path Editing
 * can delete or move turns
 * can add turns in front of or on path
 * only for selected members? or everybody? is it necessary to select? (need it for file detection?)
+
+Selection Modes
+* lasso starts a new selection
+* custom corners for selection box
+    * one resize
+    * one rotate (changes selection, limit to 0 or 45 deg)
+    * cancel selection? cancel active selection, deselect?
+    * "copy all" tool. path will be copied to all guidepoints. eg, all files countermarching on some yardline, rather than drawing file-by-file
+    * "step two" tool. a handle in middle of front rank. drag toward left/right guide to stagger, up to some reasonable number.
+* each selection has its own guidepaths, etc
+    * selections responsibility, rather than addTurnsTool
+    * addTurnsTool (or FC?) has collection of selections?
+    * membersSelected event signals new selection?
+* each selection has its own mode? 
+* block, file, rank
+    * what about individual clicks? starts a new block selection? 
+        * ctrl click adds to active selection?
+* MemberSelection class is used for all. can detect ranks, files, etc.
+* Different selection tool classes are used to implement UI
+    * BlockSelectionTool
+        * two guidepoints, left and right guide of first rank
+        * determine bounding rectangle of selected members (what happens if they change selection?)
+        * 
+    * FileSelectionTool
+        * guidepoints for each file leader
+    * RankSelectionTool
+        * guidepoint for each right and left guide
+* each guidepoint has a corresponding guide path?
+
+
+selection events
+* FC emits objectsSelected
+* design.controller catches objectSelected? or does addTurns tool catch it?
+* addTurns tool has collection of pathTools. only one is active at a time.
+* pathTool(selectedMembers)
+* 
+
+path tool
+* takes selected members
+* has cancel/save icons on the borders
+* is activated by making a selection
+* 

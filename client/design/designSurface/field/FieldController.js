@@ -10,6 +10,10 @@ import TurnMarker from './TurnMarker';
 import MemberPath from './MemberPath';
 import { StepPoint, FieldPoint } from '/client/lib/Point';
 import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
+import Selection from './Selection';
+
+//import fabric from 'fabric';
+import 'fabric-customise-controls';
 
 class FieldController {
 
@@ -21,6 +25,7 @@ class FieldController {
         this.paths = [];
         this.arePathsVisible = false;
         
+        this.initCustomCorners();
         this.draw();
         this.resize();
         this.wireUpEvents();
@@ -34,17 +39,96 @@ class FieldController {
     }
 
     test() {
-        var b = new fabric.Rect({
-            left: 100,
-            top: 100,
-            height: 100,
-            width: 100,
-            fill: 'rgba(0,0,0,0)',
-            stroke: 'black',
-            strokeWidth: 2,
-            strokeDashArray: [2,2]
-        });
+
+        
+        
+        // var b = new fabric.Rect({
+        //     left: 100,
+        //     top: 100,
+        //     height: 100,
+        //     width: 100,
+        //     fill: 'rgba(0,0,0,0)',
+        //     stroke: 'black',
+        //     strokeWidth: 2,
+        //     strokeDashArray: [2,2],
+
+        //     cornerStyle: 'circle',
+        //     transparentCorners: false,
+        // });
+        var b = new Selection();
         this.canvas.add(b);
+
+
+    }
+
+    initCustomCorners() {
+        var canvas = this.canvas;
+
+        fabric.Canvas.prototype.customiseControls({
+            tl: {
+                action: 'remove',
+                cursor: 'pointer'
+            },
+            // tr: {
+            //     action: 'scale'
+            // },
+            // bl: {
+            //     action: 'remove',
+            //     cursor: 'pointer'
+            // },
+            br: {
+                action: 'scale',
+                //cursor: 'pointer'
+            },
+            mb: {
+                action: 'moveDown',
+                cursor: 'pointer'
+            },
+            mt: {
+                action: {
+                    'rotateByDegrees': 45,
+                },
+                cursor: 'pointer'
+            },
+            // mr: {
+            //     action: function( e, target ) {
+            //         target.set( {
+            //             left: 200
+            //         } );
+            //         canvas.renderAll();
+            //     }
+            //  }
+        }, function() {
+            canvas.renderAll();
+        } );
+        
+        fabric.Object.prototype.customiseCornerIcons({
+            settings: {
+                //borderColor: 'red',
+                cornerSize: 20,
+                cornerBackgroundColor: 'black',
+                cornerShape: 'circle',
+                cornerPadding: 10,
+             },
+            tl: {
+                // icon: 'icons/rotate.svg'
+                icon: 'icons/remove.svg'
+            },
+            // tr: {
+            //     icon: 'icons/resize.svg'
+            // },
+            // bl: {
+            //     icon: 'icons/remove.svg'
+            // },
+            // br: {
+            //     icon: 'icons/up.svg'
+            // },
+            mb: {
+                icon: 'icons/down.svg'
+            }
+        }, function() {
+            canvas.renderAll();
+        } );        
     }
 
     setDrill(drill) {
@@ -245,7 +329,7 @@ class FieldController {
             lockRotation: true,
             hasControls: false
         });
-        var marchers = this.canvas.getActiveGroup().getObjects();
+        var marchers = this.canvas.getActiveGroup().getObjects().filter(o => o.type == 'Marcher');
         var members = marchers.map(marcher => marcher.member);
         
         this.canvas.discardActiveGroup(); // import to call this BEFORE emitting event, causes strange effect on position
