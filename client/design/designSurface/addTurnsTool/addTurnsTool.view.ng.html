@@ -3,10 +3,24 @@
         <i class="fa fa-bars fa-sm drag-handle"></i>
     </div>
     <div id="addTurnsToolbar" class="panel-body floating-toolbar btn-group-vertical">
-        <table class="turn-mode-button">
+        <!-- <table class="turn-mode-button">
             <tr>
                 <td>
                     <input type="checkbox" name="follow-switch" checked data-label-text="Follow" data-size="mini" data-label-width="52px">
+                </td>
+            </tr>
+        </table> -->
+        <table class="turn-mode-button">
+            <tr>
+                <td>
+                    <button ng-click="setTurnMode('block')" id="" ng-class="{ 'active': isBlockMode() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
+                        Block
+                    </button>
+                </td>
+                <td>
+                    <button ng-click="setTurnMode('file')" id="" ng-class="{ 'active': isFileMode() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
+                        File
+                    </button>
                 </td>
             </tr>
         </table>

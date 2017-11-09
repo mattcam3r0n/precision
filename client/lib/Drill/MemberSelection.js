@@ -1,5 +1,6 @@
 import PositionMap from '/client/lib/drill/PositionMap';
 import FileSelector from '/client/lib/drill/FileSelector';
+import { StepPoint } from '/client/lib/Point';
 
 class MemberSelection {
 
@@ -22,6 +23,14 @@ class MemberSelection {
 
     getRightGuide() {
         // right, front?
+    }
+
+    getUpperLeft() {
+        return new StepPoint(this.members[0].currentState.strideType, this.positionMap.getUpperLeft());
+    }
+
+    getBottomRight() {
+        return new StepPoint(this.members[0].currentState.strideType, this.positionMap.getBottomRight());
     }
 
     getClosestMember(point) {

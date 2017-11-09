@@ -4,7 +4,7 @@ var FileIndicator = fabric.util.createClass(fabric.Group, {
 
     initialize: function(points, dir, options) {
       options = options || {};
-      dir = dir || 90;
+      dir = dir === undefined ? 0 : dir;
       // options.originX = 'right';
       // options.originY = 'top';
 
@@ -15,7 +15,6 @@ var FileIndicator = fabric.util.createClass(fabric.Group, {
         pathExpr += 'L ' + p.x + ' ' + p.y + ' ';
       });
       pathExpr = pathExpr.replace('L', 'M');
-      console.log(pathExpr);
       // 'M 60 60 L 120 60 L 120 120 '
       var path = new fabric.Path(pathExpr);
       path.set({ 
@@ -29,10 +28,11 @@ var FileIndicator = fabric.util.createClass(fabric.Group, {
       var handle = new fabric.Triangle({
         originX: 'center',
         originY: 'center',
-        left: points[0].x,
-        top: points[0].y,
-        width: 7,
-        height: 7,
+        left: points[0].x ,
+        top: points[0].y ,
+        width: 8,
+        height: 8,
+        //radius: 4,
         angle: dir,
         // radius: 3,
         stroke: 'black',

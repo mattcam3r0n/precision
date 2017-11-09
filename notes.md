@@ -247,9 +247,16 @@ Selection Modes
 selection events
 * FC emits objectsSelected
 * design.controller catches objectSelected? or does addTurns tool catch it?
-* addTurns tool has collection of pathTools. only one is active at a time.
-* pathTool(selectedMembers)
-* 
+* design.controller processes selection, emits membersSelected
+* addTurns catches membersSelected (if activated)
+    * creates instance of pathTool(field, selectedMembers), adds to canvas
+* pathTool
+    * mode - block, file, rank?
+    * create selectionBox   
+        * size based on selected members
+    * create fileIndicators (default to file mode)
+    * manage mode
+    * manage guidePaths, guideLine, etc
 
 path tool
 * takes selected members

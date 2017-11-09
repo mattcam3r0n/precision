@@ -1,9 +1,9 @@
 
-var Selection = fabric.util.createClass(fabric.Rect, {
-    type: "Selection",
+var SelectionBox = fabric.util.createClass(fabric.Rect, {
+    type: "SelectionBox",
     // cosider center of object the origin. eg, rotate around center.
-    originX: 'center',
-    originY: 'center',
+    originX: 'left',
+    originY: 'top',
     angle: 0,
     cornerStyle: 'circle',
     transparentCorners: false,
@@ -66,4 +66,4 @@ var Selection = fabric.util.createClass(fabric.Rect, {
     }
 });
 
-export default Selection;
+export default SelectionBox;

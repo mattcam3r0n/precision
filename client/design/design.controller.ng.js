@@ -85,6 +85,10 @@ angular.module('drillApp')
       $scope.$safeApply();
     }
 
+    function triggerMembersSelected(args) {
+      $rootScope.$broadcast('design:membersSelected', args);
+    }
+
     function save() {
       if (!$scope.drill.isDirty) return;
 
@@ -136,8 +140,11 @@ angular.module('drillApp')
     }
 
     // handle selection event
-    $scope.$on('membersSelected', (evt, args) => {
+    $scope.$on('field:objectsSelected', (evt, args) => {
       drillBuilder.select(args.members);
+      triggerMembersSelected({
+        memberSelection: drillBuilder.getMemberSelection()
+      });
       triggerDrillStateChanged({
         memberSelection: drillBuilder.getMemberSelection()
       });
