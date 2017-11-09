@@ -28,6 +28,7 @@ class PathTool {
         // get box coords from selection
         var ul = this.memberSelection.getUpperLeft().toFieldPoint();
         var br = this.memberSelection.getBottomRight().toFieldPoint();
+
         this.selectionBox = new SelectionBox({
             left: ul.x - FieldDimensions.marcherWidth,
             top: ul.y - FieldDimensions.marcherHeight,
@@ -108,22 +109,6 @@ class PathTool {
         this.guides.push(fi);
         this.guidePaths.push(gp);
 
-        // file = files[files.length - 1];
-        // guide = sortedLeaderPositions[sortedLeaderPositions.length - 1];
-        // fi = new FileIndicator([new StepPoint(guide.strideType, guide.x, guide.y).toFieldPoint()], guide.direction);
-
-        // gp = new GuidePath(this.field, file, {
-        //     strideType: file.leader.member.currentState.strideType,
-        //     stepType: file.leader.member.currentState.stepType,
-        //     direction: file.leader.member.currentState.direction,
-        //     x: file.leader.member.currentState.x,
-        //     y: file.leader.member.currentState.y
-        //   });
-
-        // this.field.canvas.add(fi);
-        // this.guides.push(fi);
-        // this.guidePaths.push(gp);
-
     }
 
     createRankGuides() {
@@ -172,15 +157,12 @@ class PathTool {
     }
 
     saveBlockMode() {
-        console.log('saveBlockMode');
         this.guidePaths.forEach(gp => {
             let count = gp.startCount + 1;
-        console.log('start count', count);
             if (gp.points.length > 1) {
                 // for each point in guide path
                 gp.points.slice(1).forEach(p => { // skip first point, since it is current position
                     count = count + p.stepsFromPrevious;
-                    console.log('count', count);
                     let action = new Action(p);
                     this.memberSelection.members.forEach(m => {
                         let added = ScriptBuilder.addActionAtCount(m, action, count);

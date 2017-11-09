@@ -137,11 +137,11 @@ class DrillBuilder {
             m.isSelected = !m.isSelected;
         });
 
-        this.selection = new MemberSelection(members);
+        // this.selection = new MemberSelection(members);
 
-        // remove?
-        this.selectedMembers = [...members];
-        this.selectedFiles = this.getSelectedFiles();
+        // // remove?
+        // this.selectedMembers = [...members];
+        // this.selectedFiles = this.getSelectedFiles();
     }
 
     selectAll() {
@@ -153,9 +153,9 @@ class DrillBuilder {
 
         // use member selection
         
-        this.selectedMembers = [];
-        this.selectedMembers.push(...this.drill.members);
-        this.selectedFiles = this.getSelectedFiles();
+        // this.selectedMembers = [];
+        // this.selectedMembers.push(...this.drill.members);
+        // this.selectedFiles = this.getSelectedFiles();
     }
 
     deselectAll() {
@@ -165,8 +165,8 @@ class DrillBuilder {
             m.isSelected = false;
         });
 
-        this.selectedMembers = [];
-        this.selectedFiles = [];
+        // this.selectedMembers = [];
+        // this.selectedFiles = [];
     }
 
     hideUnselected() {

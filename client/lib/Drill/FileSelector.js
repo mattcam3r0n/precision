@@ -21,10 +21,10 @@ var followedByDirs = {
 };
 
 class FileSelector {
-    constructor(members) {
+    constructor(members, positionMap) {
         this.members = members;
         this.leaders = [];
-        this.positionMap = new PositionMap(members);
+        this.positionMap = positionMap || new PositionMap(members);
     }
 
     findFiles() {

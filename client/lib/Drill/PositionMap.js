@@ -5,7 +5,6 @@ class PositionMap {
         this.yMap = this.buildYMap();
         this.sortedXs = this.sortXs();
         this.sortedYs = this.sortYs();
-//console.trace();
     }
 
     getMemberAtPosition(x, y) {
@@ -32,13 +31,25 @@ class PositionMap {
     sortXs() {
         return this.members.map(m => {
             return m.currentState.x;
-        }).sort();
+        }).sort((a, b) => {
+            if (a < b)
+                return -1;
+            if (a > b)
+                return 1;
+            return 0;
+        });
     }
 
     sortYs() {
         return this.members.map(m => {
             return m.currentState.y;
-        }).sort();
+        }).sort((a, b) => {
+            if (a < b)
+                return -1;
+            if (a > b)
+                return 1;
+            return 0;
+        });
     }
 
     sortByPosition() {
@@ -74,7 +85,7 @@ class PositionMap {
 
             map[y][x] = m;
         });
-        return map;        
+        return map;
     }
 }
 

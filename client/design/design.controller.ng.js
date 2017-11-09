@@ -142,12 +142,9 @@ angular.module('drillApp')
     // handle selection event
     $scope.$on('field:objectsSelected', (evt, args) => {
       drillBuilder.select(args.members);
-      triggerMembersSelected({
-        memberSelection: drillBuilder.getMemberSelection()
-      });
-      triggerDrillStateChanged({
-        memberSelection: drillBuilder.getMemberSelection()
-      });
+      var memberSelection = drillBuilder.getMemberSelection();
+      triggerMembersSelected({ memberSelection });
+      triggerDrillStateChanged({ memberSelection });
     });
 
     $scope.$on('designTool:activateAddTurnsTool', (evt, args) => {      

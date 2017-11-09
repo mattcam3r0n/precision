@@ -134,7 +134,7 @@ class FieldController {
             return;            
         }
         this.arePathsVisible = true;
-    console.log(this.paths);
+
         _.each(this.marchers, m => {
             let p = this.createMemberPath(m.member);
             if (p) {
@@ -142,7 +142,6 @@ class FieldController {
                 this.canvas.add(p);
             }
         });
-    console.log(this.paths);
     }
 
     hidePaths() {
@@ -156,7 +155,6 @@ class FieldController {
 
     createMemberPath(member) {
         let points = this.getMemberPathPoints(member);
-    console.log(points);
         let pathExpr = this.getPathFromPoints(points);
 
         if (!points || points.length == 0)

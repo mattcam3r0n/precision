@@ -10,7 +10,7 @@ class MemberSelection {
     constructor(members) {
         this.members = members || [];
         this.positionMap = new PositionMap(members);
-        this.fileSelector = new FileSelector(members);
+        this.fileSelector = new FileSelector(members, this.positionMap);
     }
 
     getFiles() {
