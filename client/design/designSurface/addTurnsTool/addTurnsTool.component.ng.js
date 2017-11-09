@@ -107,7 +107,7 @@ angular.module('drillApp')
       }
       
       function createPathTool() {
-        if (ctrl.memberSelection.members.length == 0) return;
+        //if (ctrl.memberSelection.members.length == 0) return;
 
         if (ctrl.activePathTool) 
           destroyPathTool();

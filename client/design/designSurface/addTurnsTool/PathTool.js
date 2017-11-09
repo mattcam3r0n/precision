@@ -25,6 +25,9 @@ class PathTool {
         if (this.selectionBox)
             destroySelectionBox();
 
+        if (this.isEmptySelection())
+            return;
+
         // get box coords from selection
         var ul = this.memberSelection.getUpperLeft().toFieldPoint();
         var br = this.memberSelection.getBottomRight().toFieldPoint();
@@ -42,7 +45,14 @@ class PathTool {
         this.field.canvas.remove(this.selectionBox);
     }
 
+    isEmptySelection() {
+        return !this.memberSelection || this.memberSelection.members.length == 0;
+    }
+
     createGuides() {
+        if (this.isEmptySelection())
+        return;
+
         if (this.turnMode == 'file')
             return this.createFileGuides();
 

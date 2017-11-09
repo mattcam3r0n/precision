@@ -80,13 +80,15 @@ angular.module('drillApp')
       save();
     }
 
-    function triggerDrillStateChanged(args) {
-      $scope.$broadcast('design:drillStateChanged', args);
+    function triggerDrillStateChanged() {
+      var memberSelection = drillBuilder.getMemberSelection();
+      $scope.$broadcast('design:drillStateChanged', { memberSelection });
       $scope.$safeApply();
     }
 
-    function triggerMembersSelected(args) {
-      $rootScope.$broadcast('design:membersSelected', args);
+    function triggerMembersSelected() {
+      var memberSelection = drillBuilder.getMemberSelection();
+      $rootScope.$broadcast('design:membersSelected', { memberSelection });
     }
 
     function save() {
@@ -142,9 +144,8 @@ angular.module('drillApp')
     // handle selection event
     $scope.$on('field:objectsSelected', (evt, args) => {
       drillBuilder.select(args.members);
-      var memberSelection = drillBuilder.getMemberSelection();
-      triggerMembersSelected({ memberSelection });
-      triggerDrillStateChanged({ memberSelection });
+      triggerMembersSelected();
+      triggerDrillStateChanged();
     });
 
     $scope.$on('designTool:activateAddTurnsTool', (evt, args) => {      
@@ -159,11 +160,13 @@ angular.module('drillApp')
 
     $scope.$on('designTool:selectAll', (evt, args) => {
       drillBuilder.selectAll();
+      triggerMembersSelected();
       triggerDrillStateChanged();
     });
 
     $scope.$on('designTool:deselectAll', (evt, args) => {
       drillBuilder.deselectAll();
+      triggerMembersSelected();
       triggerDrillStateChanged();
     });
 
