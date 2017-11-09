@@ -2,15 +2,8 @@
 
 import { FieldPoint, StepPoint } from '/client/lib/Point';
 import StrideType from '/client/lib/StrideType';
-import StepType from '/client/lib/StepType';
-import StepDelta from '/client/lib/StepDelta';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
-import TurnMarker from '../field/TurnMarker';
-import CounterMarch from '../field/CounterMarch';
-import GuidePath from './GuidePath';
-import ScriptBuilder from '/client/lib/drill/ScriptBuilder';
-import Action from '/client/lib/drill/Action';
 import PathTool from './PathTool';
 
 angular.module('drillApp')
@@ -34,11 +27,8 @@ angular.module('drillApp')
       $scope.$on('design:membersSelected', function(evt, args) {
         if (!ctrl.isActivated) return;
 
-console.log('design:membersSelected');
         ctrl.memberSelection = args.memberSelection;
         createPathTool();
-        // var pathTool = new PathTool();
-        // ctrl.field.canvas.add(pathTool);
       });
 
       // TODO: need a way to detect selection changes, reset?
@@ -112,7 +102,6 @@ console.log('design:membersSelected');
       }
 
       function reset() {
-        console.log('reset');
         deactivate();
         activate(ctrl.memberSelection);
       }
@@ -161,23 +150,10 @@ console.log('design:membersSelected');
       }
 
       function save() {
-        if (!ctrl.guidePaths) return;
+        if (!ctrl.activePathTool) return;
 
-        ctrl.guidePaths.forEach(gp => {
-          if (gp.points.length > 1) {
-            // for each file member
-            gp.file.fileMembers.forEach(fm => {
-              // get current count + offset from leader (in counts)
-              let count = fm.member.currentState.count + fm.getStepsToLeader();
-              // for each point in guide path
-              gp.points.slice(1).forEach(p => { // skip first point, since it is current position
-                let action = new Action(p);
-                let added = ScriptBuilder.addActionAtPoint(fm.member, action, p);
-              });
-            });
-          }
-        });
-      
+        ctrl.activePathTool.save();
+
         $scope.$emit('addTurnsTool:save');
       }
 
