@@ -114,6 +114,7 @@ class GuidePath {
             stepType: StepType.Half,
             turnMarker: tm
         };
+        point1.stepsFromPrevious = this.calculateStepsFromPreviousPoint(point1);
         this.points.push(point1);
 
         var secondDelta = StepDelta.getDelta(StrideType.SixToFive, StepType.Full, secondTurnDirection, 1);
@@ -123,7 +124,8 @@ class GuidePath {
             y: stepPoint.y + firstDelta.deltaY,
             direction: secondTurnDirection,
             strideType: StrideType.SixToFive,
-            stepType: StepType.Full
+            stepType: StepType.Full,
+            stepsFromPrevious: 2
             //turnMarker: tm  // deliberately don't reference tm here, interferes with moving
         };
         this.points.push(point2);

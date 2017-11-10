@@ -17,19 +17,21 @@ var SelectionBox = fabric.util.createClass(fabric.Rect, {
         options = options || {};
         var self = this;
 
-
+        options.selectable = false;
+        options.evented = false;
+        
         this.callSuper('initialize', options);
 
         this.setControlsVisibility({
-            tl: true,
+            tl: false,
             tm: false,
             tr: false,
             ml: false,
             mr: false,
-            mb: true,
-            mt: true,
+            mb: false,
+            mt: false,
             bl: false,
-            br: true,
+            br: false,
             mtr: false
         });
 

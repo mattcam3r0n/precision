@@ -23,6 +23,11 @@
     width: 100%;
 } */
 
+.add-turns-tool .button-svg {
+    height: 20px;
+    width: 20px;
+}
+
 .add-turns-tool .direction-button button {
     height: 32px;
     width: 32px;
