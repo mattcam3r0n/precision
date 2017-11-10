@@ -18,6 +18,10 @@ class GuidePath {
         this.field.canvas.on('mouse:move', this.onMouseMoveHandler);
     }
 
+    setCurrentTurnDirection(dir) {
+        this.currentDir = dir;
+    }
+
     get firstPoint() {
         return this.points[0];
     }
@@ -90,9 +94,13 @@ class GuidePath {
         this.createGuidePathLine();
     }
 
+    isLeftTurn(stepPoint) {
+        return this.getEndCount(stepPoint) % 2 == 0 ? true : false;        
+    }
+
     addCountermarch(point) {
         var stepPoint = new StepPoint(point.strideType, point.x, point.y);
-        var isLeftTurn = this.getEndCount(stepPoint) % 2 == 0 ? true : false;
+        var isLeftTurn = this.isLeftTurn(stepPoint);
 
         var currentDir = this.lastPoint.direction;
         var firstTurnDirection = isLeftTurn ? Direction.leftTurnDirection(currentDir) : Direction.rightTurnDirection(currentDir);
@@ -224,6 +232,14 @@ class GuidePath {
 
         if (this.isInPath(stepPoint)) {
             this.createGuideline(this.lastPoint, stepPoint);
+            
+            if (this.currentDir == Direction.CM) {
+                if (this.isLeftTurn(stepPoint)) {
+                    this.field.canvas.defaultCursor = "url(/icons/CM-left.svg) 16 16, auto";
+                } else {
+                    this.field.canvas.defaultCursor = "url(/icons/CM-right.svg) 16 16, auto";
+                }
+            }
         } else {
             this.destroyGuideline();
         }

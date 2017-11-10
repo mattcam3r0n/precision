@@ -49,6 +49,11 @@ class PathTool {
         return !this.memberSelection || this.memberSelection.members.length == 0;
     }
 
+    setCurrentTurnDirection(dir) {
+        this.currentDir = dir;
+        this.guidePaths.forEach(gp => gp.setCurrentTurnDirection(dir));
+    }
+
     createGuides() {
         if (this.isEmptySelection())
         return;
