@@ -33,7 +33,11 @@
     width: 32px;
     padding: 0;
 }
-            
+
+.add-turns-tool .direction-button button.active {
+    background-color: #e6e6e6;
+}
+
 .add-turns-tool .turn-mode-button button {
     height: 32px;
     width: 48px;
@@ -42,8 +46,8 @@
 }
 
 .add-turns-tool .turn-mode-button button.active {
-    background-color: lightslategrey;
-    color: white;
+    background-color: #e6e6e6;
+    color: black;
 }
             
 .add-turns-tool .turn-mode-button span {

@@ -56,8 +56,13 @@ angular.module('drillApp')
         reset();
       }
 
+      $scope.isCurrentDirection= function(dir) {
+        return ctrl.turnDirection == Direction[dir];
+      }
+
       $scope.setTurnDirection = function(dir) {
         ctrl.turnDirection = Direction[dir];
+        ctrl.field.canvas.defaultCursor = "url(/icons/" + dir + ".svg) 16 16, auto";
       }
 
       $scope.isBlockMode = function() {
