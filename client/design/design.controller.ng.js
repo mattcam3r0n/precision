@@ -152,6 +152,10 @@ angular.module('drillApp')
       $rootScope.$broadcast('design:activateAddTurnsTool', { memberSelection: drillBuilder.getMemberSelection() }); 
     });
 
+    $scope.$on('designTool:activateAddStepsTool', (evt, args) => {      
+      $rootScope.$broadcast('design:activateAddStepsTool', { memberSelection: drillBuilder.getMemberSelection() }); 
+    });
+
     $scope.$on('designTool:deleteSelectedMembers', (evt, args) => {
       drillBuilder.deleteSelectedMembers();
       $scope.$broadcast('design:membersAdded', args);      

@@ -1,26 +1,12 @@
-<div draggable class="add-turns-tool panel panel-default" ng-show="$ctrl.isActivated">
+<div draggable class="add-steps-tool panel panel-default" ng-show="$ctrl.isActivated">
     <div class="panel-heading text-center drag-handle">
-        <i class="fa fa-bars fa-sm drag-handle"></i>&nbsp;Draw Paths
+        <i class="fa fa-bars fa-sm drag-handle"></i>&nbsp;Add Steps
     </div>
     <div id="addTurnsToolbar" class="panel-body floating-toolbar btn-group-vertical">
         <table class="stride-type-button">
             <tr>
                 <td>
                     <input type="checkbox" name="stride-type-switch" checked data-on-text="6/5" data-off-text="8/5" data-off-color="primary" data-label-text="Stride" data-size="mini" data-label-width="56px">
-                </td>
-            </tr>
-        </table>
-        <table class="turn-mode-button">
-            <tr>
-                <td>
-                    <button ng-click="setTurnMode('block')" id="" ng-class="{ 'active': isBlockMode() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Members will move as a block">
-                        Block
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="setTurnMode('file')" id="" ng-class="{ 'active': isFileMode() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Members will follow file leader">
-                        File
-                    </button>
                 </td>
             </tr>
         </table>
@@ -78,26 +64,35 @@
                     </button>
                 </td>
             </tr>
-        </table>
-        <table class="reset-button">
             <tr>
                 <td>
-                    <button ng-click="reset()" class="btn btn-default btn-sm">Reset</button>
-                </td>
-            </tr>
-        </table>
-        <table class="save-cancel-button">
-            <tr>
-                <td>
-                    <button ng-click="save()" id="cancelMembers" class="btn btn-default save-button" data-toggle="tooltip" data-placement="right"
-                        title="Save">
-                        <i class="fa fa-check context-button"></i>
+                    <button ng-click="" id="" ng-class="{ 'active': isCurrentDirection('SW') }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Mark time">
+                        <i class="fa fa-long-arrow-up context-button"></i>
+                        <i class="fa fa-long-arrow-down context-button"></i>
                     </button>
                 </td>
                 <td>
-                    <button ng-click="cancel()" id="cancelMembers" class="btn btn-default cancel-button" data-toggle="tooltip" data-placement="right"
-                        title="Cancel">
-                        <i class="fa fa-times context-button"></i>
+                    <button ng-click="setTurnDirection('S')" id="" ng-class="{ 'active': isCurrentDirection('S') }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="halt">
+                        <i class="fa fa-stop context-button"></i>
+                    </button>
+                </td>
+                <td>
+                    <button ng-click="setTurnDirection('SE')" id="" ng-class="{ 'active': isCurrentDirection('SE') }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Backup and delete">
+                        <i class="fa fa-arrow-circle-left context-button" style="color: red"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button ng-click="" id="" ng-class="{ 'active': isCurrentDirection('SW') }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Mark time">
+                    </button>
+                </td>
+                <td>
+                    <button ng-click="setTurnDirection('S')" id="" ng-class="{ 'active': isCurrentDirection('S') }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="halt">
+                    </button>
+                </td>
+                <td>
+                    <button ng-click="setTurnDirection('SE')" id="" ng-class="{ 'active': isCurrentDirection('SE') }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
                     </button>
                 </td>
             </tr>

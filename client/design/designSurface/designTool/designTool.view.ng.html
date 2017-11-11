@@ -1,7 +1,7 @@
 <div draggable id="designTool" class="design-tool panel panel-default" ng-show="$ctrl.isActivated">
 
-    <div class="panel-heading text-center drag-handle">
-        <i class="fa fa-bars fa-sm drag-handle"></i>
+    <div class="panel-heading text-left drag-handle">
+        <i class="fa fa-bars fa-sm drag-handle"></i> &nbsp; Tools
     </div>
     <div class="panel-body">
         <div id="designToolbar" class="floating-toolbar btn-group-vertical">
@@ -9,11 +9,11 @@
                 <i class="fa fa-play fa-rotate-270"></i>&nbsp;Add</button> -->
 
             <div class="btn-group" style="display: flex;">
-                <button ng-click="addMembers()" id="addMembers" type="button" class="btn btn-default">
-                    <i class="fa fa-play fa-rotate-270"></i>&nbsp;Add</button>
+                <button ng-click="addMembers()" id="addMembers" type="button" class="btn btn-default" title="Add Members">
+                    <i class="fa fa-play fa-rotate-270"></i>&nbsp;Add Members</button>
                 </button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    style="width: 50px;">
+                    style="width: 25px;">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
@@ -27,12 +27,34 @@
                 </ul>
             </div>
 
+            <!-- add steps -->
             <div class="btn-group" style="display: flex;">
-                <button id="drawPathTool" ng-click="drawPath()" type="button" class="btn btn-default">
-                    <i class="fa fa-pencil"></i>&nbsp;Paths
+                <button id="addStepsTool" ng-click="addSteps()" type="button" class="btn btn-default" title="Add Step-by-step">
+                    <i class="fa fa-pencil"></i>&nbsp;Add Steps
                 </button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    style="width: 50px;">
+                    style="width: 25px;">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a ng-click="deleteBackspace()" href="#">Bakckup and Delete (Alt + Backspace)</a>
+                    </li>
+                    <li>
+                        <a ng-click="deleteForward()" href="#">Delete Forward</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!-- draw paths -->
+            <div class="btn-group" style="display: flex;">
+                <button id="drawPathTool" ng-click="drawPath()" type="button" class="btn btn-default" title="Draw paths for members to follow">
+                    <i class="fa fa-pencil"></i>&nbsp;Draw Paths
+                </button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    style="width: 25px;">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
@@ -42,9 +64,6 @@
                     </li>
                     <li>
                         <a ng-click="showPaths()" href="#">Show/Hide Paths</a>
-                    </li>
-                    <li>
-                        <a href="#">Add Steps</a>
                     </li>
                     <li>
                         <a ng-click="deleteBackspace()" href="#">Bakckup and Delete (Alt + Backspace)</a>
@@ -58,7 +77,7 @@
             <div class="btn-group" style="display: flex;">
                 <button ng-click="selectAll()" type="button" class="btn btn-default">Select All</button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    style="width: 50px;">
+                    style="width: 25px;">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>

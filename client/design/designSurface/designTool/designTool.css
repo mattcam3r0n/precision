@@ -5,10 +5,21 @@
     left: 15px;
 }
 
-.design-tool .panel-body, .panel-heading {
+.design-tool div.panel-heading {
+    margin-left: 5px;
+}
+.design-tool .panel-body {
     padding: 0;
 }
 
+.design-tool .panel-body button {
+    text-align: left;
+    font-size: 10px;
+}
+
+.design-tool .dropdown-menu li {
+    font-size: 10px;
+}
 /* .select-all i:nth-child(1){
     color: lightgray;    
     font-size: 34px;
