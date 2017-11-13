@@ -2,20 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
 
 class appStateService {
-    constructor($meteor) {
+    constructor() {
         this.drill = null;        
-        this.$meteor = $meteor;
-    }
-
-    init() {
-        // TODO: do I need this subscription here?
-        //return a promise
-        // return this.$meteor.subscribe('drills').then(() => {
-        //     console.log('drills ready', arguments);
-        // });
-
-        // TODO: do i need this anymore? remove route delay?
-        return Promise.resolve();
     }
 
     get currentDrill() {

@@ -16,8 +16,10 @@ angular.module('drillApp')
         break;
     }
   });
-  appStateService.init().then(() => {
-    $urlRouter.sync();
-    $urlRouter.listen();  
-  });
+  $urlRouter.sync();
+  $urlRouter.listen();  
+// appStateService.init().then(() => {
+//     $urlRouter.sync();
+//     $urlRouter.listen();  
+//   });
 }]);
