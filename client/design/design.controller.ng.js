@@ -15,7 +15,6 @@ angular.module('drillApp')
     $reactive(ctrl).attach($scope);
     $scope.viewName = 'Design';
 
-
     var drillBuilder,
       drillPlayer,
       keyboardHandler,
@@ -203,11 +202,6 @@ angular.module('drillApp')
 
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {
-
-      // console.log(args);
-      //drillBuilder.selection
-
-
       $scope.currentPosition = args.position;
       $scope.$safeApply();
     });

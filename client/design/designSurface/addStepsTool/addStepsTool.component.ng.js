@@ -36,11 +36,29 @@ angular.module('drillApp')
 
       $scope.activate = activate;
 
+      $scope.cancel = deactivate;
+
       $scope.deactivate = function () {
       }
 
       $scope.reset = function() {
         reset();
+      }
+
+      $scope.addStep = function(dir) {
+
+      }
+
+      $scope.addMarkTime = function() {
+
+      }
+
+      $scope.addHalt = function() {
+
+      }
+
+      $scope.backspaceDelete = function() {
+        
       }
 
       function activate(memberSelection) {
@@ -61,10 +79,7 @@ angular.module('drillApp')
         ctrl.isActivated = false;
         ctrl.field.enablePositionIndicator();
         ctrl.field.canvas.selection = true;
-        ctrl.field.canvas.off('mouse:up', onMouseUp);
         ctrl.field.canvas.defaultCursor = 'default';
-        destroyGuidePaths();
-        destroyPathTool();
       }
 
       function positionTools(obj) {
