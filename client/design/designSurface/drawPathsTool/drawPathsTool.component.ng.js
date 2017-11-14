@@ -19,8 +19,6 @@ angular.module('drillApp')
         activate(drillEditorService.getMemberSelection());
       });
 
-      // TODO: need a way to detect selection changes, reset?
-
       ctrl.$onInit = function () {
         // bootstrap follow toggle button
         $("[name='stride-type-switch']").bootstrapSwitch();

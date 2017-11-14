@@ -56,6 +56,7 @@ angular.module('drillApp')
     function setDrill(drill) {
       $scope.drill = drill;
       drillEditorService.setDrill(drill);
+      drillEditorService.setTempo($scope.tempo);
       keyboardHandler = new DesignKeyboardHandler(drillEditorService, eventService);
       $scope.$safeApply(); // necessary for field painting?
     }

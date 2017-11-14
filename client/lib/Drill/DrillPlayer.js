@@ -23,7 +23,7 @@ class DrillPlayer {
     }
 
     setTempo(tempo) {
-        this.tempo = tempo;
+        this.tempo = tempo || 120;
     }
     
     play(stateChangedCallback) {
