@@ -55,7 +55,7 @@ angular.module('drillApp')
       }
 
       $scope.backspaceDelete = function() {
-        
+        drillEditorService.deleteBackspace();
       }
 
       function activate(memberSelection) {
