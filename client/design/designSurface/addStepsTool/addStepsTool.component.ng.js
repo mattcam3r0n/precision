@@ -13,20 +13,20 @@ angular.module('drillApp')
     },
     controller: function ($scope, drillEditorService, eventService) {
       var ctrl = this;
-      var toolDiv = angular.element('.add-steps-tool')[0];
-
-      // bootstrap follow toggle button
-      $("[name='stride-type-switch']").bootstrapSwitch();
-
-      var unsubscribeAddStepsToolActivated = eventService.subscribeAddStepsToolActivated((evt, args) => {
-        activate(drillEditorService.getMemberSelection());
-      });
 
       ctrl.$onInit = function () {
+        // bootstrap follow toggle button
+        $("[name='stride-type-switch']").bootstrapSwitch();
+
+        ctrl.unsubscribeAddStepsToolActivated = eventService.subscribeAddStepsToolActivated((evt, args) => {
+          activate(drillEditorService.getMemberSelection());
+        });
+
+        ctrl.toolDiv = angular.element('.add-steps-tool')[0];
       }
 
       ctrl.$onDestroy = function () {
-        unsubscribeAddStepsToolActivated();
+        ctrl.unsubscribeAddStepsToolActivated();
       }
 
       $scope.activate = activate;
@@ -41,7 +41,7 @@ angular.module('drillApp')
       }
 
       $scope.addStep = function(dir) {
-
+        drillEditorService.addStep(Direction[dir]);
       }
 
       $scope.addMarkTime = function() {
@@ -93,8 +93,8 @@ angular.module('drillApp')
         }
         var top = absCoords.top - 100;
 
-        toolDiv.style.left = left + 'px';
-        toolDiv.style.top = top + 'px';
+        ctrl.toolDiv.style.left = left + 'px';
+        ctrl.toolDiv.style.top = top + 'px';
       }
 
     }
