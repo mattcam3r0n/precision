@@ -15,7 +15,7 @@
         <table class="stride-type-button">
             <tr>
                 <td>
-                    <input type="checkbox" name="stride-type-switch" checked data-on-text="6/5" data-off-text="8/5" data-off-color="primary" data-label-text="Stride" data-size="mini" data-label-width="56px">
+                    <input ng-checked="getStrideType()" type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary" data-label-text="Stride" data-size="mini" data-label-width="56px">
                 </td>
             </tr>
         </table>
@@ -89,7 +89,7 @@
                     </button>
                 </td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td>
                     <button ng-click="" id="" ng-class="{ 'active': isCurrentDirection('SW') }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Mark time">
                     </button>
@@ -102,7 +102,7 @@
                     <button ng-click="setTurnDirection('SE')" id="" ng-class="{ 'active': isCurrentDirection('SE') }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
                     </button>
                 </td>
-            </tr>
+            </tr> -->
         </table>
     </div>
 

@@ -25,6 +25,14 @@ class DrillEditorService {
         this.notifyDrillStateChanged();
     }
 
+    get strideType() {
+        return this._strideType || StrideType.SixToFive;
+    }
+
+    set strideType(value) {
+        this._strideType = value;
+    }
+
     setTempo(tempo) {
         if (this.drillPlayer)
             this.drillPlayer.setTempo(tempo);

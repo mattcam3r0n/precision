@@ -17,13 +17,23 @@ angular.module('drillApp')
 
       ctrl.$onInit = function () {
         // bootstrap follow toggle button
-        $("[name='stride-type-switch']").bootstrapSwitch();
-
+        $("[name='stride-type-switch']").bootstrapSwitch('state', drillEditorService.strideType);
+        $("input[name='stride-type-switch']").on('switchChange.bootstrapSwitch', function(event, state) {
+          if (state) {
+            drillEditorService.strideType = StrideType.EightToFive;
+          } else {
+            drillEditorService.strideType = StrideType.SixToFive;
+          }
+          console.log(drillEditorService.strideType);
+        });
+        
         ctrl.unsubscribeAddStepsToolActivated = eventService.subscribeAddStepsToolActivated((evt, args) => {
           activate(drillEditorService.getMemberSelection());
         });
 
         ctrl.toolDiv = angular.element('.add-steps-tool')[0];
+
+        $scope.strideType = drillEditorService.strideType;
       }
 
       ctrl.$onDestroy = function () {
@@ -39,6 +49,11 @@ angular.module('drillApp')
 
       $scope.reset = function() {
         reset();
+      }
+
+      $scope.getStrideType = function() {
+        return drillEditorService.strideType;
+    console.log(drillEditorService.strideType);
       }
 
       $scope.addStep = function(dir) {

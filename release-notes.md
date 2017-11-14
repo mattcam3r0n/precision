@@ -22,3 +22,14 @@
 * ctrl/cmd + d to deselect all
 
 11-14-17
+* Two modes for adding steps to drill:  Draw Paths and Add Steps. Draw paths lets you draw out the path to follow.  Add Steps adds steps one step at a time, always in "block" mode (similar to keyboard input).
+* Draw Paths: Mouse cursor now shows the currently selected turn direction when placing turns.
+* Draw Paths: Mouse cursor reflects countermarch direction depending on count/placement.
+* Draw Paths: Block and File mode buttons.  In Block mode, all selected members will turn as a block. In File mode, they will "follow the leader".
+* Draw Paths: Block mode is indicated by a box with a single guide point.
+* Draw Paths: File mode is indicated by a box and each file is indicated with a line through it, and the leader is a guide point.  Files in non-block arrangements should still be detected.
+* Add Steps: Palette for adding steps in all directions, plus Mark Time, Halt, Countermarch, and a "backspace" button that deletes last step and backs up one count.
+* Add Steps: Countermarches are right/left based on current count.  Even counts (right foot) are left turns, odd counts are right turns.
+* 6/5 or 8/5 switch is back, but 8/5 is not operational yet.
+
+
