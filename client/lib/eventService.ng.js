@@ -12,8 +12,8 @@ class EventService {
         return unsubscribe;
     }
 
-    notifyAddStepsToolActivated() {
-        this.$rootScope.$broadcast(Events.addStepsToolActivated);
+    notifyAddStepsToolActivated(args) {
+        this.$rootScope.$broadcast(Events.addStepsToolActivated, args);
     }
 
     subscribeDrawPathsToolActivated(cb) {
@@ -21,8 +21,8 @@ class EventService {
         return unsubscribe;
     }
 
-    notifyDrawPathsToolActivated() {
-        this.$rootScope.$broadcast(Events.drawPathsToolActivated);
+    notifyDrawPathsToolActivated(args) {
+        this.$rootScope.$broadcast(Events.drawPathsToolActivated, args);
     }
 
     subscribeAddMembersToolActivated(cb) {
@@ -30,8 +30,35 @@ class EventService {
         return unsubscribe;
     }
 
-    notifyAddMembersToolActivated() {
-        this.$rootScope.$broadcast(Events.addMembersToolActivated);
+    notifyAddMembersToolActivated(args) {
+        this.$rootScope.$broadcast(Events.addMembersToolActivated, args);
+    }
+
+    subscribeObjectsSelected(cb) {
+        var unsubscribe = this.$rootScope.$on(Events.objectsSelected, cb);
+        return unsubscribe;
+    }
+
+    notifyObjectsSelected(args) {
+        this.$rootScope.$broadcast(Events.objectsSelected, args);
+    }
+
+    subscribePositionIndicator(cb) {
+        var unsubscribe = this.$rootScope.$on(Events.positionIndicator, cb);
+        return unsubscribe;
+    }
+
+    notifyPositionIndicator(args) {
+        this.$rootScope.$broadcast(Events.positionIndicator, args);
+    }
+
+    subscribeResize(cb) {
+        var unsubscribe = this.$rootScope.$on(Events.resize, cb);
+        return unsubscribe;
+    }
+
+    notifyResize(args) {
+        this.$rootScope.$broadcast(Events.resize, args);
     }
 }
 

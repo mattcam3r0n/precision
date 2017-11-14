@@ -6,7 +6,7 @@ angular.module('drillApp')
     bindings: {
       onOpen: "&"
     },
-    controller: function ($scope, $window, $timeout, $rootScope, appStateService) {
+    controller: function ($scope, appStateService) {
       var ctrl = this;
 
       $scope.page = 1;

@@ -107,7 +107,6 @@ class PathTool {
                     return 1;
                 return 0;
             });
-
         var file = files[0];
         var guide = sortedLeaderPositions[0];
         var fi = new FileIndicator([new StepPoint(guide.strideType, guide.x, guide.y).toFieldPoint()], guide.direction);

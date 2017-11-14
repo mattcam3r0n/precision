@@ -6,7 +6,7 @@ import DesignKeyboardHandler from './DesignKeyboardHandler';
 import { Meteor } from 'meteor/meteor';
 
 angular.module('drillApp')
-  .controller('DesignCtrl', function ($scope, $rootScope, $timeout, $window, $reactive, appStateService, drillEditorService) {
+  .controller('DesignCtrl', function ($scope, $window, $reactive, appStateService, drillEditorService, eventService) {
 
     var ctrl = this;
     $reactive(ctrl).attach($scope);
@@ -104,18 +104,19 @@ angular.module('drillApp')
     }
 
     // handle selection event
-    $scope.$on('field:objectsSelected', (evt, args) => {
-      drillEditorService.selectMembers(args.members);
+    var unsubscribeObjectsSelected = eventService.subscribeObjectsSelected((evt, args) => {
+      drillEditorService.selectMembers(args.members);      
     });
 
     // update position indicator
-    $rootScope.$on('positionIndicator', (evt, args) => {
+    var unsubscribePositionIndicator = eventService.subscribePositionIndicator((event, args) => {
       $scope.currentPosition = args.position;
       $scope.$safeApply();
     });
 
     $scope.$on("$destroy", function () {
       $window.removeEventListener('keydown', keydown);
+      unsubscribeObjectsSelected();
       // clean up?
     });
 
@@ -127,7 +128,7 @@ angular.module('drillApp')
       var c = angular.element('#design-surface-col')
       c.removeClass($scope.isHelpVisible ? 'col-md-12' : 'col-md-11');
       c.addClass($scope.isHelpVisible ? 'col-md-11' : 'col-md-12');
-      $rootScope.$broadcast('designSurface:resize');
+      eventService.notifyResize();
     }
 
     // show the "add members" walkthrough. make sure addMembers tool is displayed first.

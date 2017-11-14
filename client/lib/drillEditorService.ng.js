@@ -98,6 +98,10 @@ class DrillEditorService {
         this.drillBuilder.hideUnselected();
         this.notifyDrillStateChanged();          
     }
+
+    showPaths() {
+        //TODO
+    }
     
     showAll() {
         this.drillBuilder.showAll();
@@ -174,6 +178,15 @@ class DrillEditorService {
 
     notifyMembersAdded() {
         this.$rootScope.$broadcast(Events.membersAdded);
+    }
+
+    subscribeShowPaths(cb) {
+        var unsubscribe = this.$rootScope.$on(Events.showPaths, cb);
+        return unsubscribe;
+    }
+
+    notifyShowPaths() {
+        this.$rootScope.$broadcast(Events.showPaths);
     }
 }
 

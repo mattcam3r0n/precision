@@ -7,6 +7,10 @@ class Events {
         return 'membersSelected';
     }
 
+    static get showPaths() {
+        return 'showPaths';
+    }
+
     static get drillStateChanged() {
         return 'drillStateChanged';
     }
@@ -21,6 +25,18 @@ class Events {
 
     static get addMembersToolActivated() {
         return 'addMembersToolActivated';
+    }
+
+    static get objectsSelected() {
+        return 'objectsSelected';
+    }
+
+    static get positionIndicator() {
+        return 'positionIndicator';
+    }
+
+    static get resize() {
+        return 'resize';
     }
 }
 

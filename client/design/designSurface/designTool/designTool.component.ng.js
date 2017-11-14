@@ -10,7 +10,7 @@ angular.module('drillApp')
     bindings: {
       field: '<'
     },
-    controller: function ($scope, $rootScope, drillEditorService, eventService) {
+    controller: function ($scope, drillEditorService, eventService) {
       var ctrl = this;
 
       $("[name='follow-switch']").bootstrapSwitch();
@@ -49,7 +49,8 @@ angular.module('drillApp')
       }
 
       $scope.showPaths = function() {
-        $rootScope.$broadcast('designTool:showPaths');
+        drillEditorService.showPaths();
+        // $rootScope.$broadcast('designTool:showPaths');
       }
 
       $scope.hideUnselected = function() {

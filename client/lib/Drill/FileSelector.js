@@ -35,7 +35,7 @@ class FileSelector {
             var fm = new FileMember(m);
             fileMembers[m.id] = fm;
         });
-
+console.log(fileMembers);
         // wire up folowers
         this.members.forEach(m => {
             let fm = fileMembers[m.id];

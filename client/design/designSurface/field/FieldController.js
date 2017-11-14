@@ -15,10 +15,10 @@ import 'fabric-customise-controls';
 
 class FieldController {
 
-    constructor(drill, $scope) {
+    constructor(drill, eventService) {
         this.drill = drill;
         this.canvas = this.createCanvas();
-        this.$scope = $scope;
+        this.eventService = eventService;
         this.marchers = {};
         this.paths = [];
         this.arePathsVisible = false;
@@ -306,10 +306,7 @@ class FieldController {
         var members = marchers.map(marcher => marcher.member);
         
         this.canvas.discardActiveGroup(); // import to call this BEFORE emitting event, causes strange effect on position
-
-        this.$scope.$emit('field:objectsSelected', { members: members, marchers: marchers });
-       
-        // console.log(marchers);
+        this.eventService.notifyObjectsSelected({ members: members, marchers: marchers });
     }
 
     onObjectSelected(evt) {
@@ -323,7 +320,7 @@ class FieldController {
         if (!member || !member.isVisible) return; 
 
         this.canvas.discardActiveObject();
-        this.$scope.$emit('field:objectsSelected', { members: [member] });
+        this.eventService.notifyObjectsSelected({ members: [member] });
     }
 
     // onSelectionCleared(evt) {
@@ -348,7 +345,7 @@ class FieldController {
         self.canvas.renderAll();
 
         var pos = PositionCalculator.getPositionDescription(snappedPoint);
-        self.$scope.$emit('positionIndicator', { position: pos });
+        this.eventService.notifyPositionIndicator({ position: pos });
     }
 
     createPositionIndicator() {
