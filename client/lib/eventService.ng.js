@@ -60,6 +60,15 @@ class EventService {
     notifyResize(args) {
         this.$rootScope.$broadcast(Events.resize, args);
     }
+    
+    subscribeDeleteTurn(cb) {
+        var unsubscribe = this.$rootScope.$on(Events.deleteTurn, cb);
+        return unsubscribe;
+    }
+
+    notifyDeleteTurn(args) {
+        this.$rootScope.$broadcast(Events.deleteTurn, args);
+    }
 }
 
 

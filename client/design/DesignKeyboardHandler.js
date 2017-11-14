@@ -3,8 +3,9 @@ import Direction from '/client/lib/Direction';
 import StepType from '/client/lib/StepType';
 
 class DesignKeyboardHandler {
-    constructor(drillEditorService) {
+    constructor(drillEditorService, eventService) {
         this.drillEditorService = drillEditorService;
+        this.eventService = eventService;
     }
 
     handlers = {
@@ -29,7 +30,7 @@ class DesignKeyboardHandler {
             }
 
             // re-broadcast delete key event
-            this.rootScope.$broadcast('design:backspacePressed');
+            this.eventService.notifyDeleteTurn();
         },
 
         "ArrowUp": (e) => {

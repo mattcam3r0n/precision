@@ -38,6 +38,10 @@ class Events {
     static get resize() {
         return 'resize';
     }
+
+    static get deleteTurn() {
+        return 'deleteTurn';
+    }
 }
 
 export default Events;

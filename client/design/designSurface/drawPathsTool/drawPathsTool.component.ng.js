@@ -24,13 +24,6 @@ angular.module('drillApp')
         activate(drillEditorService.getMemberSelection());
       });
 
-      var unsubscribeMembersSelected = drillEditorService.subscribeMembersSelected((evt, args) => {
-        if (!ctrl.isActivated) return;
-        // activate(drillEditorService.getMemberSelection());
-        ctrl.memberSelection = args.memberSelection;
-        createPathTool();
-      });
-
       // TODO: need a way to detect selection changes, reset?
 
       ctrl.$onInit = function () {
@@ -39,7 +32,6 @@ angular.module('drillApp')
 
       ctrl.$onDestroy = function () {
         unsubscribeDrawPathsToolActivated();
-        unsubscribeMembersSelected();
       }
 
       $scope.activate = activate;
@@ -89,23 +81,29 @@ angular.module('drillApp')
         ctrl.memberSelection = memberSelection;
 
         createPathTool();
-//        initGuidePaths();
         positionTools();
 
         ctrl.field.canvas.defaultCursor = 'crosshair';
         ctrl.field.canvas.on('mouse:up', onMouseUp);
-        ctrl.deregisterOnBackspacePressed = $scope.$on('design:backspacePressed', onBackspacePressed);
+        ctrl.unsubscribeDeleteTurn = eventService.subscribeDeleteTurn(onBackspacePressed);
+        ctrl.unsubscribeMembersSelected = drillEditorService.subscribeMembersSelected((evt, args) => {
+          if (!ctrl.isActivated) return;
+          ctrl.memberSelection = args.memberSelection;
+          createPathTool();
+        });
+  
       }
 
       function deactivate() {
-        if (ctrl.deregisterOnBackspacePressed)
-          ctrl.deregisterOnBackspacePressed();
+        if (ctrl.unsubscribeDeleteTurn) 
+          ctrl.unsubscribeDeleteTurn();
+        if (ctrl.unsubscribeMembersSelected)
+          ctrl.unsubscribeMembersSelected();
         ctrl.isActivated = false;
         ctrl.field.enablePositionIndicator();
         ctrl.field.canvas.selection = true;
         ctrl.field.canvas.off('mouse:up', onMouseUp);
         ctrl.field.canvas.defaultCursor = 'default';
-        destroyGuidePaths();
         destroyPathTool();
       }
 
@@ -136,7 +134,8 @@ angular.module('drillApp')
         var target = ctrl.field.canvas.getActiveObject();
 
         //removeTurnMarker(target);
-        ctrl.guidePaths.forEach(gp => gp.removeTurnMarker(target));
+        ctrl.activePathTool.removeTurnMarker(target);
+//        ctrl.guidePaths.forEach(gp => gp.removeTurnMarker(target));
       }
 
       function onMouseUp(evt) {

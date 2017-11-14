@@ -161,6 +161,10 @@ class PathTool {
         });
     }
 
+    removeTurnMarker(marker) {
+        this.guidePaths.forEach(gp => gp.removeTurnMarker(marker));
+    }
+
     save() {
         if (!this.guidePaths) return;
 

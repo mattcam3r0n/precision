@@ -69,8 +69,6 @@ angular.module('drillApp')
       }
 
       function deactivate() {
-        if (ctrl.deregisterOnBackspacePressed)
-          ctrl.deregisterOnBackspacePressed();
         ctrl.isActivated = false;
         ctrl.field.enablePositionIndicator();
         ctrl.field.canvas.selection = true;
