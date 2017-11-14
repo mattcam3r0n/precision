@@ -35,14 +35,11 @@ class FileSelector {
             var fm = new FileMember(m);
             fileMembers[m.id] = fm;
         });
-console.log(fileMembers);
         // wire up folowers
         this.members.forEach(m => {
             let fm = fileMembers[m.id];
             let following = this.getFollowing(m);
-//            let followedBy = this.getFollowedBy(m);
             fm.following = following ? fileMembers[following.id] : null;
-//            fm.followedBy = followedBy ? fileMembers[followedBy.id] : null;
             if (fm.following)
                 fm.following.followedBy = fm;
 

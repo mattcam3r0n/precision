@@ -19,8 +19,8 @@ class Events {
         return 'addStepsToolActivated';
     }
 
-    static get addTurnsToolActivated() {
-        return 'addTurnsToolActivated';
+    static get drawPathsToolActivated() {
+        return 'drawPathsToolActivated';
     }
 
     static get addMembersToolActivated() {

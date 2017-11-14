@@ -20,3 +20,5 @@
 * began "show/hide paths" tool, but still buggy
 * made members a little smaller to make fine detail editing easier. sometimes you couldn't place a turn because a member was in the way.
 * ctrl/cmd + d to deselect all
+
+11-14-17

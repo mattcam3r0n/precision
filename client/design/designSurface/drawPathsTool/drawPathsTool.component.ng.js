@@ -14,7 +14,7 @@ angular.module('drillApp')
     },
     controller: function ($scope, $window, drillEditorService, eventService) {
       var ctrl = this;
-      var toolDiv = angular.element('.add-turns-tool')[0];
+      var toolDiv = angular.element('.draw-paths-tool')[0];
       var newTurns = [];
 
       // bootstrap follow toggle button
@@ -161,9 +161,7 @@ angular.module('drillApp')
 
         ctrl.activePathTool.save();
 
-        drillEditorService.save(true);
-          
-        $scope.$emit('addTurnsTool:save');
+        drillEditorService.save(true);          
       }
 
       function positionTools(obj) {

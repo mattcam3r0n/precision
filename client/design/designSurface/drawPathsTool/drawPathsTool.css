@@ -1,21 +1,21 @@
-.add-turns-tool {
+.draw-paths-tool {
     -visibility: hidden;
     position: absolute;
 }
 
-.add-turns-tool ul.dropdown-menu {
+.draw-paths-tool ul.dropdown-menu {
     min-width: 200px;
 }
 
-.add-turns-tool .dropdown-menu li {
+.draw-paths-tool .dropdown-menu li {
     width: 40px;
 }
 
-.add-turns-tool ul.dropdown-menu.direction-picker {
+.draw-paths-tool ul.dropdown-menu.direction-picker {
     min-width: 160px;
 }
 
-.add-turns-tool .panel-heading {
+.draw-paths-tool .panel-heading {
     margin-left: 5px;
     margin-top: 2px;
     margin-bottom: 2px;
@@ -23,60 +23,60 @@
     text-align: left;
 }
 
-.add-turns-tool .panel-body {
+.draw-paths-tool .panel-body {
     padding: 0;
 }
 
-/* .add-turns-tool table {
+/* .draw-paths-tool table {
     width: 100%;
 } */
 
-.add-turns-tool .button-svg {
+.draw-paths-tool .button-svg {
     height: 20px;
     width: 20px;
 }
 
-.add-turns-tool .direction-button button {
+.draw-paths-tool .direction-button button {
     height: 32px;
     width: 32px;
     padding: 0;
 }
 
-.add-turns-tool .direction-button button.active {
+.draw-paths-tool .direction-button button.active {
     background-color: #e6e6e6;
 }
 
-.add-turns-tool .turn-mode-button button {
+.draw-paths-tool .turn-mode-button button {
     height: 32px;
     width: 48px;
     padding: 0;
     font-size: 12px;
 }
 
-.add-turns-tool .turn-mode-button button.active {
+.draw-paths-tool .turn-mode-button button.active {
     background-color: #e6e6e6;
     color: black;
 }
             
-.add-turns-tool .turn-mode-button span {
+.draw-paths-tool .turn-mode-button span {
     font-size: 12px;
 }
 
-.add-turns-tool .save-cancel-button button {
+.draw-paths-tool .save-cancel-button button {
     height: 32px;
     width: 48px;
     padding: 0;
 }
 
-.add-turns-tool .reset-button button {
+.draw-paths-tool .reset-button button {
     width: 96px;
 }
 
-.add-turns-tool .save-button {
+.draw-paths-tool .save-button {
     color: green;    
 }
 
-.add-turns-tool .cancel-button {
+.draw-paths-tool .cancel-button {
     color: red;    
 }
 
