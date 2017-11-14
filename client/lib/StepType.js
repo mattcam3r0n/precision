@@ -13,7 +13,7 @@ class StepType {
         return 2;
     }
 
-    static get Stop(){
+    static get Halt(){
         return 3;
     }
 

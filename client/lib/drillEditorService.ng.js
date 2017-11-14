@@ -32,8 +32,11 @@ class DrillEditorService {
 
     // Playback
 
-    play() {
-        this.drillPlayer.play(this.notifyDrillStateChanged.bind(this));
+    play(cb) {
+        this.drillPlayer.play(() => {
+            this.notifyDrillStateChanged();
+            if (cb) cb();
+        });
     }
 
     stop() {

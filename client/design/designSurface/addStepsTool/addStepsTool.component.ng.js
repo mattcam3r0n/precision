@@ -2,6 +2,7 @@
 
 import { FieldPoint, StepPoint } from '/client/lib/Point';
 import StrideType from '/client/lib/StrideType';
+import StepType from '/client/lib/StepType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
 
@@ -45,11 +46,12 @@ angular.module('drillApp')
       }
 
       $scope.addMarkTime = function() {
-
+        drillEditorService.addStep(null, StepType.MarkTime);        
       }
 
       $scope.addHalt = function() {
-
+        // using null direction so it will default to current dir
+        drillEditorService.addStep(null, StepType.Halt);                
       }
 
       $scope.backspaceDelete = function() {
@@ -63,8 +65,6 @@ angular.module('drillApp')
         ctrl.isActivated = true;
         ctrl.memberSelection = memberSelection;
 
-//        createPathTool();
-//        initGuidePaths();
         positionTools();
       }
 

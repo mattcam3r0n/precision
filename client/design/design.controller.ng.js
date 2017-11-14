@@ -62,6 +62,7 @@ angular.module('drillApp')
 
     function keydown(e) {
       keyboardHandler.handle(e);
+      $scope.$safeApply();
     }
 
     $scope.debug = function () {
@@ -77,7 +78,9 @@ angular.module('drillApp')
     };
 
     $scope.onPlay = function () {
-      drillEditorService.play();
+      drillEditorService.play(() => {
+        $scope.$safeApply();
+      });
     }
 
     $scope.onStop = function () {

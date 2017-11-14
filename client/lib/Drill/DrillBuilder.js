@@ -72,30 +72,16 @@ class DrillBuilder {
     }
     
     addStep(strideType, stepType, direction, deltaX, deltaY) {
-        // var step = StepFactory.createStep(strideType, stepType, direction);
-
-        // if (this.addMode == AddMode.File) {
-        //     var files = this.selectedFiles;
-        //     files.forEach(f => {
-        //         f.addStep(step);
-        //     });
-        // } else {
-        //     var members = this.selectedMembers;
-        //     members.forEach(m => {
-        //         m.script.push(step);
-        //     });    
-        // }
-
-        var action = new Action({
-            strideType: strideType,
-            stepType: stepType,
-            direction: direction,
-            deltaX: deltaX,
-            deltaY: deltaY
-        });
-
         var members = this.getSelectedMembers();
+        var defaultValue = (a, b) => a === null || a === undefined ? b : a;
         members.forEach(m => {
+            var action = new Action({
+                strideType: defaultValue(strideType, m.currentState.strideType),
+                stepType: defaultValue(stepType, m.currentState.stepType),
+                direction: defaultValue(direction, m.currentState.direction),
+                deltaX: deltaX,
+                deltaY: deltaY
+            });
             ScriptBuilder.addActionAtCount(m, action, this.drill.count + 1);
         });
 

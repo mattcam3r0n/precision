@@ -109,7 +109,11 @@ class StepDelta {
         stepType = stepType || StepType.Full;
         steps = steps || 1;
         
-        if (stepType === StepType.MarkTime || stepType === StepType.Stop) return 0;
+        if (stepType === StepType.MarkTime || stepType === StepType.Halt) 
+            return {
+                deltaX: 0,
+                deltaY: 0
+            };
 
         var delta = deltas[strideType][stepType][direction];
 
