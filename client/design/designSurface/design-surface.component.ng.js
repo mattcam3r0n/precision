@@ -8,7 +8,7 @@ angular.module('drillApp')
     bindings: {
       drill: '<'
     },
-    controller: function ($scope, $window, $timeout, $rootScope, appStateService) {
+    controller: function ($scope, $window, $timeout, $rootScope, appStateService, drillEditorService) {
       var ctrl = this;
       $scope.showSpinner = true;
 
@@ -27,13 +27,13 @@ angular.module('drillApp')
         ctrl.field.resize();
       });
 
-      $scope.$on('design:drillStateChanged', function(evt, args) {
+      var unsubscribeDrillStateChanged = drillEditorService.subscribeDrillStateChanged((evt, args) => {
         if (!ctrl.field) return;
         ctrl.field.drillStateChanged(args);
       });
 
-      $scope.$on('design:membersAdded', function(event, args) {
-        ctrl.field.membersChanged();
+      var unsubscribeMembersAdded = drillEditorService.subscribeMembersAdded(() => {
+        ctrl.field.membersChanged();        
       });
 
       $scope.$on('designSurface:resize', function(){
@@ -42,17 +42,14 @@ angular.module('drillApp')
 
       $scope.$on("$destroy", function(){
         ctrl.field.canvas.dispose();
+        unsubscribeDrillStateChanged();
+        unsubscribeMembersAdded();
       });
 
       $scope.$on('designTool:showPaths', function() {
         ctrl.field.showPaths();
       });
       
-      // ctrl.$onInit = function() {
-      // }
-
-      // ctrl.$postLink = function() {
-      // }
     }
   });
 

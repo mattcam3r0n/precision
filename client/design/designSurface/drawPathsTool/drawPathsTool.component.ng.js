@@ -7,12 +7,12 @@ import Direction from '/client/lib/Direction';
 import PathTool from './PathTool';
 
 angular.module('drillApp')
-  .component('addTurnsTool', {
-    templateUrl: 'client/design/designSurface/addTurnsTool/addTurnsTool.view.ng.html',
+  .component('drawPathsTool', {
+    templateUrl: 'client/design/designSurface/drawPathsTool/drawPathsTool.view.ng.html',
     bindings: {
       field: '<'
     },
-    controller: function ($scope, $window) {
+    controller: function ($scope, $window, drillEditorService, eventService) {
       var ctrl = this;
       var toolDiv = angular.element('.add-turns-tool')[0];
       var newTurns = [];
@@ -20,8 +20,8 @@ angular.module('drillApp')
       // bootstrap follow toggle button
       $("[name='stride-type-switch']").bootstrapSwitch();
 
-      $scope.$on('design:activateAddTurnsTool', function (evt, args) {
-        activate(args.memberSelection);
+      var unsubscribeDrawPathsToolActivated = eventService.subscribeDrawPathsToolActivated(() => {
+        activate(drillEditorService.getMemberSelection());
       });
 
       $scope.$on('design:membersSelected', function(evt, args) {
@@ -38,6 +38,7 @@ angular.module('drillApp')
       }
 
       ctrl.$onDestroy = function () {
+        unsubscribeDrawPathsToolActivated();
       }
 
       $scope.activate = activate;
@@ -160,6 +161,8 @@ angular.module('drillApp')
 
         ctrl.activePathTool.save();
 
+        drillEditorService.save(true);
+          
         $scope.$emit('addTurnsTool:save');
       }
 

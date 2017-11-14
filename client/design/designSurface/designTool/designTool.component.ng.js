@@ -10,42 +10,42 @@ angular.module('drillApp')
     bindings: {
       field: '<'
     },
-    controller: function ($scope, $window, $rootScope) {
+    controller: function ($scope, $rootScope, drillEditorService, eventService) {
       var ctrl = this;
 
       $("[name='follow-switch']").bootstrapSwitch();
       ctrl.isActivated = true;
 
       $scope.addMembers = function() {
-        $rootScope.$broadcast('designTool:activateAddMemberTool');        
+        eventService.notifyAddMembersToolActivated();
       }
 
       $scope.deleteSelectedMembers = function() {
-        $rootScope.$broadcast('designTool:deleteSelectedMembers');
+        drillEditorService.deleteSelectedMembers();
       }
 
       $scope.addSteps = function() {
-        $rootScope.$broadcast('designTool:activateAddStepsTool');                
+        eventService.notifyAddStepsToolActivated();         
       }
 
       $scope.drawPath = function() {
-        $rootScope.$broadcast('designTool:activateAddTurnsTool');                
+        eventService.notifyDrawPathsToolActivated();
       }
 
       $scope.deselectAll = function() {
-        $rootScope.$broadcast('designTool:deselectAll');
+        drillEditorService.deselectAll();
       }
 
       $scope.selectAll = function() {
-        $rootScope.$broadcast('designTool:selectAll');
+        drillEditorService.selectAll();
       }
 
       $scope.deleteBackspace = function() {
-        $rootScope.$broadcast('designTool:deleteBackspace');
+        drillEditorService.deleteBackspace();
       }
 
       $scope.deleteForward = function() {
-        $rootScope.$broadcast('designTool:deleteForward');
+        drillEditorService.deleteForward();
       }
 
       $scope.showPaths = function() {
@@ -53,11 +53,11 @@ angular.module('drillApp')
       }
 
       $scope.hideUnselected = function() {
-        $rootScope.$broadcast('designTool:hideUnselected');
+        drillEditorService.hideUnselected();
       }
 
       $scope.showAll = function() {
-        $rootScope.$broadcast('designTool:showAll');
+        drillEditorService.showAll();
       }
     }
   });

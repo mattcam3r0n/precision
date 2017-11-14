@@ -3,30 +3,28 @@ import Direction from '/client/lib/Direction';
 import StepType from '/client/lib/StepType';
 
 class DesignKeyboardHandler {
-    constructor(drillBuilder, drillPlayer, $rootScope) {
-        this.drillBuilder = drillBuilder;
-        this.drillPlayer = drillPlayer;
-        this.rootScope = $rootScope
+    constructor(drillEditorService) {
+        this.drillEditorService = drillEditorService;
     }
 
     handlers = {
         "a": (e) => {
             if (e.ctrlKey || e.metaKey) {
-                this.rootScope.$broadcast('designTool:selectAll');
+                this.drillEditorService.selectAll();
                 return;
             }
         },
 
         "d": (e) => {
             if (e.ctrlKey || e.metaKey) {
-                this.rootScope.$broadcast('designTool:deselectAll');
+                this.drillEditorService.deselectAll();
                 return;
             }
         },
 
         "Backspace": (e) => {
             if (e.altKey) {
-                this.rootScope.$broadcast('designTool:deleteBackspace');
+                this.drillEditorService.deleteBackspace();
                 return;
             }
 
@@ -36,48 +34,45 @@ class DesignKeyboardHandler {
 
         "ArrowUp": (e) => {
             if (e.altKey) {
-                this.drillBuilder.addStep(StrideType.SixToFive, StepType.Full, Direction.N);
-                this.drillPlayer.stepForward();
+                this.drillEditorService.addStep(Direction.N);
                 return;
             }
         },
 
         "ArrowDown": (e) => {
             if (e.altKey) {
-                this.drillBuilder.addStep(StrideType.SixToFive, StepType.Full, Direction.S);
-                this.drillPlayer.stepForward();
+                this.drillEditorService.addStep(Direction.S);
                 return;
             }
         },
 
         "ArrowLeft": (e) => {
             if (e.ctrlKey || e.metaKey) {
-                this.drillPlayer.goToBeginning();
+                this.drillEditorService.goToBeginning();
                 return;
             }
 
             if (e.altKey) {
-                this.drillBuilder.addStep(StrideType.SixToFive, StepType.Full, Direction.W);
-                this.drillPlayer.stepForward();
+                this.drillEditorService.addStep(Direction.W);
                 return;
             }
 
-            this.drillPlayer.stepBackward();
+            this.drillEditorService.stepBackward();
         },
 
         "ArrowRight": (e) => {
             if (e.ctrlKey || e.metaKey) {
-                this.drillPlayer.goToEnd();
+                this.drillEditorService.goToEnd();
                 return;
             }
 
             if (e.altKey) {
-                this.drillBuilder.addStep(StrideType.SixToFive, StepType.Full, Direction.E);
-                this.drillPlayer.stepForward();
+                this.drillEditorService.addStep(Direction.E);
+                // TODO: detect shift for 1/2 step?
                 return;
             }
 
-            this.drillPlayer.stepForward();
+            this.drillEditorService.stepForward();
         }
     };
 

@@ -63,6 +63,8 @@ class DrillBuilder {
                 this.drill.members.splice(i, 1);
             }
         });
+
+        this.drill.isDirty = true;
     }
 
     createMember(strideType, dir, point) {

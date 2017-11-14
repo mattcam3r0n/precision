@@ -2,16 +2,26 @@ import { Meteor } from 'meteor/meteor';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
 
 class appStateService {
-    constructor() {
-        this.drill = null;        
+    constructor($rootScope) {
+        this._drill = null;
+        this.rootScope = $rootScope.$new(true);
     }
 
-    get currentDrill() {
-        return this.drill;
+    get drill() {
+        return this._drill;
     }
 
-    set currentDrill(drill) {
-        this.drill = drill;
+    set drill(d) {
+        this._drill = d;
+    }
+
+    subscribeDrillChanged(cb) {
+        var unsubscribe = this.rootScope.$on('drillChanged', cb);
+        return unsubscribe;
+    }
+
+    notifyDrillChanged() {
+        this.rootScope.$emit('drillChanged', this._drill);
     }
 
     getLastDrillId() {        
@@ -36,13 +46,15 @@ class appStateService {
     openDrill(id) {
         return this.getDrill(id)
             .then(drill => {
-                this.currentDrill = drill;
+                this.drill = drill;
+                this.notifyDrillChanged();
                 return drill;
             });
     }
 
     closeDrill() {
         this.newDrill();
+        this.notifyDrillChanged();
     }
 
     newDrill() {
@@ -50,15 +62,16 @@ class appStateService {
         this.saveDrill();
         
         var builder = new DrillBuilder();
-        this.currentDrill = builder.createDrill();
-        return this.currentDrill;   
+        this.drill = builder.createDrill();
+        this.notifyDrillChanged();
+        return this.drill;   
     }
 
     saveDrill() {
-        if (!this.currentDrill) return;
+        if (!this.drill) return;
 
-        var id = this.currentDrill._id;
-        this.currentDrill.isDirty = false;
+        var id = this.drill._id;
+        this.drill.isDirty = false;
         if (!id) {
             this.insertDrill();
         } else {
@@ -67,40 +80,40 @@ class appStateService {
     }
 
     insertDrill() {
-        this.currentDrill.createdDate = new Date();
-        this.currentDrill.updatedDate = new Date();
-        this.currentDrill.userId = Meteor.userId();
-        this.currentDrill.owner = getOwnerEmail(Meteor.user());
-        this.currentDrill.name_sort = this.currentDrill.name.toLowerCase();
-        this.currentDrill.owner = Meteor.userId();
-        Drills.insert(angular.copy(this.currentDrill), (err, id) => {
+        this.drill.createdDate = new Date();
+        this.drill.updatedDate = new Date();
+        this.drill.userId = Meteor.userId();
+        this.drill.owner = getOwnerEmail(Meteor.user());
+        this.drill.name_sort = this.drill.name.toLowerCase();
+        this.drill.owner = Meteor.userId();
+        Drills.insert(angular.copy(this.drill), (err, id) => {
             if (err) {
-                console.log('unable to insert', err, this.currentDrill);
+                console.log('unable to insert', err, this.drill);
                 return;
             }
-            this.currentDrill._id = id;
+            this.drill._id = id;
         });
         this.setCurrentDrill();
     }
 
     updateDrill() {
-        var id = this.currentDrill._id;
+        var id = this.drill._id;
 
         if (!id) {
             console.log('Unable to update. No _id.');
             return;
         }
 
-        this.currentDrill.updatedDate = new Date();
-        this.currentDrill.name_sort = this.currentDrill.name.toLowerCase();
-        this.currentDrill.userId = Meteor.userId();
-        this.currentDrill.owner = getOwnerEmail(Meteor.user());
+        this.drill.updatedDate = new Date();
+        this.drill.name_sort = this.drill.name.toLowerCase();
+        this.drill.userId = Meteor.userId();
+        this.drill.owner = getOwnerEmail(Meteor.user());
 
         //delete this.currentDrill._id;
         var r = Drills.update({
             _id: id
         }, {
-            $set: angular.copy(this.currentDrill)
+            $set: angular.copy(this.drill)
         },
         function (error) {
             if (error) {
@@ -118,13 +131,13 @@ class appStateService {
 
 
     setCurrentDrill() {
-        if (!this.currentDrill._id)
+        if (!this.drill._id)
             return;
             
         // update user profile with id of current drill
         Meteor.users.update({ _id: Meteor.userId() }, {
             $set: {
-                "profile.currentDrillId": this.currentDrill._id
+                "profile.currentDrillId": this.drill._id
             }
         }, 
         function(err) {

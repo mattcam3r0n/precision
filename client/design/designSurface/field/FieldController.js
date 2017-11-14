@@ -212,6 +212,7 @@ class FieldController {
     drillStateChanged(args) {
         this.updateMarchers(args);
         this.update();
+        this.canvas.renderAll();
     }
 
     disablePositionIndicator() {

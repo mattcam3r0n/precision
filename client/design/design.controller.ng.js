@@ -1,34 +1,27 @@
 'use strict'
 
 import WalkThru from '/client/lib/walkThru/WalkThru';
-import DrillBuilder from '/client/lib/drill/DrillBuilder';
-import DrillPlayer from '/client/lib/drill/DrillPlayer';
 import DesignKeyboardHandler from './DesignKeyboardHandler';
-import MemberSelection from '/client/lib/drill/MemberSelection';
 
 import { Meteor } from 'meteor/meteor';
 
 angular.module('drillApp')
-  .controller('DesignCtrl', function ($scope, $rootScope, $timeout, $window, $reactive, appStateService) {
+  .controller('DesignCtrl', function ($scope, $rootScope, $timeout, $window, $reactive, appStateService, drillEditorService) {
 
     var ctrl = this;
     $reactive(ctrl).attach($scope);
     $scope.viewName = 'Design';
 
-    var drillBuilder,
-      drillPlayer,
-      keyboardHandler,
-      saveTimeout;
+    var keyboardHandler;
 
     init();
 
     function init() {
       $scope.tempo = 120;
       $window.addEventListener('keydown', keydown);
-
+      
       $scope.$watch('tempo', function () {
-        if (drillPlayer)
-          drillPlayer.setTempo($scope.tempo);
+        drillEditorService.setTempo($scope.tempo);
       });
 
       $scope.$watch('currentUser', function(newValue, oldValue) {
@@ -39,15 +32,14 @@ angular.module('drillApp')
           return;
         }
 
-        appStateService.openLastDrillOrNew()
-        .then(openDrill);
+        appStateService.openLastDrillOrNew().then(openDrill);
       });
 
     }
 
     function newDrill() {
-      var newDrill = appStateService.newDrill();
-      setDrill(newDrill);
+      var d = appStateService.newDrill();
+      setDrill(d);
     }
 
     function openDrill(drill) {
@@ -63,41 +55,13 @@ angular.module('drillApp')
 
     function setDrill(drill) {
       $scope.drill = drill;
-      drillBuilder = new DrillBuilder(drill);
-      drillPlayer = new DrillPlayer(drill);
-      drillPlayer.setTempo($scope.tempo || 120);
-      keyboardHandler = new DesignKeyboardHandler(drillBuilder, drillPlayer, $rootScope);
-      drillPlayer.goToBeginning();
-      drillBuilder.deselectAll();
-      drillBuilder.showAll();
-      triggerDrillStateChanged(); // to force repaint  
+      drillEditorService.setDrill(drill);
+      keyboardHandler = new DesignKeyboardHandler(drillEditorService);
+      $scope.$safeApply(); // necessary for field painting?
     }
 
     function keydown(e) {
       keyboardHandler.handle(e);
-      triggerDrillStateChanged();
-      save();
-    }
-
-    function triggerDrillStateChanged() {
-      var memberSelection = drillBuilder.getMemberSelection();
-      $scope.$broadcast('design:drillStateChanged', { memberSelection });
-      $scope.$safeApply();
-    }
-
-    function triggerMembersSelected() {
-      var memberSelection = drillBuilder.getMemberSelection();
-      $rootScope.$broadcast('design:membersSelected', { memberSelection });
-    }
-
-    function save() {
-      if (!$scope.drill.isDirty) return;
-
-      if (saveTimeout) {
-        $timeout.cancel(saveTimeout)
-      }
-
-      saveTimeout = $timeout(() => appStateService.saveDrill(), 5000);
     }
 
     $scope.debug = function () {
@@ -113,104 +77,38 @@ angular.module('drillApp')
     };
 
     $scope.onPlay = function () {
-      drillPlayer.play(triggerDrillStateChanged);
+      drillEditorService.play();
     }
 
     $scope.onStop = function () {
-      drillPlayer.stop();
+      drillEditorService.stop();
     }
 
     $scope.onGoToBeginning = function () {
-      drillPlayer.goToBeginning();
-      triggerDrillStateChanged();
+      drillEditorService.goToBeginning();
     }
 
     $scope.onGoToEnd = function () {
-      drillPlayer.goToEnd();
-      triggerDrillStateChanged();
+      drillEditorService.goToEnd();
     }
 
     $scope.onStepBackward = function () {
-      drillPlayer.stepBackward();
-      triggerDrillStateChanged();
+      drillEditorService.stepBackward();
     }
 
     $scope.onStepForward = function () {
-      drillPlayer.stepForward();
-      triggerDrillStateChanged();
+      drillEditorService.stepForward();
     }
 
     // handle selection event
     $scope.$on('field:objectsSelected', (evt, args) => {
-      drillBuilder.select(args.members);
-      triggerMembersSelected();
-      triggerDrillStateChanged();
-    });
-
-    $scope.$on('designTool:activateAddTurnsTool', (evt, args) => {      
-      $rootScope.$broadcast('design:activateAddTurnsTool', { memberSelection: drillBuilder.getMemberSelection() }); 
-    });
-
-    $scope.$on('designTool:activateAddStepsTool', (evt, args) => {      
-      $rootScope.$broadcast('design:activateAddStepsTool', { memberSelection: drillBuilder.getMemberSelection() }); 
-    });
-
-    $scope.$on('designTool:deleteSelectedMembers', (evt, args) => {
-      drillBuilder.deleteSelectedMembers();
-      $scope.$broadcast('design:membersAdded', args);      
-      triggerDrillStateChanged();
-    });
-
-    $scope.$on('designTool:selectAll', (evt, args) => {
-      drillBuilder.selectAll();
-      triggerMembersSelected();
-      triggerDrillStateChanged();
-    });
-
-    $scope.$on('designTool:deselectAll', (evt, args) => {
-      drillBuilder.deselectAll();
-      triggerMembersSelected();
-      triggerDrillStateChanged();
-    });
-
-    $scope.$on('designTool:hideUnselected', (evt, args) => {
-      drillBuilder.hideUnselected();
-      triggerDrillStateChanged();
-    });
-
-    $scope.$on('designTool:showAll', (evt, args) => {
-      drillBuilder.showAll();
-      triggerDrillStateChanged();
-    });
-
-    $scope.$on('designTool:deleteForward', (evt, args) => {
-      drillBuilder.deleteForward();
-      triggerDrillStateChanged();
-    });
-
-    $scope.$on('designTool:deleteBackspace', (evt, args) => {
-      var deleteCount = $scope.drill.count;
-      drillPlayer.stepBackward();
-      drillBuilder.deleteBackspace(deleteCount);
-      triggerDrillStateChanged();
-    });
-
-    $scope.$on('addTurnsTool:save', (evt, args) => {
-      $scope.drill.isDirty = true;
-      save();
+      drillEditorService.selectMembers(args.members);
     });
 
     // update position indicator
     $rootScope.$on('positionIndicator', (evt, args) => {
       $scope.currentPosition = args.position;
       $scope.$safeApply();
-    });
-
-    $scope.$on('addMembersTool:membersAdded', function (e, args) {
-      drillBuilder.addMembers(args.members);
-      $scope.$broadcast('design:membersAdded', args);
-      save();
-      triggerDrillStateChanged();
     });
 
     $scope.$on("$destroy", function () {

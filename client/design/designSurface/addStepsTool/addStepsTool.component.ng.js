@@ -11,27 +11,22 @@ angular.module('drillApp')
     bindings: {
       field: '<'
     },
-    controller: function ($scope, $window) {
+    controller: function ($scope, drillEditorService, eventService) {
       var ctrl = this;
       var toolDiv = angular.element('.add-steps-tool')[0];
 
       // bootstrap follow toggle button
       $("[name='stride-type-switch']").bootstrapSwitch();
 
-      $scope.$on('design:activateAddStepsTool', function (evt, args) {
-        activate(args.memberSelection);
+      var unsubscribeAddStepsToolActivated = eventService.subscribeAddStepsToolActivated((evt, args) => {
+        activate(drillEditorService.getMemberSelection());
       });
-
-      $scope.$on('design:membersSelected', function(evt, args) {
-        if (!ctrl.isActivated) return;
-      });
-
-      // TODO: need a way to detect selection changes, reset?
 
       ctrl.$onInit = function () {
       }
 
       ctrl.$onDestroy = function () {
+        unsubscribeAddStepsToolActivated();
       }
 
       $scope.activate = activate;

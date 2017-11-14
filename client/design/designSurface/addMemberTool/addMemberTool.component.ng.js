@@ -14,7 +14,7 @@ angular.module('drillApp')
     bindings: {
       field: '<'
     },
-    controller: function ($scope, $window) {
+    controller: function ($scope, $window, drillEditorService, eventService) {
       var ctrl = this;
       var toolDiv = angular.element('.add-member-tool')[0];
       var builder = new DrillBuilder();
@@ -25,7 +25,11 @@ angular.module('drillApp')
         [Direction.W]: 'fa-caret-left'
       };
 
-      $scope.$on('designTool:activateAddMemberTool', function () {
+      // $scope.$on('designTool:activateAddMemberTool', function () {
+      //   activate();
+      // });
+
+      var unsubscribeAddMembersToolActivated = eventService.subscribeAddMembersToolActivated(() => {
         activate();
       });
 
@@ -33,6 +37,7 @@ angular.module('drillApp')
       }
 
       ctrl.$onDestroy = function () {
+        unsubscribeAddMembersToolActivated();
       }
 
       $scope.activate = activate;
@@ -61,7 +66,7 @@ angular.module('drillApp')
 
       $scope.save = function () {
         updateMarchers(ctrl.sizableRect);
-        $scope.$emit('addMembersTool:membersAdded', { members: ctrl.members });
+        drillEditorService.addMembers(ctrl.members);
         deactivate();
       }
 
