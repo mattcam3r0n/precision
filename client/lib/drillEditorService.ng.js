@@ -132,7 +132,7 @@ class DrillEditorService {
 
     addStep(direction, stepType, strideType) {
         stepType = stepType || StepType.Full;
-        strideType = strideType || StrideType.SixToFive;
+        strideType = strideType || this.strideType;
         this.drillBuilder.addStep(strideType, stepType, direction);
         this.drillPlayer.stepForward();
         this.notifyDrillStateChanged();
