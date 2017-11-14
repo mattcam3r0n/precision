@@ -26,8 +26,15 @@ class DrillPlayer {
         this.tempo = tempo || 120;
     }
     
-    play(stateChangedCallback) {
-        this.stateChangedCallback = stateChangedCallback;
+    play(stateChangedCallback, playLength) {
+        var self = this;
+        self.stopCount = 0;
+        if (playLength) {
+            self.stopCount = this.drill.count + playLength;
+        }
+
+        self.stateChangedCallback = stateChangedCallback;
+
         this.animationHandle = requestAnimationFrame(this.animate.bind(this));
     }
 
@@ -35,9 +42,12 @@ class DrillPlayer {
         cancelAnimationFrame(this.animationHandle);
     }
 
+    isPastStopCount() {
+        return this.stopCount > 0 && this.drill.count >= this.stopCount;
+    }
+
     animate(timestamp) {
         var self = this;
-
         var tempoInMS = (60 / self.tempo) * 1000;
 
         if (timestamp - lastTimestamp >= tempoInMS) {
@@ -45,7 +55,7 @@ class DrillPlayer {
             self.stepForward();
             self.stateChangedCallback();
     
-            if (self.isEndOfDrill()) {
+            if (self.isEndOfDrill() || self.isPastStopCount()) {
                 console.log("Reached end of drill.");
                 self.stop();
                 return;

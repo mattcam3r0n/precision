@@ -45,6 +45,10 @@ angular.module('drillApp')
         drillEditorService.addStep(Direction[dir]);
       }
 
+      $scope.addCountermarch = function() {
+        drillEditorService.addCountermarch();
+      }
+
       $scope.addMarkTime = function() {
         drillEditorService.addStep(null, StepType.MarkTime);        
       }

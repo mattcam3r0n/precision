@@ -32,11 +32,11 @@ class DrillEditorService {
 
     // Playback
 
-    play(cb) {
+    play(cb, playLength) {
         this.drillPlayer.play(() => {
             this.notifyDrillStateChanged();
             if (cb) cb();
-        });
+        }, playLength);
     }
 
     stop() {
@@ -127,6 +127,13 @@ class DrillEditorService {
         strideType = strideType || StrideType.SixToFive;
         this.drillBuilder.addStep(strideType, stepType, direction);
         this.drillPlayer.stepForward();
+        this.notifyDrillStateChanged();
+        this.save();
+    }
+
+    addCountermarch() {
+        this.drillBuilder.addCountermarch();
+        this.play(null, 3);
         this.notifyDrillStateChanged();
         this.save();
     }

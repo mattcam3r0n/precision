@@ -1,4 +1,5 @@
 import { Random } from 'meteor/random';
+import StepType from '/client/lib/StepType';
 import StepDelta from '/client/lib/StepDelta';
 import Direction from '/client/lib/Direction';
 import MemberFactory from '/client/lib/drill/MemberFactory';
@@ -84,6 +85,33 @@ class DrillBuilder {
             });
             ScriptBuilder.addActionAtCount(m, action, this.drill.count + 1);
         });
+
+        this.drill.isDirty = true;
+    }
+
+    addCountermarch() {
+        var members = this.getSelectedMembers();
+        var isLeftTurn = this.drill.count % 2 == 0 ? true : false;
+        
+        members.forEach(m => {
+            var currentDir = m.currentState.direction;
+            var firstTurnDirection = isLeftTurn ? Direction.leftTurnDirection(currentDir) : Direction.rightTurnDirection(currentDir);
+            var secondTurnDirection = isLeftTurn ? Direction.leftTurnDirection(firstTurnDirection) : Direction.rightTurnDirection(firstTurnDirection);
+
+            var firstTurn = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.Half,
+                direction: firstTurnDirection
+            });
+            ScriptBuilder.addActionAtCount(m, firstTurn, this.drill.count + 1);
+
+            var secondTurn = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.Full,
+                direction: secondTurnDirection
+            });
+            ScriptBuilder.addActionAtCount(m, secondTurn, this.drill.count + 3);
+        });        
 
         this.drill.isDirty = true;
     }
