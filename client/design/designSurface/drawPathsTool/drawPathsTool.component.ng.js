@@ -14,11 +14,6 @@ angular.module('drillApp')
     },
     controller: function ($scope, $window, drillEditorService, eventService) {
       var ctrl = this;
-      var toolDiv = angular.element('.draw-paths-tool')[0];
-      var newTurns = [];
-
-      // bootstrap follow toggle button
-      $("[name='stride-type-switch']").bootstrapSwitch();
 
       var unsubscribeDrawPathsToolActivated = eventService.subscribeDrawPathsToolActivated(() => {
         activate(drillEditorService.getMemberSelection());
@@ -27,7 +22,10 @@ angular.module('drillApp')
       // TODO: need a way to detect selection changes, reset?
 
       ctrl.$onInit = function () {
+        // bootstrap follow toggle button
+        $("[name='stride-type-switch']").bootstrapSwitch();
         ctrl.turnMode = 'block';
+        ctrl.toolDiv = angular.element('.draw-paths-tool')[0];
       }
 
       ctrl.$onDestroy = function () {
@@ -180,8 +178,8 @@ angular.module('drillApp')
         }
         var top = absCoords.top - 100;
 
-        toolDiv.style.left = left + 'px';
-        toolDiv.style.top = top + 'px';
+        ctrl.toolDiv.style.left = left + 'px';
+        ctrl.toolDiv.style.top = top + 'px';
       }
 
 
