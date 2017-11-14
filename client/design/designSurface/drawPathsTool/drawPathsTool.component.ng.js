@@ -24,9 +24,9 @@ angular.module('drillApp')
         activate(drillEditorService.getMemberSelection());
       });
 
-      $scope.$on('design:membersSelected', function(evt, args) {
+      var unsubscribeMembersSelected = drillEditorService.subscribeMembersSelected((evt, args) => {
         if (!ctrl.isActivated) return;
-
+        // activate(drillEditorService.getMemberSelection());
         ctrl.memberSelection = args.memberSelection;
         createPathTool();
       });
@@ -39,6 +39,7 @@ angular.module('drillApp')
 
       ctrl.$onDestroy = function () {
         unsubscribeDrawPathsToolActivated();
+        unsubscribeMembersSelected();
       }
 
       $scope.activate = activate;
