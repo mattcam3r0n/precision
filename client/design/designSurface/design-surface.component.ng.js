@@ -43,15 +43,17 @@ angular.module('drillApp')
       var unsubscribeShowPaths = drillEditorService.subscribeShowPaths((evt, args) => {
         ctrl.field.showPaths();        
       });
-      // $scope.$on('designTool:showPaths', function() {
-      //   ctrl.field.showPaths();
-      // });
+
+      var unsubscribeUpdateField = eventService.subscribeUpdateField((evt, args) => {
+        ctrl.field.update();
+      });
 
       $scope.$on("$destroy", function(){
         ctrl.field.canvas.dispose();
         unsubscribeDrillStateChanged();
         unsubscribeMembersAdded();
         unsubscribeShowPaths();
+        unsubscribeUpdateField();
       });
 
       

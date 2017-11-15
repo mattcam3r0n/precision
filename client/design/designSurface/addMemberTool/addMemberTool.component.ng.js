@@ -68,7 +68,7 @@ angular.module('drillApp')
         updateMarchers(ctrl.sizableRect);
         drillEditorService.addMembers(ctrl.members);
         deactivate();
-        drillEditorService.notifyDrillStateChanged();
+        eventService.notifyUpdateField();
       }
 
       $scope.cancel = deactivate;
@@ -115,6 +115,7 @@ angular.module('drillApp')
         destroySizableRect();
         destroyLabels();
         ctrl.field.canvas.selection = true;
+        eventService.notifyUpdateField();
       }
 
       function updateMarchers(r) {

@@ -99,6 +99,7 @@ angular.module('drillApp')
         ctrl.field.canvas.off('mouse:up', onMouseUp);
         ctrl.field.canvas.defaultCursor = 'default';
         destroyPathTool();
+        eventService.notifyUpdateField();
       }
 
       function reset() {
@@ -113,6 +114,7 @@ angular.module('drillApp')
           destroyPathTool();
 
         ctrl.activePathTool = new PathTool(ctrl.field, ctrl.memberSelection, ctrl.turnMode);
+        eventService.notifyUpdateField();
       }
 
       function destroyPathTool(){

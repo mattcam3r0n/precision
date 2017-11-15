@@ -42,6 +42,10 @@ class Events {
     static get deleteTurn() {
         return 'deleteTurn';
     }
+
+    static get updateField() {
+        return 'updateField';
+    }
 }
 
 export default Events;

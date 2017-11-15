@@ -69,6 +69,16 @@ class EventService {
     notifyDeleteTurn(args) {
         this.$rootScope.$broadcast(Events.deleteTurn, args);
     }
+
+    subscribeUpdateField(cb) {
+        var unsubscribe = this.$rootScope.$on(Events.updateField, cb);
+        return unsubscribe;
+    }
+
+    notifyUpdateField(args) {
+        this.$rootScope.$broadcast(Events.updateField, args);
+    }
+    
 }
 
 
