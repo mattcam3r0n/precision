@@ -116,7 +116,8 @@ class FieldController {
             backgroundColor: 'green',
             height: FieldDimensions.height,
             width: FieldDimensions.width,
-            uniScaleTransform: true
+            uniScaleTransform: true,
+            renderOnAddRemove: false // performance optimization
         });
     }
 

@@ -68,6 +68,7 @@ angular.module('drillApp')
         updateMarchers(ctrl.sizableRect);
         drillEditorService.addMembers(ctrl.members);
         deactivate();
+        drillEditorService.notifyDrillStateChanged();
       }
 
       $scope.cancel = deactivate;

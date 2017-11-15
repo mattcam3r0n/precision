@@ -186,7 +186,7 @@ class DrillEditorService {
         this.$rootScope.$broadcast(Events.membersSelected, { memberSelection });  
     }
 
-    subscribeMembersAdded(cb) {
+    subscribeMembersAdded(cb) {        
         var unsubscribe = this.$rootScope.$on(Events.membersAdded, cb);
         return unsubscribe;
     }
