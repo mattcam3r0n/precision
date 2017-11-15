@@ -13,51 +13,62 @@ angular.module('drillApp')
     controller: function ($scope, drillEditorService, eventService) {
       var ctrl = this;
 
-      $("[name='follow-switch']").bootstrapSwitch();
-      ctrl.isActivated = true;
+      ctrl.$onInit = function () {
+        ctrl.isActivated = true;
+        // bootstrap follow toggle button
+        $("[name='stride-type-switch']").bootstrapSwitch('state', drillEditorService.strideType);
+        $("input[name='stride-type-switch']").on('switchChange.bootstrapSwitch', function (event, state) {
+          if (state) {
+            drillEditorService.strideType = StrideType.EightToFive;
+          } else {
+            drillEditorService.strideType = StrideType.SixToFive;
+          }
+          console.log(drillEditorService.strideType);
+        });
+      }
 
-      $scope.addMembers = function() {
+      $scope.addMembers = function () {
         eventService.notifyAddMembersToolActivated();
       }
 
-      $scope.deleteSelectedMembers = function() {
+      $scope.deleteSelectedMembers = function () {
         drillEditorService.deleteSelectedMembers();
       }
 
-      $scope.addSteps = function() {
-        eventService.notifyAddStepsToolActivated();         
+      $scope.addSteps = function () {
+        eventService.notifyAddStepsToolActivated();
       }
 
-      $scope.drawPath = function() {
+      $scope.drawPath = function () {
         eventService.notifyDrawPathsToolActivated();
       }
 
-      $scope.deselectAll = function() {
+      $scope.deselectAll = function () {
         drillEditorService.deselectAll();
       }
 
-      $scope.selectAll = function() {
+      $scope.selectAll = function () {
         drillEditorService.selectAll();
       }
 
-      $scope.deleteBackspace = function() {
+      $scope.deleteBackspace = function () {
         drillEditorService.deleteBackspace();
       }
 
-      $scope.deleteForward = function() {
+      $scope.deleteForward = function () {
         drillEditorService.deleteForward();
       }
 
-      $scope.showPaths = function() {
+      $scope.showPaths = function () {
         drillEditorService.showPaths();
         // $rootScope.$broadcast('designTool:showPaths');
       }
 
-      $scope.hideUnselected = function() {
+      $scope.hideUnselected = function () {
         drillEditorService.hideUnselected();
       }
 
-      $scope.showAll = function() {
+      $scope.showAll = function () {
         drillEditorService.showAll();
       }
     }

@@ -20,8 +20,6 @@ angular.module('drillApp')
       });
 
       ctrl.$onInit = function () {
-        // bootstrap follow toggle button
-        $("[name='stride-type-switch']").bootstrapSwitch();
         ctrl.turnMode = 'block';
         ctrl.toolDiv = angular.element('.draw-paths-tool')[0];
       }

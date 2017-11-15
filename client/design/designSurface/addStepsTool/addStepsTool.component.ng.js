@@ -15,18 +15,7 @@ angular.module('drillApp')
     controller: function ($scope, drillEditorService, eventService) {
       var ctrl = this;
 
-      ctrl.$onInit = function () {
-        // bootstrap follow toggle button
-        $("[name='stride-type-switch']").bootstrapSwitch('state', drillEditorService.strideType);
-        $("input[name='stride-type-switch']").on('switchChange.bootstrapSwitch', function(event, state) {
-          if (state) {
-            drillEditorService.strideType = StrideType.EightToFive;
-          } else {
-            drillEditorService.strideType = StrideType.SixToFive;
-          }
-          console.log(drillEditorService.strideType);
-        });
-        
+      ctrl.$onInit = function () {        
         ctrl.unsubscribeAddStepsToolActivated = eventService.subscribeAddStepsToolActivated((evt, args) => {
           activate(drillEditorService.getMemberSelection());
         });
