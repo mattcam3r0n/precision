@@ -161,12 +161,12 @@ class FieldDimensions {
     // TODO: support 8/5
     // convert field coordinates to step coordinates
     static toStepPoint(fieldPoint, strideType) { // from field point
-        // var stepSize = this.getStepSize(strideType || StrideType.SixToFive);
-		// return {
-		// 	x: Math.floor(fieldPoint.x / stepSize.x),
-		// 	y: Math.floor(fieldPoint.y / stepSize.y)
-        // };
-        return fieldPoint;
+        var stepSize = this.getStepSize(strideType || StrideType.SixToFive);
+		return {
+			x: Math.floor(fieldPoint.x / stepSize.x) * stepSize.x,
+			y: Math.floor(fieldPoint.y / stepSize.y) * stepSize.y
+        };
+        //return fieldPoint;
 	}
 
     // convert stepPoint to field point

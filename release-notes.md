@@ -32,4 +32,6 @@
 * Add Steps: Countermarches are right/left based on current count.  Even counts (right foot) are left turns, odd counts are right turns.
 * 6/5 or 8/5 switch is back, but 8/5 is not operational yet.
 
-
+11-15-17
+* much faster rendering when adding/removing members
+* 

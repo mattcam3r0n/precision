@@ -231,6 +231,7 @@ class GuidePath {
         var stepPoint = new FieldPoint(adjustedPoint).toStepPoint(StrideType.SixToFive);
 
         if (this.isInPath(stepPoint)) {
+console.log('isInPath');
             this.createGuideline(this.lastPoint, stepPoint);
             
             if (this.currentDir == Direction.CM) {
@@ -324,6 +325,7 @@ class GuidePath {
 
     isInPath(point, sourcePoint) {
         var sourcePoint = sourcePoint || this.lastPoint;
+
         if (sourcePoint.direction == Direction.N && point.x == sourcePoint.x && point.y < sourcePoint.y)
             return true;
 
