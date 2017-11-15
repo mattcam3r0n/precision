@@ -119,8 +119,8 @@ class MemberPositionCalculator {
     static isAtFieldEdge(member, currentState) {
         currentState = currentState || member.currentState;
         
-        return currentState.x >= 156 
-            || currentState.y >= 78
+        return currentState.x >= 1560 
+            || currentState.y >= 780
             || currentState.x <= 0
             || currentState.y <= 0;                
     }

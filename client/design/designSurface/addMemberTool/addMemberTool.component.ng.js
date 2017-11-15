@@ -158,9 +158,9 @@ angular.module('drillApp')
             var marcher = createMarcher(ctrl.strideType, stepPoint.x, stepPoint.y, ctrl.direction);            
             ctrl.marchers.push(marcher);
 
-            y += ctrl.rankSpacing;
+            y += (ctrl.rankSpacing * FieldDimensions.oneStepY_6to5); //TODO: 8/5, take stride setting into account
           }
-          x += ctrl.fileSpacing;
+          x += (ctrl.fileSpacing * FieldDimensions.oneStepX_6to5);
           y = 0;
         }
 

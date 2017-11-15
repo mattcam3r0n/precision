@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
 
+var _currentDrillFormatVersion = 1;
+
 class appStateService {
     constructor($rootScope) {
         this._drill = null;
@@ -46,6 +48,9 @@ class appStateService {
     openDrill(id) {
         return this.getDrill(id)
             .then(drill => {
+                if (shouldUpgradeDrill(drill)) {
+                    upgradeDrill(drill);
+                }
                 this.drill = drill;
                 this.notifyDrillChanged();
                 return drill;
@@ -152,6 +157,29 @@ function getOwnerEmail(user) {
       return 'unknown';
     
     return user.emails[0].address;
+}
+
+function shouldUpgradeDrill(drill) {
+    return !drill.drillFormatVersion || drill.drillFormatVersion < _currentDrillFormatVersion;
+}
+
+function upgradeDrill(drill) {
+    console.log('upgrading drill to format version ' + _currentDrillFormatVersion);
+    drill.members.forEach(m => {
+        m.initialState.x *= 10;
+        m.initialState.y *= 10;
+        m.currentState.x *= 10;
+        m.currentState.y *= 10;
+
+        m.script.forEach(a => {
+            if (a) {
+                a.deltaX *= 10;
+                a.deltaY *= 10;
+            }
+        });
+    });
+    drill.drillFormatVersion = _currentDrillFormatVersion;
+    drill.isDirty = true;
 }
 
 angular.module('drillApp')

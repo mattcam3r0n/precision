@@ -59,8 +59,8 @@ function getYardlinePosition(point, stepPoint) {
 	var offset = (FieldDimensions.oneStepX_6to5 * 3) - FieldDimensions.fiveYardsX;
 	var x = Math.floor((point.x - offset) / yardline);
 	var yardlineX = x * FieldDimensions.fiveYardsX;
-	var yardlineSteps = yardlineX / FieldDimensions.oneStepX_6to5;
-	var steps = Math.abs(yardlineSteps - stepPoint.x);
+	var yardlineSteps = yardlineX; // / FieldDimensions.oneStepX_6to5;
+	var steps = (Math.abs(yardlineSteps - stepPoint.x)) / FieldDimensions.oneStepX_6to5;
 	var position = steps == 0 ? " On the " : steps + " off the ";
 
 	return position + _yardlinePosition[x];
@@ -70,8 +70,8 @@ function getSidelinePosition(point, stepPoint) {
 	var quarter = FieldDimensions.height / 4;
 	var y = Math.floor(point.y / quarter);
 	var sidelineY = _sidelinePositionY[y];
-	var sidelineSteps = sidelineY / FieldDimensions.oneStepY_6to5;
-	var steps = Math.abs(sidelineSteps - stepPoint.y);
+	var sidelineSteps = sidelineY; // / FieldDimensions.oneStepY_6to5;
+	var steps = (Math.abs(sidelineSteps - stepPoint.y)) / FieldDimensions.oneStepY_6to5;
 	var position = steps == 0 ? " On the " : steps + " off the ";
 	
 	return position + _sidelinePosition[y];

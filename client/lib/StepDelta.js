@@ -3,24 +3,24 @@ import StepType from '/client/lib/StepType';
 import Direction from '/client/lib/Direction';
 import FieldDimensions from '/client/lib/FieldDimensions';
 
-var sixToFiveObliqueDelta = 6 / 8,
-    eightToFiveObliqueDelta = 8 / 12;
+var sixToFiveObliqueDelta = (6 / 8) * FieldDimensions.oneStepX_6to5,
+    eightToFiveObliqueDelta = 8 / 12 * FieldDimensions.oneStepX_8to5;
 
 const deltas = {
         
     [StrideType.SixToFive]: {
         [StepType.Full]: {
             [Direction.N]: {
-                deltaX: 0, deltaY: -1
+                deltaX: 0, deltaY: -1 * FieldDimensions.oneStepY_6to5
             },
             [Direction.E]: {
-                deltaX: 1, deltaY: 0
+                deltaX: 1 * FieldDimensions.oneStepX_6to5, deltaY: 0
             },
             [Direction.S]: {
-                deltaX: 0, deltaY: 1
+                deltaX: 0, deltaY: 1 * FieldDimensions.oneStepY_6to5
             },
             [Direction.W]: {
-                deltaX: -1, deltaY: 0
+                deltaX: -1 * FieldDimensions.oneStepX_6to5, deltaY: 0
             },
             [Direction.NE]: {
                 deltaX: sixToFiveObliqueDelta, deltaY: -sixToFiveObliqueDelta
@@ -37,16 +37,16 @@ const deltas = {
         },
         [StepType.Half]: {
             [Direction.N]: {
-                deltaX: 0, deltaY: -0.5
+                deltaX: 0, deltaY: -0.5 * FieldDimensions.oneStepY_6to5
             },
             [Direction.E]: {
-                deltaX: 0.5, deltaY: 0
+                deltaX: 0.5 * FieldDimensions.oneStepX_6to5, deltaY: 0
             },
             [Direction.S]: {
-                deltaX: 0, deltaY: 0.5
+                deltaX: 0, deltaY: 0.5 * FieldDimensions.oneStepY_6to5
             },
             [Direction.W]: {
-                deltaX: -0.5, deltaY: 0
+                deltaX: -0.5 * FieldDimensions.oneStepX_6to5, deltaY: 0
             }
             // do we allow half steps in obliques?
             // [Direction.NE]: {
@@ -67,16 +67,16 @@ const deltas = {
     [StrideType.EightToFive]: {
         [StepType.Full]: {
             [Direction.N]: {
-                deltaX: 0, deltaY: -1
+                deltaX: 0, deltaY: -1 * FieldDimensions.oneStepY_8to5
             },
             [Direction.E]: {
-                deltaX: 1, deltaY: 0
+                deltaX: 1 * FieldDimensions.oneStepX_8to5, deltaY: 0
             },
             [Direction.S]: {
-                deltaX: 0, deltaY: 1
+                deltaX: 0, deltaY: 1 * FieldDimensions.oneStepY_8to5
             },
             [Direction.W]: {
-                deltaX: -1, deltaY: 0
+                deltaX: -1 * FieldDimensions.oneStepX_8to5, deltaY: 0
             },
             [Direction.NE]: {
                 deltaX: eightToFiveObliqueDelta, deltaY: -eightToFiveObliqueDelta
