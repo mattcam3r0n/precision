@@ -33,11 +33,18 @@ angular.module('drillApp')
         activate();
       });
 
+      var unsubscribeStrideTypeChanged = drillEditorService.subscribeStrideTypeChanged((evt, args) => {
+        if (!ctrl.isActivated) return;
+        console.log('strideTypeChanged');
+        activate();
+      });
+
       ctrl.$onInit = function () {
       }
 
       ctrl.$onDestroy = function () {
         unsubscribeAddMembersToolActivated();
+        unsubscribeStrideTypeChanged();
       }
 
       $scope.activate = activate;
@@ -81,11 +88,11 @@ angular.module('drillApp')
         ctrl.field.canvas.selection = false;
 
         ctrl.direction = Direction.E;
-        ctrl.strideType = StrideType.SixToFive; //TODO: get from appState
+        ctrl.strideType = drillEditorService.strideType;
         ctrl.fileSpacing = 2;
         ctrl.rankSpacing = 2;
 
-        ctrl.sizableRect = new SizableRect(ctrl.field);
+        ctrl.sizableRect = new SizableRect(ctrl.field, ctrl.strideType);
         ctrl.group = createMarcherGroup();
         ctrl.labels = createLabels();
 
@@ -135,34 +142,32 @@ angular.module('drillApp')
         toolDiv.style.top = top + 'px';
       }
 
-      function snap(evt) {
-        var snappedPoint = FieldDimensions.snapPoint(StrideType.SixToFive, { x: evt.target.left, y: evt.target.top });
-        evt.target.set({
-          left: snappedPoint.x,
-          top: snappedPoint.y
-        });
-      }
-
       function createMarcherGroup() {
         ctrl.marchers = [];
         ctrl.members = [];
         var files = getFilesInRect(ctrl.sizableRect);
         var ranks = getRanksInRect(ctrl.sizableRect);
         var x = 0, y = 0;
+        var stepSize = FieldDimensions.getStepSize(ctrl.strideType);
         for (var i = 0; i < files; i++) {
           for (var j = 0; j < ranks; j++) {
             var upperLeftOfRect = { x: ctrl.sizableRect.left + ctrl.sizableRect.marcherOffsetX, y: ctrl.sizableRect.top + ctrl.sizableRect.marcherOffsetY };
             var upperLeftInSteps = FieldDimensions.toStepPoint(upperLeftOfRect, ctrl.strideType);
             var stepPoint = { x: upperLeftInSteps.x + x, y: upperLeftInSteps.y + y };
+            console.log('upperLeftOfRect', upperLeftOfRect);
+            console.log('upperLeftInSteps', upperLeftInSteps);
+            console.log('y', y);
+            console.log('stepSize', stepSize);
+            console.log('stepPoint', stepPoint);
             var member = builder.createMember(ctrl.strideType, ctrl.direction, stepPoint);
             ctrl.members.push(member);
 
             var marcher = createMarcher(ctrl.strideType, stepPoint.x, stepPoint.y, ctrl.direction);            
             ctrl.marchers.push(marcher);
 
-            y += (ctrl.rankSpacing * FieldDimensions.oneStepY_6to5); //TODO: 8/5, take stride setting into account
+            y += (ctrl.rankSpacing * stepSize.y);
           }
-          x += (ctrl.fileSpacing * FieldDimensions.oneStepX_6to5);
+          x += (ctrl.fileSpacing * stepSize.x);
           y = 0;
         }
 
@@ -224,11 +229,13 @@ angular.module('drillApp')
       }
 
       function getFilesInRect(rect) {
-        return Math.floor(rect.width / (FieldDimensions.oneStepX_6to5) / ctrl.fileSpacing);
+        var stepSize = FieldDimensions.getStepSize(ctrl.strideType);
+        return Math.floor(rect.width / stepSize.x / ctrl.fileSpacing);
       }
 
       function getRanksInRect(rect) {
-        return Math.floor(rect.height / (FieldDimensions.oneStepY_6to5) / ctrl.rankSpacing);
+        var stepSize = FieldDimensions.getStepSize(ctrl.strideType);
+        return Math.floor(rect.height / stepSize.y / ctrl.rankSpacing);
       }
 
       function updateLabels(rect) {

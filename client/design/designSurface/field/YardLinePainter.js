@@ -9,7 +9,7 @@ class YardLinePainter {
     }
 }
 
-var _yardLines = [ "G    ", "1 0", "2 0", "3 0", "4 0", "5 0", "4 0", "3 0", "2 0", "1 0", "    G" ];
+var _yardlineMarkers = [ "G    ", "1 0", "2 0", "3 0", "4 0", "5 0", "4 0", "3 0", "2 0", "1 0", "    G" ];
 
 function addSideLines(canvas) {
     var sidelineRect = FieldDimensions.sidelineRect;
@@ -88,10 +88,10 @@ function addYardLineNumbers(canvas) {
     var farY = FieldDimensions.farSidelineY + FieldDimensions.fiveYardsY;
     var nearY = FieldDimensions.nearSidelineY - FieldDimensions.fiveYardsY;
     
-    for (var i = 0; i < _yardLines.length; i++) {
+    for (var i = 0; i < _yardlineMarkers.length; i++) {
         let x = FieldDimensions.goallineX + (i * FieldDimensions.fiveYardsX * 2);
-        var farText = new fabric.Text(_yardLines[i], Object.assign({ left: x, top: farY }, textOptions));
-        var nearText = new fabric.Text(_yardLines[i], Object.assign({ left: x, top: nearY }, textOptions));
+        var farText = new fabric.Text(_yardlineMarkers[i], Object.assign({ left: x, top: farY }, textOptions));
+        var nearText = new fabric.Text(_yardlineMarkers[i], Object.assign({ left: x, top: nearY }, textOptions));
         canvas.add(farText);
         canvas.add(nearText);
         farText.sendToBack();    

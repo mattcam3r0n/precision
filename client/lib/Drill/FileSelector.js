@@ -25,10 +25,14 @@ class FileSelector {
         this.members = members;
         this.leaders = [];
         this.positionMap = positionMap || new PositionMap(members);
+
     }
 
     findFiles() {
         var fileMembers = {};
+        
+        // clear leaders
+        this.leaders = [];
 
         // build FileMember for each member, and a map of them
         this.members.forEach(m => {

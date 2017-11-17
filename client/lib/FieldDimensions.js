@@ -12,7 +12,7 @@ import StrideType from './StrideType';
 * |   |    | | | | | | | | | | | | | | | | | | | | |    |   |
 * | 6 | 12 |6|6|6|6|6|6|6|6|6|6|6|6|6|6|6|6|6|6|6|6| 12 | 6 | 78
 * |   |    | | | | | | | | | | | | | | | | | | | | |    |   |
-* | 8 | 16 |8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8| 16 | 8 | 90
+* | 8 | 16 |8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8|8| 16 | 8 | 100
 * |   |    | | | | | | | | | | | | | | | | | | | | |    |   |
 * |   |    | | | | | | | | | | | | | | | | | | | | |    |   |
 * |   ---------------------------------------------------   |
@@ -24,8 +24,8 @@ import StrideType from './StrideType';
 * 20 five yard segments between goal lines
 */
 
-var fieldWidth = 1560,
-    fieldHeight = 780;
+var fieldWidth = 1560, //624 * 2, //1560,
+    fieldHeight = 780 //312 * 2 //780;
 
 var widthInSteps = {
     [StrideType.SixToFive]: 156,
@@ -34,13 +34,13 @@ var widthInSteps = {
 
 var heightInSteps = {
     [StrideType.SixToFive]: 78,
-    [StrideType.EightToFive]: 90
+    [StrideType.EightToFive]: 100
 };
 
 var oneStepY_6to5 = fieldHeight / heightInSteps[StrideType.SixToFive],
     oneStepX_6to5 = fieldWidth / widthInSteps[StrideType.SixToFive];
 
-var oneStepY_8to5 = fieldHeight / heightInSteps[StrideType.EightToFive],
+var oneStepY_8to5 = oneStepY_6to5 * (22/28), //fieldHeight / heightInSteps[StrideType.EightToFive],
     oneStepX_8to5 = fieldWidth / widthInSteps[StrideType.EightToFive];
 
 var fiveYardsX = oneStepX_6to5 * 6,
@@ -91,6 +91,10 @@ class FieldDimensions {
         return oneStepX_8to5;
     }
 
+    static get yOffset_8to5() {
+        return 8 * (this.oneStepY_8to5 - this.oneStepX_8to5);
+    }
+
     static get fiftyYardlineX() {
         return this.goallineX + (10 * this.fiveYardsX);
     }
@@ -124,37 +128,45 @@ class FieldDimensions {
     }
 
     static get marcherWidth() {
-        return 14;
+        return 12;
     }
 
     static get marcherHeight() {
-        return 14;
+        return 12;
     }
 
     static snapPoint(strideType, point) {
-        if (strideType == StrideType.EightToFive)
-            return {
-                x: Math.floor(point.x / oneStepX_8to5) * oneStepX_8to5,
-                y: Math.floor(point.y / oneStepY_8to5) * oneStepY_8to5
-            };
-
-        return {
-            x: Math.floor(point.x / oneStepX_6to5) * oneStepX_6to5,
-            y: Math.floor(point.y / oneStepY_6to5) * oneStepY_6to5
+        var stepSize = this.getStepSize(strideType || StrideType.SixToFive);
+		return {
+			x: Math.round(point.x / stepSize.x) * stepSize.x,
+			y: (Math.round(point.y / stepSize.y) * stepSize.y) - stepSize.yOffset
         };
+
+        // if (strideType == StrideType.EightToFive)
+        //     return {
+        //         x: Math.floor(point.x / oneStepX_8to5) * oneStepX_8to5,
+        //         y: Math.floor(point.y / oneStepY_8to5) * oneStepY_8to5
+        //     };
+
+        // return {
+        //     x: Math.floor(point.x / oneStepX_6to5) * oneStepX_6to5,
+        //     y: Math.floor(point.y / oneStepY_6to5) * oneStepY_6to5
+        // };
     }
 
     static getStepSize(strideType) {
         if (strideType == StrideType.EightToFive) {
             return {
                 x: this.oneStepX_8to5,
-                y: this.oneStepY_8to5
+                y: this.oneStepY_8to5,
+                yOffset: this.yOffset_8to5
             };
         }
 
         return {
             x: this.oneStepX_6to5,
-            y: this.oneStepY_6to5
+            y: this.oneStepY_6to5,
+            yOffset: 0
         };
     }
 
@@ -163,8 +175,8 @@ class FieldDimensions {
     static toStepPoint(fieldPoint, strideType) { // from field point
         var stepSize = this.getStepSize(strideType || StrideType.SixToFive);
 		return {
-			x: Math.floor(fieldPoint.x / stepSize.x) * stepSize.x,
-			y: Math.floor(fieldPoint.y / stepSize.y) * stepSize.y
+			x: Math.round(fieldPoint.x / stepSize.x) * stepSize.x,
+			y: (Math.round(fieldPoint.y / stepSize.y) * stepSize.y) - stepSize.yOffset
         };
         //return fieldPoint;
 	}

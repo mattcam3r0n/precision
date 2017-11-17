@@ -31,6 +31,7 @@ class DrillEditorService {
 
     set strideType(value) {
         this._strideType = value;
+        this.notifyStrideTypeChanged();
     }
 
     setTempo(tempo) {
@@ -176,6 +177,16 @@ class DrillEditorService {
         this.$rootScope.$broadcast(Events.drillStateChanged, { memberSelection });
     }
 
+    subscribeStrideTypeChanged(cb) {
+        var unsubscribe = this.$rootScope.$on(Events.strideTypeChanged, cb);
+        return unsubscribe;
+    }
+
+    notifyStrideTypeChanged() {
+        var strideType = this.strideType;
+        this.$rootScope.$broadcast(Events.strideTypeChanged, { strideType });
+    }
+    
     subscribeMembersSelected(cb) {
         var unsubscribe = this.$rootScope.$on(Events.membersSelected, cb);
         return unsubscribe;

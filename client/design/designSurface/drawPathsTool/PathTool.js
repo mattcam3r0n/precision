@@ -1,4 +1,3 @@
-import StrideType from '/client/lib/StrideType';
 import StepType from '/client/lib/StepType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import { StepPoint, FieldPoint } from '/client/lib/Point';
@@ -9,8 +8,9 @@ import ScriptBuilder from '/client/lib/drill/ScriptBuilder';
 import Action from '/client/lib/drill/Action';
 
 class PathTool {
-    constructor(field, memberSelection, turnMode) {
+    constructor(field, memberSelection, turnMode, strideType) {
         this.turnMode = turnMode || 'block'; // file | block | rank
+        this.strideType = strideType;
         this.field = field;
         this.memberSelection = memberSelection;
         this.selectionBox = null;
@@ -88,7 +88,7 @@ class PathTool {
                 direction: f.leader.member.currentState.direction,
                 x: f.leader.member.currentState.x,
                 y: f.leader.member.currentState.y
-            });
+            }, this.strideType);
 
             this.field.canvas.add(fi);
             this.guides.push(fi);
@@ -117,7 +117,7 @@ class PathTool {
             direction: file.leader.member.currentState.direction,
             x: file.leader.member.currentState.x,
             y: file.leader.member.currentState.y
-        });
+        }, this.strideType);
 
         this.field.canvas.add(fi);
         this.guides.push(fi);
@@ -156,7 +156,7 @@ class PathTool {
             x: stepPoint.x,
             y: stepPoint.y,
             direction: turnDirection,
-            strideType: StrideType.SixToFive,
+            strideType: this.strideType,
             stepType: StepType.Full
         });
     }

@@ -1,25 +1,48 @@
 import FieldDimensions from '/client/lib/FieldDimensions';
 import YardLinePainter from './YardLinePainter';
+import GridPainter from './GridPainter';
 
 class FieldPainter {
 
-    static paint(canvas) {
-        YardLinePainter.paint(canvas);
-        this.drawFieldLogo(canvas);
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.gridPainter = new GridPainter(canvas);
+        this.strideType = 0;
     }
 
-    static drawFieldLogo(canvas) {
+    dispose() {
+        this.canvas.remove(this.logo);
+
+    }
+
+    paint() {
+        YardLinePainter.paint(this.canvas);
+        this.showGrid(this.strideType);
+        this.drawFieldLogo(this.canvas);
+        this.canvas.renderAll();
+    }
+
+    drawFieldLogo() {
         var scaleFactor = .75;
         var self = this;
-        var img = fabric.Image.fromURL('/field-logo.png', function(oImg) {
+        self.logo = fabric.Image.fromURL('/field-logo.png', function(oImg) {
             oImg.scale(scaleFactor);
             oImg.selectable = false;
             oImg.evented = false;
             oImg.set('left', (FieldDimensions.width  / 2) - (oImg.width * scaleFactor / 2));
             oImg.set('top', (FieldDimensions.height / 2) - (oImg.height * scaleFactor / 2));
             oImg.set('opacity', .75);
-            canvas.add(oImg);
+            self.canvas.add(oImg);
         });
+    }
+
+    showGrid(strideType) {
+        this.strideType = strideType;
+        this.gridPainter.showGrid(strideType);
+    }
+
+    hideGrid() {
+        this.gridPainter.removeGrid();
     }
 }
 

@@ -7,15 +7,18 @@ import TurnMarker from '../field/TurnMarker';
 import CounterMarch from '../field/CounterMarch';
 
 class GuidePath {
-    constructor(field, file, initialPoint) {
+    constructor(field, file, initialPoint, strideType) {
         this.field = field;
         this.initialPoint = initialPoint;
+        this.strideType = strideType;
         this.points = [initialPoint];
         this.file = file;
         this.startCount = file.leader.member.currentState.count;
 
         this.onMouseMoveHandler = this.onMouseMove.bind(this);
         this.field.canvas.on('mouse:move', this.onMouseMoveHandler);
+
+console.log(this);
     }
 
     setCurrentTurnDirection(dir) {
@@ -105,7 +108,7 @@ class GuidePath {
         var currentDir = this.lastPoint.direction;
         var firstTurnDirection = isLeftTurn ? Direction.leftTurnDirection(currentDir) : Direction.rightTurnDirection(currentDir);
         var secondTurnDirection = isLeftTurn ? Direction.leftTurnDirection(firstTurnDirection) : Direction.rightTurnDirection(firstTurnDirection);
-        var firstDelta = StepDelta.getDelta(StrideType.SixToFive, StepType.Half, firstTurnDirection, 2);
+        var firstDelta = StepDelta.getDelta(this.strideType, StepType.Half, firstTurnDirection, 2);
 
         var fp = stepPoint.toFieldPoint();
         var tm = new CounterMarch(currentDir, isLeftTurn, {
@@ -118,20 +121,20 @@ class GuidePath {
             x: stepPoint.x,
             y: stepPoint.y,
             direction: firstTurnDirection,
-            strideType: StrideType.SixToFive,
+            strideType: this.strideType,
             stepType: StepType.Half,
             turnMarker: tm
         };
         point1.stepsFromPrevious = this.calculateStepsFromPreviousPoint(point1);
         this.points.push(point1);
 
-        var secondDelta = StepDelta.getDelta(StrideType.SixToFive, StepType.Full, secondTurnDirection, 1);
+        var secondDelta = StepDelta.getDelta(this.strideType, StepType.Full, secondTurnDirection, 1);
 
         var point2 = {
             x: stepPoint.x + firstDelta.deltaX,
             y: stepPoint.y + firstDelta.deltaY,
             direction: secondTurnDirection,
-            strideType: StrideType.SixToFive,
+            strideType: this.strideType,
             stepType: StepType.Full,
             stepsFromPrevious: 2
             //turnMarker: tm  // deliberately don't reference tm here, interferes with moving
@@ -143,13 +146,6 @@ class GuidePath {
 
         tm.on('moving', evt => { this.onMoveTurnMarker(evt, this.field, this, point, tm); });
         
-        // tm.on('moving', evt => {
-        //     let adjustedPoint = ctrl.field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
-        //     let newStepPoint = new FieldPoint(adjustedPoint).toStepPoint(StrideType.SixToFive);
-        //     // update turn point
-        //     tm.turn.point = newStepPoint;
-        // });
-
         this.createGuidePathLine();
     }
 
@@ -228,7 +224,7 @@ class GuidePath {
 
     onMouseMove(evt) {
         var adjustedPoint = this.field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
-        var stepPoint = new FieldPoint(adjustedPoint).toStepPoint(StrideType.SixToFive);
+        var stepPoint = new FieldPoint(adjustedPoint).toStepPoint(this.strideType);
 
         if (this.isInPath(stepPoint)) {
 console.log('isInPath');
@@ -248,7 +244,7 @@ console.log('isInPath');
 
     onMoveTurnMarker(evt, field, guidePath, point, turnMarker) {
         let adjustedMousePoint = field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
-        let moveToStepPoint = new FieldPoint(adjustedMousePoint).toStepPoint(StrideType.SixToFive);
+        let moveToStepPoint = new FieldPoint(adjustedMousePoint).toStepPoint(this.strideType);
 
         guidePath.movePoint(turnMarker.point, moveToStepPoint);
 
@@ -277,8 +273,8 @@ console.log('isInPath');
     createGuideline(fromStepPoint, toStepPoint) {
         this.destroyGuideline();
 
-        var from = new StepPoint(StrideType.SixToFive, fromStepPoint).toFieldPoint(),
-            to = new StepPoint(StrideType.SixToFive, toStepPoint).toFieldPoint();
+        var from = new StepPoint(this.strideType, fromStepPoint).toFieldPoint(),
+            to = new StepPoint(this.strideType, toStepPoint).toFieldPoint();
 
         this.guideline = new fabric.Line([from.x, from.y, to.x, to.y], {
             stroke: 'black',
@@ -325,7 +321,7 @@ console.log('isInPath');
 
     isInPath(point, sourcePoint) {
         var sourcePoint = sourcePoint || this.lastPoint;
-
+console.log(point, sourcePoint);
         if (sourcePoint.direction == Direction.N && point.x == sourcePoint.x && point.y < sourcePoint.y)
             return true;
 

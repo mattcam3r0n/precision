@@ -36,12 +36,17 @@ angular.module('drillApp')
         ctrl.field.membersChanged();        
       });
 
-      var unsubscribeResize = eventService.subscribeResize(() => {
-        ctrl.field.resize();
-      });
-
       var unsubscribeShowPaths = drillEditorService.subscribeShowPaths((evt, args) => {
         ctrl.field.showPaths();        
+      });
+
+      var unsubscribeStrideTypeChanged = drillEditorService.subscribeStrideTypeChanged((evt, args) => {
+        //ctrl.field.showPaths();        
+        ctrl.field.strideTypeChanged(args.strideType);
+      });
+
+      var unsubscribeResize = eventService.subscribeResize(() => {
+        ctrl.field.resize();
       });
 
       var unsubscribeUpdateField = eventService.subscribeUpdateField((evt, args) => {
@@ -54,6 +59,7 @@ angular.module('drillApp')
         unsubscribeMembersAdded();
         unsubscribeShowPaths();
         unsubscribeUpdateField();
+        unsubscribeStrideTypeChanged();
       });
 
       

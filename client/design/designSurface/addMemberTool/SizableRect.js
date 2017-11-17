@@ -1,4 +1,3 @@
-import StrideType from '/client/lib/StrideType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 
 var _marcherOffsetX = FieldDimensions.marcherWidth / 2,
@@ -13,14 +12,16 @@ var maxWidth = FieldDimensions.marcherWidth * 20,
     maxHeight = FieldDimensions.marcherHeight * 20;
 
 class SizableRect {
-    constructor(field) {
+    constructor(field, strideType) {
         this.field = field;
+        this.strideType = strideType;
         this.rect = createRect(field.canvas);
         this.sizingHandle = createSizingHandle(field.canvas);
 
         this.rect.on('moving', evt => {
             // snap rect to step grid
-            var p = FieldDimensions.snapPoint(StrideType.SixToFive, { x: this.rect.left, y: this.rect.top });
+            var p = FieldDimensions.snapPoint(this.strideType, { x: this.rect.left, y: this.rect.top });
+console.log('sizableRect', p);
             this.rect.set('left', p.x - this.marcherOffsetX);
             this.rect.set('top', p.y - this.marcherOffsetY);
             this.rect.setCoords();

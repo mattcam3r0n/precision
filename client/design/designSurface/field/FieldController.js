@@ -10,7 +10,6 @@ import MemberPath from './MemberPath';
 import { StepPoint, FieldPoint } from '/client/lib/Point';
 import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
 
-//import fabric from 'fabric';
 import 'fabric-customise-controls';
 
 class FieldController {
@@ -22,8 +21,9 @@ class FieldController {
         this.marchers = {};
         this.paths = [];
         this.arePathsVisible = false;
+        this.fieldPainter = new FieldPainter(this.canvas);
         
-        this.initCustomCorners();
+        //this.initCustomCorners();
         this.draw();
         this.resize();
         this.wireUpEvents();
@@ -33,76 +33,6 @@ class FieldController {
         this.positionIndicatorEnabled = true;
         
 
-    }
-
-    initCustomCorners() {
-        var canvas = this.canvas;
-
-        fabric.Canvas.prototype.customiseControls({
-            tl: {
-                action: 'remove',
-                cursor: 'pointer'
-            },
-            // tr: {
-            //     action: 'scale'
-            // },
-            // bl: {
-            //     action: 'remove',
-            //     cursor: 'pointer'
-            // },
-            br: {
-                action: 'scale',
-                //cursor: 'pointer'
-            },
-            mb: {
-                action: 'moveDown',
-                cursor: 'pointer'
-            },
-            mt: {
-                action: {
-                    'rotateByDegrees': 45,
-                },
-                cursor: 'pointer'
-            },
-            // mr: {
-            //     action: function( e, target ) {
-            //         target.set( {
-            //             left: 200
-            //         } );
-            //         canvas.renderAll();
-            //     }
-            //  }
-        }, function() {
-            canvas.renderAll();
-        } );
-        
-        fabric.Object.prototype.customiseCornerIcons({
-            settings: {
-                //borderColor: 'red',
-                cornerSize: 20,
-                cornerBackgroundColor: 'black',
-                cornerShape: 'circle',
-                cornerPadding: 10,
-             },
-            tl: {
-                // icon: 'icons/rotate.svg'
-                icon: 'icons/remove.svg'
-            },
-            // tr: {
-            //     icon: 'icons/resize.svg'
-            // },
-            // bl: {
-            //     icon: 'icons/remove.svg'
-            // },
-            // br: {
-            //     icon: 'icons/up.svg'
-            // },
-            mb: {
-                icon: 'icons/down.svg'
-            }
-        }, function() {
-            canvas.renderAll();
-        } );        
     }
 
     setDrill(drill) {
@@ -122,7 +52,7 @@ class FieldController {
     }
 
     draw() {
-        FieldPainter.paint(this.canvas);        
+        this.fieldPainter.paint();
     }
 
     update() {
@@ -214,6 +144,11 @@ class FieldController {
         this.updateMarchers(args);
         this.update();
         this.canvas.renderAll();
+    }
+
+    strideTypeChanged(strideType) {
+        this.strideType = strideType;
+        this.fieldPainter.showGrid(strideType);
     }
 
     disablePositionIndicator() {
@@ -339,13 +274,13 @@ class FieldController {
 
         var self = this;
         var p = { x: evt.e.layerX, y: evt.e.layerY };
-        var snappedPoint = FieldDimensions.snapPoint(StrideType.SixToFive, self.adjustMousePoint(p));
+        var snappedPoint = FieldDimensions.snapPoint(this.strideType || StrideType.SixToFive, self.adjustMousePoint(p));
         
         self.positionIndicator.set('left', snappedPoint.x);
         self.positionIndicator.set('top', snappedPoint.y);
         self.canvas.renderAll();
 
-        var pos = PositionCalculator.getPositionDescription(snappedPoint);
+        var pos = PositionCalculator.getPositionDescription(snappedPoint, this.strideType || StrideType.SixToFive);
         this.eventService.notifyPositionIndicator({ position: pos });
     }
 
@@ -413,5 +348,74 @@ class FieldController {
     }
 }
 
-
 export default FieldController;
+
+    // initCustomCorners() {
+    //     var canvas = this.canvas;
+
+    //     fabric.Canvas.prototype.customiseControls({
+    //         tl: {
+    //             action: 'remove',
+    //             cursor: 'pointer'
+    //         },
+    //         // tr: {
+    //         //     action: 'scale'
+    //         // },
+    //         // bl: {
+    //         //     action: 'remove',
+    //         //     cursor: 'pointer'
+    //         // },
+    //         br: {
+    //             action: 'scale',
+    //             //cursor: 'pointer'
+    //         },
+    //         mb: {
+    //             action: 'moveDown',
+    //             cursor: 'pointer'
+    //         },
+    //         mt: {
+    //             action: {
+    //                 'rotateByDegrees': 45,
+    //             },
+    //             cursor: 'pointer'
+    //         },
+    //         // mr: {
+    //         //     action: function( e, target ) {
+    //         //         target.set( {
+    //         //             left: 200
+    //         //         } );
+    //         //         canvas.renderAll();
+    //         //     }
+    //         //  }
+    //     }, function() {
+    //         canvas.renderAll();
+    //     } );
+        
+    //     fabric.Object.prototype.customiseCornerIcons({
+    //         settings: {
+    //             //borderColor: 'red',
+    //             cornerSize: 20,
+    //             cornerBackgroundColor: 'black',
+    //             cornerShape: 'circle',
+    //             cornerPadding: 10,
+    //          },
+    //         tl: {
+    //             // icon: 'icons/rotate.svg'
+    //             icon: 'icons/remove.svg'
+    //         },
+    //         // tr: {
+    //         //     icon: 'icons/resize.svg'
+    //         // },
+    //         // bl: {
+    //         //     icon: 'icons/remove.svg'
+    //         // },
+    //         // br: {
+    //         //     icon: 'icons/up.svg'
+    //         // },
+    //         mb: {
+    //             icon: 'icons/down.svg'
+    //         }
+    //     }, function() {
+    //         canvas.renderAll();
+    //     } );        
+    // }

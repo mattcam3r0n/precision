@@ -1,7 +1,6 @@
 'use strict';
 
 import { FieldPoint, StepPoint } from '/client/lib/Point';
-import StrideType from '/client/lib/StrideType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
 import PathTool from './PathTool';
@@ -19,6 +18,11 @@ angular.module('drillApp')
         activate(drillEditorService.getMemberSelection());
       });
 
+      var unsubscribeStrideTypeChanged = drillEditorService.subscribeStrideTypeChanged((evt, args) => {
+        if (!ctrl.isActivated) return;
+        activate(drillEditorService.getMemberSelection());        
+      });
+
       ctrl.$onInit = function () {
         ctrl.turnMode = 'block';
         ctrl.toolDiv = angular.element('.draw-paths-tool')[0];
@@ -26,6 +30,7 @@ angular.module('drillApp')
 
       ctrl.$onDestroy = function () {
         unsubscribeDrawPathsToolActivated();
+        unsubscribeStrideTypeChanged();
       }
 
       $scope.activate = activate;
@@ -73,6 +78,7 @@ angular.module('drillApp')
 
         ctrl.isActivated = true;
         ctrl.memberSelection = memberSelection;
+        ctrl.strideType = drillEditorService.strideType;
 
         createPathTool();
         positionTools();
@@ -113,7 +119,7 @@ angular.module('drillApp')
         if (ctrl.activePathTool) 
           destroyPathTool();
 
-        ctrl.activePathTool = new PathTool(ctrl.field, ctrl.memberSelection, ctrl.turnMode);
+        ctrl.activePathTool = new PathTool(ctrl.field, ctrl.memberSelection, ctrl.turnMode, ctrl.strideType);
         eventService.notifyUpdateField();
       }
 
@@ -140,7 +146,7 @@ angular.module('drillApp')
 
         // have to adjust point for zoom
         var adjustedPoint = ctrl.field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
-        var stepPoint = new FieldPoint(adjustedPoint).toStepPoint(StrideType.SixToFive);
+        var stepPoint = new FieldPoint(adjustedPoint).toStepPoint(ctrl.strideType);
 
         // add turn at step point
         ctrl.activePathTool.addTurnMarker(ctrl.turnDirection, stepPoint);
