@@ -33,10 +33,10 @@ angular.module('drillApp')
         unsubscribeStrideTypeChanged();
       }
 
-      $scope.activate = activate;
+      // $scope.activate = activate;
 
-      $scope.deactivate = function () {
-      }
+      // $scope.deactivate = function () {
+      // }
 
       $scope.save = function () {
         save();
@@ -105,10 +105,9 @@ angular.module('drillApp')
         eventService.notifyUpdateField();
       }
 
-      function setTurnDirection(dir) {
-        dir = Direction.getDirection(dir);
+      function setTurnDirection(direction) {
+        dir = Direction.getDirection(direction);
         ctrl.turnDirection = dir;
-    
         ctrl.field.canvas.defaultCursor = "url(/icons/" + Direction.getDirectionName(dir) + ".svg) 8 8, auto";
         ctrl.activePathTool.setCurrentTurnDirection(Direction[dir]);
       }      

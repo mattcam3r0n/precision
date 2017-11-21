@@ -91,7 +91,7 @@ class Direction {
     }
 
     static getDirection(dir) {
-        return this[dir] || dir;
+        return this[dir] == undefined ? dir : this[dir];
     }
 
     static getDirectionName(dir) {
