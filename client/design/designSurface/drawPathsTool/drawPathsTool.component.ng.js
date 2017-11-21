@@ -53,11 +53,7 @@ angular.module('drillApp')
         return ctrl.turnDirection == Direction[dir];
       }
 
-      $scope.setTurnDirection = function(dir) {
-        ctrl.turnDirection = Direction[dir];
-        ctrl.field.canvas.defaultCursor = "url(/icons/" + dir + ".svg) 16 16, auto";
-        ctrl.activePathTool.setCurrentTurnDirection(Direction[dir]);
-      }
+      $scope.setTurnDirection = setTurnDirection;
 
       $scope.isBlockMode = function() {
         return ctrl.turnMode == 'block';
@@ -83,7 +79,8 @@ angular.module('drillApp')
         createPathTool();
         positionTools();
 
-        ctrl.field.canvas.defaultCursor = 'crosshair';
+        ctrl.field.disablePositionIndicator();
+        setTurnDirection(Direction.E);
         ctrl.field.canvas.on('mouse:up', onMouseUp);
         ctrl.unsubscribeDeleteTurn = eventService.subscribeDeleteTurn(onBackspacePressed);
         ctrl.unsubscribeMembersSelected = drillEditorService.subscribeMembersSelected((evt, args) => {
@@ -107,6 +104,14 @@ angular.module('drillApp')
         destroyPathTool();
         eventService.notifyUpdateField();
       }
+
+      function setTurnDirection(dir) {
+        dir = Direction.getDirection(dir);
+        ctrl.turnDirection = dir;
+    
+        ctrl.field.canvas.defaultCursor = "url(/icons/" + Direction.getDirectionName(dir) + ".svg) 8 8, auto";
+        ctrl.activePathTool.setCurrentTurnDirection(Direction[dir]);
+      }      
 
       function reset() {
         deactivate();
@@ -146,7 +151,7 @@ angular.module('drillApp')
 
         // have to adjust point for zoom
         var adjustedPoint = ctrl.field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
-        var stepPoint = new FieldPoint(adjustedPoint).toStepPoint(ctrl.strideType);
+        var stepPoint = new FieldPoint(adjustedPoint); //.toStepPoint(ctrl.strideType);
 
         // add turn at step point
         ctrl.activePathTool.addTurnMarker(ctrl.turnDirection, stepPoint);

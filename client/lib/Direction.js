@@ -1,4 +1,14 @@
-
+var directionNames = {
+    "-1": "CM",
+    "0": "N",
+    "90": "E",
+    "180": "S",
+    "270": "W",
+    "45": "NE",
+    "135": "SE",
+    "225": "SW",
+    "315": "NW"
+};
 class Direction {
     // a special case for countermarch
     static get CM(){
@@ -78,6 +88,15 @@ class Direction {
     static rightTurnDirection(from) {
         var newDir = (from + 90);
         return newDir >= 360 ? newDir - 360 : newDir;
+    }
+
+    static getDirection(dir) {
+        return this[dir] || dir;
+    }
+
+    static getDirectionName(dir) {
+        dir = this.getDirection(dir);
+        return directionNames[dir];
     }
     
 }

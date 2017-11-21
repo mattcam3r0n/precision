@@ -45,7 +45,15 @@ class FieldPoint extends Point {
 
 class StepPoint extends Point {
     constructor(strideType, x, y) {
-        super(x, y);
+
+//console.log(x,y);
+
+        var p = x.x ? { x: x.x, y: x.y } : { x, y };
+
+        p = FieldDimensions.toStepPoint(p, strideType);
+
+
+        super(p.x, p.y);
         this.strideType = strideType;
     }
 

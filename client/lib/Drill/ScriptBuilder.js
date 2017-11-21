@@ -56,6 +56,7 @@ class ScriptBuilder {
         var stepCount = 0;
         while(stepCount < limit && !arePointsEqual) {
             arePointsEqual = FieldPoint.arePointsEqual({ x: pos.x, y: pos.y }, stepPoint);
+if (!arePointsEqual) console.log(pos, stepPoint);
             pos = MemberPositionCalculator.stepForward(member, pos);
             stepCount++;
         }
@@ -63,7 +64,7 @@ class ScriptBuilder {
         if (arePointsEqual) {
             return this.addActionAtCount(member, action, member.currentState.count + stepCount);
         }
-
+console.log('add failed');
         return false;
     }
 

@@ -153,12 +153,7 @@ angular.module('drillApp')
           for (var j = 0; j < ranks; j++) {
             var upperLeftOfRect = { x: ctrl.sizableRect.left + ctrl.sizableRect.marcherOffsetX, y: ctrl.sizableRect.top + ctrl.sizableRect.marcherOffsetY };
             var upperLeftInSteps = FieldDimensions.toStepPoint(upperLeftOfRect, ctrl.strideType);
-            var stepPoint = { x: upperLeftInSteps.x + x, y: upperLeftInSteps.y + y };
-            console.log('upperLeftOfRect', upperLeftOfRect);
-            console.log('upperLeftInSteps', upperLeftInSteps);
-            console.log('y', y);
-            console.log('stepSize', stepSize);
-            console.log('stepPoint', stepPoint);
+            var stepPoint = FieldDimensions.toStepPoint({ x: upperLeftInSteps.x + x, y: upperLeftInSteps.y + y }, ctrl.strideType);
             var member = builder.createMember(ctrl.strideType, ctrl.direction, stepPoint);
             ctrl.members.push(member);
 

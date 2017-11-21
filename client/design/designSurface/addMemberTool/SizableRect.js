@@ -21,7 +21,6 @@ class SizableRect {
         this.rect.on('moving', evt => {
             // snap rect to step grid
             var p = FieldDimensions.snapPoint(this.strideType, { x: this.rect.left, y: this.rect.top });
-console.log('sizableRect', p);
             this.rect.set('left', p.x - this.marcherOffsetX);
             this.rect.set('top', p.y - this.marcherOffsetY);
             this.rect.setCoords();

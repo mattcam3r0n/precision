@@ -1,3 +1,4 @@
+import FieldDimensions from '/client/lib/FieldDimensions';
 import StrideType from '/client/lib/StrideType';
 import StepType from '/client/lib/StepType';
 import StepDelta from '/client/lib/StepDelta';
@@ -5,20 +6,25 @@ import Direction from '/client/lib/Direction';
 import { FieldPoint, StepPoint } from '/client/lib/Point';
 import TurnMarker from '../field/TurnMarker';
 import CounterMarch from '../field/CounterMarch';
+import PathUtils from './PathUtils';
 
 class GuidePath {
     constructor(field, file, initialPoint, strideType) {
         this.field = field;
-        this.initialPoint = initialPoint;
+        this.initialPoint = {
+            strideType: strideType, // reflect current stride type
+            stepType: StepType.Full,
+            direction: initialPoint.direction,
+            x: initialPoint.x,
+            y: initialPoint.y,
+        }; 
         this.strideType = strideType;
-        this.points = [initialPoint];
+        this.points = [this.initialPoint];
         this.file = file;
         this.startCount = file.leader.member.currentState.count;
 
         this.onMouseMoveHandler = this.onMouseMove.bind(this);
         this.field.canvas.on('mouse:move', this.onMouseMoveHandler);
-
-console.log(this);
     }
 
     setCurrentTurnDirection(dir) {
@@ -86,14 +92,15 @@ console.log(this);
     }
 
     add(point) {
-        if (point.direction === Direction.CM) {
-            this.addCountermarch(point);
+        var snappedPoint = PathUtils.snapPoint(this.strideType, this.lastPoint, point);
+        if (snappedPoint.direction === Direction.CM) {
+            this.addCountermarch(snappedPoint);
             return;
         }
-
-        point.stepsFromPrevious = this.calculateStepsFromPreviousPoint(point);
-        this.createTurnMarker(point);
-        this.points.push(point);
+        snappedPoint.stepsFromPrevious = this.calculateStepsFromPreviousPoint(snappedPoint);
+console.log('add', snappedPoint);
+        this.createTurnMarker(snappedPoint);
+        this.points.push(snappedPoint);
         this.createGuidePathLine();
     }
 
@@ -151,15 +158,15 @@ console.log(this);
 
     calculateStepsFromPreviousPoint(point) {
         var prevPoint = this.lastPoint;
-        return StepDelta.getStepsBetweenPoints(prevPoint.strideType || StrideType.SixToFive, prevPoint.stepType || StepType.Full, point, prevPoint);
+        return StepDelta.getStepsBetweenPoints(this.strideType || StrideType.SixToFive, prevPoint.stepType || StepType.Full, prevPoint.direction, point, prevPoint);
     }
 
     createTurnMarker(point) {
-        var stepPoint = new StepPoint(point.strideType, point.x, point.y);
-        var fieldPoint = stepPoint.toFieldPoint();
+        // var stepPoint = new StepPoint(point.strideType, point.x, point.y);
+        // var fieldPoint = stepPoint.toFieldPoint();
         point.turnMarker = new TurnMarker(point.direction, {
-            left: fieldPoint.x,
-            top: fieldPoint.y
+            left: point.x,
+            top: point.y
         });
         point.turnMarker.point = point;
         point.turnMarker.on('moving', evt => { this.onMoveTurnMarker(evt, this.field, this, point, point.turnMarker); });
@@ -224,17 +231,18 @@ console.log(this);
 
     onMouseMove(evt) {
         var adjustedPoint = this.field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
-        var stepPoint = new FieldPoint(adjustedPoint).toStepPoint(this.strideType);
-
-        if (this.isInPath(stepPoint)) {
-console.log('isInPath');
-            this.createGuideline(this.lastPoint, stepPoint);
+        //var stepPoint = new FieldPoint(adjustedPoint).toStepPoint(this.strideType);
+this.shiftKey = evt.e.shiftKey;
+        if (this.isInPath(adjustedPoint)) {
+            var snappedPoint = PathUtils.snapPoint(this.strideType, this.lastPoint, adjustedPoint);
+//            snappedPoint.steps = this.calculateStepsFromPreviousPoint(snappedPoint);
+            this.createGuideline(this.lastPoint, snappedPoint);
             
             if (this.currentDir == Direction.CM) {
-                if (this.isLeftTurn(stepPoint)) {
-                    this.field.canvas.defaultCursor = "url(/icons/CM-left.svg) 16 16, auto";
+                if (this.isLeftTurn(snappedPoint)) {
+                    this.field.canvas.defaultCursor = "url(/icons/CM-left.svg) 8 8, auto";
                 } else {
-                    this.field.canvas.defaultCursor = "url(/icons/CM-right.svg) 16 16, auto";
+                    this.field.canvas.defaultCursor = "url(/icons/CM-right.svg) 8 8, auto";
                 }
             }
         } else {
@@ -263,18 +271,17 @@ console.log('isInPath');
         });
         this.field.canvas.add(this.path);
         this.bringTurnMarkersToFront();
+        this.field.update();
     }
 
     destroyGuidePathLine() {
         this.field.canvas.remove(this.path);
         this.path = null;
+        this.field.update();
     }
 
-    createGuideline(fromStepPoint, toStepPoint) {
+    createGuideline(from, to) {
         this.destroyGuideline();
-
-        var from = new StepPoint(this.strideType, fromStepPoint).toFieldPoint(),
-            to = new StepPoint(this.strideType, toStepPoint).toFieldPoint();
 
         this.guideline = new fabric.Line([from.x, from.y, to.x, to.y], {
             stroke: 'black',
@@ -283,22 +290,40 @@ console.log('isInPath');
             selectable: false,
             evented: false
         });
+
+        var steps = to.steps || 0;
+        this.guidelineLabel = new fabric.Text(steps.toString(), {
+            left: to.x + 10,
+            top: to.y + 10,
+            fontSize: 20,
+            stroke: 'black',
+//            fontWeight: 'bold',
+//            lineHeight: 1,
+            selectable: false,
+            evented: false
+          });
+          
         this.field.canvas.add(this.guideline);
+        this.field.canvas.add(this.guidelineLabel);
         this.bringTurnMarkersToFront();
+        this.field.update();
     }
 
     destroyGuideline() {
         if (!this.guideline) return;
 
+        this.field.canvas.remove(this.guidelineLabel);
         this.field.canvas.remove(this.guideline);
         this.guideline = null;
+        this.guidelineLabel = null;
+        this.field.update();
     }
 
     getEndCount(stepPoint) {
         if (!stepPoint)
             return this.startCount + this.getLengthInCounts();
 
-        var steps = StepDelta.getStepsBetweenPoints(stepPoint.strideType, stepPoint.stepType, this.lastPoint, stepPoint);
+        var steps = StepDelta.getStepsBetweenPoints(this.strideType, stepPoint.stepType, this.lastPoint.direction, this.lastPoint, stepPoint);
 
         return this.startCount + this.getLengthInCounts() + steps;
     }
@@ -310,44 +335,15 @@ console.log('isInPath');
         for (var i = 0; i < this.points.length - 1; i++) {
             let a = this.points[i];
             let b = this.points[i + 1];
-            counts += StepDelta.getStepsBetweenPoints(a.strideType, a.stepType, a, b);
+            counts += StepDelta.getStepsBetweenPoints(this.strideType, a.stepType, a.direction, a, b);
         }
         return counts;
     }
 
-    getStepsFromLastPoint(stepPoint) {
-        return StepDelta.getStepsBetweenPoints(this.lastPoint, stepPoint);
-    }
-
     isInPath(point, sourcePoint) {
         var sourcePoint = sourcePoint || this.lastPoint;
-console.log(point, sourcePoint);
-        if (sourcePoint.direction == Direction.N && point.x == sourcePoint.x && point.y < sourcePoint.y)
-            return true;
 
-        if (sourcePoint.direction == Direction.E && point.y == sourcePoint.y && point.x > sourcePoint.x)
-            return true;
-
-        if (sourcePoint.direction == Direction.S && point.x == sourcePoint.x && point.y > sourcePoint.y)
-            return true;
-
-        if (sourcePoint.direction == Direction.W && point.y == sourcePoint.y && point.x < sourcePoint.x)
-            return true;
-
-        // obliques
-        if (sourcePoint.direction == Direction.NE && this.isOnLine(sourcePoint, -1, point) && point.y < sourcePoint.y)
-            return true;
-
-        if (sourcePoint.direction == Direction.SE && this.isOnLine(sourcePoint, 1, point) && point.y > sourcePoint.y)
-            return true;
-
-        if (sourcePoint.direction == Direction.SW && this.isOnLine(sourcePoint, -1, point) && point.y > sourcePoint.y)
-            return true;
-
-        if (sourcePoint.direction == Direction.NW && this.isOnLine(sourcePoint, 1, point) && point.y < sourcePoint.y)
-            return true;
-
-        return null;
+        return PathUtils.isInPath(this.strideType, sourcePoint, point);
     }
 
     // Move these to a line utils class?
@@ -357,14 +353,14 @@ console.log(point, sourcePoint);
 
     isOnLine(knownPoint, knownSlope, testPoint) {
         var b = this.yIntercept(knownPoint, knownSlope);
-        return testPoint.y == (knownSlope * testPoint.x) + b; // y = mx + b
+        return testPoint.y.toFixed(3) == ((knownSlope * testPoint.x) + b).toFixed(3); // y = mx + b
     }
 
     get pathExpr() {
         var pathExpr = "M ";
         this.points.forEach(sp => {
-            let fp = new StepPoint(sp.strideType || StrideType.SixToFive, sp.x, sp.y).toFieldPoint();
-            pathExpr += fp.x + ' ' + fp.y + ' L ';
+            //let fp = new StepPoint(sp.strideType || StrideType.SixToFive, sp.x, sp.y).toFieldPoint();
+            pathExpr += sp.x + ' ' + sp.y + ' L ';
         });
         return pathExpr.slice(0, -2);
     }

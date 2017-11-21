@@ -262,4 +262,46 @@ path tool
 * takes selected members
 * has cancel/save icons on the borders
 * is activated by making a selection
-* 
+
+path tool and 6/8 problems
+* as mouse moves, snap point to the source line (not the grid)
+* but snap length to grid
+* so, for E/W, snap Y to source line, but snap X to grid (stride length)
+* for N/S, snap X to source line, but snap Y to grid (stride lengt)
+* for obliques???
+
+drawPathsTool.onMouseUp -> pathTool.addTurnMarker(turnDir, point)
+pathTool.addTurnMarker -> GuidePath.add(state)
+GuidePath.isInPath
+* determine if point is roughly in path of line
+
+snapPointToPath(sourcePoint, point) {
+    // snap point to path
+}
+
+isInPath(srcPoint, point) {
+}
+
+isInPathE(srcPoint, point) {
+    var deltaY = point.y - srcPoint.y;
+    return (deltaY > 0 && deltaY <= stepSize.y / 2);
+
+    // calc y for mouse x
+    // if mouse y is within 1/2 step of calc'd y, then on line
+    // if x > source x
+    // then true
+}
+
+isInPathN()) {
+    var deltaX = srcPoint.x - point.x;
+    return (deltaX > 0 && deltaX <= stepSize.x / 2);
+
+    // calc x for mouse y
+    // if mouse x is within 1/2 step of calc'd x, then on line
+    // if y < source y
+    // then true
+}
+
+y = mx + b
+y = mx + b
+(y - b)/m = x

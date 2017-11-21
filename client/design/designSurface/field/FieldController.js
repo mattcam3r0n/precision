@@ -231,7 +231,27 @@ class FieldController {
         //this.canvas.on('selection:cleared', this.onSelectionCleared.bind(self));
 
         this.canvas.on('object:selected', this.onObjectSelected.bind(self));
+
+        // this.canvas.on('mouse:down', (evt) => {
+        //     console.log(evt);
+        // });
+
+        this.wireUpContextMenu();
     }
+
+    wireUpContextMenu() {
+        var self = this;
+        $('.upper-canvas').bind('contextmenu', function (e) {
+            var clickPoint = self.adjustMousePoint(new fabric.Point(e.offsetX, e.offsetY));
+
+            e.preventDefault();
+        
+            var objectFound = findMarcherAtPoint(self.canvas, clickPoint);
+
+            console.log(objectFound);
+        });        
+    }
+
 
     onSelectionCreated(evt) {
         evt.target.set({
@@ -264,7 +284,7 @@ class FieldController {
     // }
 
     onMouseMove(evt) {
-        if (!this.positionIndicatorEnabled) return; 
+        //if (!this.positionIndicatorEnabled) return; 
         
         var isSelecting = !!this.canvas._groupSelector; // sneaky way of determinig if dragging selection box
         if (evt.target == null && !isSelecting)
@@ -276,6 +296,7 @@ class FieldController {
         var p = { x: evt.e.layerX, y: evt.e.layerY };
         var snappedPoint = FieldDimensions.snapPoint(this.strideType || StrideType.SixToFive, self.adjustMousePoint(p));
         
+        self.positionIndicator.set('visible', this.positionIndicatorEnabled);
         self.positionIndicator.set('left', snappedPoint.x);
         self.positionIndicator.set('top', snappedPoint.y);
         self.canvas.renderAll();
@@ -288,10 +309,10 @@ class FieldController {
         var rect = new fabric.Rect({
             left: 0,
             top: 0,
-            width: 15,
-            height: 15,
-            rx: 15,
-            ry: 15,
+            width: 12,
+            height: 12,
+            rx: 12,
+            ry: 12,
             fill: 'white',
             stroke: 'white',
             selectable: false,
@@ -349,6 +370,18 @@ class FieldController {
 }
 
 export default FieldController;
+
+function findMarcherAtPoint(canvas, point) {
+    var objectFound;
+    // find marcher
+    canvas.forEachObject(function (obj) {
+        if (!objectFound && obj.type == 'Marcher' && obj.containsPoint(point)) {
+            objectFound = obj;
+        }
+    });
+    return objectFound;
+}
+
 
     // initCustomCorners() {
     //     var canvas = this.canvas;

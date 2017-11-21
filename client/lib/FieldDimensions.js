@@ -170,13 +170,22 @@ class FieldDimensions {
         };
     }
 
+    static snapX(strideType, x) {
+        var stepSize = this.getStepSize(strideType || StrideType.SixToFive);
+        return +((Math.round(x / stepSize.x) * stepSize.x).toFixed(3));
+    }
+
+    static snapY(strideType, y) {
+        var stepSize = this.getStepSize(strideType || StrideType.SixToFive);
+        return +(((Math.round(y / stepSize.y) * stepSize.y) - stepSize.yOffset).toFixed(3));
+    }
+
     // TODO: support 8/5
     // convert field coordinates to step coordinates
     static toStepPoint(fieldPoint, strideType) { // from field point
-        var stepSize = this.getStepSize(strideType || StrideType.SixToFive);
 		return {
-			x: Math.round(fieldPoint.x / stepSize.x) * stepSize.x,
-			y: (Math.round(fieldPoint.y / stepSize.y) * stepSize.y) - stepSize.yOffset
+			x: this.snapX(strideType, fieldPoint.x),
+			y: this.snapY(strideType, fieldPoint.y)
         };
         //return fieldPoint;
 	}

@@ -178,6 +178,11 @@ class PathTool {
         this.guidePaths.forEach(gp => {
             let count = gp.startCount + 1;
             if (gp.points.length > 1) {
+                let action = new Action(gp.initialPoint);
+                this.memberSelection.members.forEach(m => {
+                    let added = ScriptBuilder.addActionAtCount(m, action, count);
+//                    let added = ScriptBuilder.addActionAtPoint(fm.member, action, gp.initialPoint);
+                });
                 // for each point in guide path
                 gp.points.slice(1).forEach(p => { // skip first point, since it is current position
                     count = count + p.stepsFromPrevious;
@@ -195,8 +200,8 @@ class PathTool {
             if (gp.points.length > 1) {
                 // for each file member
                 gp.file.fileMembers.forEach(fm => {
-                    // get current count + offset from leader (in counts)
-                    let count = fm.member.currentState.count + fm.getStepsToLeader();
+                    let action = new Action(gp.initialPoint);
+                    let added = ScriptBuilder.addActionAtPoint(fm.member, action, gp.initialPoint);
                     // for each point in guide path
                     gp.points.slice(1).forEach(p => { // skip first point, since it is current position
                         let action = new Action(p);
