@@ -103,6 +103,7 @@ angular.module('drillApp')
         ctrl.field.canvas.defaultCursor = 'default';
         destroyPathTool();
         eventService.notifyUpdateField();
+        ctrl.field.update();
       }
 
       function setTurnDirection(direction) {
@@ -167,7 +168,7 @@ angular.module('drillApp')
 
         ctrl.activePathTool.save();
 
-        drillEditorService.save(true);          
+        drillEditorService.save(true);
       }
 
       function positionTools(obj) {

@@ -87,6 +87,33 @@ const deltas = {
             [Direction.NW]: {
                 deltaX: -FieldDimensions.eightToFiveObliqueDeltaX, deltaY: -FieldDimensions.eightToFiveObliqueDeltaY
             }
+        },
+        [StepType.Half]: {
+            [Direction.N]: {
+                deltaX: 0, deltaY: -0.5 * FieldDimensions.oneStepY_8to5
+            },
+            [Direction.E]: {
+                deltaX: 0.5 * FieldDimensions.oneStepX_8to5, deltaY: 0
+            },
+            [Direction.S]: {
+                deltaX: 0, deltaY: 0.5 * FieldDimensions.oneStepY_8to5
+            },
+            [Direction.W]: {
+                deltaX: -0.5 * FieldDimensions.oneStepX_8to5, deltaY: 0
+            }
+            // do we allow half steps in obliques?
+            // [Direction.NE]: {
+            //     deltaX: sixToFiveObliqueDelta, deltaY: -sixToFiveObliqueDelta
+            // },
+            // [Direction.SE]: {
+            //     deltaX: sixToFiveObliqueDelta, deltaY: sixToFiveObliqueDelta
+            // },
+            // [Direction.SW]: {
+            //     deltaX: -sixToFiveObliqueDelta, deltaY: sixToFiveObliqueDelta
+            // },
+            // [Direction.NW]: {
+            //     deltaX: -sixToFiveObliqueDelta, deltaY: -sixToFiveObliqueDelta
+            // }            
         }
     },
 
