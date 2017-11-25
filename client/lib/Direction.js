@@ -98,6 +98,11 @@ class Direction {
         dir = this.getDirection(dir);
         return directionNames[dir];
     }
+
+    static isOblique(dir) {
+        dir = this.getDirection(dir);
+        return dir == Direction.NW || dir == Direction.NE || dir == Direction.SE || dir == Direction.SW;
+    }
     
 }
 
@@ -106,10 +111,10 @@ var slope = {
     [Direction.E]: -0,
     [Direction.S]: Infinity,
     [Direction.W]: +0,
-    [Direction.NE]: 1,
-    [Direction.SW]: 1,
-    [Direction.SE]: -1,
-    [Direction.NW]: -1
+    [Direction.NE]: -1,
+    [Direction.SW]: -1,
+    [Direction.SE]: 1,
+    [Direction.NW]: 1
 };
 
 

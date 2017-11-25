@@ -42,7 +42,7 @@ var oneStepY_6to5 = fieldHeight / heightInSteps[StrideType.SixToFive],
 
 var oneStepY_8to5 = oneStepY_6to5 * (22/28), //fieldHeight / heightInSteps[StrideType.EightToFive],
     oneStepX_8to5 = fieldWidth / widthInSteps[StrideType.EightToFive];
-
+    
 var fiveYardsX = oneStepX_6to5 * 6,
     fiveYardsY = oneStepY_6to5 * 6;
 
@@ -90,6 +90,23 @@ class FieldDimensions {
     static get oneStepX_8to5() {
         return oneStepX_8to5;
     }
+
+    static get sixToFiveObliqueDeltaX() {
+        return (6 / 8) * oneStepX_6to5;
+    } 
+
+    static get sixToFiveObliqueDeltaY() {
+        return (6 / 8) * oneStepY_6to5; 
+    }
+
+    static get eightToFiveObliqueDeltaX() {
+        return (8 / 12) * oneStepX_8to5;
+    }
+
+    static get eightToFiveObliqueDeltaY() {
+        return (8 / 12) * oneStepY_8to5;
+    }
+    
 
     static get yOffset_8to5() {
         return 8 * (this.oneStepY_8to5 - this.oneStepX_8to5);
@@ -178,6 +195,16 @@ class FieldDimensions {
     static snapY(strideType, y) {
         var stepSize = this.getStepSize(strideType || StrideType.SixToFive);
         return +(((Math.round(y / stepSize.y) * stepSize.y) - stepSize.yOffset).toFixed(3));
+    }
+
+    static snapObliqueX(strideType, x) {
+        var deltaX = strideType == StrideType.EightToFive ? this.eightToFiveObliqueDeltaX : this.sixToFiveObliqueDeltaX;
+        return +((Math.round(x / deltaX) * deltaX).toFixed(3));
+    }
+
+    static snapObliqueY(strideType, y) {
+        var deltaY = strideType == StrideType.EightToFive ? this.eightToFiveObliqueDeltaY : this.sixToFiveObliqueDeltaY;
+        return +((Math.round(x / deltaY) * deltaY).toFixed(3));
     }
 
     // TODO: support 8/5

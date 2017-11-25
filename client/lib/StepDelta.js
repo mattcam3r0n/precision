@@ -3,11 +3,6 @@ import StepType from '/client/lib/StepType';
 import Direction from '/client/lib/Direction';
 import FieldDimensions from '/client/lib/FieldDimensions';
 
-var sixToFiveObliqueDeltaX = (6 / 8) * FieldDimensions.oneStepX_6to5,
-    sixToFiveObliqueDeltaY = (6 / 8) * FieldDimensions.oneStepY_6to5,
-    eightToFiveObliqueDeltaX = (8 / 12) * FieldDimensions.oneStepX_8to5,
-    eightToFiveObliqueDeltaY = (8 / 12) * FieldDimensions.oneStepY_8to5;
-
 const deltas = {
         
     [StrideType.SixToFive]: {
@@ -25,16 +20,16 @@ const deltas = {
                 deltaX: -1 * FieldDimensions.oneStepX_6to5, deltaY: 0
             },
             [Direction.NE]: {
-                deltaX: sixToFiveObliqueDeltaX, deltaY: -sixToFiveObliqueDeltaY
+                deltaX: FieldDimensions.sixToFiveObliqueDeltaX, deltaY: -FieldDimensions.sixToFiveObliqueDeltaY
             },
             [Direction.SE]: {
-                deltaX: sixToFiveObliqueDeltaX, deltaY: sixToFiveObliqueDeltaY
+                deltaX: FieldDimensions.sixToFiveObliqueDeltaX, deltaY: FieldDimensions.sixToFiveObliqueDeltaY
             },
             [Direction.SW]: {
-                deltaX: -sixToFiveObliqueDeltaX, deltaY: sixToFiveObliqueDeltaY
+                deltaX: -FieldDimensions.sixToFiveObliqueDeltaX, deltaY: FieldDimensions.sixToFiveObliqueDeltaY
             },
             [Direction.NW]: {
-                deltaX: -sixToFiveObliqueDeltaX, deltaY: -sixToFiveObliqueDeltaY
+                deltaX: -FieldDimensions.sixToFiveObliqueDeltaX, deltaY: -FieldDimensions.sixToFiveObliqueDeltaY
             }
         },
         [StepType.Half]: {
@@ -81,16 +76,16 @@ const deltas = {
                 deltaX: -1 * FieldDimensions.oneStepX_8to5, deltaY: 0
             },
             [Direction.NE]: {
-                deltaX: eightToFiveObliqueDeltaX, deltaY: -eightToFiveObliqueDeltaY
+                deltaX: FieldDimensions.eightToFiveObliqueDeltaX, deltaY: -FieldDimensions.eightToFiveObliqueDeltaY
             },
             [Direction.SE]: {
-                deltaX: eightToFiveObliqueDeltaX, deltaY: eightToFiveObliqueDeltaY
+                deltaX: FieldDimensions.eightToFiveObliqueDeltaX, deltaY: FieldDimensions.eightToFiveObliqueDeltaY
             },
             [Direction.SW]: {
-                deltaX: -eightToFiveObliqueDeltaX, deltaY: eightToFiveObliqueDeltaY
+                deltaX: -FieldDimensions.eightToFiveObliqueDeltaX, deltaY: FieldDimensions.eightToFiveObliqueDeltaY
             },
             [Direction.NW]: {
-                deltaX: -eightToFiveObliqueDeltaX, deltaY: -eightToFiveObliqueDeltaY
+                deltaX: -FieldDimensions.eightToFiveObliqueDeltaX, deltaY: -FieldDimensions.eightToFiveObliqueDeltaY
             }
         }
     },
@@ -137,22 +132,19 @@ class StepDelta {
     }
 
     static getStepsBetweenPoints(strideType, stepType, direction, a, b) {
+        if (Direction.isOblique(direction)) {
+            a = { x: a.x, y: a.y };
+            b = { x: b.x, y: a.y };
+        }
         var delta = { x: a.x - b.x, y: a.y - b.y };
         var distance = Math.sqrt(Math.pow(delta.x, 2) + Math.pow(delta.y, 2));
         //distance = (strideType == StrideType.EightToFive) ? Math.ceil(distance) : Math.floor(distance);
 
         var stepSize = this.getDelta(strideType, stepType, direction);
-        var steps = distance / stepSize.deltaX || distance / stepSize.deltaY;
+        var steps = Math.abs(distance / stepSize.deltaX || distance / stepSize.deltaY);
         return stepType == StepType.Half ? steps * 2 : steps;
     }
 
-    get sixToFiveObliqueDelta() {
-        return sixToFiveObliqueDelta;
-    }
-
-    get eightToFiveObliqueDelta() {
-        return eightToFiveObliqueDelta;
-    }
 }
 
 export default StepDelta;

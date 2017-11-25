@@ -98,7 +98,6 @@ class GuidePath {
             return;
         }
         snappedPoint.stepsFromPrevious = this.calculateStepsFromPreviousPoint(snappedPoint);
-console.log('add', snappedPoint);
         this.createTurnMarker(snappedPoint);
         this.points.push(snappedPoint);
         this.createGuidePathLine();

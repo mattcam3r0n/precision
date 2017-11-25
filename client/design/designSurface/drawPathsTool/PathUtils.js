@@ -7,7 +7,11 @@ var inPathFuncs = {
     [Direction.N]: isInPathN,
     [Direction.S]: isInPathS,
     [Direction.E]: isInPathE,
-    [Direction.W]: isInPathW
+    [Direction.W]: isInPathW,
+    [Direction.NE]: isInPathNE,
+    [Direction.SE]: isInPathSE,
+    [Direction.SW]: isInPathSW,
+    [Direction.NW]: isInPathNW
     // TODO: obliques
 };
 
@@ -15,7 +19,11 @@ var snapPointFuncs = {
     [Direction.N]: snapPointN,
     [Direction.S]: snapPointS,
     [Direction.E]: snapPointE,
-    [Direction.W]: snapPointW
+    [Direction.W]: snapPointW,
+    [Direction.NE]: snapPointNE,
+    [Direction.SE]: snapPointSE,
+    [Direction.SW]: snapPointSW,
+    [Direction.NW]: snapPointNW
     // TODO: obliques
 };
 
@@ -51,6 +59,38 @@ function snapPointW(strideType, srcPoint, point) {
     return p;
 }
 
+function snapPointNE(strideType, srcPoint, point) {
+    point.x = FieldDimensions.snapObliqueX(strideType, point.x);
+    var p = calculatePointOnLine(srcPoint, srcPoint.direction, point.x);
+    point.x = p.x;
+    point.y = p.y;
+    return point;
+}
+
+function snapPointSE(strideType, srcPoint, point) {
+    point.x = FieldDimensions.snapObliqueX(strideType, point.x);
+    var p = calculatePointOnLine(srcPoint, srcPoint.direction, point.x);
+    point.x = p.x;
+    point.y = p.y;
+    return point;
+}
+
+function snapPointSW(strideType, srcPoint, point) {
+    point.x = FieldDimensions.snapObliqueX(strideType, point.x);
+    var p = calculatePointOnLine(srcPoint, srcPoint.direction, point.x);
+    point.x = p.x;
+    point.y = p.y;
+    return point;
+}
+
+function snapPointNW(strideType, srcPoint, point) {
+    point.x = FieldDimensions.snapObliqueX(strideType, point.x);
+    var p = calculatePointOnLine(srcPoint, srcPoint.direction, point.x);
+    point.x = p.x;
+    point.y = p.y;
+    return point;
+}
+
 function isInPathN(strideType, srcPoint, point) {
     var stepSize = FieldDimensions.getStepSize(strideType);
     var deltaX = Math.abs(srcPoint.x - point.x);
@@ -79,6 +119,57 @@ function isInPathW(strideType, srcPoint, point) {
     return (deltaX >= 0 && deltaY <= stepSize.y / 2);
 }
 
+function isInPathNE(strideType, srcPoint, point) {
+    var stepSize = FieldDimensions.getStepSize(strideType);
+    var p = calculatePointOnLine(srcPoint, srcPoint.direction, point.x);
+    var deltaX = p.x - point.x; // point should be less than srcPoint
+    var deltaY = Math.abs(p.y - point.y); 
+    return (point.x >= srcPoint.x && deltaX <= stepSize.x / 2 && deltaY <= stepSize.y / 2);
+}
+
+function isInPathSE(strideType, srcPoint, point) {
+    var stepSize = FieldDimensions.getStepSize(strideType);
+    var p = calculatePointOnLine(srcPoint, srcPoint.direction, point.x);
+    var deltaX = p.x - point.x; // x should be greatern than srcPoint
+    var deltaY = Math.abs(p.y - point.y); 
+    return (point.x >= srcPoint.x && deltaX <= stepSize.x / 2 && deltaY <= stepSize.y / 2);
+}
+
+function isInPathSW(strideType, srcPoint, point) {
+    var stepSize = FieldDimensions.getStepSize(strideType);
+    var p = calculatePointOnLine(srcPoint, srcPoint.direction, point.x);
+    var deltaX = p.x - point.x; // x should be less than srcPoint
+    var deltaY = Math.abs(p.y - point.y); 
+    return (point.x <= srcPoint.x && deltaX <= stepSize.x / 2 && deltaY <= stepSize.y / 2);
+}
+
+function isInPathNW(strideType, srcPoint, point) {
+    var stepSize = FieldDimensions.getStepSize(strideType);
+    var p = calculatePointOnLine(srcPoint, srcPoint.direction, point.x);
+    var deltaX = p.x - point.x; // point should be less than srcPoint
+    var deltaY = Math.abs(p.y - point.y); 
+    return (point.x <= srcPoint.x && deltaX <= stepSize.x / 2 && deltaY <= stepSize.y / 2);
+}
+
+function yIntercept(point, slope) {
+    return point.y - (slope * point.x); // b = y - mx
+}
+
+function isOnLine(knownPoint, knownSlope, testPoint) {
+    var b = this.yIntercept(knownPoint, knownSlope);
+    return testPoint.y.toFixed(3) == ((knownSlope * testPoint.x) + b).toFixed(3); // y = mx + b
+}
+
+function calculatePointOnLine(startPoint, direction, x) {
+    var m = Direction.getSlope(direction);
+    var b = yIntercept(startPoint, m);
+    var y = m * x + b;
+    return {
+        x: x,
+        y: y
+    };
+}
+
 class PathUtils {
     static isInPath(strideType, srcPoint, point) {
         if (srcPoint.direction == null || srcPoint.direction === undefined) return false;
@@ -93,6 +184,7 @@ class PathUtils {
         return snappedPoint;
     }
 
+    
 }
 
 export default PathUtils;
