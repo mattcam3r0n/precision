@@ -2,6 +2,7 @@
 
 import WalkThru from '/client/lib/walkThru/WalkThru';
 import DesignKeyboardHandler from './DesignKeyboardHandler';
+import Audio from '/client/lib/audio/Audio';
 
 import { Meteor } from 'meteor/meteor';
 
@@ -19,7 +20,11 @@ angular.module('drillApp')
     function init() {
       $scope.tempo = 120;
       $window.addEventListener('keydown', keydown);
-      
+
+      Audio.init();
+      Audio.loadFile('/audio/Liberty Bell Intro.ogg');
+      //Audio.play();
+
       $scope.$watch('tempo', function () {
         drillEditorService.setTempo($scope.tempo);
       });
@@ -70,6 +75,10 @@ angular.module('drillApp')
       console.log('drill', $scope.drill);
     }
 
+    $scope.playMusic = function() {
+      Audio.play();
+    }
+
     $scope.onNew = function() {
       newDrill();
     }
@@ -82,10 +91,12 @@ angular.module('drillApp')
       drillEditorService.play(() => {
         $scope.$safeApply();
       });
+      Audio.play();
     }
 
     $scope.onStop = function () {
       drillEditorService.stop();
+      Audio.stop();
     }
 
     $scope.onGoToBeginning = function () {

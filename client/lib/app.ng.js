@@ -23,10 +23,7 @@ angular.module('drillApp', [
 });
 
 onReady = function() {
-
   var appInjector = angular.bootstrap(document, ['drillApp']);
-
-//  var appState = appInjector.get('appStateService');
 };
   
 if(Meteor.isCordova) {
