@@ -1,0 +1,21 @@
+.timeline {
+    position: absolute;
+    z-index: 2;
+    top: 200px;
+    left: 50px;
+    height: 240px;
+    width: 1200px;
+}
+
+.timeline div.panel-heading {
+    margin-left: 5px;
+}
+.timeline .panel-body {
+    padding: 0;
+}
+
+.timeline .panel-body button {
+    text-align: left;
+    font-size: 10px;
+}
+
