@@ -46,6 +46,14 @@ class Events {
     static get updateField() {
         return 'updateField';
     }
+
+    static get chooseMusicDialogActivated() {
+        return 'chooseMusicDialogActivated';
+    }
+
+    static get audioClipDialogActivated() {
+        return 'audioClipDialogActivated';
+    }
 }
 
 export default Events;

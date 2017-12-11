@@ -1,0 +1,47 @@
+<!-- Modal -->
+<div class="audio-clip-dialog modal fade" id="audioClipDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Audio Clip</h4>
+            </div>
+            <div class="modal-body" style="min-height: 450px">
+                <div id="waveform" ng-click="playPause()"></div>
+                <div id="wave-timeline"></div>
+                <!-- <div class="col-xs-1">
+                    <i class="glyphicon glyphicon-zoom-out"></i>
+                </div>
+                <div class="col-xs-3">
+                    <input id="slider" type="range" min="1" max="200" value="1" style="width: 100%" />
+                </div>
+                <div class="col-xs-1">
+                    <i class="glyphicon glyphicon-zoom-in"></i>
+                </div> -->
+                <div class="col-xs-12">
+                    <button ng-click="$ctrl.play()" class="btn btn-default">
+                        <i class="fa fa-play"></i> / <i class="fa fa-pause"></i>
+                    </button>
+                    <button ng-click="$ctrl.clearRegion()" class="btn btn-default">Clear Selection</button>
+                    <label>Counts</label>
+                    <input type="number" ng-model="$ctrl.counts"/>
+                    <label>Duration</label>
+                    <input type="text" ng-model="$ctrl.formattedDuration()" ng-model-options="{ getterSetter: true }"/>
+                    <label>Tempo</label>
+                    <input type="number" ng-model="$ctrl.tempo"/>
+                </div>
+            </div>
+            <div class="col-xs-1">
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-9">
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

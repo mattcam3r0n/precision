@@ -40,6 +40,10 @@ angular.module('drillApp')
         move(0.9);
       }
 
+      ctrl.chooseMusic = function() {
+        eventService.notifyChooseMusicDialogActivated();
+      }
+
       function move (percentage) {
         var range = ctrl.timeline.timeline.getWindow();
         var interval = range.end - range.start;

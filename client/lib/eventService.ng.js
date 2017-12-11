@@ -78,6 +78,22 @@ class EventService {
     notifyUpdateField(args) {
         this.$rootScope.$broadcast(Events.updateField, args);
     }
+
+    subscribeChooseMusicDialogActivated(cb) {
+        return this.$rootScope.$on(Events.chooseMusicDialogActivated, cb);
+    }
+
+    notifyChooseMusicDialogActivated(args) {
+        this.$rootScope.$broadcast(Events.chooseMusicDialogActivated, args);
+    }
+
+    subscribeAudioClipDialogActivated(cb) {
+        return this.$rootScope.$on(Events.audioClipDialogActivated, cb);        
+    }
+
+    notifyAudioClipDialogActivated(args) {
+        this.$rootScope.$broadcast(Events.audioClipDialogActivated, args);        
+    }
     
 }
 
