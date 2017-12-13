@@ -7,10 +7,9 @@ import Audio from '/client/lib/audio/Audio';
 import { Meteor } from 'meteor/meteor';
 
 angular.module('drillApp')
-  .controller('DesignCtrl', function ($scope, $window, $reactive, appStateService, drillEditorService, eventService) {
+  .controller('DesignCtrl', function ($scope, $window, appStateService, drillEditorService, eventService) {
 
     var ctrl = this;
-    $reactive(ctrl).attach($scope);
     $scope.viewName = 'Design';
 
     var keyboardHandler;
@@ -22,8 +21,13 @@ angular.module('drillApp')
       $window.addEventListener('keydown', keydown);
 
       Audio.init();
-      Audio.loadFile('/audio/Liberty Bell Intro.ogg');
-      //Audio.play();
+      //Audio.loadFile('/audio/Liberty Bell Intro.ogg');
+      Audio
+        .load(['/audio/Liberty Bell Intro.ogg'])
+        .then((buffers) => {
+          console.log(buffers);
+          //Audio.play(Object.keys(buffers)[0]);
+        });
 
       $scope.$watch('tempo', function () {
         drillEditorService.setTempo($scope.tempo);
@@ -76,7 +80,7 @@ angular.module('drillApp')
     }
 
     $scope.playMusic = function() {
-      Audio.play();
+      Audio.play('/audio/Liberty Bell Intro.ogg');
     }
 
     $scope.onNew = function() {
@@ -91,7 +95,6 @@ angular.module('drillApp')
       drillEditorService.play(() => {
         $scope.$safeApply();
       });
-      Audio.play();
     }
 
     $scope.onStop = function () {

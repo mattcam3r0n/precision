@@ -38,11 +38,29 @@ class DrillBuilder {
         return this._addMode;
     }
 
-    
+
     createDrill() {
         return {
             name: 'New Drill',
-            members: []
+            members: [],
+            music: [
+                { 
+                    fileName: '/audio/Liberty Bell Intro.ogg',
+                    startOffset: 0,
+                    duration: 3.3,
+                    startCount: 1,
+                    endCount: 8,
+                    tempo: 130
+                },
+                {
+                    fileName: '/audio/Liberty Bell Intro.ogg',
+                    startOffset: 0,
+                    duration: 3.3,
+                    startCount: 9,
+                    endCount: 17,
+                    tempo: 130
+                }
+            ]
         };
     }
 

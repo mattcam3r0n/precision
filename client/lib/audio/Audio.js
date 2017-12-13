@@ -1,3 +1,5 @@
+import AudioBufferLoader from './AudioBufferLoader';
+
 class Audio {
     static init() {
         try {
@@ -6,11 +8,27 @@ class Audio {
             // Fix up for prefixing
             window.AudioContext = window.AudioContext || window.webkitAudioContext;
             this.context = new AudioContext();
-            console.log(this.context);
         }
         catch (e) {
             console.log('Web Audio API is not supported in this browser');
         }
+    }
+
+    static load(urlList) {
+        this.buffers = new AudioBufferLoader(this.context, urlList);
+        return this.buffers.load(); // returns promise 
+    }
+
+    static play(url, startOffset) {
+        startOffset = startOffset || 0;
+        var buffer = this.buffers.getBuffer(url);
+
+        var source = this.context.createBufferSource(); // creates a sound source
+        source.buffer = buffer;                    // tell the source which sound to play
+        source.connect(this.context.destination);       // connect the source to the context's destination (the speakers)
+        source.start(0, startOffset);                           // play the source now
+
+        this.source = source; // do i need to keep the source?
     }
 
     static loadFile(url) {
@@ -37,14 +55,6 @@ class Audio {
           });
         }
         request.send();
-    }
-
-    static play() {
-        var source = this.context.createBufferSource(); // creates a sound source
-        source.buffer = this.buffer;                    // tell the source which sound to play
-        source.connect(this.context.destination);       // connect the source to the context's destination (the speakers)
-        source.start(0);                           // play the source now
-        this.source = source;
     }
 
     static stop() {

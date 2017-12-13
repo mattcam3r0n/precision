@@ -270,38 +270,63 @@ path tool and 6/8 problems
 * for N/S, snap X to source line, but snap Y to grid (stride lengt)
 * for obliques???
 
-drawPathsTool.onMouseUp -> pathTool.addTurnMarker(turnDir, point)
-pathTool.addTurnMarker -> GuidePath.add(state)
-GuidePath.isInPath
-* determine if point is roughly in path of line
-
-snapPointToPath(sourcePoint, point) {
-    // snap point to path
-}
-
-isInPath(srcPoint, point) {
-}
-
-isInPathE(srcPoint, point) {
-    var deltaY = point.y - srcPoint.y;
-    return (deltaY > 0 && deltaY <= stepSize.y / 2);
-
-    // calc y for mouse x
-    // if mouse y is within 1/2 step of calc'd y, then on line
-    // if x > source x
-    // then true
-}
-
-isInPathN()) {
-    var deltaX = srcPoint.x - point.x;
-    return (deltaX > 0 && deltaX <= stepSize.x / 2);
-
-    // calc x for mouse y
-    // if mouse x is within 1/2 step of calc'd x, then on line
-    // if y < source y
-    // then true
-}
 
 y = mx + b
 y = mx + b
 (y - b)/m = x
+
+
+Playback Scheduling
+* on play, begin load music
+    * get distinct list of music files
+    * create bufferSources and load them (keep track)
+    * don't begin playback until loading is done
+    * show spinner
+* on play, create a schedule of every beat in drill
+    * an array with instructions for each beat
+    * time of beat (relative to start)
+    * beat number
+    * music to begin playing
+        * file
+        * start time, offset
+        * end time
+        * end beat
+    * music currently playing
+        * file
+    * music to end playing?
+        * music file?
+        * end time?
+        * end beat?
+* in animation frame loop...
+    * get scheduled beat for NEXT beat
+    * if nextBeat.time >= currentTime, then
+        * if music begins on this beat, play it
+        * advance the drill
+        * drawBand
+        * increment count? (done by advancing drill, i think)
+
+{
+    count: 7,
+    music: {
+        file: '',
+        startTime: '',  // start time in music file, adjusted for count
+        endTime: '',
+        startCount: 1, // adjust on first count, if starting in middle
+        endCount: 8
+    },
+    time: 0.46, // offset in seconds from start
+    
+}
+    
+Create playback schedule
+* start from current drill count
+* find music playing at that count
+    * if music start count is less than current count, 
+        * add count * tempoInterval to music start offset
+        * tempoInterval = 60 / music tempo
+* 
+
+BufferLoader
+    * class that loads a list of audio resources, with callback when finished
+    * returns a maps of the loaded buffers, keyed by file/resource name? or path?
+

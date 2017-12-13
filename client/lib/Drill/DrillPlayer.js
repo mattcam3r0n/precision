@@ -1,4 +1,6 @@
 import MemberPlayer from '/client/lib/drill/MemberPlayer';
+import DrillScheduler from './DrillScheduler';
+import Audio from '/client/lib/audio/Audio';
 
 var lastTimestamp = 0;
 var requestAnimationFrame = window.requestAnimationFrame 
@@ -29,13 +31,25 @@ class DrillPlayer {
     play(stateChangedCallback, playLength) {
         var self = this;
         self.stopCount = 0;
-        if (playLength) {
-            self.stopCount = this.drill.count + playLength;
+        if (playLength) { // rework this around schedule? only schedule n counts?
+            self.stopCount = self.drill.count + playLength;
         }
+
+        self.schedule = new DrillScheduler().createSchedule(self.drill);
+        console.log(self.schedule);
+
+        self.startTimestamp = 0; // get current audio timestamp?
+        self.lastTimestamp = 0;
+        self.currentMusic = null;
 
         self.stateChangedCallback = stateChangedCallback;
 
-        this.animationHandle = requestAnimationFrame(this.animate.bind(this));
+        Audio
+            .load(self.schedule.music)
+            .then((buffers) => {
+                self.animationHandle = requestAnimationFrame(self.animate.bind(self));           
+            });
+
     }
 
     stop() {
@@ -50,10 +64,23 @@ class DrillPlayer {
         var self = this;
         var tempoInMS = (60 / self.tempo) * 1000;
 
-        if (timestamp - lastTimestamp >= tempoInMS) {
-            lastTimestamp = timestamp;
+        var nextStep = self.schedule.steps[0];
+
+        if (self.startTimestamp == 0)
+            self.startTimestamp = timestamp;
+
+        if (timestamp >= self.startTimestamp + (nextStep.time * 1000)) {
+
+            self.lastTimestamp = timestamp;
             self.stepForward();
             self.stateChangedCallback();
+
+            self.schedule.steps.shift();
+            nextStep = self.schedule.steps[0];
+            if (nextStep && nextStep.music && nextStep.music.startCount == self.drill.count) {
+                self.currentMusic = nextStep.music.fileName;
+                Audio.play(self.currentMusic, nextStep.music.musicStartOffset);
+            }
     
             if (self.isEndOfDrill() || self.isPastStopCount()) {
                 console.log("Reached end of drill.");
@@ -85,6 +112,8 @@ class DrillPlayer {
     }
 
     isEndOfDrill() {
+        if (!this.drill.members || this.drill.members.length == 0) return true;
+
         // true if all members are at end
         return this.drill.members.some(m => MemberPlayer.isEndOfDrill(m));
     }
@@ -92,6 +121,14 @@ class DrillPlayer {
     goToBeginning() {
         this.drill.count = 0;
         this.drill.members.forEach(m => MemberPlayer.goToBeginning(m));
+    }
+
+    goToCount(count) {
+        //TODO: need a better way to do this
+        this.goToBeginning();
+        while(this.drill.count < count && !this.isEndOfDrill()) {
+            this.stepForward();
+        }
     }
 
     goToEnd() {
