@@ -45,20 +45,22 @@ class DrillBuilder {
             members: [],
             music: [
                 { 
+                    id: 1,
                     fileName: '/audio/Liberty Bell Intro.ogg',
                     startOffset: 0,
                     duration: 3.3,
                     startCount: 1,
                     endCount: 8,
-                    tempo: 130
+                    tempo: 132
                 },
                 {
+                    id: 2,
                     fileName: '/audio/Liberty Bell Intro.ogg',
                     startOffset: 0,
                     duration: 3.3,
                     startCount: 9,
                     endCount: 17,
-                    tempo: 130
+                    tempo: 132
                 }
             ]
         };

@@ -16,3 +16,11 @@
     color: red;
     cursor: pointer;
 }
+
+.audio-clip-dialog input {
+    width: 60px;
+}
+
+.audio-clip-dialog input.title {
+    width: 250px;
+}

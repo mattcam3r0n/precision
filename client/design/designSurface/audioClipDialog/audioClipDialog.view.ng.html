@@ -31,6 +31,8 @@
                     <input type="text" ng-model="$ctrl.formattedDuration()" ng-model-options="{ getterSetter: true }"/>
                     <label>Tempo</label>
                     <input type="number" ng-model="$ctrl.tempo"/>
+                    <label>Title</label>
+                    <input type="text" ng-model="$ctrl.title" class="title"/>
                 </div>
             </div>
             <div class="col-xs-1">
@@ -39,6 +41,7 @@
                 <div class="col-md-9">
                 </div>
                 <div class="col-md-3">
+                    <button type="button" ng-click="$ctrl.addAudioClip()" class="btn btn-default" data-dismiss="modal">OK</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

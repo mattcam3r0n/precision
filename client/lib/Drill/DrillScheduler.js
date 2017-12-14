@@ -62,14 +62,14 @@ console.log(drill.music);
             offset = (count - music.startCount) * tempoInterval;
         }
 
-        var musicStartOffset = music.startOffset + offset;
+        var startOffset = music.startOffset + offset;
         var duration = music.duration - offset;
 
         return {
             fileName: music.fileName,
             startCount: startCount > music.startCount ? startCount + 1 : music.startCount,
             endCount: music.endCount,
-            musicStartOffset: musicStartOffset,
+            startOffset: startOffset,
             duration: duration
         };
     }

@@ -6,54 +6,60 @@ angular.module('drillApp')
   .component('timeline', {
     templateUrl: 'client/design/designSurface/timeline/timeline.view.ng.html',
     bindings: {
-      field: '<'
+      drill: '<'
     },
-    controller: function ($scope, drillEditorService, eventService) {
+    controller: function ($scope, appStateService, eventService) {
       var ctrl = this;
 
       ctrl.$onInit = function () {
         ctrl.isActivated = true;
         ctrl.timeline = new Timeline('timelineContainer');
+        ctrl.unsubscribeAudioClipAdded = eventService.subscribeAudioClipAdded(onAudioClipAdded);
       }
 
+      ctrl.$onDestroy = function() {
+        ctrl.unsubscribeAudioClipAdded();
+      }
+
+      ctrl.$onChanges = function(changes) {
+        // if the drill changed, update field
+        if (!ctrl.drill) return;
+        ctrl.timeline.setMusicItems(ctrl.drill.music);
+        ctrl.timeline.goToBeginning();
+      }
+      
       ctrl.zoomIn = function() {
-        ctrl.timeline.timeline.zoomIn(0.5);
+        ctrl.timeline.zoomIn();
       }
 
       ctrl.zoomOut = function() {
-        ctrl.timeline.timeline.zoomOut(0.5);        
+        ctrl.timeline.zoomOut();
       }
 
       ctrl.goToBeginning = function() {
-        ctrl.timeline.timeline.moveTo(new Date(0));
+        ctrl.timeline.goToBeginning();
       }
 
       ctrl.goToEnd = function() {
-
+        ctrl.timeline.goToEnd();
       }
 
       ctrl.pageForward = function() {
-        move(-0.9);        
+        ctrl.timeline.pageForward();
       }
 
       ctrl.pageBackward = function() {
-        move(0.9);
+        ctrl.timeline.pageBackward();
       }
 
       ctrl.chooseMusic = function() {
         eventService.notifyChooseMusicDialogActivated();
       }
 
-      function move (percentage) {
-        var range = ctrl.timeline.timeline.getWindow();
-        var interval = range.end - range.start;
-
-        ctrl.timeline.timeline.setWindow({
-            start: range.start.valueOf() - interval * percentage,
-            end:   range.end.valueOf()   - interval * percentage
-        });
-    
+      function onAudioClipAdded(evt, args) {
+        ctrl.timeline.setMusicItems(ctrl.drill.music);
       }
+
     }
   });
 

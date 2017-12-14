@@ -94,6 +94,14 @@ class EventService {
     notifyAudioClipDialogActivated(args) {
         this.$rootScope.$broadcast(Events.audioClipDialogActivated, args);        
     }
+
+    subscribeAudioClipAdded(cb) {
+        return this.$rootScope.$on(Events.audioClipAdded, cb);
+    }
+
+    notifyAudioClipAdded(args) {
+        this.$rootScope.$broadcast(Events.audioClipAdded, args);
+    }
     
 }
 

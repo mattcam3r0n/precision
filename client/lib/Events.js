@@ -54,6 +54,10 @@ class Events {
     static get audioClipDialogActivated() {
         return 'audioClipDialogActivated';
     }
+
+    static get audioClipAdded() {
+        return 'audioClipAdded';
+    }
 }
 
 export default Events;

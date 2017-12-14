@@ -1,5 +1,6 @@
 'use strict';
 
+import shortid from 'shortid';
 import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js';
 import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
@@ -8,7 +9,7 @@ angular.module('drillApp')
   .component('audioClipDialog', {
     templateUrl: 'client/design/designSurface/audioClipDialog/audioClipDialog.view.ng.html',
     bindings: {
-      onOpen: "&"
+      drill: "<"
     },
     controller: function ($scope, $rootScope, eventService, appStateService) {
       var ctrl = this;
@@ -20,10 +21,17 @@ angular.module('drillApp')
       }
 
       ctrl.activate = function(args) {
+        ctrl.musicFile = args.musicFile;
+
+        ctrl.title = args.musicFile.title;
+        ctrl.tempo = args.musicFile.tempo;
+        ctrl.duration = args.musicFile.duration;
+        ctrl.counts = args.musicFile.counts;
+
         $('#audioClipDialog').modal('show');
         console.log('audio dialog opened');
         $('#audioClipDialog').on('shown.bs.modal', function () {
-          loadAudio(args.musicFile);
+          loadAudio(ctrl.musicFile);
           $(document).on('keydown', onSpacePressed);
         });
         $('#audioClipDialog').on('hidden.bs.modal', function () {
@@ -58,6 +66,37 @@ angular.module('drillApp')
 
       ctrl.formattedDuration = function() {
         return formatDuration(ctrl.duration);
+      }
+
+      ctrl.addAudioClip = function() {
+        var startCount = getStartCount();
+        var clip = {
+          id: shortid.generate(),
+          fileName: getFilePath() + ctrl.musicFile.fileName,
+          title: ctrl.title,
+          counts: ctrl.counts,
+          tempo: ctrl.tempo,
+          duration: ctrl.duration,
+          startOffset: ctrl.startOffset || 0,
+          startCount: startCount,
+          endCount: startCount + ctrl.counts - 1
+        };
+        ctrl.drill.music.push(clip);
+        eventService.notifyAudioClipAdded({
+          audioClip: clip
+        });
+      }
+
+      function getStartCount() {
+        if (!ctrl.drill.music || ctrl.drill.music.length == 0)
+          return 1;
+
+        var lastClip = ctrl.drill.music[ctrl.drill.music.length - 1];
+        return lastClip.endCount + 1;
+      }
+
+      function getFilePath() {
+        return '/audio/';
       }
 
       function onSpacePressed(e) {
@@ -155,6 +194,7 @@ angular.module('drillApp')
           ctrl.counts = guessCounts(duration);
           ctrl.duration = ctrl.selection.end - ctrl.selection.start;
           ctrl.tempo = guessTempo(ctrl.duration, ctrl.counts);
+          ctrl.startOffset = ctrl.selection.start;
         });
 
         // for zoom
@@ -167,9 +207,7 @@ angular.module('drillApp')
       }
 
       function unloadAudio() {
-        console.log('unloadAudio');
         if (!ctrl.wavesurfer) return;
-console.log('about to destory wavesurf');
         ctrl.wavesurfer.destroy();
       }
 
