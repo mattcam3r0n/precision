@@ -23,7 +23,7 @@ class Timeline {
                 add: true,
                 updateTime: true,
                 updateGroup: false,
-                remove: false
+                remove: true
             },
             showMajorLabels: false,
             maxMinorChars: 4,
@@ -41,7 +41,10 @@ class Timeline {
                 minorLabels: function (date, scale, step) {
                     return new Date(date).getTime();
                 }
-            }
+            },
+            onMove: this.onMove,
+            onRemove: this.onRemove.bind(this),
+            template: this.itemTemplate
         };
 
         this.groups.add({
@@ -107,15 +110,48 @@ class Timeline {
         });
     }
 
+    setOnRemoveCallback(cb) {
+        this.onRemoveCallback = cb;
+    }
+
     createMusicItem(music) {
         return {
             id: music.id || shortid.generate(), // music obj should prob have this id
             group: "music",
             start: new Date(music.startCount),
             end: new Date(music.endCount + 1),
-            content: music.title || music.fileName // change to desc
+            //content: music.title || music.fileName, // change to desc
+            music: music
         };
     }
+
+    onMove(item, callback) {
+        // update music item in drill when moved on timeline
+        // each count is represented by a millisecond
+        item.music.startCount = item.start.getMilliseconds();
+        item.music.endCount = item.end.getMilliseconds();
+    }
+
+    onRemove(item, callback) {
+        var self = this;
+        if (self.onRemoveCallback) {
+            if (self.onRemoveCallback(item)) {
+                callback(item); // remove
+            }
+            else {
+                callback(null); // cancel removal
+            }
+        }
+    }
+
+    itemTemplate(item, element, data) {
+        var html = `
+            <span>${item.music.title || item.music.fileName}</span>
+        `;
+        return html;
+    }
+    
+        
 }
 
 export default Timeline;

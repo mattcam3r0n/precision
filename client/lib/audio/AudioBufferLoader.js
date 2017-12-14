@@ -7,9 +7,10 @@ class AudioBufferLoader {
 
     load() {
         var promises = [];
-        for (var i = 0; i < this.urlList.length; ++i)
+        for (var i = 0; i < this.urlList.length; ++i) {
             promises.push(this.loadBuffer(this.urlList[i], i));
-        
+        }
+
         return Promise.all(promises).then(() => {
             return this.buffers;
         });
@@ -22,7 +23,6 @@ class AudioBufferLoader {
     loadBuffer(url, index) {
         var loader = this;
         return new Promise((resolve, reject) => {
-
             // Load buffer asynchronously
             var request = new XMLHttpRequest();
             request.open("GET", url, true);

@@ -9,10 +9,8 @@ class DrillScheduler {
 
         var schedule = {
             steps: [],
-            music: ['/audio/Liberty Bell Intro.ogg', '/audio/Liberty Bell Intro.ogg']
+            music: this.getDistinctFiles(drill)
         };
-
-console.log(drill.music);
 
         // TODO: need a way to get lenght of drill / end count
         var player = new DrillPlayer(drill);
@@ -30,6 +28,10 @@ console.log(drill.music);
         player.goToCount(saveCount);
 
         return schedule;
+    }
+
+    getDistinctFiles(drill) {
+        return [...new Set(drill.music.map(m => m.fileName))]
     }
 
     getMusicAtCount(drill, count) {

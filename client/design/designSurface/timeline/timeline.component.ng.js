@@ -14,6 +14,7 @@ angular.module('drillApp')
       ctrl.$onInit = function () {
         ctrl.isActivated = true;
         ctrl.timeline = new Timeline('timelineContainer');
+        ctrl.timeline.setOnRemoveCallback(onRemove);
         ctrl.unsubscribeAudioClipAdded = eventService.subscribeAudioClipAdded(onAudioClipAdded);
       }
 
@@ -58,6 +59,12 @@ angular.module('drillApp')
 
       function onAudioClipAdded(evt, args) {
         ctrl.timeline.setMusicItems(ctrl.drill.music);
+      }
+
+      function onRemove(item) {
+        var i = ctrl.drill.music.indexOf(item.music);
+        ctrl.drill.music.splice(i, 1);
+        return true; // continue removal. return false to cancel.
       }
 
     }

@@ -36,7 +36,9 @@ class DrillPlayer {
         }
 
         self.schedule = new DrillScheduler().createSchedule(self.drill);
-        console.log(self.schedule);
+
+        // TODO: remove
+        //console.log(self.schedule);
 
         self.startTimestamp = 0; // get current audio timestamp?
         self.lastTimestamp = 0;
