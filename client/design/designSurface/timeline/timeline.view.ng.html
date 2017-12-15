@@ -1,7 +1,7 @@
 <div draggable id="timeline" class="timeline panel panel-default" ng-show="$ctrl.isActivated">
 
     <div class="panel-heading text-left drag-handle">
-        <i class="fa fa-bars fa-sm drag-handle"></i> &nbsp; Timeline
+        <i ng-click="$ctrl.deactivate()" class="fa fa-times fa-sm close-button"></i> &nbsp; Timeline
     </div>
     <div class="panel-body">
         <div class="btn-toolbar" role="toolbar">
@@ -31,7 +31,8 @@
                 <button ng-click="$ctrl.chooseMusic()" class="btn btn-default" type="button" title="Open Drill">
                     <i class="fa fa-music"></i>
                 </button>
-        </div>
+
+            </div>
         </div>
         <div id="timelineContainer"></div>
     </div>

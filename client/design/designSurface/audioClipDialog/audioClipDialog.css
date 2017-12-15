@@ -1,10 +1,10 @@
 
-.audio-clip-dialog .list-group-item {
-    padding: 5px;
+.audio-clip-dialog {
+    padding: 10px;
 }
 
-.audio-clip-dialog .pagination {
-    display: block;
+.audio-clip-dialog p {
+    font-size: 10pt;
 }
 
 .audio-clip-dialog .small-text {
@@ -18,9 +18,8 @@
 }
 
 .audio-clip-dialog input {
-    width: 60px;
 }
 
 .audio-clip-dialog input.title {
-    width: 250px;
+    width: 100%;
 }

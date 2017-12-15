@@ -21,13 +21,6 @@ angular.module('drillApp')
       $window.addEventListener('keydown', keydown);
 
       Audio.init();
-      //Audio.loadFile('/audio/Liberty Bell Intro.ogg');
-      Audio
-        .load(['/audio/Liberty Bell Intro.ogg'])
-        .then((buffers) => {
-          console.log(buffers);
-          //Audio.play(Object.keys(buffers)[0]);
-        });
 
       $scope.$watch('tempo', function () {
         drillEditorService.setTempo($scope.tempo);
@@ -116,6 +109,10 @@ angular.module('drillApp')
 
     $scope.onStepForward = function () {
       drillEditorService.stepForward();
+    }
+
+    $scope.onShowTimeline = function() {
+      eventService.notifyShowTimeline();
     }
 
     // handle selection event

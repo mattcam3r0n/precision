@@ -7,6 +7,10 @@
     width: 1200px;
 }
 
+.timeline .close-button {
+    cursor: pointer;
+}
+
 .timeline div.panel-heading {
     margin-left: 5px;
 }

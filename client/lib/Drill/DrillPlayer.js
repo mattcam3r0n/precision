@@ -81,7 +81,8 @@ class DrillPlayer {
             nextStep = self.schedule.steps[0];
             if (nextStep && nextStep.music && nextStep.music.startCount == self.drill.count) {
                 self.currentMusic = nextStep.music.fileName;
-                Audio.play(self.currentMusic, nextStep.music.startOffset);
+    console.log(self.currentMusic, nextStep.music.startOffset, nextStep.music.duration);
+                Audio.play(self.currentMusic, nextStep.music.startOffset, nextStep.music.duration);
             }
     
             if (self.isEndOfDrill() || self.isPastStopCount()) {

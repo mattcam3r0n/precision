@@ -8,25 +8,40 @@ angular.module('drillApp')
     bindings: {
       drill: '<'
     },
-    controller: function ($scope, appStateService, eventService) {
+    controller: function ($scope, $timeout, appStateService, drillEditorService, eventService) {
       var ctrl = this;
 
       ctrl.$onInit = function () {
-        ctrl.isActivated = true;
+        ctrl.isActivated = false;
         ctrl.timeline = new Timeline('timelineContainer');
         ctrl.timeline.setOnRemoveCallback(onRemove);
         ctrl.unsubscribeAudioClipAdded = eventService.subscribeAudioClipAdded(onAudioClipAdded);
+        ctrl.unsubscribeShowTimeline = eventService.subscribeShowTimeline(ctrl.activate);
+        ctrl.unsubscribeDrillStateChanged = drillEditorService.subscribeDrillStateChanged(onDrillStateChanged);
       }
 
       ctrl.$onDestroy = function() {
         ctrl.unsubscribeAudioClipAdded();
+        ctrl.unsubscribeShowTimeline();
+        ctrl.unsubscribeDrillStateChanged();
       }
 
       ctrl.$onChanges = function(changes) {
         // if the drill changed, update field
         if (!ctrl.drill) return;
         ctrl.timeline.setMusicItems(ctrl.drill.music);
-        ctrl.timeline.goToBeginning();
+      }
+
+      ctrl.activate = function() {
+        ctrl.isActivated = true;
+
+        $timeout(() => {
+          ctrl.timeline.zoomToCount(ctrl.drill.count);
+        }, 500);
+      }
+
+      ctrl.deactivate = function() {
+        ctrl.isActivated = false;
       }
       
       ctrl.zoomIn = function() {
@@ -39,6 +54,10 @@ angular.module('drillApp')
 
       ctrl.goToBeginning = function() {
         ctrl.timeline.goToBeginning();
+      }
+
+      ctrl.goToCurrentCount = function() {
+        ctrl.timeline.setCurrentCount(10);
       }
 
       ctrl.goToEnd = function() {
@@ -65,6 +84,15 @@ angular.module('drillApp')
         var i = ctrl.drill.music.indexOf(item.music);
         ctrl.drill.music.splice(i, 1);
         return true; // continue removal. return false to cancel.
+      }
+
+      function onDrillStateChanged(args) {
+        if (!ctrl.drill || !ctrl.isActivated) return;
+
+        if (!ctrl.timeline.isCountVisible(ctrl.drill.count)) {
+          ctrl.timeline.moveTo(ctrl.drill.count);
+        }
+        ctrl.timeline.setCurrentCount(ctrl.drill.count);
       }
 
     }

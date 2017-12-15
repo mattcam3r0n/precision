@@ -58,6 +58,10 @@ class Events {
     static get audioClipAdded() {
         return 'audioClipAdded';
     }
+
+    static get showTimeline() {
+        return 'showTimeline';
+    }
 }
 
 export default Events;

@@ -9,33 +9,82 @@
                 <h4 class="modal-title" id="myModalLabel">Audio Clip</h4>
             </div>
             <div class="modal-body" style="min-height: 450px">
-                <div id="waveform" ng-click="playPause()"></div>
-                <div id="wave-timeline"></div>
-                <!-- <div class="col-xs-1">
-                    <i class="glyphicon glyphicon-zoom-out"></i>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            <i class="fa fa-info-circle "></i>&nbsp;Drag the mouse on the sound wave to select only a portion of the music for use. You can move and drag each end of the selection
+                            to refine it. Use the zoom buttons to zoom in for more precise control.
+                        </p>
+                    </div>
                 </div>
-                <div class="col-xs-3">
-                    <input id="slider" type="range" min="1" max="200" value="1" style="width: 100%" />
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="waveform" ng-click="playPause()"></div>
+                        <div id="wave-timeline"></div>
+                    </div>
                 </div>
-                <div class="col-xs-1">
-                    <i class="glyphicon glyphicon-zoom-in"></i>
-                </div> -->
-                <div class="col-xs-12">
-                    <button ng-click="$ctrl.play()" class="btn btn-default">
-                        <i class="fa fa-play"></i> / <i class="fa fa-pause"></i>
-                    </button>
-                    <button ng-click="$ctrl.clearRegion()" class="btn btn-default">Clear Selection</button>
-                    <label>Counts</label>
-                    <input type="number" ng-model="$ctrl.counts"/>
-                    <label>Duration</label>
-                    <input type="text" ng-model="$ctrl.formattedDuration()" ng-model-options="{ getterSetter: true }"/>
-                    <label>Tempo</label>
-                    <input type="number" ng-model="$ctrl.tempo"/>
-                    <label>Title</label>
-                    <input type="text" ng-model="$ctrl.title" class="title"/>
+
+                <div class="row">
+
+                    <div class="col-md-3 form-group-sm">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <i class="glyphicon glyphicon-zoom-out"></i>
+                            </div>
+                            <div class="col-md-4">
+                                <input id="slider" type="range" min="1" max="50" value="1" style="top: 20px" />
+                            </div>
+                            <div class="col-md-1">
+                                <i class="glyphicon glyphicon-zoom-in"></i>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 text-center form-group-sm">
+                        <button ng-click="$ctrl.play()" class="btn btn-default btn-sm">
+                            <i class="fa fa-play"></i> /
+                            <i class="fa fa-pause"></i>
+                        </button>
+                    </div>
+
+                    <div class="col-md-3 text-right form-group-sm">
+                        <button ng-click="$ctrl.clearRegion()" class="btn btn-default btn-sm">Clear Selection</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-1">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <p/>
+                        <p class="text-center"><i class="fa fa-info-circle "></i>&nbsp;Make sure the number of
+                            <b>counts</b> and
+                            <b>tempo</b> are set correctly, either by entering them manually or by tapping the spacebar in time
+                            with the music (the clip will start playing on first tap).</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2 form-group-sm">
+                            <label class="control-label">Counts</label>
+                            <input type="number" ng-model="$ctrl.counts" class="form-control" />
+                        </div>
+                        <div class="col-md-2 form-group-sm">
+                            <label class="control-label">Tempo</label>
+                            <input type="number" ng-model="$ctrl.tempo" class="form-control" />
+                        </div>
+                        <div class="col-md-3 form-group-sm">
+                            <label class="control-label">Duration</label>
+                            <input type="text" ng-model="$ctrl.formattedDuration()" ng-model-options="{ getterSetter: true }" class="form-control" />
+                        </div>
+                        <div class="col-md-5 form-group-sm">
+                            <label class="control-label">Title</label>
+                            <input type="text" ng-model="$ctrl.title" class="title form-control" />
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="col-md-9">
@@ -47,4 +96,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

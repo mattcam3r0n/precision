@@ -15,12 +15,12 @@ angular.module('drillApp')
       var ctrl = this;
 
       var slider = document.querySelector('#slider');
-      
-      $scope.playPause = function() {
+
+      $scope.playPause = function () {
         //ctrl.wavesurfer.playPause();
       }
 
-      ctrl.activate = function(args) {
+      ctrl.activate = function (args) {
         ctrl.musicFile = args.musicFile;
 
         ctrl.title = args.musicFile.title;
@@ -29,13 +29,13 @@ angular.module('drillApp')
         ctrl.counts = args.musicFile.counts;
 
         $('#audioClipDialog').modal('show');
-        console.log('audio dialog opened');
+
         $('#audioClipDialog').on('shown.bs.modal', function () {
           loadAudio(ctrl.musicFile);
           $(document).on('keydown', onSpacePressed);
         });
+
         $('#audioClipDialog').on('hidden.bs.modal', function () {
-          console.log('audio dialog closed');
           unloadAudio();
           $(document).off('keydown');
           $('#audioClipDialog').off('shown.bs.modal');
@@ -43,7 +43,7 @@ angular.module('drillApp')
         });
       }
 
-      ctrl.play = function() {
+      ctrl.play = function () {
         if (ctrl.wavesurfer.isPlaying()) {
           ctrl.wavesurfer.pause();
           return;
@@ -56,7 +56,7 @@ angular.module('drillApp')
         }
       }
 
-      ctrl.clearRegion = function() {
+      ctrl.clearRegion = function () {
         ctrl.wavesurfer.clearRegions();
         ctrl.wavesurfer.seekTo(0); // beginning
         ctrl.selection = null;
@@ -64,11 +64,11 @@ angular.module('drillApp')
         ctrl.tempo = guessTempo(ctrl.duration, guessCounts(ctrl.duration));
       }
 
-      ctrl.formattedDuration = function() {
+      ctrl.formattedDuration = function () {
         return formatDuration(ctrl.duration);
       }
 
-      ctrl.addAudioClip = function() {
+      ctrl.addAudioClip = function () {
         var startCount = getStartCount();
         var clip = {
           id: shortid.generate(),
@@ -123,12 +123,10 @@ angular.module('drillApp')
         return mins + ':' + secs + '.' + (partialSecs * 10);
       }
 
-      function zeroPad( number, width )
-      {
+      function zeroPad(number, width) {
         width -= number.toString().length;
-        if ( width > 0 )
-        {
-          return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+        if (width > 0) {
+          return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
         }
         return number + ""; // always return a string
       }
@@ -149,7 +147,6 @@ angular.module('drillApp')
       }
 
       function loadAudio(musicFile) {
-        console.log('loadAudio');
         ctrl.selection = null;
         ctrl.wavesurfer = WaveSurfer.create({
           container: '#waveform',
@@ -157,20 +154,19 @@ angular.module('drillApp')
           plugins: [
             TimelinePlugin.create({
               container: '#wave-timeline',
-              //deferInit: true // stop the plugin from initialising immediately
+              //deferInit: true, // stop the plugin from initialising immediately
               // primaryLabelInterval: 1,
               // secondaryLabelInterval: 2,
-              timeInterval: .1
+              timeInterval: musicFile.duration < 5 ? .1 : 5
             }),
             RegionsPlugin.create({})
           ]
         });
 
         ctrl.wavesurfer.load('/audio/' + musicFile.fileName);
-//        ctrl.wavesurfer.load('/audio/Sousa - the_liberty_bell_disc6.mp3');
-        
+        //        ctrl.wavesurfer.load('/audio/Sousa - the_liberty_bell_disc6.mp3');
+
         ctrl.wavesurfer.on('ready', function () {
-          console.log('wavesurfer ready');        
           ctrl.wavesurfer.enableDragSelection({});
           ctrl.counts = guessCounts(ctrl.wavesurfer.getDuration());
           ctrl.duration = ctrl.wavesurfer.getDuration();
@@ -178,14 +174,14 @@ angular.module('drillApp')
           $rootScope.$safeApply();
         });
 
-        ctrl.wavesurfer.on('region-created', function(region){
+        ctrl.wavesurfer.on('region-created', function (region) {
           if (ctrl.selection) {
             ctrl.selection.remove();
           }
           ctrl.selection = region;
         });
 
-        ctrl.wavesurfer.on('region-updated', function(region){
+        ctrl.wavesurfer.on('region-updated', function (region) {
           if (!ctrl.selection) return;
 
           // var beginningOfRegion = region.start / ctrl.wavesurfer.getDuration();
@@ -197,12 +193,29 @@ angular.module('drillApp')
           ctrl.startOffset = ctrl.selection.start;
         });
 
-        // for zoom
+        //for zoom
+
+        document.querySelector('#slider').oninput = function () {
+          ctrl.wavesurfer.zoom(Number(this.value));
+        };
+
         // slider.value = ctrl.wavesurfer.params.minPxPerSec;
         // slider.min = ctrl.wavesurfer.params.minPxPerSec;    
         // slider.addEventListener('input', function() {
         //     ctrl.wavesurfer.zoom(Number(this.value * 10));
         // });        
+
+        // ctrl.zoomIn = function() {
+        //   var zoomLevel = ctrl.wavesurfer.params.minPxPerSec * 10;
+        //   ctrl.wavesurfer.zoom(zoomLevel)
+        //   console.log(zoomLevel);
+        // }
+
+        // ctrl.zoomOut = function() {
+        //   var zoomLevel = ctrl.wavesurfer.params.minPxPerSec / 10;
+        //   ctrl.wavesurfer.zoom(zoomLevel)
+        //   console.log(zoomLevel);
+        // }
 
       }
 

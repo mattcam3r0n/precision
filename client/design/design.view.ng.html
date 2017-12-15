@@ -1,5 +1,7 @@
 <div class="design">
     <div class="btn-toolbar" role="toolbar">
+
+        <!-- open drill, etc -->
         <div class="btn-group btn-group-sm" role="group">
             <div class="input-group input-group-sm" style="width: 200px">
                 <input type="text" class="form-control" placeholder="Drill Name" ng-model="drill.name" title="Drill Name" />
@@ -20,6 +22,8 @@
                 </span>
             </div>
         </div>
+
+        <!-- playback, go to beginning, etc -->
         <div class="btn-group btn-group-sm" role="group">
             <button id="goToBeginning" ng-click="onGoToBeginning()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                 title="Go To Beginning (ctrl or cmd + left arrow)">
@@ -35,6 +39,8 @@
                 <i class="fa fa-fast-forward"></i>
             </button>
         </div>
+
+        <!-- count, step forward and backward -->
         <div class="btn-group btn-group-sm" role="group">
             <button id="stepBackward" ng-click="onStepBackward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                 title="Backward 1 Count (left arrow)">
@@ -47,6 +53,8 @@
                 <i class="fa fa-step-forward"></i>
             </button>
         </div>
+
+        <!-- tempo -->
         <div class="btn-group btn-group-sm" role="group">
             <div class="input-group input-group-sm" style="width: 100px;" data-toggle="tooltip" data-placement="bottom" title="Tempo">
                 <span class="input-group-btn">
@@ -58,18 +66,21 @@
                 </span>
             </div>
         </div>
-        <!-- <div class="btn-group btn-group-sm" role="group">
-            <input type="checkbox" name="follow-switch" checked data-label-text="Follow" data-size="small">
-        </div> -->
 
+        <!-- timeline -->
+        <div class="btn-group btn-group-sm" role="group">
+            <button id="showTimeline" ng-click="onShowTimeline()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                title="Show Drill Timeline">
+                <i class="fa fa-clock-o"></i>
+            </button>
+        </div>
+
+        <!-- temporary buttons, debugging -->
         <div class="btn-group btn-group-sm" role="group">
             <div class="input-group input-group-sm" style="width: 200px">
                 <span class="input-group-btn">
                     <button ng-click="debug()" class="btn btn-default" type="button" title="debug">
                         <i class="fa fa-bug"></i>
-                    </button>
-                    <button ng-click="playMusic()" class="btn btn-default" type="button" title="debug">
-                        <i class="fa fa-play"></i>
                     </button>
                 </span>
             </div>

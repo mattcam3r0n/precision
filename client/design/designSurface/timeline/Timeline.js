@@ -62,9 +62,8 @@ class Timeline {
         this.timeline.setOptions(options);
         this.timeline.setGroups(this.groups);//
         this.timeline.setItems(this.items);
-        this.timeline.moveTo(new Date(1));
-        this.timeline.zoomIn(0.5);
 
+        this.currentCountBar = this.timeline.addCustomTime(new Date(0), 'currentCountBar');
     }
 
     goToBeginning() {
@@ -89,6 +88,29 @@ class Timeline {
 
     zoomOut() {
         this.timeline.zoomOut(0.5);        
+    }
+
+    zoomToCount(count) {
+        var offset = 10;
+        var start = count - offset <= 0 ? 1 : count - offset;
+        var end = start == 1 ? 25 : count + offset;
+        this.timeline.setWindow(new Date(start), new Date(end), null, ()=> {
+            this.setCurrentCount(count);                    
+        });
+    }
+
+    setCurrentCount(count) {
+        this.timeline.setCustomTime(new Date(count), this.currentCountBar);
+    }
+
+    isCountVisible(count) {
+        var countTime = new Date(count);
+        var window = this.timeline.getWindow();
+        return window.start <= countTime && window.end >= countTime;
+    }
+
+    moveTo(count) {
+        this.timeline.moveTo(new Date(count), { animation: false });
     }
 
     move(percentage) {

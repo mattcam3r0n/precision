@@ -19,14 +19,15 @@ class Audio {
         return this.buffers.load(); // returns promise 
     }
 
-    static play(url, startOffset) {
+    static play(url, startOffset, duration) {
         startOffset = startOffset || 0;
+        duration = duration || 0;
         var buffer = this.buffers.getBuffer(url);
 
         var source = this.context.createBufferSource(); // creates a sound source
         source.buffer = buffer;                    // tell the source which sound to play
         source.connect(this.context.destination);       // connect the source to the context's destination (the speakers)
-        source.start(0, startOffset);                           // play the source now
+        source.start(0, startOffset, duration);                           // play the source now
 
         this.source = source; // do i need to keep the source?
     }
@@ -49,7 +50,6 @@ class Audio {
         request.onload = function() {
           self.context.decodeAudioData(request.response, function(buffer) {
             self.buffer = buffer;
-            console.log(buffer);
           }, function(err) {
               console.log(err);
           });
@@ -58,6 +58,7 @@ class Audio {
     }
 
     static stop() {
+        if (!this.source) return;
         this.source.stop(0);
     }
 }
