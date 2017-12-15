@@ -62,6 +62,7 @@ angular.module('drillApp')
         ctrl.selection = null;
         ctrl.duration = ctrl.wavesurfer.getDuration();
         ctrl.tempo = guessTempo(ctrl.duration, guessCounts(ctrl.duration));
+        ctrl.startOffset = 0;
       }
 
       ctrl.formattedDuration = function () {
