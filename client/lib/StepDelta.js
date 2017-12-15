@@ -168,7 +168,7 @@ class StepDelta {
         //distance = (strideType == StrideType.EightToFive) ? Math.ceil(distance) : Math.floor(distance);
 
         var stepSize = this.getDelta(strideType, stepType, direction);
-        var steps = Math.abs(distance / stepSize.deltaX || distance / stepSize.deltaY);
+        var steps = Math.abs(stepSize.deltaX == 0 ? distance / stepSize.deltaY : distance / stepSize.deltaX);
         return stepType == StepType.Half ? steps * 2 : steps;
     }
 
