@@ -15,6 +15,7 @@ angular.module('drillApp')
         ctrl.isActivated = false;
         ctrl.timeline = new Timeline('timelineContainer');
         ctrl.timeline.setOnRemoveCallback(onRemove);
+        ctrl.timeline.setOnGoToCountCallback(onGoToCount);
         ctrl.unsubscribeAudioClipAdded = eventService.subscribeAudioClipAdded(onAudioClipAdded);
         ctrl.unsubscribeShowTimeline = eventService.subscribeShowTimeline(ctrl.activate);
         ctrl.unsubscribeDrillStateChanged = drillEditorService.subscribeDrillStateChanged(onDrillStateChanged);
@@ -84,6 +85,10 @@ angular.module('drillApp')
         var i = ctrl.drill.music.indexOf(item.music);
         ctrl.drill.music.splice(i, 1);
         return true; // continue removal. return false to cancel.
+      }
+
+      function onGoToCount(count) {
+        drillEditorService.goToCount(count);
       }
 
       function onDrillStateChanged(args) {

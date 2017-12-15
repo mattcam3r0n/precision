@@ -9,6 +9,7 @@ class Timeline {
     }
 
     initTimeline() {
+        var self = this;
         var container = document.getElementById(this.containerId);
 
         var options = {
@@ -62,6 +63,16 @@ class Timeline {
         this.timeline.setOptions(options);
         this.timeline.setGroups(this.groups);//
         this.timeline.setItems(this.items);
+
+        this.timeline.on('doubleClick', function (props) {
+            var count = props.time.getMilliseconds();
+            self.moveTo(count);
+            self.setCurrentCount(count);
+            if (self.onGoToCountCallback) {
+                self.onGoToCountCallback(count);
+            }
+            console.log(count);
+        });
 
         this.currentCountBar = this.timeline.addCustomTime(new Date(0), 'currentCountBar');
     }
@@ -136,6 +147,10 @@ class Timeline {
         this.onRemoveCallback = cb;
     }
 
+    setOnGoToCountCallback(cb) {
+        this.onGoToCountCallback = cb;
+    }
+
     createMusicItem(music) {
         return {
             id: music.id || shortid.generate(), // music obj should prob have this id
@@ -151,7 +166,7 @@ class Timeline {
         // update music item in drill when moved on timeline
         // each count is represented by a millisecond
         item.music.startCount = item.start.getMilliseconds();
-        item.music.endCount = item.end.getMilliseconds();
+        item.music.endCount = item.end.getMilliseconds() - 1;
     }
 
     onRemove(item, callback) {

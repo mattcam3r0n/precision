@@ -62,6 +62,11 @@ class DrillEditorService {
         this.notifyDrillStateChanged();
     }
 
+    goToCount(count) {
+        this.drillPlayer.goToCount(count);
+        this.notifyDrillStateChanged();
+    }
+
     stepBackward() {
         this.drillPlayer.stepBackward();
         this.notifyDrillStateChanged();
