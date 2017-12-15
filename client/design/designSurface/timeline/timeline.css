@@ -14,8 +14,11 @@
 .timeline div.panel-heading {
     margin-left: 5px;
 }
+
 .timeline .panel-body {
     padding: 0;
+    /* margin-left: 2px;
+    margin-right: 2px; */
 }
 
 .timeline .panel-body button {

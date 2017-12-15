@@ -24,31 +24,21 @@
                     <a class="list-group-item" dir-paginate="musicFile in musicFiles | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
                         <table width="100%">
                             <tr>
-                                <td class="drill-img">
-                                    <img src="" style="width: 100px; height: 100px" />
-                                </td>
                                 <td class="drill-desc">
                                     <div>
                                         <a ng-click="$ctrl.open(musicFile)">
-                                            <h3 class="drill-title">{{ musicFile.fileName }}</h3>
+                                            <h3 class="drill-title">{{ musicFile.title }}</h3>
                                         </a>
                                     </div>
-                                    <p>
-                                        {{ musicFile.title }}
-                                    </p>
                                     <table width="100%">
                                         <tr>
-                                            <td class="small-text">Owned by {{ musicFile.owner }}</td>
-                                            <td class="small-text">Last edited {{ musicFile.updatedDate | date }}</td>
+                                            <td class="small-text">{{ musicFile.fileName }}</td>
+                                            <td class="small-text">Performed by {{ musicFile.performedBy }}</td>
+                                            <td class="small-text">Length {{ musicFile.duration }}s</td>
                                         </tr>
                                     </table>
                                     <!-- <div><span class="">Owned by {{drill.owner}}</span></div>
                                     <div><span class="">Last edited {{drill.updatedDate | date}}</span></div> -->
-                                </td>
-                                <td>
-                                    <a ng-click="delete(drill)">
-                                        <i class="fa fa-times fa-lg delete-button"></i>
-                                    </a>
                                 </td>
                             </tr>
                         </table>
@@ -60,7 +50,6 @@
                 <div class="col-md-9">
                 </div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#audioClipDialog" data-dismiss="modal">Ok</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
