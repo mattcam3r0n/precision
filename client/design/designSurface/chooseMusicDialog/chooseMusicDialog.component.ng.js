@@ -9,7 +9,7 @@ angular.module('drillApp')
       var ctrl = this;
 
       $scope.page = 1;
-      $scope.perPage = 3;
+      $scope.perPage = 8;
       $scope.sort = {}; //{ name_sort: 1 };
       $scope.orderProperty = '1';
 

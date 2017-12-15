@@ -13,7 +13,7 @@
                 <div class="input-group">
                     <input type="search" ng-model="searchText" class="form-control" placeholder="Search">
                     <span class="input-group-btn">
-                        <button ng-click="searchText = ''" class="btn" type="button">
+                        <button ng-click="searchText = ''" class="btn btn-default" type="button">
                             <i class="fa fa-times-circle"></i>
                         </button>
                     </span>
@@ -21,8 +21,20 @@
 
                 <div class="list-group">
                     <!-- {{ drillCount }} -->
-                    <a class="list-group-item" dir-paginate="musicFile in musicFiles | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
-                        <table width="100%">
+                    <div class="list-group-item" dir-paginate="musicFile in musicFiles | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a ng-click="$ctrl.open(musicFile)">
+                                    <h4 class="drill-title">{{ musicFile.title }}</h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 small-text text-left">{{ musicFile.fileName }}</div>
+                            <div class="col-md-5 small-text text-left">Performed by {{ musicFile.performedBy }}</div>
+                            <div class="col-md-3 small-text text-left">Length {{ musicFile.duration }}s</div>
+                        </div>
+                        <!-- <table width="100%">
                             <tr>
                                 <td class="drill-desc">
                                     <div>
@@ -37,12 +49,10 @@
                                             <td class="small-text">Length {{ musicFile.duration }}s</td>
                                         </tr>
                                     </table>
-                                    <!-- <div><span class="">Owned by {{drill.owner}}</span></div>
-                                    <div><span class="">Last edited {{drill.updatedDate | date}}</span></div> -->
                                 </td>
                             </tr>
-                        </table>
-                    </a>
+                        </table> -->
+                    </div>
                 </div>
 
             </div>

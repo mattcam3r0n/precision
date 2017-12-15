@@ -7,6 +7,10 @@
     display: block;
 }
 
+.choose-music-dialog .row {
+    margin: 2px;
+}
+
 .choose-music-dialog .small-text {
     font-style: italic;
     font-size: 10pt;
