@@ -31,13 +31,13 @@
                     <div class="col-md-3 form-group-sm">
                         <div class="row">
                             <div class="col-md-1">
-                                <i class="glyphicon glyphicon-zoom-out"></i>
+                                <i ng-click="$ctrl.zoomOut()" class="glyphicon glyphicon-zoom-out zoom-out"></i>
                             </div>
                             <div class="col-md-4">
                                 <input id="slider" type="range" min="1" max="50" value="1" style="top: 20px" />
                             </div>
                             <div class="col-md-1">
-                                <i class="glyphicon glyphicon-zoom-in"></i>
+                                <i ng-click="$ctrl.zoomIn()" class="glyphicon glyphicon-zoom-in zoom-in"></i>
                             </div>
                         </div>
                     </div>

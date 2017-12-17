@@ -23,3 +23,15 @@
 .audio-clip-dialog input.title {
     width: 100%;
 }
+
+.audio-clip-dialog .zoom-in {
+    cursor: pointer;
+}
+
+.audio-clip-dialog .zoom-out {
+    cursor: pointer;
+}
+
+.audio-clip-dialog #slider {
+    width: 60px;
+}

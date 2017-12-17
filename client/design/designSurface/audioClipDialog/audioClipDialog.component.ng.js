@@ -41,6 +41,8 @@ angular.module('drillApp')
           $('#audioClipDialog').off('shown.bs.modal');
           $('#audioClipDialog').off('hidden.bs.modal');
         });
+
+        resetZoom();
       }
 
       ctrl.play = function () {
@@ -101,7 +103,6 @@ angular.module('drillApp')
       }
 
       function onSpacePressed(e) {
-        console.log(e);
         if (e.key != ' ') return;
 
         if (!ctrl.wavesurfer.isPlaying()) {
@@ -143,7 +144,6 @@ angular.module('drillApp')
 
       function guessTempo(duration, counts) {
         var tempo = Math.floor(counts * 60 / duration);
-        console.log(duration, counts, tempo);
         return tempo;
       }
 
@@ -200,26 +200,22 @@ angular.module('drillApp')
           ctrl.wavesurfer.zoom(Number(this.value));
         };
 
-        // slider.value = ctrl.wavesurfer.params.minPxPerSec;
-        // slider.min = ctrl.wavesurfer.params.minPxPerSec;    
-        // slider.addEventListener('input', function() {
-        //     ctrl.wavesurfer.zoom(Number(this.value * 10));
-        // });        
+        ctrl.zoomIn = function() {
+          slider.value = Number(slider.value) + 5;
+          ctrl.wavesurfer.zoom(Number(slider.value));
+        }
 
-        // ctrl.zoomIn = function() {
-        //   var zoomLevel = ctrl.wavesurfer.params.minPxPerSec * 10;
-        //   ctrl.wavesurfer.zoom(zoomLevel)
-        //   console.log(zoomLevel);
-        // }
-
-        // ctrl.zoomOut = function() {
-        //   var zoomLevel = ctrl.wavesurfer.params.minPxPerSec / 10;
-        //   ctrl.wavesurfer.zoom(zoomLevel)
-        //   console.log(zoomLevel);
-        // }
+        ctrl.zoomOut = function() {
+          slider.value = Number(slider.value) - 5;
+          ctrl.wavesurfer.zoom(Number(slider.value));
+        }
 
       }
 
+      function resetZoom() {
+        slider.value = 1;
+      }
+    
       function unloadAudio() {
         if (!ctrl.wavesurfer) return;
         ctrl.wavesurfer.destroy();
