@@ -103,7 +103,7 @@ angular.module('drillApp')
       }
 
       function onSpacePressed(e) {
-        if (e.key != ' ') return;
+        if (e.key != ' ' || e.target.nodeName == 'INPUT') return;
 
         if (!ctrl.wavesurfer.isPlaying()) {
           ctrl.play();
@@ -172,6 +172,9 @@ angular.module('drillApp')
           ctrl.counts = guessCounts(ctrl.wavesurfer.getDuration());
           ctrl.duration = ctrl.wavesurfer.getDuration();
           ctrl.tempo = guessTempo(ctrl.duration, ctrl.counts);
+
+          addRegion(ctrl.musicFile);
+
           $rootScope.$safeApply();
         });
 
@@ -210,6 +213,15 @@ angular.module('drillApp')
           ctrl.wavesurfer.zoom(Number(slider.value));
         }
 
+      }
+
+      function addRegion(musicFile) {
+        if (musicFile.type != 'clip') return;
+
+        ctrl.wavesurfer.addRegion({
+          start: musicFile.startOffset,
+          end: musicFile.startOffset + musicFile.duration,
+        });
       }
 
       function resetZoom() {

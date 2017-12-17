@@ -13,8 +13,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p>
-                            <i class="fa fa-info-circle "></i>&nbsp;Drag the mouse on the sound wave to select only a portion of the music for use. You can move and drag each end of the selection
-                            to refine it. Use the zoom buttons to zoom in for more precise control.
+                            <i class="fa fa-info-circle "></i>&nbsp;Drag the mouse on the sound wave to select only a portion of the music for use. You
+                            can move and drag each end of the selection to refine it. Use the zoom buttons to zoom in for
+                            more precise control.
                         </p>
                     </div>
                 </div>
@@ -31,13 +32,17 @@
                     <div class="col-md-3 form-group-sm">
                         <div class="row">
                             <div class="col-md-1">
-                                <i ng-click="$ctrl.zoomOut()" class="glyphicon glyphicon-zoom-out zoom-out"></i>
+                                <button class="btn btn-default btn-sm" ng-click="$ctrl.zoomOut()">
+                                    <i class="glyphicon glyphicon-zoom-out zoom-out"></i>
+                                </button>
                             </div>
                             <div class="col-md-4">
                                 <input id="slider" type="range" min="1" max="50" value="1" style="top: 20px" />
                             </div>
                             <div class="col-md-1">
-                                <i ng-click="$ctrl.zoomIn()" class="glyphicon glyphicon-zoom-in zoom-in"></i>
+                                <button class="btn btn-default btn-sm" ng-click="$ctrl.zoomIn()">
+                                    <i ng-click="$ctrl.zoomIn()" class="glyphicon glyphicon-zoom-in zoom-in"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -58,7 +63,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p/>
-                        <p class="text-center"><i class="fa fa-info-circle "></i>&nbsp;Make sure the number of
+                        <p class="text-center">
+                            <i class="fa fa-info-circle "></i>&nbsp;Make sure the number of
                             <b>counts</b> and
                             <b>tempo</b> are set correctly, either by entering them manually or by tapping the spacebar in time
                             with the music (the clip will start playing on first tap).</p>
