@@ -20,7 +20,7 @@ angular.module('drillApp')
           skip: ((parseInt($scope.getReactively('page'))) - 1) * (parseInt($scope.getReactively('perPage')))
         }, $scope.getReactively('searchText')];
       });
-
+      
       $scope.helpers({
         musicFileCount: function () {
           return Counts.get('numberOfMusicFiles');
@@ -39,6 +39,14 @@ angular.module('drillApp')
       ctrl.open = function(musicFile) {
         $('#chooseMusicDialog').modal('hide');
         eventService.notifyAudioClipDialogActivated({ musicFile });
+      }
+
+      ctrl.isFile = function(musicFile) {
+        return musicFile.type == "file";
+      }
+
+      ctrl.isClip = function(musicFile) {
+        return musicFile.type == "clip";
       }
 
       ctrl.$onInit = function () {
