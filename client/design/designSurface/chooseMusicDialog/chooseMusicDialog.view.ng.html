@@ -16,17 +16,40 @@
                         <button ng-click="searchText = ''" class="btn btn-default" type="button">
                             <i class="fa fa-times-circle"></i>
                         </button>
+                        <!-- <input type="checkbox"/>&nbsp;Files                            
+                        <input type="checkbox"/>&nbsp;Clips                             -->
+                    </span>
+                    <span class="input-group-addon">
+                        <input type="checkbox" />&nbsp;
+                        <i class="fa fa-file-audio-o"></i>&nbsp;Files
+                    </span>
+                    <span class="input-group-addon">
+                        <input type="checkbox" />&nbsp;
+                        <i class="fa fa-scissors"></i>&nbsp;Clips
                     </span>
                 </div>
 
-                <div class="list-group">
+                <ul class="list-group">
                     <!-- {{ drillCount }} -->
-                    <div class="list-group-item" dir-paginate="musicFile in musicFiles | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
+                    <li class="list-group-item" dir-paginate="musicFile in musicFiles | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
+                        <!-- <div class="row">
+                            <div class="col-md-1">
+                                <i class="fa fa-file fa-2x"></i>
+                            </div>
+                        </div> -->
+                        <!-- <div class="col-md-11">
+                            </div> -->
                         <div class="row">
                             <div class="col-md-12">
-                                <a ng-click="$ctrl.open(musicFile)">
-                                    <h4 class="drill-title">{{ musicFile.title }}</h4>
-                                </a>
+                                <span>
+                                    <i class="fa fa-file-audio-o fa-2x"></i>
+                                </span>
+                                <span>
+                                    <a class="title" ng-click="$ctrl.open(musicFile)">
+                                        {{ musicFile.title }}
+                                    </a>
+                                    <!-- <h4 class=""></h4> -->
+                                </span>
                             </div>
                         </div>
                         <div class="row">
@@ -52,8 +75,8 @@
                                 </td>
                             </tr>
                         </table> -->
-                    </div>
-                </div>
+                    </li>
+                </ul>
 
             </div>
             <div class="modal-footer">
