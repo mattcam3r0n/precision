@@ -16,8 +16,6 @@
                         <button ng-click="searchText = ''" class="btn btn-default" type="button">
                             <i class="fa fa-times-circle"></i>
                         </button>
-                        <!-- <input type="checkbox"/>&nbsp;Files                            
-                        <input type="checkbox"/>&nbsp;Clips                             -->
                     </span>
                     <span class="input-group-addon">
                         <input type="checkbox" />&nbsp;
@@ -30,15 +28,7 @@
                 </div>
 
                 <ul class="list-group">
-                    <!-- {{ drillCount }} -->
-                    <li class="list-group-item" dir-paginate="musicFile in musicFiles | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
-                        <!-- <div class="row">
-                            <div class="col-md-1">
-                                <i class="fa fa-file fa-2x"></i>
-                            </div>
-                        </div> -->
-                        <!-- <div class="col-md-11">
-                            </div> -->
+                    <li class="list-group-item" dir-paginate="musicFile in musicFiles | itemsPerPage: perPage" total-items="musicFileCount" current-page='page'>
                         <div class="row">
                             <div class="col-md-12">
                                 <span>
@@ -48,7 +38,6 @@
                                     <a class="title" ng-click="$ctrl.open(musicFile)">
                                         {{ musicFile.title }}
                                     </a>
-                                    <!-- <h4 class=""></h4> -->
                                 </span>
                             </div>
                         </div>
@@ -57,32 +46,18 @@
                             <div class="col-md-5 small-text text-left">Performed by {{ musicFile.performedBy }}</div>
                             <div class="col-md-3 small-text text-left">Length {{ musicFile.duration }}s</div>
                         </div>
-                        <!-- <table width="100%">
-                            <tr>
-                                <td class="drill-desc">
-                                    <div>
-                                        <a ng-click="$ctrl.open(musicFile)">
-                                            <h3 class="drill-title">{{ musicFile.title }}</h3>
-                                        </a>
-                                    </div>
-                                    <table width="100%">
-                                        <tr>
-                                            <td class="small-text">{{ musicFile.fileName }}</td>
-                                            <td class="small-text">Performed by {{ musicFile.performedBy }}</td>
-                                            <td class="small-text">Length {{ musicFile.duration }}s</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table> -->
                     </li>
                 </ul>
 
             </div>
             <div class="modal-footer">
-                <div class="col-md-9">
+                <div class="col-md-3 text-left">
+                    {{musicFileCount}} items
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6 text-center">
+                    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" class=""></dir-pagination-controls>
+                </div>
+                <div class="col-md-3 text-right">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

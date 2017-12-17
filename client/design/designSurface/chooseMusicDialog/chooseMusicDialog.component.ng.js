@@ -59,6 +59,9 @@ angular.module('drillApp')
         ctrl.unsubscribeChooseMusicDialogActivated();
       }
 
+      $scope.pageChanged = function (newPage) {
+        $scope.page = newPage;
+      };
 
     }
   });
