@@ -8,6 +8,7 @@ angular.module('drillApp')
     controller: function ($scope, eventService, appStateService) {
       var ctrl = this;
 
+      $scope.searchOptions = { searchText: '', searchFiles: true, searchClips: true };
       $scope.page = 1;
       $scope.perPage = 6;
       $scope.sort = {}; //{ name_sort: 1 };
@@ -18,8 +19,16 @@ angular.module('drillApp')
           sort: $scope.getReactively('sort'),
           limit: parseInt($scope.getReactively('perPage')),
           skip: ((parseInt($scope.getReactively('page'))) - 1) * (parseInt($scope.getReactively('perPage')))
-        }, $scope.getReactively('searchText')];
+        }, 
+        $scope.getReactively('searchOptions.searchText'),
+        $scope.getReactively('searchOptions.searchFiles'),
+        $scope.getReactively('searchOptions.searchClips')
+        ];
       });
+
+      // $scope.$watch('searchOptions', function() {
+      //   console.log($scope.searchOptions);
+      // });
       
       $scope.helpers({
         musicFileCount: function () {

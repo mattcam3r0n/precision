@@ -8,21 +8,21 @@
                 </button>
                 <h4 class="modal-title" id="myModalLabel">Choose Music</h4>
             </div>
-            <div class="modal-body" style="min-height: 450px">
 
+            <div class="modal-body" style="min-height: 450px">
                 <div class="input-group">
-                    <input type="search" ng-model="searchText" class="form-control" placeholder="Search">
+                    <input type="search" ng-model="searchOptions.searchText" class="form-control" placeholder="Search">
                     <span class="input-group-btn">
-                        <button ng-click="searchText = ''" class="btn btn-default" type="button">
+                        <button ng-click="searchOptions.searchText = ''" class="btn btn-default" type="button">
                             <i class="fa fa-times-circle"></i>
                         </button>
                     </span>
                     <span class="input-group-addon">
-                        <input type="checkbox" />&nbsp;
+                        <input type="checkbox" ng-model="searchOptions.searchFiles" />&nbsp;
                         <i class="fa fa-file-audio-o"></i>&nbsp;Files
                     </span>
                     <span class="input-group-addon">
-                        <input type="checkbox" />&nbsp;
+                        <input type="checkbox" ng-model="searchOptions.searchClips" />&nbsp;
                         <i class="fa fa-scissors"></i>&nbsp;Clips
                     </span>
                 </div>
@@ -50,6 +50,7 @@
                 </ul>
 
             </div>
+            
             <div class="modal-footer">
                 <div class="col-md-3 text-left">
                     {{musicFileCount}} items
