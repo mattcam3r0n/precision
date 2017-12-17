@@ -168,31 +168,22 @@ class FieldController {
 
             let fieldPoint = FieldDimensions.toFieldPoint({ x: member.currentState.x, y: member.currentState.y }, member.currentState.strideType || StrideType.SixToFive);
 
-            // set position and direction
-            marcher.set('left', fieldPoint.x);
-            marcher.set('top', fieldPoint.y);
-            marcher.set('angle', member.currentState.direction);
-            // set selection 
-            marcher.set('stroke', member.isSelected ? 'yellow' : 'black');
+            let state = {
+                count: this.drill.count,
+                strideType: member.currentState.strideType,
+                stepType: member.currentState.stepType,
+                x: fieldPoint.x,
+                y: fieldPoint.y,
+                direction: member.currentState.direction,
+                isSelected: member.isSelected,
+                isVisible: member.isVisible
+            };
 
-            this.showMarcherIfVisible(marcher);
-
+            marcher.update(state);
             marcher.setCoords();
         }
         
     }
-
-    showMarcherIfVisible(marcher) {
-        // hide/show logic
-        var member = marcher.member;
-        // hack to ensure isVisible prop is present
-        member.isVisible = member.isVisible === undefined ? true : member.isVisible;
-        //marcher.set('visible', member.isVisible ? true : false);
-        marcher.set('opacity', member.isVisible ? 1 : .15);
-        marcher.set('selectable', member.isVisible ? true : false);
-        marcher.set('evented', member.isVisible ? true : false);
-    }
-
 
     synchronizeMarchers() {
         if (!this.drill) return; 
