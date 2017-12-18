@@ -43,6 +43,7 @@ angular.module('drillApp')
 
       ctrl.activate = function() {
         $('#chooseMusicDialog').modal('show');
+        $scope.page = 1;
       }
 
       ctrl.open = function(musicFile) {
