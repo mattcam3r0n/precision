@@ -66,7 +66,7 @@ class DrillPlayer {
         var self = this;
         var tempoInMS = (60 / self.tempo) * 1000;
 
-        var nextStep = self.schedule.steps[0];
+        var nextStep = self.schedule.steps[self.drill.count];
 
         if (self.startTimestamp == 0)
             self.startTimestamp = timestamp;
@@ -77,11 +77,10 @@ class DrillPlayer {
             self.stepForward();
             self.stateChangedCallback();
 
-            self.schedule.steps.shift();
-            nextStep = self.schedule.steps[0];
+            //self.schedule.steps.shift();
+            nextStep = self.schedule.steps[self.drill.count];
             if (nextStep && nextStep.music && nextStep.music.startCount == self.drill.count) {
                 self.currentMusic = nextStep.music.fileName;
-    console.log(self.currentMusic, nextStep.music.startOffset, nextStep.music.duration);
                 Audio.play(self.currentMusic, nextStep.music.startOffset, nextStep.music.duration);
             }
     
