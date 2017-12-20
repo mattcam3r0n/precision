@@ -25,16 +25,16 @@ var Marcher = fabric.util.createClass(fabric.Triangle, {
     this.on('mouseover', function () {
       if (this.member && !this.member.isVisible) return;
 
-      this.set('height', this.height + 4);
-      this.set('width', this.width + 4);
+      this.set('height', FieldDimensions.marcherHeight + 2);
+      this.set('width', FieldDimensions.marcherWidth + 2);
       this.set('strokeWidth', 2);
     });
 
     this.on('mouseout', function () {
       if (this.member && !this.member.isVisible) return;
 
-      this.set('height', this.height - 4);
-      this.set('width', this.width - 4);
+      this.set('height', FieldDimensions.marcherHeight); // this.height - 4);
+      this.set('width', FieldDimensions.marcherWidth); //this.width - 4);
       this.set('strokeWidth', 1);
     });
 
