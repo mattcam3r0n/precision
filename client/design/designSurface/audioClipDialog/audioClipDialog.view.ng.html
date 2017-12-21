@@ -11,7 +11,7 @@
             <div class="modal-body" style="min-height: 450px">
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 text-left">
                         <p>
                             <i class="fa fa-info-circle "></i>&nbsp;Drag the mouse on the sound wave to select only a portion of the music for use. You
                             can move and drag each end of the selection to refine it. Use the zoom buttons to zoom in for
@@ -63,7 +63,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p/>
-                        <p class="text-center">
+                        <p class="text-left">
                             <i class="fa fa-info-circle "></i>&nbsp;Make sure the number of
                             <b>counts</b> and
                             <b>tempo</b> are set correctly, either by entering them manually or by tapping the spacebar in time
@@ -72,34 +72,39 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-2 form-group-sm">
-                            <label class="control-label">Counts</label>
-                            <input type="number" ng-model="$ctrl.counts" class="form-control" />
-                        </div>
-                        <div class="col-md-2 form-group-sm">
-                            <label class="control-label">Tempo</label>
-                            <input type="number" ng-model="$ctrl.tempo" class="form-control" />
-                        </div>
-                        <div class="col-md-3 form-group-sm">
-                            <label class="control-label">Duration</label>
-                            <input type="text" ng-model="$ctrl.formattedDuration()" ng-model-options="{ getterSetter: true }" class="form-control" />
-                        </div>
-                        <div class="col-md-5 form-group-sm">
-                            <label class="control-label">Title</label>
-                            <input type="text" ng-model="$ctrl.title" class="title form-control" />
+                    <div class="col-md-2 form-group-sm">
+                        <label class="control-label">Counts</label>
+                        <input type="number" ng-model="$ctrl.counts" ng-required='true' class="form-control" />
+                    </div>
+                    <div class="col-md-2 form-group-sm">
+                        <label class="control-label">Tempo</label>
+                        <input type="number" ng-model="$ctrl.tempo" ng-required='true' class="form-control" />
+                    </div>
+                    <div class="col-md-2 form-group-sm">
+                        <label class="control-label">Duration</label>
+                        <input type="text" ng-model="$ctrl.formattedDuration()" ng-model-options="{ getterSetter: true }" class="form-control" />
+                    </div>
+                    <div class="col-md-5 form-group-sm">
+                        <label class="control-label">Title</label>
+                        <input type="text" ng-model="$ctrl.title" class="title form-control" />
+                    </div>
+                    <div class="col-md-1 form-group-sm">
+                            <label class="control-label">Public</label>
+                            <input type='checkbox' class="form-control" ng-model="$ctrl.isPublic" />
                         </div>
                     </div>
+
+                <div class="row">
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="col-md-3 text-left">
-                    <button type="button" class="btn btn-default ">Save As New Clip</button>
+                    <button ng-click="$ctrl.saveClip()" ng-disabled="!$ctrl.isSavable()" type="button" class="btn btn-default ">Save Clip to Library</button>
                 </div>
                 <div class="col-md-6">
                 </div>
                 <div class="col-md-3 text-right">
-                    <button type="button" ng-click="$ctrl.addAudioClip()" class="btn btn-default" data-dismiss="modal">OK</button>
+                    <button type="button" ng-disabled="!$ctrl.isValid()" ng-click="$ctrl.addAudioClip()" class="btn btn-default" data-dismiss="modal">Add to Drill</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

@@ -8,7 +8,11 @@ Meteor.publish('musicFiles', function(options, searchText, searchFiles, searchCl
       '$options': 'i'
     },
     // limit to users musicFiles. TODO: add publicly shared musicFiles?
-    'userId': Meteor.userId(),
+    //'userId': Meteor.userId(),
+    $or : [
+      { 'userId': Meteor.userId() },
+      { 'isPublic': true }
+    ],
     // limit to files and/or clips
     'type': { $in: getTypes(searchFiles, searchClips) }
   };

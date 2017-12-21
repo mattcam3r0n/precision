@@ -37,3 +37,7 @@
     margin-top: 5px;
     margin-left: 10px;
 }
+
+input.ng-invalid {
+    border: solid 1px red;
+}

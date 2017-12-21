@@ -26,8 +26,8 @@ class appStateService {
         this.rootScope.$emit('drillChanged', this._drill);
     }
 
-    getLastDrillId() {        
-        return Meteor.callPromise('getLastDrillId');    
+    getLastDrillId() {
+        return Meteor.callPromise('getLastDrillId');
     }
 
     getDrill(id) {
@@ -38,7 +38,7 @@ class appStateService {
         return this.getLastDrillId()
             .then(drillId => {
 
-                if (!drillId) 
+                if (!drillId)
                     return this.newDrill();
 
                 return this.openDrill(drillId);
@@ -65,11 +65,11 @@ class appStateService {
     newDrill() {
         // save current drill before starting new drill
         this.saveDrill();
-        
+
         var builder = new DrillBuilder();
         this.drill = builder.createDrill();
         this.notifyDrillChanged();
-        return this.drill;   
+        return this.drill;
     }
 
     saveDrill() {
@@ -90,7 +90,7 @@ class appStateService {
         this.drill.userId = Meteor.userId();
         this.drill.owner = getOwnerEmail(Meteor.user());
         this.drill.name_sort = this.drill.name.toLowerCase();
-        this.drill.owner = Meteor.userId();
+        //this.drill.owner = Meteor.userId();
         Drills.insert(angular.copy(this.drill), (err, id) => {
             if (err) {
                 console.log('unable to insert', err, this.drill);
@@ -118,15 +118,15 @@ class appStateService {
         var r = Drills.update({
             _id: id
         }, {
-            $set: angular.copy(this.drill)
-        },
-        function (error) {
-            if (error) {
-                console.log('Unable to update the drill', error);
-            } else {
-                console.log('saved');
-            }
-        });
+                $set: angular.copy(this.drill)
+            },
+            function (error) {
+                if (error) {
+                    console.log('Unable to update the drill', error);
+                } else {
+                    console.log('saved');
+                }
+            });
         this.setCurrentDrill();
     }
 
@@ -134,28 +134,80 @@ class appStateService {
         Drills.remove(id);
     }
 
+    saveClip(clip) {
+        if (!clip) return;
+
+        if (!clip._id) {
+            this.insertClip(clip);
+        } else {
+            this.updateClip(clip);
+        }
+    }
+
+    insertClip(clip) {
+        clip.createdDate = new Date();
+        clip.updatedDate = new Date();
+        clip.userId = Meteor.userId();
+        clip.owner = getOwnerEmail(Meteor.user());
+        clip.title_sort = clip.title.toLowerCase();
+        MusicFiles.insert(angular.copy(clip), (err, id) => {
+            if (err) {
+                console.log('unable to insert', err, clip);
+                return;
+            }
+            clip._id = id;
+        });
+    }
+
+    updateClip(clip) {
+        var id = clip._id;
+
+        if (!id) {
+            console.log('Unable to update. No _id.');
+            return;
+        }
+
+        clip.updatedDate = new Date();
+        clip.title_sort = clip.name.toLowerCase();
+        clip.userId = Meteor.userId();
+        clip.owner = getOwnerEmail(Meteor.user());
+
+        var r = MusicFiles.update({
+                _id: id
+            }, {
+                $set: angular.copy(clip)
+            },
+            function (error) {
+                if (error) {
+                    console.log('Unable to update musicFile', error);
+                } else {
+                    console.log('saved');
+                }
+            });
+    }
+
 
     setCurrentDrill() {
         if (!this.drill._id)
             return;
-            
+
         // update user profile with id of current drill
         Meteor.users.update({ _id: Meteor.userId() }, {
             $set: {
                 "profile.currentDrillId": this.drill._id
             }
-        }, 
-        function(err) {
-            if (err)
-                console.log('Unable to update user', err);
-        });
+        },
+            function (err) {
+                if (err)
+                    console.log('Unable to update user', err);
+            });
     }
 }
 
 function getOwnerEmail(user) {
     if (!user || !user.emails || user.emails.length == 0)
-      return 'unknown';
-    
+        return 'unknown';
+
     return user.emails[0].address;
 }
 

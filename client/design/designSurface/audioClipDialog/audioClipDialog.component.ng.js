@@ -23,6 +23,7 @@ angular.module('drillApp')
       ctrl.activate = function (args) {
         ctrl.musicFile = args.musicFile;
 
+        ctrl.isPublic = args.musicFile.isPublic || false;
         ctrl.title = args.musicFile.title;
         ctrl.tempo = args.musicFile.tempo;
         ctrl.duration = args.musicFile.duration;
@@ -63,7 +64,8 @@ angular.module('drillApp')
         ctrl.wavesurfer.seekTo(0); // beginning
         ctrl.selection = null;
         ctrl.duration = ctrl.wavesurfer.getDuration();
-        ctrl.tempo = guessTempo(ctrl.duration, guessCounts(ctrl.duration));
+        ctrl.tempo = null; //calcTempo(ctrl.duration, guessCounts(ctrl.duration));
+        ctrl.counts = null;
         ctrl.startOffset = 0;
       }
 
@@ -88,6 +90,47 @@ angular.module('drillApp')
         eventService.notifyAudioClipAdded({
           audioClip: clip
         });
+      }
+
+      ctrl.isValid = function() {
+        return ctrl.counts > 0 && ctrl.tempo > 0 && ctrl.duration > 0;
+      }
+
+      ctrl.isSavable = function() {
+        return ctrl.musicFile != null
+            && $scope.currentUser != null
+            && ctrl.isValid()
+            && ( ctrl.musicFile.type == 'clip' 
+            || ctrl.selection != null );
+      }
+
+      ctrl.saveClip = function() {
+        var clip = getClip();
+        appStateService.saveClip(clip);
+      }
+
+      function getClip() {
+        if (!ctrl.selection) return null;
+
+        var clip = {
+            type : "clip",
+            fileName : ctrl.musicFile.fileName,
+            title : ctrl.title,
+            counts : ctrl.counts,
+            tempo : ctrl.tempo,
+            duration : ctrl.duration,
+            fileDuration : ctrl.wavesurfer.getDuration(),
+            startOffset : ctrl.selection.start,
+            performedBy : ctrl.musicFile.performedBy,
+            isPublic : ctrl.isPublic,
+            userId : $scope.currentUser._id
+        };
+
+        if (ctrl.musicFile.type == 'clip' && ctrl.musicFile._id) {
+          clip._id = ctrl.musicFile._id;
+        }
+        
+        return clip;
       }
 
       function getStartCount() {
@@ -115,7 +158,7 @@ angular.module('drillApp')
           ctrl.lastTap = e.timeStamp;
         }
         var duration = (ctrl.lastTap - ctrl.firstTap) / 1000;
-        ctrl.tempo = guessTempo(duration, ctrl.counts - 1);
+        ctrl.tempo = calcTempo(duration, ctrl.counts - 1);
       }
 
       function formatDuration(duration) {
@@ -142,7 +185,7 @@ angular.module('drillApp')
         return Math.round(counts);
       }
 
-      function guessTempo(duration, counts) {
+      function calcTempo(duration, counts) {
         var tempo = Math.floor(counts * 60 / duration);
         return tempo;
       }
@@ -158,7 +201,7 @@ angular.module('drillApp')
               //deferInit: true, // stop the plugin from initialising immediately
               // primaryLabelInterval: 1,
               // secondaryLabelInterval: 2,
-              timeInterval: musicFile.duration < 5 ? .1 : 5
+              timeInterval: (musicFile.fileDuration || musicFile.duration) < 5 ? .1 : 5
             }),
             RegionsPlugin.create({})
           ]
@@ -169,9 +212,13 @@ angular.module('drillApp')
 
         ctrl.wavesurfer.on('ready', function () {
           ctrl.wavesurfer.enableDragSelection({});
-          ctrl.counts = guessCounts(ctrl.wavesurfer.getDuration());
           ctrl.duration = ctrl.wavesurfer.getDuration();
-          ctrl.tempo = guessTempo(ctrl.duration, ctrl.counts);
+          // if (!ctrl.counts)
+          //   ctrl.counts = guessCounts(ctrl.wavesurfer.getDuration());
+          // if (!ctrl.duration)
+          //   ctrl.duration = ctrl.wavesurfer.getDuration();
+          // if (!ctrl.tempo)
+          //   ctrl.tempo = calcTempo(ctrl.duration, ctrl.counts);
 
           addRegion(ctrl.musicFile);
 
@@ -191,9 +238,9 @@ angular.module('drillApp')
           // var beginningOfRegion = region.start / ctrl.wavesurfer.getDuration();
           // ctrl.wavesurfer.seekTo(0.5);
           var duration = region.end - region.start;
-          ctrl.counts = guessCounts(duration);
           ctrl.duration = ctrl.selection.end - ctrl.selection.start;
-          ctrl.tempo = guessTempo(ctrl.duration, ctrl.counts);
+          ctrl.counts = null; //guessCounts(duration);
+          ctrl.tempo = null; //calcTempo(ctrl.duration, ctrl.counts);
           ctrl.startOffset = ctrl.selection.start;
         });
 
