@@ -29,11 +29,13 @@ angular.module('drillApp')
       $scope.$watch('currentUser', function(newValue, oldValue) {
         if ($scope.currentUser === undefined) return; // user not available yet
 
+        if (newValue && oldValue && newValue._id === oldValue._id) return; // phantom change
+
         if ($scope.currentUser === null) { // signed out
           newDrill();
           return;
         }
-
+        console.log('currentUser changed', newValue, oldValue);
         appStateService.openLastDrillOrNew().then(openDrill);
       });
 

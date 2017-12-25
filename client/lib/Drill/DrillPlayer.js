@@ -40,6 +40,7 @@ class DrillPlayer {
         // TODO: remove
         console.log(self.schedule);
 
+        self.startCount = self.drill.count;
         self.startTimestamp = 0; // get current audio timestamp?
         self.lastTimestamp = 0;
         self.currentMusic = null;
@@ -66,24 +67,28 @@ class DrillPlayer {
         var self = this;
         var tempoInMS = (60 / self.tempo) * 1000;
 
-        var nextStep = self.schedule.steps[self.drill.count];
-
+        var nextStep = self.schedule.steps[self.drill.count - self.startCount];
         if (self.startTimestamp == 0)
             self.startTimestamp = timestamp;
 
         if (timestamp >= self.startTimestamp + (nextStep.time * 1000)) {
-
             self.lastTimestamp = timestamp;
             self.stepForward();
             self.stateChangedCallback();
 
-            //self.schedule.steps.shift();
-            nextStep = self.schedule.steps[self.drill.count];
             if (nextStep && nextStep.music && nextStep.music.startCount == self.drill.count) {
                 self.currentMusic = nextStep.music.fileName;
+            console.log('start playing', self.drill.count, nextStep.music);
                 Audio.play(self.currentMusic, nextStep.music.startOffset, nextStep.music.duration);
             }
+            
+            nextStep = self.schedule.steps[self.drill.count - self.startCount];
     
+            // if (nextStep && nextStep.music && nextStep.music.startCount == self.drill.count) {
+            //     self.currentMusic = nextStep.music.fileName;
+            //     Audio.play(self.currentMusic, nextStep.music.startOffset, nextStep.music.duration);
+            // }
+
             if (self.isEndOfDrill() || self.isPastStopCount()) {
                 console.log("Reached end of drill.");
                 self.stop();

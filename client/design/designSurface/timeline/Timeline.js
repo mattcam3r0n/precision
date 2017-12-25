@@ -120,6 +120,14 @@ class Timeline {
         return window.start <= countTime && window.end >= countTime;
     }
 
+    getVisibleCountRange() {
+        var window = this.timeline.getWindow();
+        return {
+            start: window.start.getMilliseconds(),
+            end: window.end.getMilliseconds()
+        };
+    }
+
     moveTo(count) {
         this.timeline.moveTo(new Date(count), { animation: false });
     }

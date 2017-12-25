@@ -15,12 +15,13 @@ class DrillScheduler {
         // TODO: need a way to get lenght of drill / end count
         var player = new DrillPlayer(drill);
         var lastTime = 0;
-        var startCount = drill.count;
-        while (!player.isEndOfDrill()) {
+        var startCount = drill.count + 1;
+        while (!player.isEndOfDrill()) {;
+            player.stepForward();
             var step = this.createCountDescriptor(drill, startCount, drill.count, lastTime);
+console.log(step);
             lastTime = step.time;
             schedule.steps.push(step);
-            player.stepForward();
         }
 
         // TODO: need a way to move thru drill without affecting drillstate
@@ -45,14 +46,17 @@ class DrillScheduler {
     createCountDescriptor(drill, startCount, count, lastTime) {
         var music = this.getMusicAtCount(drill, count);
         var tempo = music ? music.tempo : drill.tempo || 120;
-        var tempoInterval = 60 / tempo; 
-        var time = lastTime + tempoInterval;
+        var timeInterval = 60 / tempo; 
+        if (music && music.beats && music.beats[count - startCount]) {
+            timeInterval = music.beats[count - music.startCount].timeInterval;
+        }
+        var time = count == startCount ? 0 : lastTime + timeInterval;
 
         return {
             count: count,
             time: time,
             tempo: tempo,
-            music: this.createMusicDescriptor(music, startCount, count, tempoInterval)
+            music: this.createMusicDescriptor(music, startCount, count, timeInterval)
         };
     }
 
@@ -61,15 +65,24 @@ class DrillScheduler {
 
         var offset = 0;
         if (music.startCount < count) {
-            offset = (count - music.startCount) * tempoInterval;
+            if (music && music.beats && music.beats.length > 0) {
+                //var countsOffset = count - startCount;
+                //var beats = music.beats.slice(0, countsOffset); // +1 because there is a zero beat
+console.log(music, count, startCount);
+                offset = music.beats[count - music.startCount].timeOffset;
+            } else {
+                offset = (count - music.startCount) * tempoInterval;                
+            }
         }
 
         var startOffset = music.startOffset + offset;
         var duration = music.duration - offset;
 
+// console.log(offset, startOffset, duration);
+        
         return {
             fileName: music.fileName,
-            startCount: startCount > music.startCount ? startCount + 1 : music.startCount,
+            startCount: startCount > music.startCount ? startCount : music.startCount,
             endCount: music.endCount,
             startOffset: startOffset,
             duration: duration

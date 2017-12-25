@@ -35,6 +35,7 @@ class appStateService {
     }
 
     openLastDrillOrNew() {
+        console.log('openLastDrillOrNew');
         return this.getLastDrillId()
             .then(drillId => {
 
@@ -46,6 +47,7 @@ class appStateService {
     }
 
     openDrill(id) {
+        console.log('openDrill');
         return this.getDrill(id)
             .then(drill => {
                 if (shouldUpgradeDrill(drill)) {
@@ -63,11 +65,13 @@ class appStateService {
     }
 
     newDrill() {
+        console.log('newDrill');
         // save current drill before starting new drill
         this.saveDrill();
 
         var builder = new DrillBuilder();
         this.drill = builder.createDrill();
+        this.drill.drillFormatVersion = _currentDrillFormatVersion;
         this.notifyDrillChanged();
         return this.drill;
     }
@@ -168,7 +172,7 @@ class appStateService {
         }
 
         clip.updatedDate = new Date();
-        clip.title_sort = clip.name.toLowerCase();
+        clip.title_sort = clip.title.toLowerCase();
         clip.userId = Meteor.userId();
         clip.owner = getOwnerEmail(Meteor.user());
 

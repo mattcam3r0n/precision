@@ -75,7 +75,7 @@ angular.module('drillApp')
 
       ctrl.addAudioClip = function () {
         var startCount = getStartCount();
-        var clip = {
+        var clip = { // use getClip()?
           id: shortid.generate(),
           fileName: getFilePath() + ctrl.musicFile.fileName,
           title: ctrl.title,
@@ -84,7 +84,8 @@ angular.module('drillApp')
           duration: ctrl.duration,
           startOffset: ctrl.startOffset || 0,
           startCount: startCount,
-          endCount: startCount + ctrl.counts - 1
+          endCount: startCount + ctrl.counts - 1,
+          beats: ctrl.beats
         };
         ctrl.drill.music.push(clip);
         eventService.notifyAudioClipAdded({
@@ -123,7 +124,8 @@ angular.module('drillApp')
             startOffset : ctrl.selection.start,
             performedBy : ctrl.musicFile.performedBy,
             isPublic : ctrl.isPublic,
-            userId : $scope.currentUser._id
+            userId : $scope.currentUser._id,
+            beats: ctrl.beats
         };
 
         if (ctrl.musicFile.type == 'clip' && ctrl.musicFile._id) {
@@ -148,14 +150,28 @@ angular.module('drillApp')
       function onSpacePressed(e) {
         if (e.key != ' ' || e.target.nodeName == 'INPUT') return;
 
+        var thisTap = e.timeStamp;
         if (!ctrl.wavesurfer.isPlaying()) {
+          ctrl.beats = [{
+            count: 1,
+            timeInterval: 0,
+            timeOffset: 0
+          }];
           ctrl.play();
           ctrl.counts = 1;
-          ctrl.firstTap = e.timeStamp;
-          ctrl.lastTap = e.timeStamp;
+          ctrl.firstTap = thisTap;
+          ctrl.lastTap = thisTap;
+          ctrl.cumulativeTime = 0;
         } else {
+          var timeSinceLastTap = thisTap - ctrl.lastTap;
+          ctrl.cumulativeTime += timeSinceLastTap;
           ctrl.counts++;
-          ctrl.lastTap = e.timeStamp;
+          ctrl.lastTap = thisTap;
+          ctrl.beats[ctrl.counts - 1] = {
+            count: ctrl.counts,
+            timeInterval: timeSinceLastTap / 1000,
+            timeOffset: ctrl.cumulativeTime / 1000
+          };
         }
         var duration = (ctrl.lastTap - ctrl.firstTap) / 1000;
         ctrl.tempo = calcTempo(duration, ctrl.counts - 1);
