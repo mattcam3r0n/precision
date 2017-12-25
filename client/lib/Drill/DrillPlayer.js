@@ -78,7 +78,6 @@ class DrillPlayer {
 
             if (nextStep && nextStep.music && nextStep.music.startCount == self.drill.count) {
                 self.currentMusic = nextStep.music.fileName;
-            console.log('start playing', self.drill.count, nextStep.music);
                 Audio.play(self.currentMusic, nextStep.music.startOffset, nextStep.music.duration);
             }
             

@@ -19,7 +19,6 @@ class DrillScheduler {
         while (!player.isEndOfDrill()) {;
             player.stepForward();
             var step = this.createCountDescriptor(drill, startCount, drill.count, lastTime);
-console.log(step);
             lastTime = step.time;
             schedule.steps.push(step);
         }
@@ -66,9 +65,6 @@ console.log(step);
         var offset = 0;
         if (music.startCount < count) {
             if (music && music.beats && music.beats.length > 0) {
-                //var countsOffset = count - startCount;
-                //var beats = music.beats.slice(0, countsOffset); // +1 because there is a zero beat
-console.log(music, count, startCount);
                 offset = music.beats[count - music.startCount].timeOffset;
             } else {
                 offset = (count - music.startCount) * tempoInterval;                
@@ -77,8 +73,6 @@ console.log(music, count, startCount);
 
         var startOffset = music.startOffset + offset;
         var duration = music.duration - offset;
-
-// console.log(offset, startOffset, duration);
         
         return {
             fileName: music.fileName,
