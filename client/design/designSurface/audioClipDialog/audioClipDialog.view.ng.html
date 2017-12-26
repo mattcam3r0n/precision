@@ -53,6 +53,9 @@
                             <i class="fa fa-play"></i> /
                             <i class="fa fa-pause"></i>
                         </button>
+                        <label class="checkbox-inline">
+                            <input type='checkbox' class="" ng-model="$ctrl.isMetronomeEnabled" /> Metronome
+                        </label>
                     </div>
 
                     <div class="col-md-3 text-right form-group-sm">
@@ -89,10 +92,10 @@
                         <input type="text" ng-model="$ctrl.title" class="title form-control" />
                     </div>
                     <div class="col-md-1 form-group-sm">
-                            <label class="control-label">Public</label>
-                            <input type='checkbox' class="form-control" ng-model="$ctrl.isPublic" />
-                        </div>
+                        <label class="control-label">Public</label>
+                        <input type='checkbox' class="form-control" ng-model="$ctrl.isPublic" />
                     </div>
+                </div>
 
                 <div class="row">
                 </div>

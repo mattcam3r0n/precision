@@ -16,7 +16,7 @@ class DrillScheduler {
         var player = new DrillPlayer(drill);
         var lastTime = 0;
         var startCount = drill.count + 1;
-        while (!player.isEndOfDrill()) {;
+        while (!player.isEndOfDrill()) {
             player.stepForward();
             var step = this.createCountDescriptor(drill, startCount, drill.count, lastTime);
             lastTime = step.time;

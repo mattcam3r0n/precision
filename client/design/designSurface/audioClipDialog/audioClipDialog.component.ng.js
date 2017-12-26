@@ -4,6 +4,7 @@ import shortid from 'shortid';
 import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js';
 import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
+import Metronome from './Metronome';
 
 angular.module('drillApp')
   .component('audioClipDialog', {
@@ -23,6 +24,7 @@ angular.module('drillApp')
       ctrl.activate = function (args) {
         ctrl.musicFile = args.musicFile;
 
+        ctrl.isMetronomeEnabled = true;
         ctrl.isPublic = args.musicFile.isPublic || false;
         ctrl.title = args.musicFile.title;
         ctrl.tempo = args.musicFile.tempo;
@@ -46,9 +48,11 @@ angular.module('drillApp')
         resetZoom();
       }
 
-      ctrl.play = function () {
+      ctrl.play = function (playMetronome) {
+        playMetronome = playMetronome === undefined ? true : playMetronome;
         if (ctrl.wavesurfer.isPlaying()) {
           ctrl.wavesurfer.pause();
+          ctrl.metronome.stop();
           return;
         }
 
@@ -57,7 +61,12 @@ angular.module('drillApp')
         } else {
           ctrl.wavesurfer.playPause();
         }
+        if (playMetronome && ctrl.isMetronomeEnabled) {
+          ctrl.metronome = new Metronome(ctrl.wavesurfer, ctrl.beats || ctrl.musicFile.beats);
+          ctrl.metronome.start();  
+        }
       }
+
 
       ctrl.clearRegion = function () {
         ctrl.wavesurfer.clearRegions();
@@ -157,7 +166,7 @@ angular.module('drillApp')
             timeInterval: 0,
             timeOffset: 0
           }];
-          ctrl.play();
+          ctrl.play(false);
           ctrl.counts = 1;
           ctrl.firstTap = thisTap;
           ctrl.lastTap = thisTap;

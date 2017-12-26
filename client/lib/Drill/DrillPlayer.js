@@ -1,18 +1,9 @@
 import MemberPlayer from '/client/lib/drill/MemberPlayer';
 import DrillScheduler from './DrillScheduler';
 import Audio from '/client/lib/audio/Audio';
+import AnimationLoop from '/client/lib/AnimationLoop';
 
 var lastTimestamp = 0;
-var requestAnimationFrame = window.requestAnimationFrame 
-    || window.mozRequestAnimationFrame 
-    || window.webkitRequestAnimationFrame 
-    || window.msRequestAnimationFrame;
-
-var cancelRequestAnimationFrame = window.cancelAnimationFrame ||
-        window.webkitCancelRequestAnimationFrame ||
-        window.mozCancelRequestAnimationFrame ||
-        window.oCancelRequestAnimationFrame ||
-        window.msCancelRequestAnimationFrame;
 
 /**
  * Contains logic that manipulates current position/count of a drill.
@@ -50,13 +41,14 @@ class DrillPlayer {
         Audio
             .load(self.schedule.music)
             .then((buffers) => {
-                self.animationHandle = requestAnimationFrame(self.animate.bind(self));           
+                self.animationLoop = new AnimationLoop(self.animate.bind(self));
+                self.animationLoop.start();
             });
 
     }
 
     stop() {
-        cancelAnimationFrame(this.animationHandle);
+        this.animationLoop.stop();
     }
 
     isPastStopCount() {
@@ -66,7 +58,6 @@ class DrillPlayer {
     animate(timestamp) {
         var self = this;
         var tempoInMS = (60 / self.tempo) * 1000;
-
         var nextStep = self.schedule.steps[self.drill.count - self.startCount];
         if (self.startTimestamp == 0)
             self.startTimestamp = timestamp;
@@ -83,11 +74,6 @@ class DrillPlayer {
             
             nextStep = self.schedule.steps[self.drill.count - self.startCount];
     
-            // if (nextStep && nextStep.music && nextStep.music.startCount == self.drill.count) {
-            //     self.currentMusic = nextStep.music.fileName;
-            //     Audio.play(self.currentMusic, nextStep.music.startOffset, nextStep.music.duration);
-            // }
-
             if (self.isEndOfDrill() || self.isPastStopCount()) {
                 console.log("Reached end of drill.");
                 self.stop();
@@ -95,7 +81,6 @@ class DrillPlayer {
             }    
         }
 
-        this.animationHandle = requestAnimationFrame(this.animate.bind(this));
     }
 
     stepForward() {
