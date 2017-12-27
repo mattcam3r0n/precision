@@ -62,7 +62,7 @@ class DrillPlayer {
         if (self.startTimestamp == 0)
             self.startTimestamp = timestamp;
 
-        if (timestamp >= self.startTimestamp + (nextStep.time * 1000)) {
+        if (nextStep && timestamp >= self.startTimestamp + (nextStep.time * 1000)) {
             self.lastTimestamp = timestamp;
             self.stepForward();
             self.stateChangedCallback();
@@ -106,7 +106,7 @@ class DrillPlayer {
         if (!this.drill.members || this.drill.members.length == 0) return true;
 
         // true if all members are at end
-        return this.drill.members.some(m => MemberPlayer.isEndOfDrill(m));
+        return this.drill.members.every(m => MemberPlayer.isEndOfDrill(m));
     }
 
     goToBeginning() {

@@ -113,7 +113,9 @@ class MemberPositionCalculator {
     static isEndOfDrill(member, currentState) {
         currentState = currentState || member.currentState;
 
-        return this.isAtFieldEdge(member, currentState) || (currentState.count >= member.script.length && currentState.stepType == StepType.Halt);
+        return this.isAtFieldEdge(member, currentState) 
+            || (currentState.count >= member.script.length 
+                && currentState.stepType == StepType.Halt);
     }
 
     static isAtFieldEdge(member, currentState) {

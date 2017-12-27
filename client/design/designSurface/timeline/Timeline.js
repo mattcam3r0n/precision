@@ -145,6 +145,10 @@ class Timeline {
     setMusicItems(musicList) {
         if (!musicList) return;
 
+        if (musicList.length == 0) {
+            this.items.clear();
+        }
+
         musicList.forEach(m => {
             var item = this.createMusicItem(m);
             this.items.update(item);
