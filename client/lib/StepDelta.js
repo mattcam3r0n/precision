@@ -44,20 +44,19 @@ const deltas = {
             },
             [Direction.W]: {
                 deltaX: -0.5 * FieldDimensions.oneStepX_6to5, deltaY: 0
+            },
+            [Direction.NE]: {
+                deltaX: FieldDimensions.sixToFiveObliqueDeltaX / 2, deltaY: -FieldDimensions.sixToFiveObliqueDeltaY / 2
+            },
+            [Direction.SE]: {
+                deltaX: FieldDimensions.sixToFiveObliqueDeltaX / 2, deltaY: FieldDimensions.sixToFiveObliqueDeltaY / 2
+            },
+            [Direction.SW]: {
+                deltaX: -FieldDimensions.sixToFiveObliqueDeltaX / 2, deltaY: FieldDimensions.sixToFiveObliqueDeltaY / 2
+            },
+            [Direction.NW]: {
+                deltaX: -FieldDimensions.sixToFiveObliqueDeltaX / 2, deltaY: -FieldDimensions.sixToFiveObliqueDeltaY / 2
             }
-            // do we allow half steps in obliques?
-            // [Direction.NE]: {
-            //     deltaX: sixToFiveObliqueDelta, deltaY: -sixToFiveObliqueDelta
-            // },
-            // [Direction.SE]: {
-            //     deltaX: sixToFiveObliqueDelta, deltaY: sixToFiveObliqueDelta
-            // },
-            // [Direction.SW]: {
-            //     deltaX: -sixToFiveObliqueDelta, deltaY: sixToFiveObliqueDelta
-            // },
-            // [Direction.NW]: {
-            //     deltaX: -sixToFiveObliqueDelta, deltaY: -sixToFiveObliqueDelta
-            // }            
         }
     },
 
@@ -100,20 +99,19 @@ const deltas = {
             },
             [Direction.W]: {
                 deltaX: -0.5 * FieldDimensions.oneStepX_8to5, deltaY: 0
+            }, 
+            [Direction.NE]: {
+                deltaX: FieldDimensions.eightToFiveObliqueDeltaX / 2, deltaY: -FieldDimensions.eightToFiveObliqueDeltaY / 2
+            },
+            [Direction.SE]: {
+                deltaX: FieldDimensions.eightToFiveObliqueDeltaX / 2, deltaY: FieldDimensions.eightToFiveObliqueDeltaY / 2
+            },
+            [Direction.SW]: {
+                deltaX: -FieldDimensions.eightToFiveObliqueDeltaX / 2, deltaY: FieldDimensions.eightToFiveObliqueDeltaY / 2
+            },
+            [Direction.NW]: {
+                deltaX: -FieldDimensions.eightToFiveObliqueDeltaX / 2, deltaY: -FieldDimensions.eightToFiveObliqueDeltaY / 2
             }
-            // do we allow half steps in obliques?
-            // [Direction.NE]: {
-            //     deltaX: sixToFiveObliqueDelta, deltaY: -sixToFiveObliqueDelta
-            // },
-            // [Direction.SE]: {
-            //     deltaX: sixToFiveObliqueDelta, deltaY: sixToFiveObliqueDelta
-            // },
-            // [Direction.SW]: {
-            //     deltaX: -sixToFiveObliqueDelta, deltaY: sixToFiveObliqueDelta
-            // },
-            // [Direction.NW]: {
-            //     deltaX: -sixToFiveObliqueDelta, deltaY: -sixToFiveObliqueDelta
-            // }            
         }
     },
 
