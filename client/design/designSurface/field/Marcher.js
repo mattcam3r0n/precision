@@ -22,6 +22,17 @@ var Marcher = fabric.util.createClass(fabric.Triangle, {
   initialize: function (options) {
     this.callSuper('initialize', options);
 
+    // this.setGradient('fill', {
+    //   x1: 0,
+    //   y1: 0,
+    //   x2: this.width,
+    //   y2: this.height,
+    //   colorStops:{
+    //       0: 'red',
+    //       1: 'white'
+    //   }
+    // });    
+
     this.on('mouseover', function () {
       if (this.member && !this.member.isVisible) return;
 
@@ -54,7 +65,19 @@ var Marcher = fabric.util.createClass(fabric.Triangle, {
     this.setSize(state);
     this.setSelection(state.isSelected);
     this.setVisible(state.isVisible);
+    this.setOpacity(state);
 
+  },
+
+  setOpacity: function(state) {
+    if (!state.isVisible) return;
+
+    if (state.stepType == StepType.Halt) {
+      this.set('opacity', state.count % 2 == 0 ? .7 : .8 );
+      return;
+    } 
+
+    this.set('opacity', 1);
   },
 
   setSize: function (state) {
