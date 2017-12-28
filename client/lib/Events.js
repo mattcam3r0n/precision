@@ -51,6 +51,10 @@ class Events {
         return 'chooseMusicDialogActivated';
     }
 
+    static get uploadMusicDialogActivated() {
+        return 'uploadMusicDialogActivated';
+    }
+
     static get audioClipDialogActivated() {
         return 'audioClipDialogActivated';
     }

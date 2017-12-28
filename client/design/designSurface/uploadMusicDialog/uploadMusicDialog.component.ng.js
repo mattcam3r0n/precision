@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('drillApp')
-  .component('chooseMusicDialog', {
-    templateUrl: 'client/design/designSurface/chooseMusicDialog/chooseMusicDialog.view.ng.html',
+  .component('uploadMusicDialog', {
+    templateUrl: 'client/design/designSurface/uploadMusicDialog/uploadMusicDialog.view.ng.html',
     bindings: {
     },
     controller: function ($scope, eventService, appStateService) {
@@ -42,39 +42,35 @@ angular.module('drillApp')
       });
 
       ctrl.activate = function() {
-        $('#chooseMusicDialog').modal('show');
+        $('#uploadMusicDialog').modal('show');
         $scope.page = 1;
       }
 
-      ctrl.open = function(musicFile) {
-        $('#chooseMusicDialog').modal('hide');
-        eventService.notifyAudioClipDialogActivated({ musicFile });
-      }
+      $scope.uploadFile = function(event){
+        var files = event.target.files;
+        console.log(files);
 
-      ctrl.isFile = function(musicFile) {
-        return musicFile.type == "file";
-      }
-
-      ctrl.isClip = function(musicFile) {
-        return musicFile.type == "clip";
-      }
+        const uploader = new Slingshot.Upload( "uploadToAmazonS3" );
+        uploader.send( files[0], ( error, url ) => {
+          if ( error ) {
+            console.log('error', error);
+            // Bert.alert( error.message, "warning" );
+            // _setPlaceholderText();
+          } else {
+            console.log('uploaded!', url);
+            // _addUrlToDatabase( url );
+          }
+        });               
+      };      
 
       ctrl.$onInit = function () {
-        ctrl.unsubscribeChooseMusicDialogActivated = eventService.subscribeChooseMusicDialogActivated((evt, args) => {
+        ctrl.unsubscribeUploadMusicDialogActivated = eventService.subscribeUploadMusicDialogActivated((evt, args) => {
           ctrl.activate();
         });
       }
 
       ctrl.$onDestroy = function () {
-        ctrl.unsubscribeChooseMusicDialogActivated();
-      }
-
-      $scope.pageChanged = function (newPage) {
-        $scope.page = newPage;
-      };
-
-      $scope.upload = function() {
-        eventService.notifyUploadMusicDialogActivated();
+        ctrl.unsubscribeUploadMusicDialogActivated();
       }
 
     }

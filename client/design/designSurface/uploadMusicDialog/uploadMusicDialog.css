@@ -1,0 +1,40 @@
+
+.upload-music-dialog .list-group-item {
+    padding: 5px;
+}
+
+.upload-music-dialog .pagination {
+    display: block;
+}
+
+.upload-music-dialog .row {
+    margin: 2px;
+}
+
+.upload-music-dialog .title {
+    font-size: 18px;
+}
+
+.upload-music-dialog .small-text {
+    font-style: italic;
+    font-size: 10pt;
+}
+
+.upload-music-dialog .delete-button {
+    color: red;
+    cursor: pointer;
+}
+
+.upload-area .alert {
+    position: relative;
+  }
+  
+  .upload-area input[type="file"] {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    opacity: 0;
+  }
