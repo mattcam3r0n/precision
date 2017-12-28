@@ -1,7 +1,6 @@
 'use strict'
 
 Meteor.publish('musicFiles', function(options, searchText, searchFiles, searchClips) {
-  console.log(searchText, searchFiles, searchClips);
   var where = {
     'title': {
       '$regex': searchText || '',
