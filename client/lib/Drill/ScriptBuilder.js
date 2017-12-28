@@ -34,7 +34,6 @@ class ScriptBuilder {
         // don't need to add if member is already in that state
         var state = MemberPositionCalculator.getStateAtCount(member, count);
         if (action.stepType != StepType.Halt && MemberPositionCalculator.areStatesSame(state, action)) {
-            console.log('already in state');
             return;
         }
 
