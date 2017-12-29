@@ -10,26 +10,44 @@
             </div>
 
             <div class="modal-body" style="min-height: 450px">
-
-                <h4 class="page-header">Upload a File to Amazon S3</h4>
-
-                <div class="upload-area">
-                    <form id="upload">
-                      <p class="alert alert-success text-center">
-                        <span>Click or Drag a File Here to Upload</span>
-                        <input type="file" custom-on-change="uploadFile"/>
-                      </p>
-                    </form>
-                  </div>
-                                
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="btn btn-default btn-file">
+                            Choose File...
+                            <input type="file" style="display: none;" custom-on-change="fileChosen">
+                        </label>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <h4>{{$ctrl.file.name}}</h4>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <h4>{{$ctrl.fileSize() | number:1}} MB</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label">Title</label>
+                        <input type="text" ng-model="$ctrl.title" ng-required='true' class="form-control" />
+                        <label class="control-label">Performed By</label>
+                        <input type="text" ng-model="$ctrl.performedBy" ng-required='false' class="form-control" />
+                        <label class="control-label">Notes</label>
+                        <textarea rows="4" ng-model="$ctrl.notes" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label checkbox-inline"><input type="checkbox" class=""/>Allow other Precision users to use this music.</label>
+                    </div>
+                </div>
             </div>
-            
+
             <div class="modal-footer">
                 <div class="col-md-3 text-left">
                 </div>
                 <div class="col-md-6 text-center">
                 </div>
                 <div class="col-md-3 text-right">
+                    <button ng-click="$ctrl.upload()" ng-disabled="!$ctrl.isValid()" type="button" class="btn btn-default">Upload</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

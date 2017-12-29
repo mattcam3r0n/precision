@@ -59,6 +59,10 @@ angular.module('drillApp')
         return musicFile.type == "clip";
       }
 
+      ctrl.isUserLoggedIn = function() {
+        return $scope.currentUser;
+      }
+
       ctrl.$onInit = function () {
         ctrl.unsubscribeChooseMusicDialogActivated = eventService.subscribeChooseMusicDialogActivated((evt, args) => {
           ctrl.activate();

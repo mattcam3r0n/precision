@@ -13,12 +13,12 @@ Slingshot.createDirective("uploadToAmazonS3", Slingshot.S3Storage, {
         // TODO: logic to authorize file upload goes here...
         //   * logged in?
         //   * has upload permissions?
-        return true;
+        return Meteor.userId();
     },
     key: function (file) {
         // var user = Meteor.users.findOne(this.userId);
         // return user.emails[0].address + "/" + file.name;
         // TODO: logic to generate unique key (file name) goes here
-        return file.name;
+        return Meteor.userId() + '/' + file.name;
     }
 });

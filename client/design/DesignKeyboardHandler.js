@@ -79,7 +79,7 @@ class DesignKeyboardHandler {
 
     handle(e) {
         // disregard if keystroke is not on body (or canvas)
-        if (['INPUT'].includes(e.target.tagName)) return;
+        if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
 
         // prevent shifting of document
         e.preventDefault();

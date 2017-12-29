@@ -48,15 +48,14 @@
                         </div>
                     </li>
                 </ul>
-
+                <div class="text-center">
+                        {{musicFileCount}} items                                        
+                </div>
             </div>
             
             <div class="modal-footer">
-                <div class="col-md-2 text-left">
-                    {{musicFileCount}} items
-                </div>
-                <div class="col-md-1 text-left">
-                    <button ng-click="upload()" type="button" class="btn btn-default" data-dismiss="modal">Upload...</button>
+                <div class="col-md-3 text-left">
+                    <button ng-click="upload()" ng-disabled="!$ctrl.isUserLoggedIn()" type="button" class="btn btn-default" data-dismiss="modal">Upload...</button>
                 </div>
                 <div class="col-md-6 text-center">
                     <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" class=""></dir-pagination-controls>

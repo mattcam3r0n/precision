@@ -1,67 +1,78 @@
 'use strict';
 
+import Spinner from '/client/components/spinner/spinner';
+
 angular.module('drillApp')
   .component('uploadMusicDialog', {
     templateUrl: 'client/design/designSurface/uploadMusicDialog/uploadMusicDialog.view.ng.html',
     bindings: {
     },
-    controller: function ($scope, eventService, appStateService) {
+    controller: function ($rootScope, $scope, eventService, appStateService) {
       var ctrl = this;
-
-      $scope.searchOptions = { searchText: '', searchFiles: true, searchClips: true };
-      $scope.page = 1;
-      $scope.perPage = 6;
-      $scope.sort = {}; //{ name_sort: 1 };
-      $scope.orderProperty = '1';
-
-      $scope.subscribe('musicFiles', function () {
-        return [{
-          sort: $scope.getReactively('sort'),
-          limit: parseInt($scope.getReactively('perPage')),
-          skip: ((parseInt($scope.getReactively('page'))) - 1) * (parseInt($scope.getReactively('perPage')))
-        }, 
-        $scope.getReactively('searchOptions.searchText'),
-        $scope.getReactively('searchOptions.searchFiles'),
-        $scope.getReactively('searchOptions.searchClips')
-        ];
-      });
-
-      // $scope.$watch('searchOptions', function() {
-      //   console.log($scope.searchOptions);
-      // });
-      
-      $scope.helpers({
-        musicFileCount: function () {
-          return Counts.get('numberOfMusicFiles');
-        },
-        musicFiles: function () {
-          return MusicFiles.find({}, {
-            sort: $scope.getReactively('sort')
-          });
-        }
-      });
 
       ctrl.activate = function() {
         $('#uploadMusicDialog').modal('show');
-        $scope.page = 1;
       }
 
-      $scope.uploadFile = function(event){
-        var files = event.target.files;
-        console.log(files);
+      ctrl.deactivate = function() {
+        $('#uploadMusicDialog').modal('hide');        
+      }
 
-        const uploader = new Slingshot.Upload( "uploadToAmazonS3" );
-        uploader.send( files[0], ( error, url ) => {
-          if ( error ) {
-            console.log('error', error);
-            // Bert.alert( error.message, "warning" );
-            // _setPlaceholderText();
-          } else {
-            console.log('uploaded!', url);
-            // _addUrlToDatabase( url );
-          }
-        });               
+      ctrl.isValid = function() {
+        return !empty(ctrl.title) && !empty(ctrl.file);
+      }
+
+      function empty(val) {
+        return val == undefined || val == null || val == '';
+      }
+
+      $scope.fileChosen = function(event){
+        var files = event.target.files;
+        ctrl.file = files[0];
+        console.log(ctrl.file);
+        $rootScope.$safeApply();
       };      
+
+      ctrl.upload = function() {
+        console.log(ctrl.file);
+        let s = new Spinner($('#uploadMusicDialog')[0]);
+        s.start();
+
+        uploadFile(ctrl.file).then(url => {
+          console.log('upload done', url);
+          s.stop();
+          ctrl.deactivate();
+        }).catch(err => {
+          console.log(err);
+        });
+      }
+
+      ctrl.fileSize = function() {
+        if (!ctrl.file) return 0;
+
+        return ctrl.file.size / 1024 / 1024;
+      }
+
+      function uploadFile(file) {
+        if (!file) return; 
+
+        return new Promise((resolve, reject) => {
+          const uploader = new Slingshot.Upload( "uploadToAmazonS3" );
+          uploader.send( file, ( error, url ) => {
+            if ( error ) {
+              console.log('error', error);
+              // Bert.alert( error.message, "warning" );
+              // _setPlaceholderText();
+              reject(error);
+            } else {
+              console.log('uploaded!', url);
+              // _addUrlToDatabase( url );
+              resolve(url);
+            }
+          });               
+  
+        });
+      }
 
       ctrl.$onInit = function () {
         ctrl.unsubscribeUploadMusicDialogActivated = eventService.subscribeUploadMusicDialogActivated((evt, args) => {
