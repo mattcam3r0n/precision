@@ -1,6 +1,7 @@
 'use strict';
 
 import Spinner from '/client/components/spinner/spinner';
+import FileUploader from '/lib/FileUploader';
 
 angular.module('drillApp')
   .component('uploadMusicDialog', {
@@ -35,43 +36,39 @@ angular.module('drillApp')
 
       ctrl.upload = function() {
         console.log(ctrl.file);
-        let s = new Spinner($('#uploadMusicDialog')[0]);
-        s.start();
+        let spinner = new Spinner($('#uploadMusicDialog')[0]);
+        spinner.start();
 
-        uploadFile(ctrl.file).then(url => {
-          console.log('upload done', url);
-          s.stop();
+        FileUploader.upload(ctrl.file)
+        .then(url => {
+          saveFile(ctrl.file, url);
+          spinner.stop();
           ctrl.deactivate();
-        }).catch(err => {
+        })
+        .catch(err => {
           console.log(err);
         });
+      }
+
+      function saveFile(file, url) {
+        var musicFile = {
+          type: "file",
+          fileName: file.name,
+          key: FileUploader.key(file),
+          url: url,
+          title: ctrl.title,
+          notes: ctrl.notes,
+          performedBy: ctrl.performedBy,
+          isPublic: ctrl.isPublic || false
+        };
+
+        appStateService.saveClip(musicFile);
       }
 
       ctrl.fileSize = function() {
         if (!ctrl.file) return 0;
 
         return ctrl.file.size / 1024 / 1024;
-      }
-
-      function uploadFile(file) {
-        if (!file) return; 
-
-        return new Promise((resolve, reject) => {
-          const uploader = new Slingshot.Upload( "uploadToAmazonS3" );
-          uploader.send( file, ( error, url ) => {
-            if ( error ) {
-              console.log('error', error);
-              // Bert.alert( error.message, "warning" );
-              // _setPlaceholderText();
-              reject(error);
-            } else {
-              console.log('uploaded!', url);
-              // _addUrlToDatabase( url );
-              resolve(url);
-            }
-          });               
-  
-        });
       }
 
       ctrl.$onInit = function () {

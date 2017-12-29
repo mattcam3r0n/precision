@@ -43,6 +43,9 @@ class DrillPlayer {
             .then((buffers) => {
                 self.animationLoop = new AnimationLoop(self.animate.bind(self));
                 self.animationLoop.start();
+            })
+            .catch(err => {
+                console.log(err);
             });
 
     }
@@ -68,7 +71,7 @@ class DrillPlayer {
             self.stateChangedCallback();
 
             if (nextStep && nextStep.music && nextStep.music.startCount == self.drill.count) {
-                self.currentMusic = nextStep.music.fileName;
+                self.currentMusic = nextStep.music.url;
                 Audio.play(self.currentMusic, nextStep.music.startOffset, nextStep.music.duration);
             }
             

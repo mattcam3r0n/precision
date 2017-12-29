@@ -31,7 +31,7 @@ class DrillScheduler {
     }
 
     getDistinctFiles(drill) {
-        return [...new Set(drill.music.map(m => m.fileName))]
+        return [...new Set(drill.music.map(m => m.url))]
     }
 
     getMusicAtCount(drill, count) {
@@ -76,6 +76,7 @@ class DrillScheduler {
         
         return {
             fileName: music.fileName,
+            url: music.url,
             startCount: startCount > music.startCount ? startCount : music.startCount,
             endCount: music.endCount,
             startOffset: startOffset,

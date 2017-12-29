@@ -5,6 +5,7 @@ import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js';
 import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
 import Metronome from './Metronome';
+import Spinner from '/client/components/spinner/spinner';
 
 angular.module('drillApp')
   .component('audioClipDialog', {
@@ -84,18 +85,24 @@ angular.module('drillApp')
 
       ctrl.addAudioClip = function () {
         var startCount = getStartCount();
-        var clip = { // use getClip()?
-          id: shortid.generate(),
-          fileName: getFilePath() + ctrl.musicFile.fileName,
-          title: ctrl.title,
-          counts: ctrl.counts,
-          tempo: ctrl.tempo,
-          duration: ctrl.duration,
-          startOffset: ctrl.startOffset || 0,
-          startCount: startCount,
-          endCount: startCount + ctrl.counts - 1,
-          beats: ctrl.beats
-        };
+        var clip = getClip();
+
+        clip.startCount = startCount;
+        clip.endCount = startCount + ctrl.counts - 1;
+
+        // var clip = { // use getClip()?
+        //   id: shortid.generate(),
+        //   fileName: getFilePath() + ctrl.musicFile.fileName,
+        //   title: ctrl.title,
+        //   counts: ctrl.counts,
+        //   tempo: ctrl.tempo,
+        //   duration: ctrl.duration,
+        //   startOffset: ctrl.startOffset || 0,
+        //   startCount: startCount,
+        //   endCount: startCount + ctrl.counts - 1,
+        //   beats: ctrl.beats
+        // };
+
         ctrl.drill.music.push(clip);
         eventService.notifyAudioClipAdded({
           audioClip: clip
@@ -123,14 +130,16 @@ angular.module('drillApp')
         if (!ctrl.selection) return null;
 
         var clip = {
-            type : "clip",
+            type : ctrl.selection ? "clip" : "file",
             fileName : ctrl.musicFile.fileName,
+            key: ctrl.musicFile.key,
+            url: ctrl.musicFile.url,
             title : ctrl.title,
             counts : ctrl.counts,
             tempo : ctrl.tempo,
             duration : ctrl.duration,
             fileDuration : ctrl.wavesurfer.getDuration(),
-            startOffset : ctrl.selection.start,
+            startOffset : ctrl.startOffset || 0,
             performedBy : ctrl.musicFile.performedBy,
             isPublic : ctrl.isPublic,
             userId : $scope.currentUser._id,
@@ -140,6 +149,7 @@ angular.module('drillApp')
         if (ctrl.musicFile.type == 'clip' && ctrl.musicFile._id) {
           clip._id = ctrl.musicFile._id;
         }
+        clip.id = clip._id || shortid.generate(); // need an id for timeline
         
         return clip;
       }
@@ -216,6 +226,8 @@ angular.module('drillApp')
       }
 
       function loadAudio(musicFile) {
+        var spinner = new Spinner($('#audioClipDialog')[0]);
+        spinner.spin();
         ctrl.selection = null;
         ctrl.wavesurfer = WaveSurfer.create({
           container: '#waveform',
@@ -232,22 +244,23 @@ angular.module('drillApp')
           ]
         });
 
-        ctrl.wavesurfer.load('/audio/' + musicFile.fileName);
-        //        ctrl.wavesurfer.load('/audio/Sousa - the_liberty_bell_disc6.mp3');
+        ctrl.wavesurfer.load(musicFile.url);
 
         ctrl.wavesurfer.on('ready', function () {
           ctrl.wavesurfer.enableDragSelection({});
           ctrl.duration = ctrl.wavesurfer.getDuration();
-          // if (!ctrl.counts)
-          //   ctrl.counts = guessCounts(ctrl.wavesurfer.getDuration());
-          // if (!ctrl.duration)
-          //   ctrl.duration = ctrl.wavesurfer.getDuration();
-          // if (!ctrl.tempo)
-          //   ctrl.tempo = calcTempo(ctrl.duration, ctrl.counts);
+          ctrl.beats = musicFile.beats;
 
           addRegion(ctrl.musicFile);
 
+          spinner.stop();
           $rootScope.$safeApply();
+        });
+
+        ctrl.wavesurfer.on('error', function(err) {
+          // TODO: notify
+          console.log(err);
+          spinner.stop();
         });
 
         ctrl.wavesurfer.on('region-created', function (region) {
@@ -294,6 +307,8 @@ angular.module('drillApp')
           start: musicFile.startOffset,
           end: musicFile.startOffset + musicFile.duration,
         });
+        ctrl.startOffset = musicFile.startOffset;
+        ctrl.duration = musicFile.duration;
       }
 
       function resetZoom() {

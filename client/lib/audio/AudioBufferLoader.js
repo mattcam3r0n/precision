@@ -12,6 +12,7 @@ class AudioBufferLoader {
         }
 
         return Promise.all(promises).then(() => {
+            console.log(this.buffers);
             return this.buffers;
         });
     }

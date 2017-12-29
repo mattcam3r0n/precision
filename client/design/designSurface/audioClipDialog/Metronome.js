@@ -15,9 +15,10 @@ class Metronome {
     }
 
     callback() {
+        if (!this.beats || this.beats.length == 0) return;
+
         var timeOffset = this.clock.getCurrentTime() - this.startTime;
         if (this.nextBeat < this.beats.length && timeOffset >= this.beats[this.nextBeat].timeOffset) {
-            console.log('beat');
             Audio.playMetronome();
             this.nextBeat++;
         }

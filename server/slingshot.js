@@ -1,5 +1,12 @@
+import FileUploader from '/lib/FileUploader';
+
 Slingshot.fileRestrictions("uploadToAmazonS3", {
-    allowedFileTypes: [ "audio/midi", "audio/mpeg", "audio/webm", "audio/ogg", "audio/wav" ],
+    allowedFileTypes: [ "audio/midi", 
+        "audio/mpeg",
+        "audio/mp3", 
+        "audio/webm", 
+        "audio/ogg", 
+        "audio/wav" ],
     maxSize: 10 * 1024 * 1024
 });
 
@@ -19,6 +26,6 @@ Slingshot.createDirective("uploadToAmazonS3", Slingshot.S3Storage, {
         // var user = Meteor.users.findOne(this.userId);
         // return user.emails[0].address + "/" + file.name;
         // TODO: logic to generate unique key (file name) goes here
-        return Meteor.userId() + '/' + file.name;
+        return FileUploader.key(file);
     }
 });

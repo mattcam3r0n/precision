@@ -1,7 +1,5 @@
 import { Spinner } from './spin.js';
 
-console.log('spinner', Spinner);
-
 const opts = {
   lines: 19, // The number of lines to draw
   length: 7, // The length of each line

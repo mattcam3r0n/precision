@@ -26,6 +26,7 @@ class Audio {
     }
 
     static load(urlList) {
+        console.log(urlList);
         this.buffers = new AudioBufferLoader(this.context, urlList);
         return this.buffers.load(); // returns promise 
     }
@@ -47,8 +48,9 @@ class Audio {
     }
 
     static play(url, startOffset, duration) {
+    console.log('play', url);
         var buffer = this.buffers.getBuffer(url);
-
+    console.log('play', buffer);
         var source = this.playBuffer(buffer, startOffset, duration);
 
         this.source = source; // do i need to keep the source?
