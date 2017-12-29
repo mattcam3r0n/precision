@@ -10,11 +10,11 @@ angular.module('drillApp')
     },
     controller: function ($scope, $window, $timeout, appStateService, drillEditorService, eventService) {
       var ctrl = this;
-      $scope.showSpinner = true;
+      eventService.notifyShowSpinner();
 
       $timeout(function(){
         ctrl.field = new FieldController(ctrl.drill, eventService);
-        $scope.showSpinner = false;
+        eventService.notifyHideSpinner();
       });
 
       ctrl.$onChanges = function(changes) {

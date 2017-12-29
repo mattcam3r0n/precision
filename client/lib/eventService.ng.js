@@ -118,6 +118,22 @@ class EventService {
     notifyShowTimeline(args) {
         this.$rootScope.$broadcast(Events.showTimeline, args);
     }
+
+    subscribeShowSpinner(cb) {
+        return this.$rootScope.$on(Events.showSpinner, cb);
+    }
+
+    notifyShowSpinner(args) {
+        this.$rootScope.$broadcast(Events.showSpinner, args);
+    }
+
+    subscribeHideSpinner(cb) {
+        return this.$rootScope.$on(Events.hideSpinner, cb);
+    }
+
+    notifyHideSpinner(args) {
+        this.$rootScope.$broadcast(Events.hideSpinner, args);
+    }
 }
 
 

@@ -1,27 +1,35 @@
 class AudioBufferLoader {
-    constructor(context, urlList) {
+    constructor(context) {
         this.context = context;
-        this.urlList = urlList;
         this.buffers = {};
     }
 
-    load() {
+    load(urlList) {
+        urlList = this.makeArray(urlList);
         var promises = [];
-        for (var i = 0; i < this.urlList.length; ++i) {
-            promises.push(this.loadBuffer(this.urlList[i], i));
+        for (var i = 0; i < urlList.length; ++i) {
+            let url = urlList[i];
+            if (!this.buffers[url])
+                promises.push(this.loadBuffer(url));
         }
 
         return Promise.all(promises).then(() => {
-            console.log(this.buffers);
             return this.buffers;
         });
+    }
+
+    makeArray(val) {
+        if (Array.isArray(val))
+            return val;
+
+        return [val];
     }
 
     getBuffer(url) {
         return this.buffers[url];
     }
 
-    loadBuffer(url, index) {
+    loadBuffer(url) {
         var loader = this;
         return new Promise((resolve, reject) => {
             // Load buffer asynchronously

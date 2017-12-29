@@ -3,6 +3,7 @@
 import WalkThru from '/client/lib/walkThru/WalkThru';
 import DesignKeyboardHandler from './DesignKeyboardHandler';
 import Audio from '/client/lib/audio/Audio';
+import Spinner from '/client/components/spinner/spinner';
 
 import { Meteor } from 'meteor/meteor';
 
@@ -17,6 +18,8 @@ angular.module('drillApp')
     init();
 
     function init() {
+      ctrl.spinner = new Spinner($('div.design')[0]);
+
       $scope.tempo = 120;
       $window.addEventListener('keydown', keydown);
 
@@ -26,7 +29,7 @@ angular.module('drillApp')
         drillEditorService.setTempo($scope.tempo);
       });
 
-      $scope.$watch('currentUser', function(newValue, oldValue) {
+      $scope.$watch('currentUser', function (newValue, oldValue) {
         if ($scope.currentUser === undefined) return; // user not available yet
 
         if (newValue && oldValue && newValue._id === oldValue._id) return; // phantom change
@@ -35,11 +38,37 @@ angular.module('drillApp')
           newDrill();
           return;
         }
-        console.log('currentUser changed', newValue, oldValue);
         appStateService.openLastDrillOrNew().then(openDrill);
       });
 
+      // handle selection event
+      var unsubscribeObjectsSelected = eventService.subscribeObjectsSelected((evt, args) => {
+        drillEditorService.selectMembers(args.members);
+      });
+
+      // update position indicator
+      var unsubscribePositionIndicator = eventService.subscribePositionIndicator((event, args) => {
+        $scope.currentPosition = args.position;
+        $scope.$safeApply();
+      });
+
+      var unsubscribeShowSpinner = eventService.subscribeShowSpinner((event, args) => {
+        ctrl.spinner.start();
+      });
+
+      var unsubscribeHideSpinner = eventService.subscribeHideSpinner((event, args) => {
+        ctrl.spinner.stop();
+      });
     }
+
+
+    $scope.$on("$destroy", function () {
+      $window.removeEventListener('keydown', keydown);
+      unsubscribeObjectsSelected();
+      unsubscribePositionIndicator();
+      unsubscribeShowSpinner();
+      unsubscribeHideSpinner();
+    });
 
     function newDrill() {
       var d = appStateService.newDrill();
@@ -74,11 +103,11 @@ angular.module('drillApp')
       console.log('drill', $scope.drill);
     }
 
-    $scope.playMusic = function() {
+    $scope.playMusic = function () {
       Audio.play('/audio/Liberty Bell Intro.ogg');
     }
 
-    $scope.onNew = function() {
+    $scope.onNew = function () {
       newDrill();
     }
 
@@ -113,26 +142,16 @@ angular.module('drillApp')
       drillEditorService.stepForward();
     }
 
-    $scope.onShowTimeline = function() {
+    $scope.onShowTimeline = function () {
       eventService.notifyShowTimeline();
     }
 
-    // handle selection event
-    var unsubscribeObjectsSelected = eventService.subscribeObjectsSelected((evt, args) => {
-      drillEditorService.selectMembers(args.members);      
-    });
 
-    // update position indicator
-    var unsubscribePositionIndicator = eventService.subscribePositionIndicator((event, args) => {
-      $scope.currentPosition = args.position;
-      $scope.$safeApply();
-    });
-
-    $scope.$on("$destroy", function () {
-      $window.removeEventListener('keydown', keydown);
-      unsubscribeObjectsSelected();
-      // clean up?
-    });
+    // $scope.$on("$destroy", function () {
+    //   $window.removeEventListener('keydown', keydown);
+    //   unsubscribeObjectsSelected();
+    //   // clean up?
+    // });
 
     // show help
     // TODO: Make this an overlay rather than resizing field

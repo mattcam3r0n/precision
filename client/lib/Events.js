@@ -66,6 +66,14 @@ class Events {
     static get showTimeline() {
         return 'showTimeline';
     }
+
+    static get showSpinner() {
+        return 'showSpinner';
+    }
+
+    static get hideSpinner() {
+        return 'hideSpinner';
+    }
 }
 
 export default Events;

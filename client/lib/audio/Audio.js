@@ -9,6 +9,7 @@ class Audio {
             window.AudioContext = window.AudioContext || window.webkitAudioContext;
             this.context = new AudioContext();
             this.loadMetronome();
+            this.buffers = new AudioBufferLoader(this.context);
         }
         catch (e) {
             console.log('Web Audio API is not supported in this browser');
@@ -26,9 +27,7 @@ class Audio {
     }
 
     static load(urlList) {
-        console.log(urlList);
-        this.buffers = new AudioBufferLoader(this.context, urlList);
-        return this.buffers.load(); // returns promise 
+        return this.buffers.load(urlList); // returns promise 
     }
 
     static playBuffer(buffer, startOffset, duration) {

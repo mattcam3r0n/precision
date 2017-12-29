@@ -7,15 +7,16 @@ import DrillPlayer from '/client/lib/drill/DrillPlayer';
 import { appendFile } from 'fs';
 
 class DrillEditorService {
-    constructor($rootScope, $timeout, appStateService) {
+    constructor($rootScope, $timeout, appStateService, eventService) {
         this.$rootScope = $rootScope.$new(true);
         this.$timeout = $timeout;
         this.appStateService = appStateService;
+        this.eventService = eventService;
     }
 
     setDrill(d) {
         this.drill = d;
-        this.drillPlayer = new DrillPlayer(this.drill);
+        this.drillPlayer = new DrillPlayer(this.drill, this.eventService);
         this.drillBuilder = new DrillBuilder(this.drill);
 
         this.goToBeginning();

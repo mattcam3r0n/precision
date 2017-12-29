@@ -5,7 +5,6 @@ import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js';
 import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
 import Metronome from './Metronome';
-import Spinner from '/client/components/spinner/spinner';
 
 angular.module('drillApp')
   .component('audioClipDialog', {
@@ -225,9 +224,16 @@ angular.module('drillApp')
         return tempo;
       }
 
+      function showSpinner() {
+        eventService.notifyShowSpinner();
+      }
+
+      function hideSpinner() {
+        eventService.notifyHideSpinner();
+      }
+
       function loadAudio(musicFile) {
-        var spinner = new Spinner($('#audioClipDialog')[0]);
-        spinner.spin();
+        showSpinner();
         ctrl.selection = null;
         ctrl.wavesurfer = WaveSurfer.create({
           container: '#waveform',
@@ -253,14 +259,14 @@ angular.module('drillApp')
 
           addRegion(ctrl.musicFile);
 
-          spinner.stop();
+          hideSpinner();
           $rootScope.$safeApply();
         });
 
         ctrl.wavesurfer.on('error', function(err) {
           // TODO: notify
           console.log(err);
-          spinner.stop();
+          hideSpinner();
         });
 
         ctrl.wavesurfer.on('region-created', function (region) {

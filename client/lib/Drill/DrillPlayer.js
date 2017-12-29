@@ -9,8 +9,9 @@ var lastTimestamp = 0;
  * Contains logic that manipulates current position/count of a drill.
  */
 class DrillPlayer {
-    constructor(drill) {
+    constructor(drill, eventService) {
         this.drill = drill;
+        this.eventService = eventService;
         this.tempo = 120;
         this.drill.count = this.drill.count || 0; // ensure there is a count
     }
@@ -38,16 +39,27 @@ class DrillPlayer {
 
         self.stateChangedCallback = stateChangedCallback;
 
+        this.startSpinner();
         Audio
             .load(self.schedule.music)
             .then((buffers) => {
+                this.stopSpinner();
                 self.animationLoop = new AnimationLoop(self.animate.bind(self));
                 self.animationLoop.start();
             })
             .catch(err => {
                 console.log(err);
             });
+    }
 
+    startSpinner() {
+        if (this.eventService) 
+            this.eventService.notifyShowSpinner();
+    }
+
+    stopSpinner() {
+        if (this.eventService)
+            this.eventService.notifyHideSpinner();
     }
 
     stop() {
