@@ -30,6 +30,10 @@ class Audio {
         return this.buffers.load(urlList); // returns promise 
     }
 
+    static getBuffer(url) {
+        return this.buffers.getBuffer(url);
+    }
+
     static playBuffer(buffer, startOffset, duration) {
         startOffset = startOffset || 0;
         duration = duration || 0;

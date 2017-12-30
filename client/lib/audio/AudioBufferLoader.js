@@ -29,6 +29,10 @@ class AudioBufferLoader {
         return this.buffers[url];
     }
 
+    isBuffered(url) {
+        return !!this.buffers[url];
+    }
+
     loadBuffer(url) {
         var loader = this;
         return new Promise((resolve, reject) => {

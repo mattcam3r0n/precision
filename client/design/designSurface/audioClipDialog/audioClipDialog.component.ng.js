@@ -1,6 +1,7 @@
 'use strict';
 
 import shortid from 'shortid';
+import Audio from '/client/lib/audio/Audio';
 import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js';
 import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
@@ -237,7 +238,16 @@ angular.module('drillApp')
           ]
         });
 
-        ctrl.wavesurfer.load(musicFile.url);
+        // use Audio class to load music so it will be buffered for later
+        Audio
+          .load(musicFile.url)
+          .then(() => {
+              ctrl.wavesurfer.loadDecodedBuffer(Audio.getBuffer(musicFile.url));
+          })
+          .catch(err => {
+            Bert.alert('Unable to load audio file.', 'danger', 'growl-top-right');
+          });
+//        ctrl.wavesurfer.load(musicFile.url);
 
         ctrl.wavesurfer.on('ready', function () {
           ctrl.wavesurfer.enableDragSelection({});
