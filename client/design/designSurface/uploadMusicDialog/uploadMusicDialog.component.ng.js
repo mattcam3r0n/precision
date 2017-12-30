@@ -13,6 +13,7 @@ angular.module('drillApp')
 
       ctrl.activate = function() {
         $('#uploadMusicDialog').modal('show');
+        ctrl.file = null;
       }
 
       ctrl.deactivate = function() {
