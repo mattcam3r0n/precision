@@ -18,7 +18,6 @@ angular.module('drillApp')
     init();
 
     function init() {
-      console.log('design init');
       ctrl.spinner = new Spinner($('div.design')[0]);
 
       $scope.tempo = 120;
