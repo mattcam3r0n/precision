@@ -111,6 +111,7 @@ angular.module('drillApp')
       ctrl.saveClip = function() {
         var clip = getClip();
         appStateService.saveClip(clip);
+        Bert.alert('Clip saved.', 'success', 'growl-top-right');
       }
 
       function getClip() {

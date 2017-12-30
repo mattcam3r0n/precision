@@ -43,6 +43,7 @@ angular.module('drillApp')
         .then(url => {
           saveFile(ctrl.file, url);
           spinner.stop();
+          Bert.alert('File uploaded successfully.', 'success', 'growl-top-right');
           ctrl.deactivate();
         })
         .catch(err => {

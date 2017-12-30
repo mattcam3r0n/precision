@@ -37,7 +37,8 @@
 
 12-30-17
 * NEW: upload music files from "choose music" dialog
-  * can share with other users
+  * can only upload when logged in
+  * can share with other users, or not
   * stored in cloud (Amazon S3) - backed up, secure, not dependent on app server
 * NEW: create and save music clips, and share them with other users
 * NEW: search and filter music clips and files
