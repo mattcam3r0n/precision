@@ -98,7 +98,6 @@ angular.module('drillApp')
           var range = ctrl.timeline.getVisibleCountRange();
           var midpoint = Math.floor((range.end - range.start) / 2);
           var count = ctrl.drill.count + midpoint - 1;
-          console.log(range, midpoint, count);
           ctrl.timeline.moveTo(count);
         }
         ctrl.timeline.setCurrentCount(ctrl.drill.count);
