@@ -42,11 +42,11 @@ class DrillEditorService {
 
     // Playback
 
-    play(cb, playLength) {
+    play(cb, playLength, playMusic) {
         this.drillPlayer.play(() => {
             this.notifyDrillStateChanged();
             if (cb) cb();
-        }, playLength);
+        }, playLength, playMusic);
     }
 
     stop() {

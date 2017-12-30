@@ -116,10 +116,10 @@ angular.module('drillApp')
       openDrill(drillId);
     };
 
-    $scope.onPlay = function () {
+    $scope.onPlay = function (playMusic) {
       drillEditorService.play(() => {
         $scope.$safeApply();
-      });
+      }, 0, playMusic);
     }
 
     $scope.onStop = function () {

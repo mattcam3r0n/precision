@@ -34,4 +34,22 @@
 
 11-15-17
 * much faster rendering when adding/removing members
-* 
+
+12-30-17
+* NEW: upload music files from "choose music" dialog
+  * can share with other users
+  * stored in cloud (Amazon S3) - backed up, secure, not dependent on app server
+* NEW: create and save music clips, and share them with other users
+* NEW: search and filter music clips and files
+* NEW: tapping space to set beats now uses your exact tap timing, rather than just calculating avg bpm. animation will be sync'd with your exact taps. this allows you to adjust for varations in tempo. if tapping isn't provided, bpm will be calculated based on entered number of counts and duration of music. this means animation can be slightly off if there are variations in tempo of music, though it should correct by end of clip.
+* NEW: metronome in audio clip dialog allows you to play back recorded beats with music to see how accurate your tapping was and re-do if necessary
+* NEW: separate Play and Play w/ Music buttons
+* NEW: spinner for lengthy operations, like loading big music files
+* NEW: alert system for error and other notifications
+* NEW: mark time counts are indicated by slight size change in marchers, so you can tell what's happening
+* NEW: halted counts are indicated by slight opacity change in marchers, so you can tell they are intentionally halted
+* FIX/NEW: click the halt button for as many counts as you'd like the selected marchers to be halted. click another command to make them start moving again.
+* FIX: clear music timeline on new drill
+* FIX: countermarches in obliques 
+* FIX: automatically opening your last drill on login or when changing views sometimes didn't work
+

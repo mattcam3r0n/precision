@@ -14,14 +14,18 @@ class DrillPlayer {
         this.eventService = eventService;
         this.tempo = 120;
         this.drill.count = this.drill.count || 0; // ensure there is a count
+        this.isPlaying = false;
     }
 
     setTempo(tempo) {
         this.tempo = tempo || 120;
     }
     
-    play(stateChangedCallback, playLength) {
+    play(stateChangedCallback, playLength, playMusic) {
         var self = this;
+
+        if (self.isPlaying) return;
+
         self.stopCount = 0;
         if (playLength) { // rework this around schedule? only schedule n counts?
             self.stopCount = self.drill.count + playLength;
@@ -40,16 +44,38 @@ class DrillPlayer {
         self.stateChangedCallback = stateChangedCallback;
 
         this.startSpinner();
-        Audio
-            .load(self.schedule.music)
-            .then((buffers) => {
+        this.loadMusic(playMusic)
+            .then(() => {
                 this.stopSpinner();
                 self.animationLoop = new AnimationLoop(self.animate.bind(self));
                 self.animationLoop.start();
+                self.isPlaying = true;
             })
             .catch(err => {
                 console.log(err);
+                self.isPlaying = false;
             });
+    
+        // Audio
+        //     .load(self.schedule.music)
+        //     .then((buffers) => {
+        //         this.stopSpinner();
+        //         self.animationLoop = new AnimationLoop(self.animate.bind(self));
+        //         self.animationLoop.start();
+        //         self.isPlaying = true;
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //         self.isPlaying = false;
+        //     });
+    }
+
+    loadMusic(playMusic) {
+        if (playMusic) {
+            return Audio.load(this.schedule.music);
+        };
+
+        return Promise.resolve();
     }
 
     startSpinner() {
@@ -64,6 +90,11 @@ class DrillPlayer {
 
     stop() {
         this.animationLoop.stop();
+        this.isPlaying = false;
+    }
+
+    isPlaying() {
+        return this.isPlaying;
     }
 
     isPastStopCount() {
