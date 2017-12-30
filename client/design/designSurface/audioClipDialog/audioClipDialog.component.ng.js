@@ -90,6 +90,8 @@ angular.module('drillApp')
         clip.startCount = startCount;
         clip.endCount = startCount + ctrl.counts - 1;
 
+        if (!ctrl.drill.music)
+          ctrl.drill.music = [];
         ctrl.drill.music.push(clip);
         eventService.notifyAudioClipAdded({
           audioClip: clip
