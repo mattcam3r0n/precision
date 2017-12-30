@@ -26,6 +26,7 @@ class DrillPlayer {
 
         if (self.isPlaying) return;
 
+        self.playMusic = playMusic || false;
         self.stopCount = 0;
         if (playLength) { // rework this around schedule? only schedule n counts?
             self.stopCount = self.drill.count + playLength;
@@ -113,7 +114,7 @@ class DrillPlayer {
             self.stepForward();
             self.stateChangedCallback();
 
-            if (nextStep && nextStep.music && nextStep.music.startCount == self.drill.count) {
+            if (self.playMusic && nextStep && nextStep.music && nextStep.music.startCount == self.drill.count) {
                 self.currentMusic = nextStep.music.url;
                 Audio.play(self.currentMusic, nextStep.music.startOffset, nextStep.music.duration);
             }
