@@ -44,7 +44,7 @@
                         <div class="row">
                             <div class="col-md-4 small-text text-left">{{ musicFile.fileName }}</div>
                             <div class="col-md-5 small-text text-left">Performed by {{ musicFile.performedBy }}</div>
-                            <div class="col-md-3 small-text text-left">Length {{ musicFile.duration }}s</div>
+                            <div class="col-md-3 small-text text-left">Length {{ $ctrl.getDuration(musicFile) | number:1 }}s</div>
                         </div>
                     </li>
                 </ul>

@@ -246,6 +246,7 @@ angular.module('drillApp')
           })
           .catch(err => {
             Bert.alert('Unable to load audio file.', 'danger', 'growl-top-right');
+            hideSpinner();
           });
 //        ctrl.wavesurfer.load(musicFile.url);
 
