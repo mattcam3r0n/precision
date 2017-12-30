@@ -89,19 +89,6 @@ angular.module('drillApp')
         clip.startCount = startCount;
         clip.endCount = startCount + ctrl.counts - 1;
 
-        // var clip = { // use getClip()?
-        //   id: shortid.generate(),
-        //   fileName: getFilePath() + ctrl.musicFile.fileName,
-        //   title: ctrl.title,
-        //   counts: ctrl.counts,
-        //   tempo: ctrl.tempo,
-        //   duration: ctrl.duration,
-        //   startOffset: ctrl.startOffset || 0,
-        //   startCount: startCount,
-        //   endCount: startCount + ctrl.counts - 1,
-        //   beats: ctrl.beats
-        // };
-
         ctrl.drill.music.push(clip);
         eventService.notifyAudioClipAdded({
           audioClip: clip
@@ -265,6 +252,7 @@ angular.module('drillApp')
 
         ctrl.wavesurfer.on('error', function(err) {
           // TODO: notify
+          Bert.alert('Unable to load audio.', 'danger', 'growl-top-right');
           console.log(err);
           hideSpinner();
         });

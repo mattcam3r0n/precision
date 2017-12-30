@@ -103,10 +103,6 @@ angular.module('drillApp')
       console.log('drill', $scope.drill);
     }
 
-    $scope.playMusic = function () {
-      Audio.play('/audio/Liberty Bell Intro.ogg');
-    }
-
     $scope.onNew = function () {
       newDrill();
     }

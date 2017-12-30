@@ -47,30 +47,12 @@ class Audio {
     }
 
     static play(url, startOffset, duration) {
-    console.log('play', url);
         var buffer = this.buffers.getBuffer(url);
-    console.log('play', buffer);
         var source = this.playBuffer(buffer, startOffset, duration);
-
-        this.source = source; // do i need to keep the source?
+        this.source = source; 
     }
 
     static loadFile(url) {
-        // var self = this;
-        // var request = new XMLHttpRequest();
-        // request.open('GET', url, true);
-        // request.responseType = 'arraybuffer';
-      
-        // // Decode asynchronously
-        // request.onload = function() {
-        //   self.context.decodeAudioData(request.response, function(buffer) {
-        //     self.buffer = buffer;
-        //   }, function(err) {
-        //       console.log(err);
-        //   });
-        // }
-        // request.send();
-
         var self = this;
         return new Promise((resolve, reject) => {
             // Load buffer asynchronously
