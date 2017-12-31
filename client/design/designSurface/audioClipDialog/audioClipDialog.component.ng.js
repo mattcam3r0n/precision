@@ -87,6 +87,7 @@ angular.module('drillApp')
         var startCount = getStartCount();
         var clip = getClip();
 
+        clip.timelineId = shortid.generate(); // add a unique id for timeline to use
         clip.startCount = startCount;
         clip.endCount = startCount + ctrl.counts - 1;
 
@@ -139,7 +140,7 @@ angular.module('drillApp')
         if (ctrl.musicFile.type == 'clip' && ctrl.musicFile._id) {
           clip._id = ctrl.musicFile._id;
         }
-        clip.id = clip._id || shortid.generate(); // need an id for timeline
+        //clip.id = clip._id || shortid.generate(); // need an id for timeline
         
         return clip;
       }

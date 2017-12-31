@@ -165,7 +165,7 @@ class Timeline {
 
     createMusicItem(music) {
         return {
-            id: music.id || shortid.generate(), // music obj should prob have this id
+            id: music.timelineId,
             group: "music",
             start: new Date(music.startCount),
             end: new Date(music.endCount + 1),
