@@ -15,11 +15,13 @@ class DrillScheduler {
         // TODO: need a way to get lenght of drill / end count
         var player = new DrillPlayer(drill);
         var lastTime = 0;
+        var lastTimeInterval = 0;
         var startCount = drill.count + 1;
         while (!player.isEndOfDrill()) {
             player.stepForward();
-            var step = this.createCountDescriptor(drill, startCount, drill.count, lastTime);
+            var step = this.createCountDescriptor(drill, startCount, drill.count, lastTime, lastTimeInterval);
             lastTime = step.time;
+            lastTimeInterval = step.timeInterval;
             schedule.steps.push(step);
         }
 
@@ -42,18 +44,21 @@ class DrillScheduler {
         });
     }
 
-    createCountDescriptor(drill, startCount, count, lastTime) {
+    createCountDescriptor(drill, startCount, count, lastTime, lastTimeInterval) {
         var music = this.getMusicAtCount(drill, count);
         var tempo = music ? music.tempo : drill.tempo || 120;
         var timeInterval = 60 / tempo; 
         if (music && music.beats && music.beats[count - startCount]) {
             timeInterval = music.beats[count - music.startCount].timeInterval;
         }
-        var time = count == startCount ? 0 : lastTime + timeInterval;
+        // if timeInterval is 0 (at start of new music), use lastTimeInterval to add
+        // appropriate space between stop of last clip and start of new
+        var time = count == startCount ? 0 : lastTime + (timeInterval || lastTimeInterval);
 
         return {
             count: count,
             time: time,
+            timeInterval: timeInterval,
             tempo: tempo,
             music: this.createMusicDescriptor(music, startCount, count, timeInterval)
         };
