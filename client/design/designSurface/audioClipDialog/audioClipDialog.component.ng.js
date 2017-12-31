@@ -132,7 +132,7 @@ angular.module('drillApp')
             startOffset : ctrl.startOffset || 0,
             performedBy : ctrl.musicFile.performedBy,
             isPublic : ctrl.isPublic,
-            userId : $scope.currentUser._id,
+            userId : $scope.currentUser ? $scope.currentUser._id : null,
             beats: ctrl.beats
         };
 

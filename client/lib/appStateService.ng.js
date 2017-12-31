@@ -4,8 +4,9 @@ import DrillBuilder from '/client/lib/drill/DrillBuilder';
 var _currentDrillFormatVersion = 1;
 
 class appStateService {
-    constructor($rootScope) {
+    constructor($rootScope, alertService) {
         this._drill = null;
+        this.alertService = alertService;
         this.rootScope = $rootScope.$new(true);
     }
 
@@ -94,7 +95,10 @@ class appStateService {
         //this.drill.owner = Meteor.userId();
         Drills.insert(angular.copy(this.drill), (err, id) => {
             if (err) {
-                console.log('unable to insert', err, this.drill);
+                if (!Meteor.userId())
+                    this.alertService.warning('Unable to save drill. Please login to save your work.');
+                else
+                    this.alertService.danger('Unable to save drill. ' + err);
                 return;
             }
             this.drill._id = id;
@@ -123,7 +127,10 @@ class appStateService {
             },
             function (error) {
                 if (error) {
-                    console.log('Unable to update the drill', error);
+                    if (!Meteor.userId())
+                        this.alertService.warning('Unable to save drill. Please login to save your work.');
+                    else
+                        this.alertService.danger('Unable to save drill. ' + err);
                 } else {
                     console.log('saved');
                 }
@@ -174,8 +181,8 @@ class appStateService {
         clip.owner = getOwnerEmail(Meteor.user());
 
         var r = MusicFiles.update({
-                _id: id
-            }, {
+            _id: id
+        }, {
                 $set: angular.copy(clip)
             },
             function (error) {
@@ -236,4 +243,4 @@ function upgradeDrill(drill) {
 }
 
 angular.module('drillApp')
-    .service('appStateService', appStateService);
+    .service('appStateService', ['$rootScope', 'alertService', appStateService]);
