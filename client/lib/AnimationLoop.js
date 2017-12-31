@@ -1,9 +1,9 @@
-let requestAnimationFrame = window.requestAnimationFrame 
+const requestAnimationFrame = window.requestAnimationFrame 
     || window.mozRequestAnimationFrame 
     || window.webkitRequestAnimationFrame 
     || window.msRequestAnimationFrame;
 
-let cancelRequestAnimationFrame = window.cancelAnimationFrame 
+const cancelRequestAnimationFrame = window.cancelAnimationFrame 
     || window.webkitCancelRequestAnimationFrame 
     || window.mozCancelRequestAnimationFrame 
     || window.oCancelRequestAnimationFrame 
@@ -12,19 +12,26 @@ let cancelRequestAnimationFrame = window.cancelAnimationFrame
 class AnimationLoop {
     constructor(callback) {
         this.callback = callback;
+        this.isAnimating = false;
     }
 
     start() {
-        this.animationHandle = requestAnimationFrame(this.animate.bind(this));
+        var self = this;
+        self.isAnimating = true;
+        self.animationHandle = requestAnimationFrame(self.animate.bind(self));
     }
 
     animate(timestamp) {
-        this.callback(timestamp);
-        this.animationHandle = requestAnimationFrame(this.animate.bind(this));
+        var self = this;
+        self.callback(timestamp);
+        if (self.isAnimating)
+            self.animationHandle = requestAnimationFrame(self.animate.bind(self));
     }
 
     stop() {
-        cancelRequestAnimationFrame(this.animationHandle);
+        var self = this;
+        self.isAnimating = false;
+        cancelRequestAnimationFrame(self.animationHandle);
     }
 }
 

@@ -55,20 +55,7 @@ class DrillPlayer {
             .catch(err => {
                 console.log(err);
                 self.isPlaying = false;
-            });
-    
-        // Audio
-        //     .load(self.schedule.music)
-        //     .then((buffers) => {
-        //         this.stopSpinner();
-        //         self.animationLoop = new AnimationLoop(self.animate.bind(self));
-        //         self.animationLoop.start();
-        //         self.isPlaying = true;
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //         self.isPlaying = false;
-        //     });
+            });    
     }
 
     loadMusic(playMusic) {

@@ -42,7 +42,6 @@ angular.module('drillApp')
 
       $scope.getStrideType = function() {
         return drillEditorService.strideType;
-    console.log(drillEditorService.strideType);
       }
 
       $scope.addStep = function(dir) {
