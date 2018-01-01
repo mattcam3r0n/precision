@@ -1,10 +1,19 @@
 .timeline {
     position: absolute;
     z-index: 2;
+<<<<<<< Updated upstream
     top: 400px;
     left: 50px;
     height: 240px;
     width: 1200px;
+=======
+    top: 505px;
+    left: -95px;
+    height: 140px;
+    width: 100%;
+
+    font-size: 8pt;
+>>>>>>> Stashed changes
 }
 
 .timeline .close-button {
@@ -24,5 +33,9 @@
 .timeline .panel-body button {
     text-align: left;
     font-size: 10px;
+}
+
+.timeline .vis-item .vis-item-content {
+    padding: 0;
 }
 

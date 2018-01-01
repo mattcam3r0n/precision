@@ -13,7 +13,7 @@ class Timeline {
         var container = document.getElementById(this.containerId);
 
         var options = {
-            height: '180px',
+            height: '70px',
             // zoomMin: 1000,                    // 1 second
             // zoomMax: 1000 * 60 * 60 * 24,     // 1 day
             verticalScroll: true,
@@ -25,6 +25,10 @@ class Timeline {
                 updateTime: true,
                 updateGroup: false,
                 remove: true
+            },
+            margin: {
+                axis: 2,
+                item: 2
             },
             showMajorLabels: false,
             maxMinorChars: 4,
@@ -117,7 +121,15 @@ class Timeline {
     isCountVisible(count) {
         var countTime = new Date(count);
         var window = this.timeline.getWindow();
-        return window.start <= countTime && window.end >= countTime;
+        return window.start <= countTime && window.end - 1 >= countTime;
+    }
+
+    getVisibleCountRange() {
+        var window = this.timeline.getWindow();
+        return {
+            start: window.start.getMilliseconds(),
+            end: window.end.getMilliseconds()
+        };
     }
 
     getVisibleCountRange() {

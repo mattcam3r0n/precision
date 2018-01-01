@@ -1,13 +1,33 @@
 .design-tool {
     position: absolute;
     z-index: 2;
-    top: 10px;
-    left: 15px;
+    top: 0px;
+    left: -95px;
+    width: 110px;
+}
+
+#designToolbar {
+    width: 110px;
+}
+
+/* .design-tool .btn-group button {
+    width: 80px;
+} */
+
+.design-tool .btn-group-vertical > .btn, 
+.design-tool .btn-group-vertical > .btn-group, 
+.design-tool .btn-group-vertical > .btn-group > .btn .design-tool button {
+    width: 110px;
+}
+
+.design-tool button.btn.btn-default.dropdown-toggle {
+    width: 25px;
 }
 
 .design-tool div.panel-heading {
     margin-left: 5px;
 }
+
 .design-tool .panel-body {
     padding: 0;
 }

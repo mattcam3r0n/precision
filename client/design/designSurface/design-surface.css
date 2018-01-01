@@ -1,8 +1,7 @@
 
-/* .design-surface {
-    border: solid 1px black;
-    background-color: green;
-} */
+div.design-surface {
+    height: 540px;
+}
 
 /* #design-surface, #design-surface canvas {
     width: 100%
