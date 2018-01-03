@@ -1,7 +1,6 @@
 <div class="design">
-    <div class="btn-toolbar" role="toolbar">
+    <!-- <div class="btn-toolbar" role="toolbar">
 
-        <!-- open drill, etc -->
         <div class="btn-group btn-group-sm" role="group">
             <div class="input-group input-group-sm" style="width: 200px">
                 <input type="text" class="form-control" placeholder="Drill Name" ng-model="drill.name" title="Drill Name" />
@@ -23,7 +22,6 @@
             </div>
         </div>
 
-        <!-- playback, go to beginning, etc -->
         <div class="btn-group btn-group-sm" role="group">
             <button id="goToBeginning" ng-click="onGoToBeginning()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                 title="Go To Beginning (ctrl or cmd + left arrow)">
@@ -44,7 +42,6 @@
             </button>
         </div>
 
-        <!-- count, step forward and backward -->
         <div class="btn-group btn-group-sm" role="group">
             <button id="stepBackward" ng-click="onStepBackward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                 title="Backward 1 Count (left arrow)">
@@ -58,7 +55,6 @@
             </button>
         </div>
 
-        <!-- tempo -->
         <div class="btn-group btn-group-sm" role="group">
             <div class="input-group input-group-sm" style="width: 100px;" data-toggle="tooltip" data-placement="bottom" title="Tempo">
                 <span class="input-group-btn">
@@ -71,7 +67,6 @@
             </div>
         </div>
 
-        <!-- timeline -->
         <div class="btn-group btn-group-sm" role="group">
             <button id="showTimeline" ng-click="onShowTimeline()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                 title="Show Drill Timeline">
@@ -79,7 +74,6 @@
             </button>
         </div>
 
-        <!-- temporary buttons, debugging -->
         <div class="btn-group btn-group-sm" role="group">
             <div class="input-group input-group-sm" style="width: 200px">
                 <span class="input-group-btn">
@@ -90,26 +84,95 @@
             </div>
         </div>
 
-        <!-- position indicator -->
         <div class="btn-group btn-group-sm pull-right" role="group">
             <div class="btn">{{currentPosition}}</div>
             <button class="btn btn-default" ng-click="showHelp()">
                 <i class="fa fa-question-circle fa-lg"></i>
             </button>
         </div>
-    </div>
+    </div> -->
     <div class="row">
-        <div id="left-sidebar" class="col-md-1"></div>
-        <div id="design-surface-col" class="col-md-11">
-            <!-- <div id="test" style="position: absolute; left: 250px; top: 100px; width: 0px; height: 0px; z-index: -1; "></div> -->
-            <!-- <div id="design-surface-container">
-            </div> -->
-            <design-surface drill="drill" ng-show="true"></design-surface>                
-            <!-- <div id="timeline-container">
-            </div> -->
-            <open-dialog on-open="onOpen(drill)"></open-dialog>
+        <div id="left-sidebar" class="">
+            <ul id="sideMenu" class="side-menu">
+                <li class="panel">
+                    <a href="#selectOptions" data-toggle="collapse" data-parent="#sideMenu">
+                        <i class="fa fa-mouse-pointer"></i> Select</a>
+                    <div id="selectOptions" class="collapse">
+                        <ul class="side-sub-menu">
+                            <li>Select All</li>
+                            <li>Deselect All</li>
+                            <li>Hide Unselected</li>
+                            <li>Show Unselected</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="panel">
+                    <a href="#marcherOptions" data-toggle="collapse" data-parent="#sideMenu">
+                        <i class="fa fa-play"></i> Marchers</a>
+                    <div id="marcherOptions" class="collapse">
+                        <ul class="side-sub-menu">
+                            <li>Add Marchers</li>
+                            <li>Delete Selected</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="panel">
+                    <a href="#addSteps" data-toggle="collapse" data-parent="#sideMenu">
+                        <i class="fa fa-plus"></i> Steps</a>
+                    <div id="addSteps" class="collapse">
+                        <ul class="side-sub-menu">
+                            <li>Add Steps</li>
+                            <li>Backup &amp; Delete</li>
+                            <li>Delete Forward</li>
+                        </ul>
+                    </div>
+                </li>
+                </li>
+                <li class="panel">
+                    <a href="#drawPaths" data-toggle="collapse" data-parent="#sideMenu">
+                        <i class="fa fa-pencil"></i> Paths</a>
+                    <div id="drawPaths" class="collapse">
+                        <ul class="side-sub-menu">
+                            <li>Draw Paths</li>
+                            <li>Backup &amp; Delete</li>
+                            <li>Delete Forward</li>
+                        </ul>
+                    </div>
+                </li>
+                </li>
+                <li class="panel">
+                    <a href="#addMusic" data-toggle="collapse" data-parent="#sideMenu">
+                        <i class="fa fa-music"></i> Music</a>
+                    <div id="addMusic" class="collapse">
+                        <ul class="side-sub-menu">
+                            <li>Add Music</li>
+                            <li>Manage Music</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="panel">
+                    <a href="#zoom" data-toggle="collapse" data-parent="#sideMenu">
+                        <i class="fa fa-search-plus"></i> Zoom</a>
+                    <div id="zoom" class="collapse">
+                        <ul class="side-sub-menu">
+                            <li>Fit To Window</li>
+                            <li>Zoom In</li>
+                            <li>Zoom Out</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="panel">
+                    <i class="fa fa-cog"></i> Settings
+                </li>
+            </ul>
         </div>
-        <div class="col-md-1">
+        <div id="design-surface-col" class="">
+            <div class="design-surface-container">
+                <design-surface drill="drill" ng-show="true"></design-surface>
+                <open-dialog on-open="onOpen(drill)"></open-dialog>
+            </div>
+        </div>
+        <!-- <div class="col-md-1">
             <div class="design-help pull-right" ng-show="isHelpVisible">
                 <ul class="nav">
                     <li class="nav-header">
@@ -120,6 +183,13 @@
                     </li>
                 </ul>
             </div>
+        </div> -->
+    </div>
+    <div class="footer navbar-fixed-bottom">
+        <div class="footer-spacer">&nbsp;
+        </div>
+        <div class="footer-timeline">
+            <playback-controls drill="$ctrl.drill"></playback-controls>
         </div>
     </div>
 </div>

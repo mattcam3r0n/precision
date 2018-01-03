@@ -3,6 +3,14 @@
   line-height: 20px;
 }
 
+div.navbar-main {
+  background-color: #353535;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
+}
+
 .navbar {
   min-height: 0;
 }

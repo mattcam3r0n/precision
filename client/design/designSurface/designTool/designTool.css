@@ -1,8 +1,8 @@
 .design-tool {
     position: absolute;
     z-index: 2;
-    top: 0px;
-    left: -95px;
+    top: 50px;
+    left: 100px;
     width: 110px;
 }
 

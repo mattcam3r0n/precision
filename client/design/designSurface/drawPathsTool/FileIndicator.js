@@ -7,6 +7,8 @@ var FileIndicator = fabric.util.createClass(fabric.Group, {
       dir = dir === undefined ? 0 : dir;
       // options.originX = 'right';
       // options.originY = 'top';
+      options.evented = false;
+      options.selectable = false;
 
       var objects = [];
 

@@ -3,6 +3,8 @@ import FieldDimensions from '/client/lib/FieldDimensions';
 class FieldResizer {
 
     static resize(canvas) {
+        $('.design-surface-container').height($('div.footer').position().top - 50);
+//console.log($('.design-surface-container').height());
         var size = this.getSize();
         // set css size to scale canvas to parent area
         canvas.setDimensions({ height: size.height + 'px', width: size.width + 'px' }, { cssOnly: true });
@@ -18,7 +20,7 @@ class FieldResizer {
             height: parentEl.clientHeight,
             width: parentEl.clientHeight * 2
         };
-        console.log(parentEl, size);
+//console.log(parentEl, size);
         return size;
     }
 

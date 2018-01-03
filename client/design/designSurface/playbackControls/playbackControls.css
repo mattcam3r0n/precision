@@ -1,0 +1,50 @@
+.playback-controls {
+    /* position: absolute;
+    z-index: 2;
+    top: 100px;
+    left: -95px;
+    height: 140px;
+    width: 100%; */
+
+    font-size: 8pt;
+}
+
+.playback-controls .btn-toolbar {
+    margin: 0;
+    padding: 2px;
+    background-color:gainsboro;
+}
+
+.playback-controls .close-button {
+    cursor: pointer;
+}
+
+.playback-controls div.panel-heading {
+    margin-left: 5px;
+}
+
+.playback-controls .panel-body {
+    padding: 0;
+    /* margin-left: 2px;
+    margin-right: 2px; */
+}
+
+#tempo, #tempoMinus, #tempoPlus {
+    text-align: left;
+    font-size: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    height: 23px;
+}
+
+.playback-controls .panel-body button {
+    text-align: left;
+    font-size: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
