@@ -43,7 +43,7 @@ class FieldController {
 
     createCanvas() {
         return new fabric.Canvas('design-surface', {
-            backgroundColor: 'green',
+            backgroundColor: '#40703B', // huntergreen //'green',
             height: FieldDimensions.height,
             width: FieldDimensions.width,
             uniScaleTransform: true,
