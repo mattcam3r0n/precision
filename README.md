@@ -1,14 +1,13 @@
 # Precision
 Drill writing software for military marching bands. 
 
-This is a project for the [National Association of Military Marching Bands](HTTP://NAMMB.ORG).
+This software is under development for the [National Association of Military Marching Bands](HTTP://NAMMB.ORG). It will be available via their website when complete.
 
 ![Precision Demo GIF](/public/Precision%20Speed%20Demo.gif?raw=true "Demo GIF")
 
 ![Precision Animation GIF](/public/precision%20animation%20demo.gif?raw=true "Animation GIF")
 
 ![Precision Music GIF](/public/precision%20music%20demo.gif?raw=true "Music GIF")
-
 
 # Features
 * Create drills using software designed specifically for military style marching.
@@ -20,4 +19,16 @@ This is a project for the [National Association of Military Marching Bands](HTTP
 
 # System Requirements
 A modern browser like Chrome, Safari, or Firefox.
+
+# Credits
+
+Precision is built with open source frameworks, libraries and tools, including:
+
+* [Meteor](https://www.meteor.com/)
+* [Bootstrap](https://getbootstrap.com/)
+* [Angular JS](https://angularjs.org/)
+* [Angular-Meteor](https://angular-meteor.com/)
+* [FabricJS](http://fabricjs.com/)
+* [WaveSurferJS](https://wavesurfer-js.org/)
+* [vis.js](http://visjs.org/index.html)
 
