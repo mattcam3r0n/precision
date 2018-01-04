@@ -28,11 +28,21 @@ class FieldPainter {
         self.logo = fabric.Image.fromURL('/field-logo.png', function(oImg) {
             oImg.scale(scaleFactor);
             oImg.selectable = false;
-            oImg.evented = false;
+            oImg.evented = true;
             oImg.set('left', (FieldDimensions.width  / 2) - (oImg.width * scaleFactor / 2));
             oImg.set('top', (FieldDimensions.height / 2) - (oImg.height * scaleFactor / 2));
             oImg.set('opacity', .75);
             self.canvas.add(oImg);
+
+            oImg.on('mouseover', function() {
+                oImg.set('opacity', .25);
+                oImg.sendToBack();
+            });
+
+            oImg.on('mouseout', function() {
+                oImg.set('opacity', .75);
+                oImg.sendToBack();
+            });
         });
     }
 
