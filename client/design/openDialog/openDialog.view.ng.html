@@ -20,7 +20,6 @@
                 </div>
 
                 <div class="list-group">
-                    <!-- {{ drillCount }} -->
                     <a class="list-group-item" dir-paginate="drill in drills | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
                         <table width="100%">
                             <tr>
@@ -42,8 +41,6 @@
                                             <td class="small-text">Last edited {{drill.updatedDate | date}}</td>
                                         </tr>
                                     </table>
-                                    <!-- <div><span class="">Owned by {{drill.owner}}</span></div>
-                                    <div><span class="">Last edited {{drill.updatedDate | date}}</span></div> -->
                                 </td>
                                 <td>
                                     <a ng-click="delete(drill)">

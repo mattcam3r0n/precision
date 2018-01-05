@@ -129,7 +129,7 @@ class DrillBuilder {
         this.drill.isDirty = true;        
     }
 
-        /**
+    /**
      * Backup one step and delete
      */
     deleteBackspace(deleteCount) {
@@ -153,12 +153,6 @@ class DrillBuilder {
             if (!m) return;
             m.isSelected = !m.isSelected;
         });
-
-        // this.selection = new MemberSelection(members);
-
-        // // remove?
-        // this.selectedMembers = [...members];
-        // this.selectedFiles = this.getSelectedFiles();
     }
 
     selectAll() {
@@ -167,12 +161,6 @@ class DrillBuilder {
         this.drill.members.forEach(m => {
             m.isSelected = true;
         });
-
-        // use member selection
-        
-        // this.selectedMembers = [];
-        // this.selectedMembers.push(...this.drill.members);
-        // this.selectedFiles = this.getSelectedFiles();
     }
 
     deselectAll() {
@@ -181,9 +169,6 @@ class DrillBuilder {
         this.drill.members.forEach(m => {
             m.isSelected = false;
         });
-
-        // this.selectedMembers = [];
-        // this.selectedFiles = [];
     }
 
     hideUnselected() {

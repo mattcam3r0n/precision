@@ -21,15 +21,15 @@ class DrillPlayer {
         this.tempo = tempo || 120;
     }
     
-    play(stateChangedCallback, playLength, playMusic) {
+    play(stateChangedCallback, counts, playMusic) {
         var self = this;
 
         if (self.isPlaying) return;
 
         self.playMusic = playMusic || false;
         self.stopCount = 0;
-        if (playLength) { // rework this around schedule? only schedule n counts?
-            self.stopCount = self.drill.count + playLength;
+        if (counts) { // rework this around schedule? only schedule n counts?
+            self.stopCount = self.drill.count + counts;
         }
 
         self.schedule = new DrillScheduler().createSchedule(self.drill);
