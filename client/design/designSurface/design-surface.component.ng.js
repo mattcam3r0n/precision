@@ -49,6 +49,18 @@ angular.module('drillApp')
         ctrl.field.resize();
       });
 
+      var unsubscribeSizeToFit = eventService.subscribeSizeToFit(() => {
+        ctrl.field.sizeToFit();
+      });
+
+      var unsubscribeZoomIn = eventService.subscribeZoomIn(() => {
+        ctrl.field.zoomIn();
+      });
+
+      var unsubscribeZoomOut = eventService.subscribeZoomOut(() => {
+        ctrl.field.zoomOut();
+      });
+
       var unsubscribeUpdateField = eventService.subscribeUpdateField((evt, args) => {
         ctrl.field.update();
       });
@@ -60,6 +72,10 @@ angular.module('drillApp')
         unsubscribeShowPaths();
         unsubscribeUpdateField();
         unsubscribeStrideTypeChanged();
+        unsubscribeResize();
+        unsubscribeSizeToFit();
+        unsubscribeZoomIn();
+        unsubscribeZoomOut();
       });
 
       

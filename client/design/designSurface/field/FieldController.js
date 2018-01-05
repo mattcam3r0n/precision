@@ -211,6 +211,18 @@ class FieldController {
         FieldResizer.resize(this.canvas);
     }
 
+    sizeToFit() {
+        FieldResizer.sizeToFit(this.canvas);
+    }
+
+    zoomIn() {
+        FieldResizer.zoomIn(this.canvas);
+    }
+
+    zoomOut() {
+        FieldResizer.zoomOut(this.canvas);
+    }
+
     wireUpEvents() {
         var self = this;
         var canvas = this.canvas;

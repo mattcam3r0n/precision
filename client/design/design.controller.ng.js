@@ -146,6 +146,18 @@ angular.module('drillApp')
       eventService.notifyShowTimeline();
     }
 
+    $scope.sizeToFit = function() {
+      eventService.notifySizeToFit();
+    }
+
+    $scope.zoomIn = function() {
+      eventService.notifyZoomIn();
+    }
+
+    $scope.zoomOut = function() {
+      eventService.notifyZoomOut();
+    }
+
     // show help
     // TODO: Make this an overlay rather than resizing field
     $scope.showHelp = function () {

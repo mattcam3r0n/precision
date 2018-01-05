@@ -39,6 +39,18 @@ class Events {
         return 'resize';
     }
 
+    static get sizeToFit() {
+        return 'sizeToFit';
+    }
+
+    static get zoomIn() {
+        return 'zoomIn';
+    }
+
+    static get zoomOut() {
+        return 'zoomOut';
+    }
+
     static get deleteTurn() {
         return 'deleteTurn';
     }
