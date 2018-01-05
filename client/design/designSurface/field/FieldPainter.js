@@ -25,23 +25,24 @@ class FieldPainter {
     drawFieldLogo() {
         var scaleFactor = .75;
         var self = this;
-        self.logo = fabric.Image.fromURL('/field-logo.png', function(oImg) {
-            oImg.scale(scaleFactor);
-            oImg.selectable = false;
-            oImg.evented = true;
-            oImg.set('left', (FieldDimensions.width  / 2) - (oImg.width * scaleFactor / 2));
-            oImg.set('top', (FieldDimensions.height / 2) - (oImg.height * scaleFactor / 2));
-            oImg.set('opacity', .75);
-            self.canvas.add(oImg);
+        self.logo = fabric.Image.fromURL('/field-logo.png', function(img) {
+            img.scale(scaleFactor);
+            img.selectable = false;
+            img.evented = true;
+            img.set('left', (FieldDimensions.width  / 2) - (img.width * scaleFactor / 2));
+            img.set('top', (FieldDimensions.height / 2) - (img.height * scaleFactor / 2));
+            img.set('opacity', .75);
+            img.hoverCursor = 'default';
+            self.canvas.add(img);
 
-            oImg.on('mouseover', function() {
-                oImg.set('opacity', .25);
-                oImg.sendToBack();
+            img.on('mouseover', function() {
+                img.set('opacity', .25);
+                img.sendToBack();
             });
 
-            oImg.on('mouseout', function() {
-                oImg.set('opacity', .75);
-                oImg.sendToBack();
+            img.on('mouseout', function() {
+                img.set('opacity', .75);
+                img.sendToBack();
             });
         });
     }
