@@ -25,6 +25,21 @@ angular.module('drillApp')
           }
           console.log(drillEditorService.strideType);
         });
+
+        $('div.collapse').on('hidden.bs.collapse', function (args) {
+          // do something…
+          console.log('hidden', args);
+          $(args.currentTarget.parentElement).removeClass('opened');
+        });
+        $('div.collapse').on('shown.bs.collapse', function (args) {
+          // do something…
+          console.log('shown', args);
+          $(args.currentTarget.parentElement).addClass('opened');
+        });
+      }
+
+      $scope.isOpened = function(e) {
+        console.log(e);
       }
 
       $scope.addMembers = function () {

@@ -34,6 +34,14 @@
     text-decoration: none;
 }
 
+.side-menu li.opened {
+    background-color: #1E3749;
+}
+/* .side-menu a:not(.collapsed) {
+    width: 100%;
+    background-color: #1E3749;
+} */
+
 
 .side-sub-menu {
     list-style-type: none;
