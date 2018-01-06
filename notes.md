@@ -32,6 +32,7 @@ Denver Meeting 1/5/18
     * DNS? precision.nammb.org?
 
 * concerns
+
     * biggest things that haven't started yet:
         * lasso
         * middle-of-drill editing. no clear direction yet.
