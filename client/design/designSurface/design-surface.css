@@ -1,10 +1,4 @@
 
-div.design-surface {
-    /* height: 580px; */
-    height: calc(100%);
-    /* overflow: auto; */
-}
-
 /* to center field within available space */
 .canvas-container {
     margin: auto;

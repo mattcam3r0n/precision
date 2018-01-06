@@ -54,12 +54,20 @@ Takeaways
         * File menu
         * Help menu
         * show current drill name in header bar
+* calculate counts if tempo is entered
+* calculate tempo if counts is entered
 * add metronome feature to audio clip dialog
     * automatically detect start/deadspace? add warning? way to clip?
 * new favicon?
 * make logo fade on mouseover, when members pass over it?
 * left and right CM buttons
 * show drill time on one axis of timeline?
+    * use a second timeline and sync with first
 * need some way to set tempo for a section of drill, akin to music
 * three count about face button?
 
+Next Steps
+* ui revamp
+    * factor out sidebar into component
+    * stride button
+    * 
