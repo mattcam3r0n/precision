@@ -93,7 +93,7 @@ angular.module('drillApp')
             drillEditorService.strideType = StrideType.SixToFive;
           }
           // sync other stride switches
-          $("[name='stride-type-switch']").bootstrapSwitch('state', state);
+          $("[name='stride-type-switch']").bootstrapSwitch('state', state, true);
         });        
       }
 
