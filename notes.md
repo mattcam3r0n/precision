@@ -1,3 +1,6 @@
+Color Scheme generator
+https://coolors.co/353535-40703b-ffffff-d9d9d9-284b63 
+
 Denver Meeting 1/5/18
 * layout changes
     * overview of new layout
