@@ -16,6 +16,7 @@ angular.module('drillApp')
       var ctrl = this;
 
       ctrl.$onInit = function () {        
+        ctrl.isActivated = true;
         ctrl.unsubscribeAddStepsToolActivated = eventService.subscribeAddStepsToolActivated((evt, args) => {
           activate(drillEditorService.getMemberSelection());
         });
@@ -92,14 +93,14 @@ angular.module('drillApp')
         var leftmost = ctrl.field.getLeftmostMarcherPosition();
 
         var absCoords = ctrl.field.getAbsoluteCoords(leftmost);
-        var left = absCoords.left - 200;
+        var left = absCoords.left - 150;
         if (left < 0) {
           left = absCoords.left + absCoords.width + 20;
         }
-        var top = absCoords.top - 100;
+        var top = absCoords.top;
 
-        ctrl.toolDiv.style.left = left + 'px';
-        ctrl.toolDiv.style.top = top + 'px';
+        // ctrl.toolDiv.style.left = left + 'px';
+        // ctrl.toolDiv.style.top = top + 'px';
       }
 
     }

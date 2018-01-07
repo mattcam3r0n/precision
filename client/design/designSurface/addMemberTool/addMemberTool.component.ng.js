@@ -133,11 +133,11 @@ angular.module('drillApp')
 
       function positionTools(obj) {
         var absCoords = ctrl.field.getAbsoluteCoords(obj);
-        var left = absCoords.left - 50;
+        var left = absCoords.left - 70;
         if (left < 0) {
           left = absCoords.left + absCoords.width + 20;
         }
-        var top = absCoords.top - 100;
+        var top = absCoords.top;
         toolDiv.style.left = left + 'px';
         toolDiv.style.top = top + 'px';
       }

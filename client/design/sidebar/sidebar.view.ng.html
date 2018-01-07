@@ -1,27 +1,31 @@
 <div id="sidebar" class="sidebar ">
 
-    <!-- <input type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary" data-label-text="Stride" data-size="mini" data-label-width="70px"> -->
-
     <ul id="sideMenu" class="side-menu">
+        <li>
+            <input type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary" data-label-text="Stride"
+                data-size="mini" data-label-width="70px">
+        </li>
         <li class="panel">
             <a href="#selectOptions" data-toggle="collapse" data-parent="#sideMenu">
                 <i class="fa fa-mouse-pointer"></i> Select</a>
             <div id="selectOptions" class="collapse">
                 <ul class="side-sub-menu">
-                    <li>Select All</li>
+                    <li>
+                        <a ng-click="selectAll()">Select All</a>
+                    </li>
                     <li>Deselect All</li>
                     <li>Hide Unselected</li>
                     <li>Show Unselected</li>
                 </ul>
             </div>
         </li>
-        <li class="panel" >
+        <li class="panel">
             <a href="#marcherOptions" data-toggle="collapse" data-parent="#sideMenu">
                 <i class="fa fa-play"></i> Marchers</a>
             <div id="marcherOptions" class="collapse">
                 <ul class="side-sub-menu">
-                    <li>Add Marchers</li>
-                    <li>Delete Selected</li>
+                    <li><a ng-click="addMembers()">Add Marchers</a></li>
+                    <li><a ng-click="deleteSelectedMembers()">Delete Selected</a></li>
                 </ul>
             </div>
         </li>
@@ -30,9 +34,9 @@
                 <i class="fa fa-plus"></i> Steps</a>
             <div id="addSteps" class="collapse">
                 <ul class="side-sub-menu">
-                    <li>Add Steps</li>
-                    <li>Backup &amp; Delete</li>
-                    <li>Delete Forward</li>
+                    <li>
+                        <add-steps-tool field="$ctrl.field"></add-steps-tool>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -64,9 +68,12 @@
                 <i class="fa fa-search-plus"></i> Zoom</a>
             <div id="zoom" class="collapse">
                 <ul class="side-sub-menu">
-                    <li ng-click="sizeToFit()"><i class="fa fa-arrows"></i>Fit</li>
-                    <li ng-click="zoomIn()"><i class="fa fa-search-plus"></i>Zoom In</li>
-                    <li ng-click="zoomOut()"><i class="fa fa-search-minus"></i>Zoom Out</li>
+                    <li ng-click="sizeToFit()">
+                        <i class="fa fa-arrows"></i>Fit</li>
+                    <li ng-click="zoomIn()">
+                        <i class="fa fa-search-plus"></i>Zoom In</li>
+                    <li ng-click="zoomOut()">
+                        <i class="fa fa-search-minus"></i>Zoom Out</li>
                 </ul>
             </div>
         </li>

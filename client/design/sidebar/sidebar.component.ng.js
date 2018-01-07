@@ -15,6 +15,7 @@ angular.module('drillApp')
 
       ctrl.$onInit = function () {
         ctrl.isActivated = true;
+        
         // bootstrap follow toggle button
         $("[name='stride-type-switch']").bootstrapSwitch('state', drillEditorService.strideType);
         $("input[name='stride-type-switch']").on('switchChange.bootstrapSwitch', function (event, state) {
@@ -26,14 +27,11 @@ angular.module('drillApp')
           console.log(drillEditorService.strideType);
         });
 
+        // add class to highlight opened menu
         $('div.collapse').on('hidden.bs.collapse', function (args) {
-          // do something…
-          console.log('hidden', args);
           $(args.currentTarget.parentElement).removeClass('opened');
         });
         $('div.collapse').on('shown.bs.collapse', function (args) {
-          // do something…
-          console.log('shown', args);
           $(args.currentTarget.parentElement).addClass('opened');
         });
       }
