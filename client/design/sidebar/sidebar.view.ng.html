@@ -24,8 +24,12 @@
                 <i class="fa fa-play"></i> Marchers</a>
             <div id="marcherOptions" class="collapse">
                 <ul class="side-sub-menu">
-                    <li><a ng-click="addMembers()">Add Marchers</a></li>
-                    <li><a ng-click="deleteSelectedMembers()">Delete Selected</a></li>
+                    <li>
+                        <a ng-click="addMembers()">Add Marchers</a>
+                    </li>
+                    <li>
+                        <a ng-click="deleteSelectedMembers()">Delete Selected</a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -68,12 +72,18 @@
                 <i class="fa fa-search-plus"></i> Zoom</a>
             <div id="zoom" class="collapse">
                 <ul class="side-sub-menu">
-                    <li ng-click="sizeToFit()">
-                        <i class="fa fa-arrows"></i>Fit</li>
-                    <li ng-click="zoomIn()">
-                        <i class="fa fa-search-plus"></i>Zoom In</li>
-                    <li ng-click="zoomOut()">
-                        <i class="fa fa-search-minus"></i>Zoom Out</li>
+                    <li>
+                        <a ng-click="sizeToFit()">
+                            <i class="fa fa-arrows"></i>Fit</a>
+                    </li>
+                    <li>
+                        <a ng-click="zoomIn()">
+                            <i class="fa fa-search-plus"></i>Zoom In</a>
+                    </li>
+                    <li>
+                        <a ng-click="zoomOut()">
+                            <i class="fa fa-search-minus"></i>Zoom Out</a>
+                    </li>
                 </ul>
             </div>
         </li>

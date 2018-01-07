@@ -36,6 +36,7 @@
 .side-menu li a {
     color: white;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .side-menu li.opened {
