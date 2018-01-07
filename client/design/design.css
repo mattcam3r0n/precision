@@ -25,6 +25,8 @@
 .design-surface-content {
     flex: 1 1 auto;
     overflow: scroll;
+    /* TODO: would like to get a little padding around field but getting a small scroll overflow */
+    /* padding-top: 3px; */
 }
 
 .design-surface-container {
