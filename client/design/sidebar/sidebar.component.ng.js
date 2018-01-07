@@ -14,26 +14,8 @@ angular.module('drillApp')
       var ctrl = this;
 
       ctrl.$onInit = function () {
-        ctrl.isActivated = true;
-        
-        // bootstrap follow toggle button
-        $("[name='stride-type-switch']").bootstrapSwitch('state', drillEditorService.strideType);
-        $("input[name='stride-type-switch']").on('switchChange.bootstrapSwitch', function (event, state) {
-          if (state) {
-            drillEditorService.strideType = StrideType.EightToFive;
-          } else {
-            drillEditorService.strideType = StrideType.SixToFive;
-          }
-          console.log(drillEditorService.strideType);
-        });
-
-        // add class to highlight opened menu
-        $('div.collapse').on('hidden.bs.collapse', function (args) {
-          $(args.currentTarget.parentElement).removeClass('opened');
-        });
-        $('div.collapse').on('shown.bs.collapse', function (args) {
-          $(args.currentTarget.parentElement).addClass('opened');
-        });
+        initStrideTypeSwitch();
+        initCollapseHighlighting();
       }
 
       $scope.isOpened = function(e) {
@@ -49,10 +31,12 @@ angular.module('drillApp')
       }
 
       $scope.addSteps = function () {
+        console.log('addsteps');
         eventService.notifyAddStepsToolActivated();
       }
 
-      $scope.drawPath = function () {
+      $scope.drawPaths = function () {
+        console.log('drawpaths');
         eventService.notifyDrawPathsToolActivated();
       }
 
@@ -95,6 +79,29 @@ angular.module('drillApp')
   
       $scope.zoomOut = function() {
         eventService.notifyZoomOut();
+      }
+
+      function initStrideTypeSwitch() {
+        // bootstrap toggle button
+        $("[name='stride-type-switch']").bootstrapSwitch('state', drillEditorService.strideType);
+        $("input[name='stride-type-switch']").on('switchChange.bootstrapSwitch', function (event, state) {
+          if (state) {
+            drillEditorService.strideType = StrideType.EightToFive;
+          } else {
+            drillEditorService.strideType = StrideType.SixToFive;
+          }
+          console.log(drillEditorService.strideType);
+        });        
+      }
+
+      function initCollapseHighlighting() {
+        // add class to highlight opened menu
+        $('div.collapse').on('hidden.bs.collapse', function (args) {
+          $(args.currentTarget.parentElement).removeClass('opened');
+        });
+        $('div.collapse').on('shown.bs.collapse', function (args) {
+          $(args.currentTarget.parentElement).addClass('opened');
+        });        
       }
         
     }

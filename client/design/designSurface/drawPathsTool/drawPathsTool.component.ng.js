@@ -77,7 +77,6 @@ angular.module('drillApp')
         ctrl.strideType = drillEditorService.strideType;
 
         createPathTool();
-        positionTools();
 
         ctrl.field.disablePositionIndicator();
         setTurnDirection(Direction.E);
@@ -170,29 +169,6 @@ angular.module('drillApp')
 
         drillEditorService.save(true);
       }
-
-      function positionTools(obj) {
-        // TODO
-        // * make this better
-        // * take selected members in to account?
-        // * handle error when no members
-
-        // get leftmost marcher
-        var leftmost = ctrl.field.getLeftmostMarcherPosition();
-
-        var absCoords = ctrl.field.getAbsoluteCoords(leftmost);
-        var left = absCoords.left - 200;
-        if (left < 0) {
-          left = absCoords.left + absCoords.width + 20;
-        }
-        var top = absCoords.top - 100;
-
-        ctrl.toolDiv.style.left = left + 'px';
-        ctrl.toolDiv.style.top = top + 'px';
-      }
-
-
-
 
     }
   });

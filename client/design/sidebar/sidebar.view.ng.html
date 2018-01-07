@@ -34,25 +34,25 @@
             </div>
         </li>
         <li class="panel">
-            <a href="#addSteps" data-toggle="collapse" data-parent="#sideMenu">
+            <a href="#addSteps" ng-click="addSteps()" data-toggle="collapse" data-parent="#sideMenu">
                 <i class="fa fa-plus"></i> Steps</a>
             <div id="addSteps" class="collapse">
                 <ul class="side-sub-menu">
                     <li>
-                        <add-steps-tool field="$ctrl.field"></add-steps-tool>
+                        <add-steps-tool></add-steps-tool>
                     </li>
                 </ul>
             </div>
         </li>
         </li>
         <li class="panel">
-            <a href="#drawPaths" data-toggle="collapse" data-parent="#sideMenu">
+            <a href="#drawPaths" ng-click="drawPaths()" data-toggle="collapse" data-parent="#sideMenu">
                 <i class="fa fa-pencil"></i> Paths</a>
             <div id="drawPaths" class="collapse">
                 <ul class="side-sub-menu">
-                    <li>Draw Paths</li>
-                    <li>Backup &amp; Delete</li>
-                    <li>Delete Forward</li>
+                    <li>
+                        <draw-paths-tool></draw-paths-tool>
+                    </li>
                 </ul>
             </div>
         </li>

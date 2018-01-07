@@ -65,6 +65,7 @@ Takeaways
     * use a second timeline and sync with first
 * need some way to set tempo for a section of drill, akin to music
 * three count about face button?
+* better signup form with additional fields
 
 Next Steps
 * ui revamp
