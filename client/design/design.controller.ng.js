@@ -158,22 +158,4 @@ angular.module('drillApp')
       eventService.notifyZoomOut();
     }
 
-    // show help
-    // TODO: Make this an overlay rather than resizing field
-    $scope.showHelp = function () {
-      $scope.isHelpVisible = !$scope.isHelpVisible;
-
-      var c = angular.element('#design-surface-col')
-      c.removeClass($scope.isHelpVisible ? 'col-md-12' : 'col-md-11');
-      c.addClass($scope.isHelpVisible ? 'col-md-11' : 'col-md-12');
-      eventService.notifyResize();
-    }
-
-    // show the "add members" walkthrough. make sure addMembers tool is displayed first.
-    $scope.showIntro = function () {
-      $scope.addMembers();
-      var wt = new WalkThru();
-      wt.start('addMembers');
-    }
-
   });
