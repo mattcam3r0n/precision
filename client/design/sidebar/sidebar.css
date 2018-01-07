@@ -19,6 +19,10 @@
     color: white;
 }
 
+.side-menu li.panel:hover {
+    background-color: #1E3749;
+}
+
 .side-menu li.panel {
     margin-left: 0px;
     margin-right: 0px;
@@ -47,6 +51,7 @@
     list-style-type: none;
     background-color: #3B5B71;
     color: whitesmoke;
+    border: solid 2px #1E3749;
     text-align: left;
     font-size: 10px;
     padding: 2px;
