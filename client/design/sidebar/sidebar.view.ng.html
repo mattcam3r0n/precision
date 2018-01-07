@@ -2,8 +2,6 @@
 
     <ul id="sideMenu" class="side-menu">
         <li>
-            <input type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary" data-label-text="Stride"
-                data-size="mini" data-label-width="70px">
         </li>
         <li class="panel">
             <a href="#selectOptions" data-toggle="collapse" data-parent="#sideMenu">
@@ -45,6 +43,10 @@
             <div id="addSteps" class="collapse">
                 <ul class="side-sub-menu">
                     <li>
+                        <input type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary" data-label-text="Stride"
+                            data-size="mini" data-label-width="55px" />
+                    </li>
+                    <li>
                         <add-steps-tool></add-steps-tool>
                     </li>
                 </ul>
@@ -56,6 +58,10 @@
                 <i class="fa fa-pencil"></i> Paths</a>
             <div id="drawPaths" class="collapse">
                 <ul class="side-sub-menu">
+                    <li>
+                        <input type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary" data-label-text="Stride"
+                            data-size="mini" data-label-width="55px" />
+                    </li>
                     <li>
                         <draw-paths-tool></draw-paths-tool>
                     </li>
@@ -94,7 +100,20 @@
             </div>
         </li>
         <li class="panel">
-            <i class="fa fa-cog"></i> Settings
+            <a href="#settings" data-toggle="collapse" data-parent="#sideMenu">
+                <i class="fa fa-cog"></i> Settings</a>
+            <div id="settings" class="collapse">
+                <ul class="side-sub-menu">
+                    <li>
+                        <input type="checkbox" name="grid-switch" data-off-text="Off" data-on-text="On" data-off-color="primary" data-label-text="Grid"
+                            data-size="mini" data-label-width="55px">
+                    </li>
+                    <li>
+                        <input type="checkbox" name="logo-switch" data-off-text="Off" data-on-text="On" data-off-color="primary" data-label-text="Logo"
+                            data-size="mini" data-label-width="55px">
+                    </li>
+                </ul>
+            </div>
         </li>
     </ul>
 </div>

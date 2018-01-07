@@ -15,6 +15,8 @@ angular.module('drillApp')
 
       ctrl.$onInit = function () {
         initStrideTypeSwitch();
+        initGridSwitch();
+        initLogoSwitch();
         initCollapseHighlighting();
       }
 
@@ -90,7 +92,32 @@ angular.module('drillApp')
           } else {
             drillEditorService.strideType = StrideType.SixToFive;
           }
-          console.log(drillEditorService.strideType);
+          // sync other stride switches
+          $("[name='stride-type-switch']").bootstrapSwitch('state', state);
+        });        
+      }
+
+      function initGridSwitch() {
+        // bootstrap toggle button
+        $("[name='grid-switch']").bootstrapSwitch('state', $scope.showGrid);
+        $("input[name='grid-switch']").on('switchChange.bootstrapSwitch', function (event, state) {
+          if (state) {
+            // show grid
+          } else {
+            // turn off grid
+          }
+        });        
+      }
+
+      function initLogoSwitch() {
+        // bootstrap toggle button
+        $("[name='logo-switch']").bootstrapSwitch('state', $scope.showLogo);
+        $("input[name='logo-switch']").on('switchChange.bootstrapSwitch', function (event, state) {
+          if (state) {
+            // show logo
+          } else {
+            // turn off logo
+          }
         });        
       }
 
