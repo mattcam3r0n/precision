@@ -30,7 +30,6 @@
 .design-surface-container {
     /* have to subtract width of sidebar */
     width: calc(100vw - 120px);
-    overflow: auto;
 }
 
 .design-surface-footer {
@@ -43,37 +42,3 @@
     width: 100%;
 }
 
-/* .design .btn-toolbar {
-    margin-top: 5px;
-    margin-bottom: 5px;
-} */
-
-.design-help {
-    transition: margin 0.3s ease;    
-}
-
-.design-help .collapsed {
-    display: none;
-}
-
-#design-surface-col {
-    overflow: scroll;
-    float: left;
-    padding: 5px;
-    /* height: 100px; */
-    width: calc(100% - 120px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-/* experimenting with docking timeline at bottom */
-/* #design-surface-col {
-    width: 75%;
-} */
-
-/* #timeline-container {
-    height: 200px;
-    width: 100%;
-} */
