@@ -23,6 +23,10 @@ class Events {
         return 'drawPathsToolActivated';
     }
 
+    static get drawPathsToolDeactivated() {
+        return 'drawPathsToolDeactivated';
+    }
+
     static get addMembersToolActivated() {
         return 'addMembersToolActivated';
     }

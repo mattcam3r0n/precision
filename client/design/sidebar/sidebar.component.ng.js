@@ -1,5 +1,6 @@
 'use strict';
 
+import Events from '/client/lib/Events';
 import StrideType from '/client/lib/StrideType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
@@ -18,6 +19,14 @@ angular.module('drillApp')
         initGridSwitch();
         initLogoSwitch();
         initCollapseHighlighting();
+        var unsubscribeDrawPathsDeactivated = eventService.subscribe(Events.drawPathsToolDeactivated, () => {
+          console.log('drawpaths deactivated');
+          collapseDrawPaths();
+        });
+      }
+
+      ctrl.$onDestroy = function() {
+        unsubscribeDrawPathsDeactivated();
       }
 
       $scope.isOpened = function(e) {
@@ -129,6 +138,10 @@ angular.module('drillApp')
         $('div.collapse').on('shown.bs.collapse', function (args) {
           $(args.currentTarget.parentElement).addClass('opened');
         });        
+      }
+
+      function collapseDrawPaths() {
+        $('#drawPaths').collapse('hide');
       }
         
     }

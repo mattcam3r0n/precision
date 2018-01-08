@@ -15,6 +15,7 @@ angular.module('drillApp')
 
       $timeout(function(){
         ctrl.field = new FieldController(ctrl.drill, eventService);
+        appStateService.field = ctrl.field;
         eventService.notifyHideSpinner();
       });
 
@@ -68,6 +69,7 @@ angular.module('drillApp')
 
       $scope.$on("$destroy", function(){
         ctrl.field.canvas.dispose();
+        appStateService.field = null;
         unsubscribeDrillStateChanged();
         unsubscribeMembersAdded();
         unsubscribeShowPaths();

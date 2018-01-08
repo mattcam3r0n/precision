@@ -12,6 +12,7 @@ class EventService {
     }
 
     notify(event, args) {
+        console.log('notify', event);
         this.$rootScope.$broadcast(event, args);
     }
 

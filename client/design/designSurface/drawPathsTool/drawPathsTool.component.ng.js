@@ -1,5 +1,6 @@
 'use strict';
 
+import Events from '/client/lib/Events';
 import { FieldPoint, StepPoint } from '/client/lib/Point';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
@@ -9,9 +10,8 @@ angular.module('drillApp')
   .component('drawPathsTool', {
     templateUrl: 'client/design/designSurface/drawPathsTool/drawPathsTool.view.ng.html',
     bindings: {
-      field: '<'
     },
-    controller: function ($scope, $window, drillEditorService, eventService) {
+    controller: function ($scope, $window, appStateService, drillEditorService, eventService) {
       var ctrl = this;
 
       var unsubscribeDrawPathsToolActivated = eventService.subscribeDrawPathsToolActivated(() => {
@@ -73,6 +73,7 @@ angular.module('drillApp')
           deactivate();
 
         ctrl.isActivated = true;
+        ctrl.field = appStateService.field;
         ctrl.memberSelection = memberSelection;
         ctrl.strideType = drillEditorService.strideType;
 
@@ -86,8 +87,7 @@ angular.module('drillApp')
           if (!ctrl.isActivated) return;
           ctrl.memberSelection = args.memberSelection;
           createPathTool();
-        });
-  
+        });  
       }
 
       function deactivate() {
@@ -103,6 +103,7 @@ angular.module('drillApp')
         destroyPathTool();
         eventService.notifyUpdateField();
         ctrl.field.update();
+        eventService.notify(Events.drawPathsToolDeactivated);        
       }
 
       function setTurnDirection(direction) {

@@ -6,6 +6,7 @@ var _currentDrillFormatVersion = 1;
 class appStateService {
     constructor($rootScope, alertService) {
         this._drill = null;
+        this._field = null;
         this.alertService = alertService;
         this.rootScope = $rootScope.$new(true);
     }
@@ -16,6 +17,14 @@ class appStateService {
 
     set drill(d) {
         this._drill = d;
+    }
+
+    get field() {
+        return this._field;
+    }
+
+    set field(f) {
+        this._field = f;
     }
 
     subscribeDrillChanged(cb) {
