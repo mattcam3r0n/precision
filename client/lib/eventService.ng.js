@@ -7,6 +7,14 @@ class EventService {
 
     // Events
 
+    subscribe(event, cb) {
+        return this.$rootScope.$on(event, cb);
+    }
+
+    notify(event, args) {
+        this.$rootScope.$broadcast(event, args);
+    }
+
     subscribeAddStepsToolActivated(cb) {
         var unsubscribe = this.$rootScope.$on(Events.addStepsToolActivated, cb);
         return unsubscribe;

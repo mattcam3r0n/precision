@@ -1,5 +1,6 @@
 'use strict';
 
+import Events from '/client/lib/Events';
 import FieldController from './field/FieldController';
 
 angular.module('drillApp')
@@ -10,7 +11,7 @@ angular.module('drillApp')
     },
     controller: function ($scope, $window, $timeout, appStateService, drillEditorService, eventService) {
       var ctrl = this;
-      eventService.notifyShowSpinner();
+      eventService.notify(Events.showSpinner);
 
       $timeout(function(){
         ctrl.field = new FieldController(ctrl.drill, eventService);
