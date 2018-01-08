@@ -1,6 +1,7 @@
 'use strict';
 
 import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import StrideType from '/client/lib/StrideType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
@@ -14,23 +15,17 @@ angular.module('drillApp')
     controller: function ($scope, drillEditorService, eventService) {
       var ctrl = this;
 
-      ctrl.$onInit = function () {
+      ctrl.$onInit = function() {
+        ctrl.subscriptions = new EventSubscriptionManager(eventService);
         initStrideTypeSwitch();
         initGridSwitch();
         initLogoSwitch();
         initCollapseHighlighting();
-        var unsubscribeDrawPathsDeactivated = eventService.subscribe(Events.drawPathsToolDeactivated, () => {
-          console.log('drawpaths deactivated');
-          collapseDrawPaths();
-        });
+        ctrl.subscriptions.subscribe(Events.drawPathsToolDeactivated, collapseDrawPaths);
       }
 
       ctrl.$onDestroy = function() {
-        unsubscribeDrawPathsDeactivated();
-      }
-
-      $scope.isOpened = function(e) {
-        console.log(e);
+        ctrl.subscriptions.unsubscribeAll();
       }
 
       $scope.addMembers = function () {
