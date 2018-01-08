@@ -154,6 +154,15 @@ class FieldController {
         this.update();
     }
 
+    get isLogoVisible() {
+        return this.fieldPainter.isLogoVisible;
+    }
+
+    set isLogoVisible(isVisible) {
+        this.fieldPainter.isLogoVisible = isVisible;
+        this.update();
+    }
+
     strideTypeChanged(strideType) {
         this.strideType = strideType;
         if (this.fieldPainter.isGridVisible)

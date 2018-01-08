@@ -9,6 +9,7 @@ class FieldPainter {
         this.gridPainter = new GridPainter(canvas);
         this.strideType = 0;
         this._isGridVisible = false;
+        this._isLogoVisible = true;
     }
 
     dispose() {
@@ -22,14 +23,30 @@ class FieldPainter {
             this.showGrid(this.strideType);
         else   
             this.hideGrid();
-        this.drawFieldLogo(this.canvas);
+        this.showFieldLogo(this.canvas);
         this.canvas.renderAll();
     }
 
-    drawFieldLogo() {
-        var scaleFactor = .75;
+    get isLogoVisible() {
+        return this._isLogoVisible;
+    }
+
+    set isLogoVisible(val) {
+        this._isLogoVisible = val;
+        if (val) 
+            this.showFieldLogo();
+        else
+            this.hideFieldLogo();
+        this.canvas.renderAll();
+    }
+
+    showFieldLogo() {
         var self = this;
-        self.logo = fabric.Image.fromURL('/field-logo.png', function(img) {
+        if (self.logo) this.hideFieldLogo();
+
+        var scaleFactor = .75;
+        fabric.Image.fromURL('/field-logo.png', function(img) {
+            self.logo = img;
             img.scale(scaleFactor);
             img.selectable = false;
             img.evented = true;
@@ -48,7 +65,13 @@ class FieldPainter {
                 img.set('opacity', .75);
                 img.sendToBack();
             });
+
+            self.canvas.renderAll();
         });
+    }
+    
+    hideFieldLogo() {
+        this.canvas.remove(this.logo);
     }
 
     get isGridVisible() {

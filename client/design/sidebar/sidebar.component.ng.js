@@ -101,28 +101,17 @@ angular.module('drillApp')
 
       function initGridSwitch() {
         // bootstrap toggle button
-        $("[name='grid-switch']").bootstrapSwitch('state', $scope.showGrid);
+        $("[name='grid-switch']").bootstrapSwitch('state', false);
         $("input[name='grid-switch']").on('switchChange.bootstrapSwitch', function (event, state) {
           appStateService.field.isGridVisible = state;
-          // if (state) {
-          //   // show grid
-          //   appStateService.field.isGridVisible = false;
-          // } else {
-          //   // turn off grid
-          //   appStateService.field.isGridVisible = false;
-          // }
         });        
       }
 
       function initLogoSwitch() {
         // bootstrap toggle button
-        $("[name='logo-switch']").bootstrapSwitch('state', $scope.showLogo);
+        $("[name='logo-switch']").bootstrapSwitch('state', true);
         $("input[name='logo-switch']").on('switchChange.bootstrapSwitch', function (event, state) {
-          if (state) {
-            // show logo
-          } else {
-            // turn off logo
-          }
+          appStateService.field.isLogoVisible = state;
         });        
       }
 
