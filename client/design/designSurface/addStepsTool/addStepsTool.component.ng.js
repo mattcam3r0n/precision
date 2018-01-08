@@ -71,8 +71,6 @@ angular.module('drillApp')
 
         ctrl.isActivated = true;
         ctrl.memberSelection = memberSelection;
-
-        positionTools();
       }
 
       function deactivate() {

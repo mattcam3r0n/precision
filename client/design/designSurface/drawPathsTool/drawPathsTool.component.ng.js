@@ -1,6 +1,7 @@
 'use strict';
 
 import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import { FieldPoint, StepPoint } from '/client/lib/Point';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
@@ -14,23 +15,34 @@ angular.module('drillApp')
     controller: function ($scope, $window, appStateService, drillEditorService, eventService) {
       var ctrl = this;
 
-      var unsubscribeDrawPathsToolActivated = eventService.subscribeDrawPathsToolActivated(() => {
-        activate(drillEditorService.getMemberSelection());
-      });
-
-      var unsubscribeStrideTypeChanged = drillEditorService.subscribeStrideTypeChanged((evt, args) => {
-        if (!ctrl.isActivated) return;
-        activate(drillEditorService.getMemberSelection());        
-      });
-
       ctrl.$onInit = function () {
+        ctrl.subscriptions = new EventSubscriptionManager(eventService);
         ctrl.turnMode = 'block';
         ctrl.toolDiv = angular.element('.draw-paths-tool')[0];
+      
+        ctrl.subscriptions.subscribe(Events.drawPathsToolActivated, () => {
+          activate(drillEditorService.getMemberSelection());
+        });
+
+        ctrl.subscriptions.subscribe(Events.strideTypeChanged, (evt, args) => {
+          if (!ctrl.isActivated) return;
+          activate(drillEditorService.getMemberSelection());        
+        });
+
+        // var unsubscribeDrawPathsToolActivated = eventService.subscribeDrawPathsToolActivated(() => {
+        //   activate(drillEditorService.getMemberSelection());
+        // });
+  
+        // var unsubscribeStrideTypeChanged = drillEditorService.subscribeStrideTypeChanged((evt, args) => {
+        //   if (!ctrl.isActivated) return;
+        //   activate(drillEditorService.getMemberSelection());        
+        // });
       }
 
       ctrl.$onDestroy = function () {
-        unsubscribeDrawPathsToolActivated();
-        unsubscribeStrideTypeChanged();
+        ctrl.subscriptions.unsubscribeAll();
+        // unsubscribeDrawPathsToolActivated();
+        // unsubscribeStrideTypeChanged();
       }
 
       // $scope.activate = activate;
