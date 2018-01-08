@@ -12,7 +12,7 @@ angular.module('drillApp')
     bindings: {
       field: '<'
     },
-    controller: function ($scope, drillEditorService, eventService) {
+    controller: function ($scope, appStateService, drillEditorService, eventService) {
       var ctrl = this;
 
       ctrl.$onInit = function() {
@@ -37,12 +37,10 @@ angular.module('drillApp')
       }
 
       $scope.addSteps = function () {
-        console.log('addsteps');
         eventService.notifyAddStepsToolActivated();
       }
 
       $scope.drawPaths = function () {
-        console.log('drawpaths');
         eventService.notifyDrawPathsToolActivated();
       }
 
@@ -105,11 +103,14 @@ angular.module('drillApp')
         // bootstrap toggle button
         $("[name='grid-switch']").bootstrapSwitch('state', $scope.showGrid);
         $("input[name='grid-switch']").on('switchChange.bootstrapSwitch', function (event, state) {
-          if (state) {
-            // show grid
-          } else {
-            // turn off grid
-          }
+          appStateService.field.isGridVisible = state;
+          // if (state) {
+          //   // show grid
+          //   appStateService.field.isGridVisible = false;
+          // } else {
+          //   // turn off grid
+          //   appStateService.field.isGridVisible = false;
+          // }
         });        
       }
 

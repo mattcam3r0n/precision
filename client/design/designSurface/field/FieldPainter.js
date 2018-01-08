@@ -8,6 +8,7 @@ class FieldPainter {
         this.canvas = canvas;
         this.gridPainter = new GridPainter(canvas);
         this.strideType = 0;
+        this._isGridVisible = false;
     }
 
     dispose() {
@@ -17,7 +18,10 @@ class FieldPainter {
 
     paint() {
         YardLinePainter.paint(this.canvas);
-        this.showGrid(this.strideType);
+        if (this.isGridVisible) 
+            this.showGrid(this.strideType);
+        else   
+            this.hideGrid();
         this.drawFieldLogo(this.canvas);
         this.canvas.renderAll();
     }
@@ -45,6 +49,18 @@ class FieldPainter {
                 img.sendToBack();
             });
         });
+    }
+
+    get isGridVisible() {
+        return this._isGridVisible;
+    }
+
+    set isGridVisible(val) {
+        this._isGridVisible = val;
+        if (val)
+            this.showGrid(this.strideType);
+        else
+            this.hideGrid();
     }
 
     showGrid(strideType) {

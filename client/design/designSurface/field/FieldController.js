@@ -31,8 +31,6 @@ class FieldController {
 
         this.positionIndicator = this.createPositionIndicator();
         this.positionIndicatorEnabled = true;
-        
-
     }
 
     setDrill(drill) {
@@ -146,10 +144,24 @@ class FieldController {
         this.canvas.renderAll();
     }
 
+    get isGridVisible() {
+        return this.fieldPainter.isGridVisible;
+    }
+
+    set isGridVisible(isVisible) {
+        this.fieldPainter.isGridVisible = isVisible;
+//        isVisible ? this.fieldPainter.showGrid(this.strideType) : this.fieldPainter.hideGrid();
+        this.update();
+    }
+
     strideTypeChanged(strideType) {
         this.strideType = strideType;
-        this.fieldPainter.showGrid(strideType);
-    }
+        if (this.fieldPainter.isGridVisible)
+            this.fieldPainter.showGrid(strideType);
+        else
+            this.fieldPainter.hideGrid();
+        this.update();
+        }
 
     disablePositionIndicator() {
         this.positionIndicatorEnabled = false;
