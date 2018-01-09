@@ -47,6 +47,7 @@ class FieldPainter {
         var scaleFactor = .75;
         fabric.Image.fromURL('/field-logo.png', function(img) {
             self.logo = img;
+            img.isLogo = true;
             img.scale(scaleFactor);
             img.selectable = false;
             img.evented = true;
@@ -57,12 +58,12 @@ class FieldPainter {
             self.canvas.add(img);
 
             img.on('mouseover', function() {
-                img.set('opacity', .25);
+                img.set('opacity', .15);
                 img.sendToBack();
             });
 
             img.on('mouseout', function() {
-                img.set('opacity', .75);
+                img.set('opacity', .65);
                 img.sendToBack();
             });
 

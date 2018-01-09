@@ -159,7 +159,7 @@ angular.module('drillApp')
 
       function onMouseUp(evt) {
         if (!evt.isClick) return;
-        if (evt.target !== null) return; // clicked on an object
+        if (evt.target !== null && !evt.target.isLogo) return; // clicked on an object
 
         // have to adjust point for zoom
         var adjustedPoint = ctrl.field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
