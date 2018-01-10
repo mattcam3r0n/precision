@@ -53,7 +53,7 @@ class FieldPainter {
             img.evented = true;
             img.set('left', (FieldDimensions.width  / 2) - (img.width * scaleFactor / 2));
             img.set('top', (FieldDimensions.height / 2) - (img.height * scaleFactor / 2));
-            img.set('opacity', .75);
+            img.set('opacity', .25);
             img.hoverCursor = 'default';
             self.canvas.add(img);
 
@@ -63,7 +63,7 @@ class FieldPainter {
             });
 
             img.on('mouseout', function() {
-                img.set('opacity', .65);
+                img.set('opacity', .25);
                 img.sendToBack();
             });
 
