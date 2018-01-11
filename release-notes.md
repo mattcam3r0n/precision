@@ -54,3 +54,10 @@
 * FIX: countermarches in obliques 
 * FIX: automatically opening your last drill on login or when changing views sometimes didn't work
 
+1-6-18
+* UI layout makeover
+
+1-7-18
+* new favicon (tiny icon in browser tab), uses nammb logo
+* increased number of members that can be added to in excess of 30 x 30 ranks and files
+* 

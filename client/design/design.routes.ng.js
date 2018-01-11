@@ -4,7 +4,7 @@ angular.module('drillApp')
 .config(function($stateProvider) {
   $stateProvider
   .state('design', {
-    url: '/design',
+    url: '/',
     templateUrl: 'client/design/design.view.ng.html',
     controller: 'DesignCtrl',
     // resolve: {

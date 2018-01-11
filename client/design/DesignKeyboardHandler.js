@@ -81,6 +81,9 @@ class DesignKeyboardHandler {
         // disregard if keystroke is not on body (or canvas)
         if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
 
+        // allow dev tools shortcut, for convenience
+        if (e.altKey && e.metaKey && e.key == "Dead" && e.code == "KeyI") return;
+
         // prevent shifting of document
         e.preventDefault();
 

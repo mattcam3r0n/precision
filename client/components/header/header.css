@@ -3,6 +3,29 @@
   line-height: 20px;
 }
 
+.header .header-menu {
+  color: white;
+  margin-top: 5px;
+}
+
+.header .header-menu button {
+  background-color: #353535;
+  border: 0;
+}
+
+#fileMenu {
+}
+
+
+div.navbar-main {
+  background-color: #353535;
+  /* background-color: #284B63; */
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
+}
+
 .navbar {
   min-height: 0;
 }
@@ -27,9 +50,13 @@
 }
 
 .brand-link {
+  width: 120px;
+  background-color: #353535;
   /* font-size: 14pt;
   font-weight: bold; */
 }
+
+
 
 @media (min-width: 768px) {
   #login-buttons {

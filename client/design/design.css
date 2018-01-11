@@ -1,26 +1,78 @@
+
 .design {
-    padding: 5px;
+    padding: 0;
+    background-color: #D9D9D9;
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
 }
 
-.design .btn-toolbar {
-    margin-top: 5px;
-    margin-bottom: 5px;
+.design div.sidebar {
+    background-color: #284B63;
+    height: 100vh;
+    width: 120px;
+    flex: none;
+    padding: 0;
 }
 
-.design-help {
-    transition: margin 0.3s ease;    
+.design .content {
+    height: 100vh;
+    flex: auto;
+    display: flex;
+    flex-direction: column;
 }
 
-.design-help .collapsed {
-    display: none;
+.design-surface-content {
+    flex: 1 1 auto;
+    overflow: scroll;
+    /* TODO: would like to get a little padding around field but getting a small scroll overflow */
+    /* padding-top: 3px; */
 }
 
-.side-menu {
-    position:relative;
- }
- .side-menu li ul {
-   position:absolute;
-   z-index:99;
-   width:100%;
- }
+.design-surface-container {
+    /* have to subtract width of sidebar */
+    width: calc(100vw - 120px);
+}
 
+.design-surface-footer {
+    flex: 0 0 auto;
+    height: 150px;
+}
+
+.design .footer-timeline {
+    float: left;
+    width: 100%;
+}
+
+/* used to rotate font awesome directional arrows for addSteps, drawPaths buttons */
+.fa-rotate-NE {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.fa-rotate-SE {
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    transform: rotate(135deg);
+}
+
+.fa-rotate-SW {
+    -webkit-transform: rotate(225deg);
+    -moz-transform: rotate(225deg);
+    -ms-transform: rotate(225deg);
+    -o-transform: rotate(225deg);
+    transform: rotate(225deg);
+}
+
+.fa-rotate-NW {
+    -webkit-transform: rotate(315deg);
+    -moz-transform: rotate(315deg);
+    -ms-transform: rotate(315deg);
+    -o-transform: rotate(315deg);
+    transform: rotate(315deg);
+}

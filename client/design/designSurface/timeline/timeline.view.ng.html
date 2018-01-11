@@ -1,40 +1,20 @@
-<div draggable id="timeline" class="timeline panel panel-default" ng-show="$ctrl.isActivated">
-
-    <div class="panel-heading text-left drag-handle">
-        <i ng-click="$ctrl.deactivate()" class="fa fa-times fa-sm close-button"></i> &nbsp; Timeline
+<div id="timeline" class="timeline">
+    <div class="inline">
+        <button id="timeline-page-left" ng-click="$ctrl.pageBackward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+            title="Page backward">
+            <i class="fa fa-step-backward"></i>
+        </button>
     </div>
-    <div class="panel-body">
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group btn-group-sm" role="group">
-                <button ng-click="$ctrl.goToBeginning()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Go To Beginning (ctrl or cmd + left arrow)">
-                    <i class="fa fa-fast-backward"></i>
-                </button>
-                <button ng-click="$ctrl.pageBackward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Page backward">
-                    <i class="fa fa-step-backward"></i>
-                </button>
-                <button ng-click="$ctrl.pageForward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Page forward">
-                    <i class="fa fa-step-forward"></i>
-                </button>
-                <button ng-click="$ctrl.goToEnd()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Go To End (ctrl or cmd + right arrow)">
-                    <i class="fa fa-fast-forward"></i>
-                </button>
-            </div>
-            <div class="btn-group btn-group-sm" role="group">
-                <button ng-click="$ctrl.zoomIn()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Zoom In">
-                    <i class="fa fa-search-plus"></i>
-                </button>
-                <button ng-click="$ctrl.zoomOut()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Zoom Out">
-                    <i class="fa fa-search-minus"></i>
-                </button>
-            </div>
-            <div class="btn-group btn-group-sm" role="group">
-                <button ng-click="$ctrl.chooseMusic()" class="btn btn-default" type="button" title="Add Music">
-                    <i class="fa fa-music"></i>
-                </button>
-
-            </div>
-        </div>
+    <div class="inline timeline-container">
         <div id="timelineContainer"></div>
     </div>
+    <div class="inline ">
+        <button id="timeline-page-right" ng-click="$ctrl.pageForward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+            title="Page forward">
+            <i class="fa fa-step-forward"></i>
+        </button>
+    </div>
+
+    <!-- </div> -->
 
 </div>

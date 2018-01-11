@@ -1,35 +1,6 @@
 .draw-paths-tool {
-    -visibility: hidden;
-    position: absolute;
+    background-color: gainsboro;
 }
-
-.draw-paths-tool ul.dropdown-menu {
-    min-width: 200px;
-}
-
-.draw-paths-tool .dropdown-menu li {
-    width: 40px;
-}
-
-.draw-paths-tool ul.dropdown-menu.direction-picker {
-    min-width: 160px;
-}
-
-.draw-paths-tool .panel-heading {
-    margin-left: 5px;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    font-size: 12px;
-    text-align: left;
-}
-
-.draw-paths-tool .panel-body {
-    padding: 0;
-}
-
-/* .draw-paths-tool table {
-    width: 100%;
-} */
 
 .draw-paths-tool .button-svg {
     height: 20px;
@@ -37,9 +8,14 @@
 }
 
 .draw-paths-tool .direction-button button {
+    border-radius: 0;
     height: 32px;
     width: 32px;
     padding: 0;
+}
+
+.draw-paths-tool .direction-button button i {
+    color: black;
 }
 
 .draw-paths-tool .direction-button button.active {
@@ -47,6 +23,7 @@
 }
 
 .draw-paths-tool .turn-mode-button button {
+    border-radius: 0;
     height: 32px;
     width: 48px;
     padding: 0;
@@ -63,51 +40,22 @@
 }
 
 .draw-paths-tool .save-cancel-button button {
+    border-radius: 0;
     height: 32px;
     width: 48px;
     padding: 0;
 }
 
 .draw-paths-tool .reset-button button {
+    border-radius: 0;
     width: 96px;
 }
 
-.draw-paths-tool .save-button {
+.draw-paths-tool .save-button i {
     color: green;    
 }
 
-.draw-paths-tool .cancel-button {
+.draw-paths-tool .cancel-button i {
     color: red;    
 }
 
-.fa-rotate-NE {
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-
-.fa-rotate-SE {
-    -webkit-transform: rotate(135deg);
-    -moz-transform: rotate(135deg);
-    -ms-transform: rotate(135deg);
-    -o-transform: rotate(135deg);
-    transform: rotate(135deg);
-}
-
-.fa-rotate-SW {
-    -webkit-transform: rotate(225deg);
-    -moz-transform: rotate(225deg);
-    -ms-transform: rotate(225deg);
-    -o-transform: rotate(225deg);
-    transform: rotate(225deg);
-}
-
-.fa-rotate-NW {
-    -webkit-transform: rotate(315deg);
-    -moz-transform: rotate(315deg);
-    -ms-transform: rotate(315deg);
-    -o-transform: rotate(315deg);
-    transform: rotate(315deg);
-}

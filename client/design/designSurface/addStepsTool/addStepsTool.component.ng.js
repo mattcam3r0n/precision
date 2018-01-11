@@ -10,12 +10,12 @@ angular.module('drillApp')
   .component('addStepsTool', {
     templateUrl: 'client/design/designSurface/addStepsTool/addStepsTool.view.ng.html',
     bindings: {
-      field: '<'
     },
     controller: function ($scope, drillEditorService, eventService) {
       var ctrl = this;
 
       ctrl.$onInit = function () {        
+        ctrl.isActivated = true;
         ctrl.unsubscribeAddStepsToolActivated = eventService.subscribeAddStepsToolActivated((evt, args) => {
           activate(drillEditorService.getMemberSelection());
         });
@@ -71,36 +71,16 @@ angular.module('drillApp')
 
         ctrl.isActivated = true;
         ctrl.memberSelection = memberSelection;
-
-        positionTools();
       }
 
       function deactivate() {
         ctrl.isActivated = false;
-        ctrl.field.enablePositionIndicator();
-        ctrl.field.canvas.selection = true;
-        ctrl.field.canvas.defaultCursor = 'default';
+        // TODO: use events to signal this, if still needed?
+        // ctrl.field.enablePositionIndicator();
+        // ctrl.field.canvas.selection = true;
+        // ctrl.field.canvas.defaultCursor = 'default';
       }
 
-      function positionTools(obj) {
-        // TODO
-        // * make this better
-        // * take selected members in to account?
-        // * handle error when no members
-
-        // get leftmost marcher
-        var leftmost = ctrl.field.getLeftmostMarcherPosition();
-
-        var absCoords = ctrl.field.getAbsoluteCoords(leftmost);
-        var left = absCoords.left - 200;
-        if (left < 0) {
-          left = absCoords.left + absCoords.width + 20;
-        }
-        var top = absCoords.top - 100;
-
-        ctrl.toolDiv.style.left = left + 'px';
-        ctrl.toolDiv.style.top = top + 'px';
-      }
 
     }
   });

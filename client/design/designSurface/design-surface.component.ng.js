@@ -1,5 +1,6 @@
 'use strict';
 
+import Events from '/client/lib/Events';
 import FieldController from './field/FieldController';
 
 angular.module('drillApp')
@@ -10,10 +11,11 @@ angular.module('drillApp')
     },
     controller: function ($scope, $window, $timeout, appStateService, drillEditorService, eventService) {
       var ctrl = this;
-      eventService.notifyShowSpinner();
+      eventService.notify(Events.showSpinner);
 
       $timeout(function(){
         ctrl.field = new FieldController(ctrl.drill, eventService);
+        appStateService.field = ctrl.field;
         eventService.notifyHideSpinner();
       });
 
@@ -49,17 +51,34 @@ angular.module('drillApp')
         ctrl.field.resize();
       });
 
+      var unsubscribeSizeToFit = eventService.subscribeSizeToFit(() => {
+        ctrl.field.sizeToFit();
+      });
+
+      var unsubscribeZoomIn = eventService.subscribeZoomIn(() => {
+        ctrl.field.zoomIn();
+      });
+
+      var unsubscribeZoomOut = eventService.subscribeZoomOut(() => {
+        ctrl.field.zoomOut();
+      });
+
       var unsubscribeUpdateField = eventService.subscribeUpdateField((evt, args) => {
         ctrl.field.update();
       });
 
       $scope.$on("$destroy", function(){
         ctrl.field.canvas.dispose();
+        appStateService.field = null;
         unsubscribeDrillStateChanged();
         unsubscribeMembersAdded();
         unsubscribeShowPaths();
         unsubscribeUpdateField();
         unsubscribeStrideTypeChanged();
+        unsubscribeResize();
+        unsubscribeSizeToFit();
+        unsubscribeZoomIn();
+        unsubscribeZoomOut();
       });
 
       

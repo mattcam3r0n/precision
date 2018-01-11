@@ -13,20 +13,20 @@
     cursor: pointer;
 }
 
-.open-dialog .list-group-item {
+.open-drill-dialog .list-group-item {
     padding: 5px;
 }
 
-.open-dialog .pagination {
+.open-drill-dialog .pagination {
     display: block;
 }
 
-.open-dialog .small-text {
+.open-drill-dialog .small-text {
     font-style: italic;
     font-size: 10pt;
 }
 
-.open-dialog .delete-button {
+.open-drill-dialog .delete-button {
     color: red;
     cursor: pointer;
 }

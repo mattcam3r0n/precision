@@ -8,8 +8,8 @@ var minWidth = FieldDimensions.marcherWidth + 10,
     minHeight = FieldDimensions.marcherHeight + 10;
 
 // limit to max of aprox ~16 x 16
-var maxWidth = FieldDimensions.marcherWidth * 20,
-    maxHeight = FieldDimensions.marcherHeight * 20;
+var maxWidth = FieldDimensions.marcherWidth * 2 * 30,
+    maxHeight = FieldDimensions.marcherHeight * 2 * 30;
 
 class SizableRect {
     constructor(field, strideType) {

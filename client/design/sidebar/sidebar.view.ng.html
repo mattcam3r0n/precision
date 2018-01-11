@@ -1,0 +1,119 @@
+<div id="sidebar" class="sidebar ">
+
+    <ul id="sideMenu" class="side-menu">
+        <li>
+        </li>
+        <li class="panel">
+            <a href="#selectOptions" data-toggle="collapse" data-parent="#sideMenu">
+                <i class="fa fa-mouse-pointer"></i> Select</a>
+            <div id="selectOptions" class="collapse">
+                <ul class="side-sub-menu">
+                    <li>
+                        <a ng-click="selectAll()">Select All</a>
+                    </li>
+                    <li>
+                        <a ng-click="deselectAll()">Deselect All</a>
+                    </li>
+                    <li>
+                        <a ng-click="hideUnselected()">Hide Unselected</a>
+                    </li>
+                    <li>
+                        <a ng-click="showAll()">Show Unselected</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="panel">
+            <a href="#marcherOptions" data-toggle="collapse" data-parent="#sideMenu">
+                <i class="fa fa-play"></i> Marchers</a>
+            <div id="marcherOptions" class="collapse">
+                <ul class="side-sub-menu">
+                    <li>
+                        <a ng-click="addMembers()"><i class="fa fa-plus"></i>Add Marchers</a>
+                    </li>
+                    <li>
+                        <a ng-click="deleteSelectedMembers()"><i class="fa fa-times"></i>Delete Selected</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="panel">
+            <a href="#addSteps" ng-click="addSteps()" data-toggle="collapse" data-parent="#sideMenu">
+                <i class="fa fa-plus"></i> Steps</a>
+            <div id="addSteps" class="collapse">
+                <ul class="side-sub-menu">
+                    <li>
+                        <input type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary" data-label-text="Stride"
+                            data-size="mini" data-label-width="55px" />
+                    </li>
+                    <li>
+                        <add-steps-tool></add-steps-tool>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        </li>
+        <li class="panel">
+            <a href="#drawPaths" ng-click="drawPaths()" data-toggle="collapse" data-parent="#sideMenu">
+                <i class="fa fa-pencil"></i> Paths</a>
+            <div id="drawPaths" class="collapse">
+                <ul class="side-sub-menu">
+                    <li>
+                        <input type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary" data-label-text="Stride"
+                            data-size="mini" data-label-width="55px" />
+                    </li>
+                    <li>
+                        <draw-paths-tool></draw-paths-tool>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        </li>
+        <li class="panel">
+            <a href="#addMusic" data-toggle="collapse" data-parent="#sideMenu">
+                <i class="fa fa-music"></i> Music</a>
+            <div id="addMusic" class="collapse">
+                <ul class="side-sub-menu">
+                    <li><a ng-click="addMusic()"><i class="fa fa-plus"></i>Add Music</a></li>
+                    <li>Music Library</li>
+                </ul>
+            </div>
+        </li>
+        <li class="panel">
+            <a href="#zoom" data-toggle="collapse" data-parent="#sideMenu">
+                <i class="fa fa-search-plus"></i> Zoom</a>
+            <div id="zoom" class="collapse">
+                <ul class="side-sub-menu">
+                    <li>
+                        <a ng-click="sizeToFit()">
+                            <i class="fa fa-arrows"></i>Fit</a>
+                    </li>
+                    <li>
+                        <a ng-click="zoomIn()">
+                            <i class="fa fa-search-plus"></i>Zoom In</a>
+                    </li>
+                    <li>
+                        <a ng-click="zoomOut()">
+                            <i class="fa fa-search-minus"></i>Zoom Out</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="panel">
+            <a href="#settings" data-toggle="collapse" data-parent="#sideMenu">
+                <i class="fa fa-cog"></i> Settings</a>
+            <div id="settings" class="collapse">
+                <ul class="side-sub-menu">
+                    <li>
+                        <input type="checkbox" name="grid-switch" data-off-text="Off" data-on-text="On" data-off-color="primary" data-label-text="Grid"
+                            data-size="mini" data-label-width="55px">
+                    </li>
+                    <li>
+                        <input type="checkbox" name="logo-switch" data-off-text="Off" data-on-text="On" data-off-color="primary" data-label-text="Logo"
+                            data-size="mini" data-label-width="55px">
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,3 +1,8 @@
-.design.container {
-    margin: 15px;
+
+body {
+    overflow: hidden;
+}
+
+.navbar {
+    margin-bottom: 0;
 }

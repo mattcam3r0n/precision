@@ -1,5 +1,7 @@
 'use strict';
 
+import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import { FieldPoint, StepPoint } from '/client/lib/Point';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
@@ -9,28 +11,38 @@ angular.module('drillApp')
   .component('drawPathsTool', {
     templateUrl: 'client/design/designSurface/drawPathsTool/drawPathsTool.view.ng.html',
     bindings: {
-      field: '<'
     },
-    controller: function ($scope, $window, drillEditorService, eventService) {
+    controller: function ($scope, $window, appStateService, drillEditorService, eventService) {
       var ctrl = this;
 
-      var unsubscribeDrawPathsToolActivated = eventService.subscribeDrawPathsToolActivated(() => {
-        activate(drillEditorService.getMemberSelection());
-      });
-
-      var unsubscribeStrideTypeChanged = drillEditorService.subscribeStrideTypeChanged((evt, args) => {
-        if (!ctrl.isActivated) return;
-        activate(drillEditorService.getMemberSelection());        
-      });
-
       ctrl.$onInit = function () {
+        ctrl.subscriptions = new EventSubscriptionManager(eventService);
         ctrl.turnMode = 'block';
         ctrl.toolDiv = angular.element('.draw-paths-tool')[0];
+      
+        ctrl.subscriptions.subscribe(Events.drawPathsToolActivated, () => {
+          activate(drillEditorService.getMemberSelection());
+        });
+
+        ctrl.subscriptions.subscribe(Events.strideTypeChanged, (evt, args) => {
+          if (!ctrl.isActivated) return;
+          activate(drillEditorService.getMemberSelection());        
+        });
+
+        // var unsubscribeDrawPathsToolActivated = eventService.subscribeDrawPathsToolActivated(() => {
+        //   activate(drillEditorService.getMemberSelection());
+        // });
+  
+        // var unsubscribeStrideTypeChanged = drillEditorService.subscribeStrideTypeChanged((evt, args) => {
+        //   if (!ctrl.isActivated) return;
+        //   activate(drillEditorService.getMemberSelection());        
+        // });
       }
 
       ctrl.$onDestroy = function () {
-        unsubscribeDrawPathsToolActivated();
-        unsubscribeStrideTypeChanged();
+        ctrl.subscriptions.unsubscribeAll();
+        // unsubscribeDrawPathsToolActivated();
+        // unsubscribeStrideTypeChanged();
       }
 
       // $scope.activate = activate;
@@ -73,11 +85,11 @@ angular.module('drillApp')
           deactivate();
 
         ctrl.isActivated = true;
+        ctrl.field = appStateService.field;
         ctrl.memberSelection = memberSelection;
         ctrl.strideType = drillEditorService.strideType;
 
         createPathTool();
-        positionTools();
 
         ctrl.field.disablePositionIndicator();
         setTurnDirection(Direction.E);
@@ -87,8 +99,7 @@ angular.module('drillApp')
           if (!ctrl.isActivated) return;
           ctrl.memberSelection = args.memberSelection;
           createPathTool();
-        });
-  
+        });  
       }
 
       function deactivate() {
@@ -104,6 +115,7 @@ angular.module('drillApp')
         destroyPathTool();
         eventService.notifyUpdateField();
         ctrl.field.update();
+        eventService.notify(Events.drawPathsToolDeactivated);        
       }
 
       function setTurnDirection(direction) {
@@ -147,7 +159,7 @@ angular.module('drillApp')
 
       function onMouseUp(evt) {
         if (!evt.isClick) return;
-        if (evt.target !== null) return; // clicked on an object
+        if (evt.target !== null && !evt.target.isLogo) return; // clicked on an object
 
         // have to adjust point for zoom
         var adjustedPoint = ctrl.field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
@@ -170,29 +182,6 @@ angular.module('drillApp')
 
         drillEditorService.save(true);
       }
-
-      function positionTools(obj) {
-        // TODO
-        // * make this better
-        // * take selected members in to account?
-        // * handle error when no members
-
-        // get leftmost marcher
-        var leftmost = ctrl.field.getLeftmostMarcherPosition();
-
-        var absCoords = ctrl.field.getAbsoluteCoords(leftmost);
-        var left = absCoords.left - 200;
-        if (left < 0) {
-          left = absCoords.left + absCoords.width + 20;
-        }
-        var top = absCoords.top - 100;
-
-        ctrl.toolDiv.style.left = left + 'px';
-        ctrl.toolDiv.style.top = top + 'px';
-      }
-
-
-
 
     }
   });

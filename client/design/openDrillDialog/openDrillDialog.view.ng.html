@@ -1,12 +1,12 @@
 <!-- Modal -->
-<div class="open-dialog modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="open-drill-dialog modal fade" id="openDrillDialog" tabindex="-1" role="dialog" aria-labelledby="openDialoglabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Open Drill</h4>
+                <h4 class="modal-title" id="openDialogLabel">Open Drill</h4>
             </div>
             <div class="modal-body" style="min-height: 450px">
 
@@ -20,7 +20,6 @@
                 </div>
 
                 <div class="list-group">
-                    <!-- {{ drillCount }} -->
                     <a class="list-group-item" dir-paginate="drill in drills | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
                         <table width="100%">
                             <tr>
@@ -29,7 +28,7 @@
                                 </td>
                                 <td class="drill-desc">
                                     <div>
-                                        <a ng-click="open(drill)" data-toggle="modal" data-target="#myModal">
+                                        <a ng-click="open(drill)" data-toggle="modal" data-target="#openDrillDialog">
                                             <h3 class="drill-title">{{drill.name}}</h3>
                                         </a>
                                     </div>
@@ -42,8 +41,6 @@
                                             <td class="small-text">Last edited {{drill.updatedDate | date}}</td>
                                         </tr>
                                     </table>
-                                    <!-- <div><span class="">Owned by {{drill.owner}}</span></div>
-                                    <div><span class="">Last edited {{drill.updatedDate | date}}</span></div> -->
                                 </td>
                                 <td>
                                     <a ng-click="delete(drill)">

@@ -1,4 +1,34 @@
 class Events {
+    // TODO: make a clearer distinction between commands and events
+
+    // Commands - message to do something
+
+    static get newDrill() {
+        return 'newDrill';
+    }
+
+    static get showOpenDrillDialog() {
+        return 'showOpenDrillDialog';
+    }
+
+    static get showDrillPropertiesDialog() {
+        return 'showDrillPropertiesDialog';
+    }
+
+    static get sizeToFit() {
+        return 'sizeToFit';
+    }
+
+    static get zoomIn() {
+        return 'zoomIn';
+    }
+
+    static get zoomOut() {
+        return 'zoomOut';
+    }
+
+    // Events - notification that something has happened
+
     static get membersAdded() {
         return 'membersAdded';
     }
@@ -23,6 +53,10 @@ class Events {
         return 'drawPathsToolActivated';
     }
 
+    static get drawPathsToolDeactivated() {
+        return 'drawPathsToolDeactivated';
+    }
+
     static get addMembersToolActivated() {
         return 'addMembersToolActivated';
     }
@@ -38,6 +72,7 @@ class Events {
     static get resize() {
         return 'resize';
     }
+
 
     static get deleteTurn() {
         return 'deleteTurn';

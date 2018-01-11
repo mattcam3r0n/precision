@@ -22,7 +22,7 @@ class FieldController {
         this.paths = [];
         this.arePathsVisible = false;
         this.fieldPainter = new FieldPainter(this.canvas);
-        
+
         //this.initCustomCorners();
         this.draw();
         this.resize();
@@ -31,8 +31,6 @@ class FieldController {
 
         this.positionIndicator = this.createPositionIndicator();
         this.positionIndicatorEnabled = true;
-        
-
     }
 
     setDrill(drill) {
@@ -43,7 +41,7 @@ class FieldController {
 
     createCanvas() {
         return new fabric.Canvas('design-surface', {
-            backgroundColor: 'green',
+            backgroundColor: '#40703B', // huntergreen //'green',
             height: FieldDimensions.height,
             width: FieldDimensions.width,
             uniScaleTransform: true,
@@ -62,7 +60,7 @@ class FieldController {
     showPaths(counts) {
         if (this.arePathsVisible) {
             this.hidePaths();
-            return;            
+            return;
         }
         this.arePathsVisible = true;
 
@@ -106,7 +104,7 @@ class FieldController {
         points.push(new StepPoint(member.initialState.strideType, member.initialState.x, member.initialState.y).toFieldPoint());
 
         var pos = null;
-        for(var i = 0; i < 30; i++) {
+        for (var i = 0; i < 30; i++) {
             pos = MemberPositionCalculator.stepForward(member, pos);
             let p = new StepPoint(pos.strideType, pos.x, pos.y).toFieldPoint();
             points.push(p);
@@ -126,7 +124,7 @@ class FieldController {
         points.forEach(p => {
             pathExpr += p.x + ' ' + p.y + ' L ';
         });
-        return pathExpr.slice(0, -2);    
+        return pathExpr.slice(0, -2);
     }
 
     /**
@@ -146,9 +144,32 @@ class FieldController {
         this.canvas.renderAll();
     }
 
+    get isGridVisible() {
+        return this.fieldPainter.isGridVisible;
+    }
+
+    set isGridVisible(isVisible) {
+        this.fieldPainter.isGridVisible = isVisible;
+        //        isVisible ? this.fieldPainter.showGrid(this.strideType) : this.fieldPainter.hideGrid();
+        this.update();
+    }
+
+    get isLogoVisible() {
+        return this.fieldPainter.isLogoVisible;
+    }
+
+    set isLogoVisible(isVisible) {
+        this.fieldPainter.isLogoVisible = isVisible;
+        this.update();
+    }
+
     strideTypeChanged(strideType) {
         this.strideType = strideType;
-        this.fieldPainter.showGrid(strideType);
+        if (this.fieldPainter.isGridVisible)
+            this.fieldPainter.showGrid(strideType);
+        else
+            this.fieldPainter.hideGrid();
+        this.update();
     }
 
     disablePositionIndicator() {
@@ -182,23 +203,23 @@ class FieldController {
             marcher.update(state);
             marcher.setCoords();
         }
-        
+
     }
 
     synchronizeMarchers() {
-        if (!this.drill) return; 
+        if (!this.drill) return;
 
         for (var id in this.marchers) {
             let marcher = this.marchers[id];
             this.destroyMarcher(marcher);
         }
         this.marchers = {};
-        
+
         this.drill.members.forEach(member => {
             let newMarcher = MarcherFactory.createMarcher(member.initialState);
             newMarcher.member = member;
             this.marchers[member.id] = newMarcher;
-            this.canvas.add(newMarcher);    
+            this.canvas.add(newMarcher);
         });
     }
 
@@ -209,6 +230,18 @@ class FieldController {
 
     resize() {
         FieldResizer.resize(this.canvas);
+    }
+
+    sizeToFit() {
+        FieldResizer.sizeToFit(this.canvas);
+    }
+
+    zoomIn() {
+        FieldResizer.zoomIn(this.canvas);
+    }
+
+    zoomOut() {
+        FieldResizer.zoomOut(this.canvas);
     }
 
     wireUpEvents() {
@@ -236,11 +269,11 @@ class FieldController {
             var clickPoint = self.adjustMousePoint(new fabric.Point(e.offsetX, e.offsetY));
 
             e.preventDefault();
-        
+
             var objectFound = findMarcherAtPoint(self.canvas, clickPoint);
 
             console.log(objectFound);
-        });        
+        });
     }
 
 
@@ -251,7 +284,7 @@ class FieldController {
         });
         var marchers = this.canvas.getActiveGroup().getObjects().filter(o => o.type == 'Marcher');
         var members = marchers.map(marcher => marcher.member);
-        
+
         this.canvas.discardActiveGroup(); // import to call this BEFORE emitting event, causes strange effect on position
         this.eventService.notifyObjectsSelected({ members: members, marchers: marchers });
     }
@@ -264,7 +297,7 @@ class FieldController {
 
         var member = evt.target.member;
 
-        if (!member || !member.isVisible) return; 
+        if (!member || !member.isVisible) return;
 
         this.canvas.discardActiveObject();
         this.eventService.notifyObjectsSelected({ members: [member] });
@@ -276,17 +309,17 @@ class FieldController {
 
     onMouseMove(evt) {
         //if (!this.positionIndicatorEnabled) return; 
-        
+
         var isSelecting = !!this.canvas._groupSelector; // sneaky way of determinig if dragging selection box
         if (evt.target == null && !isSelecting)
             this.positionIndicator.set('visible', true);
-        else    
+        else
             this.positionIndicator.set('visible', false);
 
         var self = this;
         var p = { x: evt.e.layerX, y: evt.e.layerY };
         var snappedPoint = FieldDimensions.snapPoint(this.strideType || StrideType.SixToFive, self.adjustMousePoint(p));
-        
+
         self.positionIndicator.set('visible', this.positionIndicatorEnabled);
         self.positionIndicator.set('left', snappedPoint.x);
         self.positionIndicator.set('top', snappedPoint.y);
@@ -321,34 +354,34 @@ class FieldController {
         var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
         return {
             x: point.x * (1 / zoomFactor.x),
-            y: point.y * ( 1/ zoomFactor.y)
+            y: point.y * (1 / zoomFactor.y)
         };
     }
 
     getAbsoluteCoords(object) {
         var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
         var coords = {};
-        
+
         if (object.left)
             coords.left = (object.left * zoomFactor.x) + this.canvas._offset.left;
-        
+
         if (object.top)
             coords.top = (object.top * zoomFactor.y) + this.canvas._offset.top;
 
         if (object.width)
             coords.width = (object.width * zoomFactor.x); // + this.canvas._offset.left
-        
+
         if (object.height)
             coords.height = (object.height * zoomFactor.y);
 
-        return coords;            
+        return coords;
     }
 
     getLeftmostMarcherPosition() {
         var sorted = _.sortBy(this.marchers, m => {
             return m.left;
         });
-        
+
         var leftmost = _.first(sorted);
 
         return {
@@ -414,7 +447,7 @@ function findMarcherAtPoint(canvas, point) {
     //     }, function() {
     //         canvas.renderAll();
     //     } );
-        
+
     //     fabric.Object.prototype.customiseCornerIcons({
     //         settings: {
     //             //borderColor: 'red',

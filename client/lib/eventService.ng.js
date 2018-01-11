@@ -7,6 +7,18 @@ class EventService {
 
     // Events
 
+    subscribe(event, cb) {
+        if (!event && !cb) return;
+        
+        return this.$rootScope.$on(event, cb);
+    }
+
+    notify(event, args) {
+        if (!event) return;
+
+        this.$rootScope.$broadcast(event, args);
+    }
+
     subscribeAddStepsToolActivated(cb) {
         var unsubscribe = this.$rootScope.$on(Events.addStepsToolActivated, cb);
         return unsubscribe;
@@ -61,6 +73,33 @@ class EventService {
         this.$rootScope.$broadcast(Events.resize, args);
     }
     
+    subscribeSizeToFit(cb) {
+        var unsubscribe = this.$rootScope.$on(Events.sizeToFit, cb);
+        return unsubscribe;
+    }
+
+    notifySizeToFit(args) {
+        this.$rootScope.$broadcast(Events.sizeToFit, args);
+    }
+
+    subscribeZoomIn(cb) {
+        var unsubscribe = this.$rootScope.$on(Events.zoomIn, cb);
+        return unsubscribe;
+    }
+
+    notifyZoomIn(args) {
+        this.$rootScope.$broadcast(Events.zoomIn, args);
+    }
+
+    subscribeZoomOut(cb) {
+        var unsubscribe = this.$rootScope.$on(Events.zoomOut, cb);
+        return unsubscribe;
+    }
+
+    notifyZoomOut(args) {
+        this.$rootScope.$broadcast(Events.zoomOut, args);
+    }
+
     subscribeDeleteTurn(cb) {
         var unsubscribe = this.$rootScope.$on(Events.deleteTurn, cb);
         return unsubscribe;

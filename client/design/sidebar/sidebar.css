@@ -1,0 +1,80 @@
+.sidebar {
+}
+
+.side-menu {
+    text-align: left;
+    padding: 5px;
+    list-style-type: none;
+    color: whitesmoke;
+    font-size: 12px;
+}
+
+.side-menu i {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    /* width: 100%; */
+    font-size: 20px;
+    color: white;
+}
+
+.side-menu li.panel:hover {
+    background-color: #1E3749;
+}
+
+.side-menu li.panel {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+.side-menu li a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.side-menu li.opened {
+    background-color: #1E3749;
+}
+/* .side-menu a:not(.collapsed) {
+    width: 100%;
+    background-color: #1E3749;
+} */
+
+
+.side-sub-menu {
+    list-style-type: none;
+    background-color: #3B5B71;
+    color: whitesmoke;
+    border: solid 2px #1E3749;
+    text-align: left;
+    font-size: 10px;
+    padding: 2px;
+    width: 100%;
+}
+
+.side-sub-menu li {
+    width: 100%;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+}
+
+.side-sub-menu li:hover {
+    background-color: slategray;
+}
+
+.side-sub-menu li i {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 12px;
+}

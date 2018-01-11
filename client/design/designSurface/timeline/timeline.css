@@ -1,10 +1,19 @@
 .timeline {
-    position: absolute;
+    /* position: absolute;
     z-index: 2;
-    top: 400px;
-    left: 50px;
-    height: 240px;
-    width: 1200px;
+    top: 505px;
+    left: -95px;
+    height: 140px;
+    width: 100%; */
+
+    width:100%;
+
+    font-size: 8pt;
+    padding: 0;
+}
+
+#timeline {
+    padding: 2px;
 }
 
 .timeline .close-button {
@@ -15,14 +24,33 @@
     margin-left: 5px;
 }
 
-.timeline .panel-body {
-    padding: 0;
-    /* margin-left: 2px;
-    margin-right: 2px; */
-}
-
-.timeline .panel-body button {
+.timeline button {
     text-align: left;
     font-size: 10px;
+    padding: 5px;
 }
+
+.timeline .vis-background {
+    background-color: white;
+}
+
+.timeline .vis-item .vis-item-content {
+    padding: 0;
+}
+
+#timeline-page-left {
+    height: 70px;
+}
+
+#timeline-page-right {
+    height: 70px;
+}
+
+.timeline-container {
+    width: calc(100% - 40px);
+}
+
+div.inline { float:left; }
+.clearBoth { clear:both; }
+
 

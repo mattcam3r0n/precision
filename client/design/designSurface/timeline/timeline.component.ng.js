@@ -12,7 +12,7 @@ angular.module('drillApp')
       var ctrl = this;
 
       ctrl.$onInit = function () {
-        ctrl.isActivated = false;
+        ctrl.isActivated = true;
         ctrl.timeline = new Timeline('timelineContainer');
         ctrl.timeline.setOnRemoveCallback(onRemove);
         ctrl.timeline.setOnGoToCountCallback(onGoToCount);
@@ -94,7 +94,7 @@ angular.module('drillApp')
 
       function onDrillStateChanged(args) {
         if (!ctrl.drill || !ctrl.isActivated) return;
-
+        
         if (!ctrl.timeline.isCountVisible(ctrl.drill.count)) {
           var range = ctrl.timeline.getVisibleCountRange();
           var midpoint = Math.floor((range.end - range.start) / 2);

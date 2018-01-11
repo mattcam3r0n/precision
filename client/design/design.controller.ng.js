@@ -1,9 +1,10 @@
 'use strict'
 
-import WalkThru from '/client/lib/walkThru/WalkThru';
 import DesignKeyboardHandler from './DesignKeyboardHandler';
 import Audio from '/client/lib/audio/Audio';
 import Spinner from '/client/components/spinner/spinner';
+import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 import { Meteor } from 'meteor/meteor';
 
@@ -19,6 +20,7 @@ angular.module('drillApp')
 
     function init() {
       ctrl.spinner = new Spinner($('div.design')[0]);
+      ctrl.subscriptions = new EventSubscriptionManager(eventService);
 
       $scope.tempo = 120;
       $window.addEventListener('keydown', keydown);
@@ -45,22 +47,28 @@ angular.module('drillApp')
         appStateService.openLastDrillOrNew().then(openDrill);
       });
 
-      // handle selection event
-      ctrl.unsubscribeObjectsSelected = eventService.subscribeObjectsSelected((evt, args) => {
+      // handle events
+      ctrl.subscriptions.subscribe(Events.newDrill, (evt, args) => {
+        newDrill();
+      });
+
+      ctrl.subscriptions.subscribe(Events.showOpenDrillDialog, (evt, args) => {
+        $('#openDrillDialog').modal('show');
+      });
+
+      ctrl.subscriptions.subscribe(Events.showDrillPropertiesDialog, (evt, args) => {
+
+      });
+
+      ctrl.subscriptions.subscribe(Events.objectsSelected, (evt, args) => {
         drillEditorService.selectMembers(args.members);
       });
 
-      // update position indicator
-      ctrl.unsubscribePositionIndicator = eventService.subscribePositionIndicator((event, args) => {
-        $scope.currentPosition = args.position;
-        $scope.$safeApply();
-      });
-
-      ctrl.unsubscribeShowSpinner = eventService.subscribeShowSpinner((event, args) => {
+      ctrl.subscriptions.subscribe(Events.showSpinner, (event, args) => {
         ctrl.spinner.start();
       });
 
-      ctrl.unsubscribeHideSpinner = eventService.subscribeHideSpinner((event, args) => {
+      ctrl.subscriptions.subscribe(Events.hideSpinner, (event, args) => {
         ctrl.spinner.stop();
       });
     }
@@ -68,10 +76,7 @@ angular.module('drillApp')
 
     $scope.$on("$destroy", function () {
       $window.removeEventListener('keydown', keydown);
-      ctrl.unsubscribeObjectsSelected();
-      ctrl.unsubscribePositionIndicator();
-      ctrl.unsubscribeShowSpinner();
-      ctrl.unsubscribeHideSpinner();
+      ctrl.subscriptions.unsubscribeAll();
     });
 
     function newDrill() {
@@ -107,61 +112,13 @@ angular.module('drillApp')
       console.log('drill', $scope.drill);
     }
 
-    $scope.onNew = function () {
-      newDrill();
-    }
+    // $scope.onNew = function () {
+    //   newDrill();
+    // }
 
+    // used by openDrillDialog when a drill is chosen
     $scope.onOpen = function (drillId) {
       openDrill(drillId);
     };
-
-    $scope.onPlay = function (playMusic) {
-      drillEditorService.play(() => {
-        $scope.$safeApply();
-      }, 0, playMusic);
-    }
-
-    $scope.onStop = function () {
-      drillEditorService.stop();
-      Audio.stop();
-    }
-
-    $scope.onGoToBeginning = function () {
-      drillEditorService.goToBeginning();
-    }
-
-    $scope.onGoToEnd = function () {
-      drillEditorService.goToEnd();
-    }
-
-    $scope.onStepBackward = function () {
-      drillEditorService.stepBackward();
-    }
-
-    $scope.onStepForward = function () {
-      drillEditorService.stepForward();
-    }
-
-    $scope.onShowTimeline = function () {
-      eventService.notifyShowTimeline();
-    }
-
-    // show help
-    // TODO: Make this an overlay rather than resizing field
-    $scope.showHelp = function () {
-      $scope.isHelpVisible = !$scope.isHelpVisible;
-
-      var c = angular.element('#design-surface-col')
-      c.removeClass($scope.isHelpVisible ? 'col-md-12' : 'col-md-11');
-      c.addClass($scope.isHelpVisible ? 'col-md-11' : 'col-md-12');
-      eventService.notifyResize();
-    }
-
-    // show the "add members" walkthrough. make sure addMembers tool is displayed first.
-    $scope.showIntro = function () {
-      $scope.addMembers();
-      var wt = new WalkThru();
-      wt.start('addMembers');
-    }
 
   });
