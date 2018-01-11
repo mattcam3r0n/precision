@@ -50,11 +50,11 @@ angular.module('drillApp')
         drillEditorService.selectMembers(args.members);
       });
 
-      // update position indicator
-      ctrl.unsubscribePositionIndicator = eventService.subscribePositionIndicator((event, args) => {
-        $scope.currentPosition = args.position;
-        $scope.$safeApply();
-      });
+      // // update position indicator
+      // ctrl.unsubscribePositionIndicator = eventService.subscribePositionIndicator((event, args) => {
+      //   $scope.currentPosition = args.position;
+      //   $scope.$safeApply();
+      // });
 
       ctrl.unsubscribeShowSpinner = eventService.subscribeShowSpinner((event, args) => {
         ctrl.spinner.start();
@@ -115,47 +115,47 @@ angular.module('drillApp')
       openDrill(drillId);
     };
 
-    $scope.onPlay = function (playMusic) {
-      drillEditorService.play(() => {
-        $scope.$safeApply();
-      }, 0, playMusic);
-    }
+    // $scope.onPlay = function (playMusic) {
+    //   drillEditorService.play(() => {
+    //     $scope.$safeApply();
+    //   }, 0, playMusic);
+    // }
 
-    $scope.onStop = function () {
-      drillEditorService.stop();
-      Audio.stop();
-    }
+    // $scope.onStop = function () {
+    //   drillEditorService.stop();
+    //   Audio.stop();
+    // }
 
-    $scope.onGoToBeginning = function () {
-      drillEditorService.goToBeginning();
-    }
+    // $scope.onGoToBeginning = function () {
+    //   drillEditorService.goToBeginning();
+    // }
 
-    $scope.onGoToEnd = function () {
-      drillEditorService.goToEnd();
-    }
+    // $scope.onGoToEnd = function () {
+    //   drillEditorService.goToEnd();
+    // }
 
-    $scope.onStepBackward = function () {
-      drillEditorService.stepBackward();
-    }
+    // $scope.onStepBackward = function () {
+    //   drillEditorService.stepBackward();
+    // }
 
-    $scope.onStepForward = function () {
-      drillEditorService.stepForward();
-    }
+    // $scope.onStepForward = function () {
+    //   drillEditorService.stepForward();
+    // }
 
-    $scope.onShowTimeline = function () {
-      eventService.notifyShowTimeline();
-    }
+    // $scope.onShowTimeline = function () {
+    //   eventService.notifyShowTimeline();
+    // }
 
-    $scope.sizeToFit = function() {
-      eventService.notifySizeToFit();
-    }
+    // $scope.sizeToFit = function() {
+    //   eventService.notifySizeToFit();
+    // }
 
-    $scope.zoomIn = function() {
-      eventService.notifyZoomIn();
-    }
+    // $scope.zoomIn = function() {
+    //   eventService.notifyZoomIn();
+    // }
 
-    $scope.zoomOut = function() {
-      eventService.notifyZoomOut();
-    }
+    // $scope.zoomOut = function() {
+    //   eventService.notifyZoomOut();
+    // }
 
   });

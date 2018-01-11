@@ -5,28 +5,51 @@
     left: -95px;
     height: 140px;
     width: 100%; */
-
-    font-size: 8pt;
 }
 
-.playback-controls .btn-toolbar {
-    margin: 0;
+#playbackToolbar {
+    height: 27px;
+    margin-top: 3px;
+    margin-bottom: 0;
+    margin-left: 0;
+    marging-right: 0;
     padding: 2px;
     background-color:gainsboro;
+}
+
+
+.playback-controls .btn-toolbar .btn {
+    font-size: 8pt;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 .playback-controls .close-button {
     cursor: pointer;
 }
 
-.playback-controls div.panel-heading {
+/* .playback-controls div.panel-heading {
     margin-left: 5px;
+} */
+
+/* .playback-controls .panel-body {
+    padding: 0;
+} */
+
+
+#currentCount {
+    width: 34px;
+    margin-left: 0;
 }
 
-.playback-controls .panel-body {
-    padding: 0;
-    /* margin-left: 2px;
-    margin-right: 2px; */
+#tempoGroup {
+    width: 60px;
+}
+
+#tempo {
+    width: 35px;
 }
 
 #tempo, #tempoMinus, #tempoPlus {

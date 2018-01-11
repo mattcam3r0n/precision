@@ -1,5 +1,7 @@
 'use strict';
 
+import Audio from '/client/lib/audio/Audio';
+
 
 angular.module('drillApp')
   .component('playbackControls', {
@@ -7,14 +9,26 @@ angular.module('drillApp')
     bindings: {
       drill: '<'
     },
-    controller: function ($scope, $timeout, appStateService, drillEditorService, eventService) {
+    controller: function ($scope, $rootScope, $timeout, appStateService, drillEditorService, eventService) {
       var ctrl = this;
 
+      $scope.tempo = 120;
+      $scope.$watch('tempo', function () {
+        drillEditorService.setTempo($scope.tempo);
+      });
+      
       ctrl.$onInit = function () {
         ctrl.isActivated = true;
+
+        // update position indicator
+        ctrl.unsubscribePositionIndicator = eventService.subscribePositionIndicator((event, args) => {
+          $scope.currentPosition = args.position;
+          $rootScope.$safeApply();
+        });
       }
 
       ctrl.$onDestroy = function() {
+        ctrl.unsubscribePositionIndicator();
       }
 
       ctrl.$onChanges = function(changes) {
@@ -25,6 +39,34 @@ angular.module('drillApp')
 
       ctrl.deactivate = function() {
       }
+
+      ctrl.onPlay = function (playMusic) {
+        drillEditorService.play(() => {
+          $rootScope.$safeApply();
+        }, 0, playMusic);
+      }
+  
+      ctrl.onStop = function () {
+        drillEditorService.stop();
+        Audio.stop();
+      }
+  
+      ctrl.onGoToBeginning = function () {
+        drillEditorService.goToBeginning();
+      }
+  
+      ctrl.onGoToEnd = function () {
+        drillEditorService.goToEnd();
+      }
+  
+      ctrl.onStepBackward = function () {
+        drillEditorService.stepBackward();
+      }
+  
+      ctrl.onStepForward = function () {
+        drillEditorService.stepForward();
+      }
+        
       
       ctrl.zoomIn = function() {
         ctrl.timeline.zoomIn();

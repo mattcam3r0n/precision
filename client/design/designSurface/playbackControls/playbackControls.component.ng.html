@@ -1,9 +1,9 @@
 <div id="playbackControls" class="playback-controls">
 
-    <div class="panel-body">
+    <!-- <div class="panel-body"> -->
 
         <!-- old timeline stuff -->
-        <div class="btn-toolbar" role="toolbar">
+        <div id="playbackToolbar" class="btn-toolbar" role="toolbar">
 
             <!-- open drill, etc -->
             <div class="btn-group btn-group-sm" role="group">
@@ -20,34 +20,33 @@
 
             <!-- playback, go to beginning, etc -->
             <div class="btn-group btn-group-sm" role="group">
-                <button id="goToBeginning" ng-click="onGoToBeginning()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                <button id="goToBeginning" ng-click="$ctrl.onGoToBeginning()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                     title="Go To Beginning (ctrl or cmd + left arrow)">
                     <i class="fa fa-fast-backward"></i>
                 </button>
-                <button id="play" ng-click="onPlay(false)" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Play">
+                <button id="play" ng-click="$ctrl.onPlay(false)" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Play">
                     <i class="fa fa-play"></i>
                 </button>
-                <button id="play" ng-click="onPlay(true)" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Play">
+                <button id="play" ng-click="$ctrl.onPlay(true)" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Play">
                     <i class="fa fa-music"></i>
                     <i class="fa fa-play"></i>
                 </button>
-                <button id="stop" ng-click="onStop()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Stop">
+                <button id="stop" ng-click="$ctrl.onStop()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Stop">
                     <i class="fa fa-stop"></i>
                 </button>
-                <button id="goToEnd" ng-click="onGoToEnd()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Go To End (ctrl or cmd + right arrow)">
+                <button id="goToEnd" ng-click="$ctrl.onGoToEnd()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Go To End (ctrl or cmd + right arrow)">
                     <i class="fa fa-fast-forward"></i>
                 </button>
             </div>
 
             <!-- count, step forward and backward -->
             <div class="btn-group btn-group-sm" role="group">
-                <button id="stepBackward" ng-click="onStepBackward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                <button id="stepBackward" ng-click="$ctrl.onStepBackward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                     title="Backward 1 Count (left arrow)">
                     <i class="fa fa-step-backward"></i>
                 </button>
-                <button id="currentCount" class="btn btn-default btn-md" data-toggle="tooltip" data-placement="bottom" title="Current count"
-                    style="width: 40px;">{{drill.count}}</button>
-                <button id="stepForward" ng-click="onStepForward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                <button id="currentCount" class="btn btn-default btn-md" data-toggle="tooltip" data-placement="bottom" title="Current count">{{$ctrl.drill.count}}</button>
+                <button id="stepForward" ng-click="$ctrl.onStepForward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                     title="Forward 1 Count (right arrow)">
                     <i class="fa fa-step-forward"></i>
                 </button>
@@ -55,7 +54,7 @@
 
             <!-- tempo -->
             <div class="btn-group btn-group-sm" role="group">
-                <div class="input-group input-group-sm" style="width: 100px;" data-toggle="tooltip" data-placement="bottom" title="Tempo">
+                <div id="tempoGroup" class="input-group input-group-sm" data-toggle="tooltip" data-placement="bottom" title="Tempo">
                     <span class="input-group-btn">
                         <button id="tempoMinus" ng-click="tempo = tempo - 1" class="btn btn-default" type="button">-</button>
                     </span>
@@ -120,5 +119,5 @@
                 <i class="fa fa-step-forward"></i>
             </button>
         </div> -->
-    </div>
+    <!-- </div> -->
 </div>
