@@ -5,19 +5,6 @@
         <!-- old timeline stuff -->
         <div id="playbackToolbar" class="btn-toolbar" role="toolbar">
 
-            <!-- open drill, etc -->
-            <div class="btn-group btn-group-sm" role="group">
-                <button ng-click="onNew()" class="btn btn-default" type="button" title="New Drill">
-                    <i class="fa fa-file-o"></i>
-                </button>
-                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal" title="Open Drill">
-                    <i class="fa fa-folder-open"></i>
-                </button>
-                <button class="btn btn-default" type="button" title="Drill Settings">
-                    <i class="fa fa-cog"></i>
-                </button>
-            </div>
-
             <!-- playback, go to beginning, etc -->
             <div class="btn-group btn-group-sm" role="group">
                 <button id="goToBeginning" ng-click="$ctrl.onGoToBeginning()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
@@ -70,27 +57,27 @@
             </div>
 
             <!-- music -->
-            <div class="btn-group btn-group-sm" role="group">
+            <!-- <div class="btn-group btn-group-sm" role="group">
                 <button ng-click="$ctrl.chooseMusic()" class="btn btn-default" type="button" title="Add Music">
                     <i class="fa fa-music"></i>
                 </button>
-            </div>
+            </div> -->
 
             <!-- temporary buttons, debugging -->
-            <div class="btn-group btn-group-sm" role="group">
+            <!-- <div class="btn-group btn-group-sm" role="group">
                 <button ng-click="debug()" class="btn btn-default" type="button" title="debug">
                     <i class="fa fa-bug"></i>
                 </button>
-            </div>
+            </div> -->
 
-            <div class="btn-group btn-group-sm" role="group">
+            <!-- <div class="btn-group btn-group-sm" role="group">
                 <button ng-click="$ctrl.zoomIn()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Zoom In">
                     <i class="fa fa-search-plus"></i>
                 </button>
                 <button ng-click="$ctrl.zoomOut()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Zoom Out">
                     <i class="fa fa-search-minus"></i>
                 </button>
-            </div>
+            </div> -->
 
             <!-- position indicator -->
             <div class="btn-group btn-group-sm pull-right" role="group">

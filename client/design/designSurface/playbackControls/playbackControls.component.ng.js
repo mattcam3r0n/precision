@@ -68,13 +68,13 @@ angular.module('drillApp')
       }
         
       
-      ctrl.zoomIn = function() {
-        ctrl.timeline.zoomIn();
-      }
+      // ctrl.zoomIn = function() {
+      //   ctrl.timeline.zoomIn();
+      // }
 
-      ctrl.zoomOut = function() {
-        ctrl.timeline.zoomOut();
-      }
+      // ctrl.zoomOut = function() {
+      //   ctrl.timeline.zoomOut();
+      // }
 
       ctrl.goToBeginning = function() {
         ctrl.timeline.goToBeginning();
@@ -96,9 +96,9 @@ angular.module('drillApp')
         ctrl.timeline.pageBackward();
       }
 
-      ctrl.chooseMusic = function() {
-        eventService.notifyChooseMusicDialogActivated();
-      }
+      // ctrl.chooseMusic = function() {
+      //   eventService.notifyChooseMusicDialogActivated();
+      // }
 
 
     }

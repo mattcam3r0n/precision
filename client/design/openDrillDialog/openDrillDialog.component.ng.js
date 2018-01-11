@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('drillApp')
-  .component('openDialog', {
-    templateUrl: 'client/design/openDialog/openDialog.view.ng.html',
+  .component('openDrillDialog', {
+    templateUrl: 'client/design/openDrillDialog/openDrillDialog.view.ng.html',
     bindings: {
       onOpen: "&"
     },
@@ -34,6 +34,7 @@ angular.module('drillApp')
       });
 
       $scope.open = function(drill) {
+        console.log('openDrillDialog open');
         ctrl.onOpen({ drill: drill });
       }
 

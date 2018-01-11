@@ -73,6 +73,10 @@ angular.module('drillApp')
         drillEditorService.showAll();
       }
 
+      $scope.addMusic = function() {
+        eventService.notifyChooseMusicDialogActivated();
+      }
+
       $scope.sizeToFit = function() {
         eventService.notifySizeToFit();
       }

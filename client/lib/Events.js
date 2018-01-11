@@ -1,4 +1,34 @@
 class Events {
+    // TODO: make a clearer distinction between commands and events
+
+    // Commands - message to do something
+
+    static get newDrill() {
+        return 'newDrill';
+    }
+
+    static get showOpenDrillDialog() {
+        return 'showOpenDrillDialog';
+    }
+
+    static get showDrillPropertiesDialog() {
+        return 'showDrillPropertiesDialog';
+    }
+
+    static get sizeToFit() {
+        return 'sizeToFit';
+    }
+
+    static get zoomIn() {
+        return 'zoomIn';
+    }
+
+    static get zoomOut() {
+        return 'zoomOut';
+    }
+
+    // Events - notification that something has happened
+
     static get membersAdded() {
         return 'membersAdded';
     }
@@ -43,17 +73,6 @@ class Events {
         return 'resize';
     }
 
-    static get sizeToFit() {
-        return 'sizeToFit';
-    }
-
-    static get zoomIn() {
-        return 'zoomIn';
-    }
-
-    static get zoomOut() {
-        return 'zoomOut';
-    }
 
     static get deleteTurn() {
         return 'deleteTurn';
