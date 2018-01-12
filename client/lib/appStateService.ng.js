@@ -1,14 +1,17 @@
 import { Meteor } from 'meteor/meteor';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
+import Events from '/client/lib/Events';
 
 var _currentDrillFormatVersion = 1;
 
 class appStateService {
-    constructor($rootScope, alertService) {
+    constructor($rootScope, alertService, eventService) {
         this._drill = null;
         this._field = null;
         this.alertService = alertService;
+        this.eventService = eventService;
         this.rootScope = $rootScope.$new(true);
+        this.userProfile = {};
     }
 
     get drill() {
@@ -27,13 +30,54 @@ class appStateService {
         this._field = f;
     }
 
-    subscribeDrillChanged(cb) {
-        var unsubscribe = this.rootScope.$on('drillChanged', cb);
-        return unsubscribe;
+    get isGridVisible() {
+        return this.userProfile.isGridVisible;
     }
 
-    notifyDrillChanged() {
-        this.rootScope.$emit('drillChanged', this._drill);
+    set isGridVisible(val) {
+        this.userProfile.isGridVisible = val;
+    }
+
+    get isLogoVisible() {
+        return this.userProfile.isLogoVisible;
+    }
+
+    set isLogoVisible(val) {
+        this.userProfile.isLogoVisible = val;
+    }
+
+    userChanged() {
+        if (!Meteor.user()) return;
+console.log('userChanged', Meteor.user().profile);
+
+        // get user profile
+        this.userProfile = Meteor.user().profile;
+        // open new or last drill
+        // TODO: change from current way of opening last drill, in design view
+        //     fire drillOpened event 
+
+        // update logo and grid based on profile
+        if (this.userProfile.isGridVisible)
+            this.eventService.notify(Events.showGrid);
+        else
+            this.eventService.notify(Events.hideGrid);
+
+        if (this.userProfile.isLogoVisible)
+            this.eventService.notify(Events.showLogo);
+        else
+            this.eventService.notify(Events.hideLogo);
+    }
+
+    updateUserProfile() {
+        if (!Meteor.user()) return;
+
+        var profile = {
+            lastDrillId: this.drill._id,
+            isGridVisible: this.userProfile.isGridVisible === undefined ? false : this.userProfile.isGridVisible,
+            isLogoVisible: this.userProfile.isLogoVisible === undefined ? true : this.userProfile.isLogoVisible
+        };
+
+        Meteor.call('updateUserProfile', profile);
     }
 
     getLastDrillId() {
@@ -62,7 +106,6 @@ class appStateService {
                     upgradeDrill(drill);
                 }
                 this.drill = drill;
-                this.notifyDrillChanged();
                 return drill;
             });
     }
@@ -79,7 +122,6 @@ class appStateService {
         var builder = new DrillBuilder();
         this.drill = builder.createDrill();
         this.drill.drillFormatVersion = _currentDrillFormatVersion;
-        this.notifyDrillChanged();
         return this.drill;
     }
 
@@ -112,7 +154,7 @@ class appStateService {
             }
             this.drill._id = id;
         });
-        this.setCurrentDrill();
+        this.updateUserProfile();
     }
 
     updateDrill() {
@@ -128,7 +170,6 @@ class appStateService {
         this.drill.userId = Meteor.userId();
         this.drill.owner = getOwnerEmail(Meteor.user());
 
-        //delete this.currentDrill._id;
         var r = Drills.update({
             _id: id
         }, {
@@ -144,7 +185,7 @@ class appStateService {
                     console.log('saved');
                 }
             });
-        this.setCurrentDrill();
+        this.updateUserProfile();
     }
 
     deleteDrill(id) {
@@ -203,22 +244,6 @@ class appStateService {
             });
     }
 
-
-    setCurrentDrill() {
-        if (!this.drill._id)
-            return;
-
-        // update user profile with id of current drill
-        Meteor.users.update({ _id: Meteor.userId() }, {
-            $set: {
-                "profile.currentDrillId": this.drill._id
-            }
-        },
-            function (err) {
-                if (err)
-                    console.log('Unable to update user', err);
-            });
-    }
 }
 
 function getOwnerEmail(user) {
@@ -252,4 +277,4 @@ function upgradeDrill(drill) {
 }
 
 angular.module('drillApp')
-    .service('appStateService', ['$rootScope', 'alertService', appStateService]);
+    .service('appStateService', ['$rootScope', 'alertService', 'eventService', appStateService]);

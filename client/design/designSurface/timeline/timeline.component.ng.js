@@ -17,13 +17,11 @@ angular.module('drillApp')
         ctrl.timeline.setOnRemoveCallback(onRemove);
         ctrl.timeline.setOnGoToCountCallback(onGoToCount);
         ctrl.unsubscribeAudioClipAdded = eventService.subscribeAudioClipAdded(onAudioClipAdded);
-        ctrl.unsubscribeShowTimeline = eventService.subscribeShowTimeline(ctrl.activate);
         ctrl.unsubscribeDrillStateChanged = drillEditorService.subscribeDrillStateChanged(onDrillStateChanged);
       }
 
       ctrl.$onDestroy = function() {
         ctrl.unsubscribeAudioClipAdded();
-        ctrl.unsubscribeShowTimeline();
         ctrl.unsubscribeDrillStateChanged();
       }
 

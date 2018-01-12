@@ -40,10 +40,13 @@ angular.module('drillApp')
 
         if (newValue && oldValue && newValue._id === oldValue._id) return; // phantom change
 
+        appStateService.userChanged();
+
         if ($scope.currentUser === null) { // signed out
           newDrill();
           return;
         }
+        
         appStateService.openLastDrillOrNew().then(openDrill);
       });
 

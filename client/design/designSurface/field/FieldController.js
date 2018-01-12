@@ -9,6 +9,8 @@ import TurnMarker from './TurnMarker';
 import MemberPath from './MemberPath';
 import { StepPoint, FieldPoint } from '/client/lib/Point';
 import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
+import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 import 'fabric-customise-controls';
 
@@ -17,11 +19,12 @@ class FieldController {
     constructor(drill, eventService) {
         this.drill = drill;
         this.canvas = this.createCanvas();
+        this.fieldPainter = new FieldPainter(this.canvas);
         this.eventService = eventService;
+        this.subscriptions = new EventSubscriptionManager(eventService);
         this.marchers = {};
         this.paths = [];
         this.arePathsVisible = false;
-        this.fieldPainter = new FieldPainter(this.canvas);
 
         //this.initCustomCorners();
         this.draw();
@@ -31,6 +34,11 @@ class FieldController {
 
         this.positionIndicator = this.createPositionIndicator();
         this.positionIndicatorEnabled = true;
+    }
+
+    dispose() {
+        this.canvas.dispose();
+        this.subscriptions.unsubscribeAll();
     }
 
     setDrill(drill) {
@@ -109,13 +117,6 @@ class FieldController {
             let p = new StepPoint(pos.strideType, pos.x, pos.y).toFieldPoint();
             points.push(p);
         }
-        // member.script.forEach(a => {
-        //     if (a) {
-        //         console.log(a);
-        //         let p = new StepPoint(a.strideType, a.x, a.y).toFieldPoint();
-        //         points.push(p);
-        //     }
-        // });
         return points;
     }
 
@@ -144,22 +145,23 @@ class FieldController {
         this.canvas.renderAll();
     }
 
-    get isGridVisible() {
-        return this.fieldPainter.isGridVisible;
-    }
-
-    set isGridVisible(isVisible) {
-        this.fieldPainter.isGridVisible = isVisible;
-        //        isVisible ? this.fieldPainter.showGrid(this.strideType) : this.fieldPainter.hideGrid();
+    showGrid() {
+        this.fieldPainter.isGridVisible = true;
         this.update();
     }
 
-    get isLogoVisible() {
-        return this.fieldPainter.isLogoVisible;
+    hideGrid() {
+        this.fieldPainter.isGridVisible = false;
+        this.update();
     }
 
-    set isLogoVisible(isVisible) {
-        this.fieldPainter.isLogoVisible = isVisible;
+    showLogo() {
+        this.fieldPainter.isLogoVisible = true;
+        this.update();
+    }
+
+    hideLogo(){
+        this.fieldPainter.isLogoVisible = false;
         this.update();
     }
 
@@ -256,11 +258,13 @@ class FieldController {
 
         this.canvas.on('object:selected', this.onObjectSelected.bind(self));
 
-        // this.canvas.on('mouse:down', (evt) => {
-        //     console.log(evt);
-        // });
-
         this.wireUpContextMenu();
+
+        this.subscriptions.subscribe(Events.showGrid, this.showGrid.bind(this));
+        this.subscriptions.subscribe(Events.hideGrid, this.hideGrid.bind(this));
+        this.subscriptions.subscribe(Events.showLogo, this.showLogo.bind(this));
+        this.subscriptions.subscribe(Events.hideLogo, this.hideLogo.bind(this));
+
     }
 
     wireUpContextMenu() {

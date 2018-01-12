@@ -22,6 +22,10 @@ angular.module('drillApp')
         initLogoSwitch();
         initCollapseHighlighting();
         ctrl.subscriptions.subscribe(Events.drawPathsToolDeactivated, collapseDrawPaths);
+        ctrl.subscriptions.subscribe(Events.showGrid, onShowGrid);
+        ctrl.subscriptions.subscribe(Events.hideGrid, onHideGrid);
+        ctrl.subscriptions.subscribe(Events.showLogo, onShowLogo);
+        ctrl.subscriptions.subscribe(Events.hideLogo, onHideLogo);
       }
 
       ctrl.$onDestroy = function() {
@@ -103,19 +107,47 @@ angular.module('drillApp')
       }
 
       function initGridSwitch() {
-        // bootstrap toggle button
         $("[name='grid-switch']").bootstrapSwitch('state', false);
         $("input[name='grid-switch']").on('switchChange.bootstrapSwitch', function (event, state) {
-          appStateService.field.isGridVisible = state;
-        });        
+          appStateService.isGridVisible = state;
+          state 
+            ? eventService.notify(Events.showGrid) 
+            : eventService.notify(Events.hideGrid);
+        });
+      }
+
+      function onShowGrid() {
+        // sync switch with grid change
+        // third 'true' skips firing of switchChange
+        $("[name='grid-switch']").bootstrapSwitch('state', true, true);        
+      }
+
+      function onHideGrid() {
+        // sync switch with grid change
+        // third 'true' skips firing of switchChange
+        $("[name='grid-switch']").bootstrapSwitch('state', false, true);        
       }
 
       function initLogoSwitch() {
-        // bootstrap toggle button
         $("[name='logo-switch']").bootstrapSwitch('state', true);
         $("input[name='logo-switch']").on('switchChange.bootstrapSwitch', function (event, state) {
-          appStateService.field.isLogoVisible = state;
-        });        
+          appStateService.isLogoVisible = state;
+          state 
+            ? eventService.notify(Events.showLogo) 
+            : eventService.notify(Events.hideLogo);
+        });
+      }
+
+      function onShowLogo() {
+        // sync switch with logo change
+        // third 'true' skips firing of switchChange
+        $("[name='logo-switch']").bootstrapSwitch('state', true, true);        
+      }
+
+      function onHideLogo() {
+        // sync switch with logo change
+        // third 'true' skips firing of switchChange
+        $("[name='logo-switch']").bootstrapSwitch('state', false, true);        
       }
 
       function initCollapseHighlighting() {

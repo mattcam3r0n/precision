@@ -150,14 +150,6 @@ class EventService {
         this.$rootScope.$broadcast(Events.audioClipAdded, args);
     }
 
-    subscribeShowTimeline(cb) {
-        return this.$rootScope.$on(Events.showTimeline, cb);
-    }
-
-    notifyShowTimeline(args) {
-        this.$rootScope.$broadcast(Events.showTimeline, args);
-    }
-
     subscribeShowSpinner(cb) {
         return this.$rootScope.$on(Events.showSpinner, cb);
     }

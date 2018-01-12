@@ -27,7 +27,35 @@ class Events {
         return 'zoomOut';
     }
 
+    static get showSpinner() {
+        return 'showSpinner';
+    }
+
+    static get hideSpinner() {
+        return 'hideSpinner';
+    }
+    
+    static get showLogo() {
+        return 'showLogo';
+    }
+
+    static get hideLogo() {
+        return 'hideLogo';
+    }
+
+    static get showGrid() {
+        return 'showGrid';
+    }
+
+    static get hideGrid() {
+        return 'hideGrid';
+    }
+
     // Events - notification that something has happened
+
+    static get drillOpened() {
+        return 'drillOpened';
+    }
 
     static get membersAdded() {
         return 'membersAdded';
@@ -98,17 +126,6 @@ class Events {
         return 'audioClipAdded';
     }
 
-    static get showTimeline() {
-        return 'showTimeline';
-    }
-
-    static get showSpinner() {
-        return 'showSpinner';
-    }
-
-    static get hideSpinner() {
-        return 'hideSpinner';
-    }
 }
 
 export default Events;

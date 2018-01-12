@@ -75,3 +75,6 @@
 * FIX: increased number of members that can be added to in excess of 30 x 30 ranks and files
 * NEW: field logo is more subtle, to make it easier to see when editing in that area, and fades further when mouse is over it 
 
+1-11-18
+* FIX: format steps label so it doesn't have a zillion decimal places
+* NEW: save grid and logo preferences to user profile
