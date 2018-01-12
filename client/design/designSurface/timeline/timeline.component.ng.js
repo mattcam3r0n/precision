@@ -93,7 +93,10 @@ angular.module('drillApp')
       }
 
       function onDrillStateChanged(args) {
-        if (!ctrl.drill || !ctrl.isActivated) return;
+        if (!ctrl.drill){
+          ctrl.timeline.setCurrentCount(0);
+          return;
+        }
         
         if (!ctrl.timeline.isCountVisible(ctrl.drill.count)) {
           var range = ctrl.timeline.getVisibleCountRange();

@@ -55,9 +55,22 @@
 * FIX: automatically opening your last drill on login or when changing views sometimes didn't work
 
 1-6-18
-* UI layout makeover
 
 1-7-18
 * new favicon (tiny icon in browser tab), uses nammb logo
 * increased number of members that can be added to in excess of 30 x 30 ranks and files
-* 
+
+1-10-18
+* UI layout makeover
+  * dropdown menu in header
+    * moved new/open to file menu
+    * moved About to Help menu
+    * moved Debug (which is temporary) to Help menu
+  * timeline is always visible and fixed to bottom
+  * Replaced floating "Tools" menu with sidebar
+  * Steps and Paths palettes are in sidebar
+  * Add Music option is in sidebar now
+  * moved playback-related controls to timeline
+  * Field zooming options in sidebar.  Can make field larger, smaller, or fit to availalbe space
+* NEW: Settings to show/hide grid and logo. 
+* Field logo is more subtle, to make it easier to see when editing in that area.  

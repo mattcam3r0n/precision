@@ -82,6 +82,7 @@ angular.module('drillApp')
     function newDrill() {
       var d = appStateService.newDrill();
       setDrill(d);
+      drillEditorService.goToBeginning();
     }
 
     function openDrill(drill) {
@@ -92,6 +93,7 @@ angular.module('drillApp')
 
       appStateService.openDrill(drill._id).then(openedDrill => {
         setDrill(openedDrill);
+        drillEditorService.goToBeginning();
       });
     }
 
