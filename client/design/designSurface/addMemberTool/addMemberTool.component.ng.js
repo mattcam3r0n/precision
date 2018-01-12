@@ -25,10 +25,6 @@ angular.module('drillApp')
         [Direction.W]: 'fa-caret-left'
       };
 
-      // $scope.$on('designTool:activateAddMemberTool', function () {
-      //   activate();
-      // });
-
       var unsubscribeAddMembersToolActivated = eventService.subscribeAddMembersToolActivated(() => {
         activate();
       });

@@ -62,7 +62,6 @@ angular.module('drillApp')
 
       $scope.showPaths = function () {
         drillEditorService.showPaths();
-        // $rootScope.$broadcast('designTool:showPaths');
       }
 
       $scope.hideUnselected = function () {
