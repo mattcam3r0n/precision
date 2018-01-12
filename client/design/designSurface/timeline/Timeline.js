@@ -20,6 +20,7 @@ class Timeline {
             orientation: {
                 axis: 'bottom'
             },
+            stack: false,
             editable: {
                 add: true,
                 updateTime: true,
