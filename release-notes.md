@@ -57,8 +57,6 @@
 1-6-18
 
 1-7-18
-* new favicon (tiny icon in browser tab), uses nammb logo
-* increased number of members that can be added to in excess of 30 x 30 ranks and files
 
 1-10-18
 * UI layout makeover
@@ -73,4 +71,7 @@
   * moved playback-related controls to timeline
   * Field zooming options in sidebar.  Can make field larger, smaller, or fit to availalbe space
 * NEW: Settings to show/hide grid and logo. 
-* Field logo is more subtle, to make it easier to see when editing in that area.  
+* NEW: favicon (tiny icon in browser tab), uses nammb logo
+* FIX: increased number of members that can be added to in excess of 30 x 30 ranks and files
+* NEW: field logo is more subtle, to make it easier to see when editing in that area, and fades further when mouse is over it 
+
