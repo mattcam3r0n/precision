@@ -291,7 +291,12 @@ this.shiftKey = evt.e.shiftKey;
         });
 
         var steps = to.steps || 0;
-        this.guidelineLabel = new fabric.Text(steps.toString(), {
+
+        function formatSteps(x) {
+            return x.toFixed(1).replace(/\.0$/, '');     
+        }
+
+        this.guidelineLabel = new fabric.Text(formatSteps(steps), {
             left: to.x + 10,
             top: to.y + 10,
             fontSize: 20,
