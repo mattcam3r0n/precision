@@ -45,7 +45,7 @@ angular.module('drillApp')
       }
 
       $scope.drawPaths = function () {
-        eventService.notifyDrawPathsToolActivated();
+        eventService.notify(Events.drawPathsToolActivated);
       }
 
       $scope.deselectAll = function () {

@@ -19,15 +19,6 @@ class EventService {
         this.$rootScope.$broadcast(event, args);
     }
 
-    subscribeDrawPathsToolActivated(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.drawPathsToolActivated, cb);
-        return unsubscribe;
-    }
-
-    notifyDrawPathsToolActivated(args) {
-        this.$rootScope.$broadcast(Events.drawPathsToolActivated, args);
-    }
-
     subscribeAddMembersToolActivated(cb) {
         var unsubscribe = this.$rootScope.$on(Events.addMembersToolActivated, cb);
         return unsubscribe;
