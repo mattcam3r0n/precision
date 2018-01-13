@@ -28,14 +28,14 @@ class EventService {
         this.$rootScope.$broadcast(Events.deleteTurn, args);
     }
 
-    subscribeUpdateField(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.updateField, cb);
-        return unsubscribe;
-    }
+    // subscribeUpdateField(cb) {
+    //     var unsubscribe = this.$rootScope.$on(Events.updateField, cb);
+    //     return unsubscribe;
+    // }
 
-    notifyUpdateField(args) {
-        this.$rootScope.$broadcast(Events.updateField, args);
-    }
+    // notifyUpdateField(args) {
+    //     this.$rootScope.$broadcast(Events.updateField, args);
+    // }
 
     subscribeChooseMusicDialogActivated(cb) {
         return this.$rootScope.$on(Events.chooseMusicDialogActivated, cb);
