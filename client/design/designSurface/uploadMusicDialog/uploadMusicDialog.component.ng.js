@@ -60,6 +60,7 @@ angular.module('drillApp')
           url: url,
           title: ctrl.title,
           notes: ctrl.notes,
+          composedBy: ctrl.composedBy,
           performedBy: ctrl.performedBy,
           isPublic: ctrl.isPublic || false
         };

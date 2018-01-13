@@ -79,3 +79,5 @@
 * FIX: format steps label so it doesn't have a zillion decimal places
 * NEW: save grid and logo preferences to user profile
 * NEW: drill name in header
+* NEW: drill info dialog
+* NEW: composed by field when uploading 
