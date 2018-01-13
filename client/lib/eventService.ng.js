@@ -19,29 +19,6 @@ class EventService {
         this.$rootScope.$broadcast(event, args);
     }
     
-    // subscribeAudioClipAdded(cb) {
-    //     return this.$rootScope.$on(Events.audioClipAdded, cb);
-    // }
-
-    // notifyAudioClipAdded(args) {
-    //     this.$rootScope.$broadcast(Events.audioClipAdded, args);
-    // }
-
-    subscribeShowSpinner(cb) {
-        return this.$rootScope.$on(Events.showSpinner, cb);
-    }
-
-    notifyShowSpinner(args) {
-        this.$rootScope.$broadcast(Events.showSpinner, args);
-    }
-
-    subscribeHideSpinner(cb) {
-        return this.$rootScope.$on(Events.hideSpinner, cb);
-    }
-
-    notifyHideSpinner(args) {
-        this.$rootScope.$broadcast(Events.hideSpinner, args);
-    }
 }
 
 

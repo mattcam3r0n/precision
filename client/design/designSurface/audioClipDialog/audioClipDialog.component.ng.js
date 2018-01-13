@@ -219,11 +219,11 @@ angular.module('drillApp')
       }
 
       function showSpinner() {
-        eventService.notifyShowSpinner();
+        eventService.notify(Events.showSpinner);
       }
 
       function hideSpinner() {
-        eventService.notifyHideSpinner();
+        eventService.notify(Events.hideSpinner);
       }
 
       function loadAudio(musicFile) {

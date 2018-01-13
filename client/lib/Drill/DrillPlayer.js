@@ -68,12 +68,12 @@ class DrillPlayer {
 
     startSpinner() {
         if (this.eventService) 
-            this.eventService.notifyShowSpinner();
+            this.eventService.notify(Events.showSpinner);
     }
 
     stopSpinner() {
         if (this.eventService)
-            this.eventService.notifyHideSpinner();
+            this.eventService.notify(Events.hideSpinner);
     }
 
     stop() {

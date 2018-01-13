@@ -20,7 +20,7 @@ angular.module('drillApp')
         $timeout(function(){
           ctrl.field = new FieldController(ctrl.drill, eventService);
           appStateService.field = ctrl.field;
-          eventService.notifyHideSpinner();
+          eventService.notify(Events.hideSpinner);
         });
   
         angular.element($window).bind('resize', function () {
