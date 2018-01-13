@@ -78,3 +78,4 @@
 1-11-18
 * FIX: format steps label so it doesn't have a zillion decimal places
 * NEW: save grid and logo preferences to user profile
+* NEW: drill name in header
