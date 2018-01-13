@@ -12,6 +12,10 @@ class EventSubscriptionManager {
         this.subscriptions = {};
     }
 
+    isSubscribed(event) {
+        return !!this.subscriptions[event];
+    }
+
     subscribe(event, cb) {
         if (this.subscriptions[event]) {
             throw new EventSubscriptionManagerException('Already subscribed to ' + event);
@@ -22,12 +26,14 @@ class EventSubscriptionManager {
     unsubscribe(event) {
         if (!this.subscriptions[event]) return;
         this.subscriptions[event]();
+        delete this.subscriptions[event];
     }
 
     unsubscribeAll() {
         for(var k in this.subscriptions) {
             let unsub = this.subscriptions[k];
             unsub();
+            delete this.subscriptions[k];
         }
         this.subscriptions = {};
     }

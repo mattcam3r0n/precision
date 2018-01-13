@@ -1,3 +1,4 @@
+import Events from '/client/lib/Events';
 import StrideType from '/client/lib/StrideType';
 import Direction from '/client/lib/Direction';
 import StepType from '/client/lib/StepType';
@@ -30,7 +31,7 @@ class DesignKeyboardHandler {
             }
 
             // re-broadcast delete key event
-            this.eventService.notifyDeleteTurn();
+            this.eventService.notify(Events.deleteTurn);
         },
 
         "ArrowUp": (e) => {

@@ -53,6 +53,10 @@ class Events {
 
     // Events - notification that something has happened
 
+    static get strideTypeChanged() {
+        return 'strideTypeChanged';
+    }
+    
     static get drillOpened() {
         return 'drillOpened';
     }

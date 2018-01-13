@@ -66,6 +66,7 @@ angular.module('drillApp')
       }
 
       function activate(memberSelection) {
+
         if (ctrl.isActivated)
           deactivate();
 
@@ -131,6 +132,7 @@ angular.module('drillApp')
       }
 
       function onBackspacePressed(evt) {
+        console.log('onBackspacePressed');
         // how to get corresponding turn?
         if (!ctrl.field.canvas.getActiveObject()) return;
 

@@ -19,24 +19,6 @@ class EventService {
         this.$rootScope.$broadcast(event, args);
     }
     
-    subscribeDeleteTurn(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.deleteTurn, cb);
-        return unsubscribe;
-    }
-
-    notifyDeleteTurn(args) {
-        this.$rootScope.$broadcast(Events.deleteTurn, args);
-    }
-
-    // subscribeUpdateField(cb) {
-    //     var unsubscribe = this.$rootScope.$on(Events.updateField, cb);
-    //     return unsubscribe;
-    // }
-
-    // notifyUpdateField(args) {
-    //     this.$rootScope.$broadcast(Events.updateField, args);
-    // }
-
     subscribeChooseMusicDialogActivated(cb) {
         return this.$rootScope.$on(Events.chooseMusicDialogActivated, cb);
     }
