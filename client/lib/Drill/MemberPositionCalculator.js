@@ -20,6 +20,13 @@ class MemberPositionCalculator {
             && state1.deltaX == state2.deltaX
             && state1.deltaY == state2.deltaY;
     }
+
+    static arePositionsSame(pos1, pos2) {
+        return pos1 && pos2
+            && this.areStatesSame(pos1, pos2)
+            && pos1.x == pos2.x
+            && pos1.y == pos2.y;
+    }
     
     static getStateAtCount(member, count) {
         var i = count - 1;
