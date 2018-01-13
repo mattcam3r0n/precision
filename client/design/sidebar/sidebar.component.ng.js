@@ -33,7 +33,7 @@ angular.module('drillApp')
       }
 
       $scope.addMembers = function () {
-        eventService.notifyAddMembersToolActivated();
+        eventService.notify(Events.addMembersToolActivated);
       }
 
       $scope.deleteSelectedMembers = function () {

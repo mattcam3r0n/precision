@@ -19,15 +19,6 @@ class EventService {
         this.$rootScope.$broadcast(event, args);
     }
 
-    subscribeAddMembersToolActivated(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.addMembersToolActivated, cb);
-        return unsubscribe;
-    }
-
-    notifyAddMembersToolActivated(args) {
-        this.$rootScope.$broadcast(Events.addMembersToolActivated, args);
-    }
-
     subscribeObjectsSelected(cb) {
         var unsubscribe = this.$rootScope.$on(Events.objectsSelected, cb);
         return unsubscribe;

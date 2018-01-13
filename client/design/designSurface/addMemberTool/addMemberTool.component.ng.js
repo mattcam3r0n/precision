@@ -30,7 +30,8 @@ angular.module('drillApp')
       ctrl.$onInit = function () {
         ctrl.isActivated = false;
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
-        var unsubscribeAddMembersToolActivated = eventService.subscribeAddMembersToolActivated(() => {
+
+        ctrl.subscriptions.subscribe(Events.addMembersToolActivated, () => {
           activate();
         });
   
@@ -42,7 +43,6 @@ angular.module('drillApp')
       }
 
       ctrl.$onDestroy = function () {
-        unsubscribeAddMembersToolActivated();
         ctrl.unsubscribeAll();
       }
 
