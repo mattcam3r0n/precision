@@ -41,7 +41,7 @@ angular.module('drillApp')
       }
 
       $scope.addSteps = function () {
-        eventService.notifyAddStepsToolActivated();
+        eventService.notify(Events.addStepsToolActivated);
       }
 
       $scope.drawPaths = function () {

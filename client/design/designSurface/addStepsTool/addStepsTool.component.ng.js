@@ -5,6 +5,8 @@ import StrideType from '/client/lib/StrideType';
 import StepType from '/client/lib/StepType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
+import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 angular.module('drillApp')
   .component('addStepsTool', {
@@ -16,7 +18,8 @@ angular.module('drillApp')
 
       ctrl.$onInit = function () {        
         ctrl.isActivated = true;
-        ctrl.unsubscribeAddStepsToolActivated = eventService.subscribeAddStepsToolActivated((evt, args) => {
+        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions.subscribe(Events.addStepsToolActivated, (evt, args) => {
           activate(drillEditorService.getMemberSelection());
         });
 
@@ -26,7 +29,7 @@ angular.module('drillApp')
       }
 
       ctrl.$onDestroy = function () {
-        ctrl.unsubscribeAddStepsToolActivated();
+        ctrl.subscriptions.unsubscribeAll();
       }
 
       $scope.activate = activate;
