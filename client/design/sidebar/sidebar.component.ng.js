@@ -81,7 +81,7 @@ angular.module('drillApp')
       }
 
       $scope.sizeToFit = function() {
-        eventService.notifySizeToFit();
+        eventService.notify(Events.sizeToFit);
       }
   
       $scope.zoomIn = function() {
