@@ -19,13 +19,13 @@ class EventService {
         this.$rootScope.$broadcast(event, args);
     }
     
-    subscribeAudioClipAdded(cb) {
-        return this.$rootScope.$on(Events.audioClipAdded, cb);
-    }
+    // subscribeAudioClipAdded(cb) {
+    //     return this.$rootScope.$on(Events.audioClipAdded, cb);
+    // }
 
-    notifyAudioClipAdded(args) {
-        this.$rootScope.$broadcast(Events.audioClipAdded, args);
-    }
+    // notifyAudioClipAdded(args) {
+    //     this.$rootScope.$broadcast(Events.audioClipAdded, args);
+    // }
 
     subscribeShowSpinner(cb) {
         return this.$rootScope.$on(Events.showSpinner, cb);

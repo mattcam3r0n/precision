@@ -19,14 +19,12 @@ angular.module('drillApp')
         ctrl.timeline = new Timeline('timelineContainer');
         ctrl.timeline.setOnRemoveCallback(onRemove);
         ctrl.timeline.setOnGoToCountCallback(onGoToCount);
-        ctrl.unsubscribeAudioClipAdded = eventService.subscribeAudioClipAdded(onAudioClipAdded);
+        ctrl.subscriptions.subscribe(Events.audioClipAdded, onAudioClipAdded);
         ctrl.subscriptions.subscribe(Events.drillStateChanged, onDrillStateChanged);
       }
 
       ctrl.$onDestroy = function() {
         ctrl.subscriptions.unsubscribeAll();
-
-        ctrl.unsubscribeAudioClipAdded();
       }
 
       ctrl.$onChanges = function(changes) {

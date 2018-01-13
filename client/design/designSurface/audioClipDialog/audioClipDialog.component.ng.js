@@ -96,7 +96,7 @@ angular.module('drillApp')
         if (!ctrl.drill.music)
           ctrl.drill.music = [];
         ctrl.drill.music.push(clip);
-        eventService.notifyAudioClipAdded({
+        eventService.notify(Events.audioClipAdded, {
           audioClip: clip
         });
       }
