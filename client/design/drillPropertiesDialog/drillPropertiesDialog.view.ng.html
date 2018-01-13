@@ -1,0 +1,39 @@
+<!-- Modal -->
+<div class="drill-properties-dialog modal fade" id="drillPropertiesDialog" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="drillPropertiesLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="drillPropertiesLabel">Drill Properties</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 form-group-sm">
+                        <label class="control-label">Drill Name</label>
+                        <input type="text" ng-model="$ctrl.drill.name" ng-required='true' class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group-sm">
+                        <label class="control-label">Description</label>
+                        <textarea rows="4" ng-model="$ctrl.drill.description" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer row">
+                <div class="col-md-3 text-left">
+                </div>
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-3 text-right">
+                    <button type="button" ng-disabled="!$ctrl.isValid()" ng-click="" class="btn btn-default" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
