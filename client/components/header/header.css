@@ -1,3 +1,45 @@
+div.header {
+  display: flex;
+  background-color: #353535;
+}
+
+.header .brand {
+  flex: none;
+  width: 120px;
+  text-align: center;
+  margin-top: 5px;
+  color: white;
+}
+
+.header .brand a {
+  color: white;  
+}
+
+.header .brand a:hover {
+  text-decoration: none;
+}
+
+.header .menu {
+  flex: none;
+  width: 150px;
+  display: flex;
+}
+
+.header .drill-name {
+  flex: 1 1 auto;
+  color: white;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.header .login-info {
+  flex: none;
+  width: 240px;
+}
+
+
+/* before flexbox header */
+
 #login-buttons {
   padding: 5px;
   line-height: 20px;
@@ -13,74 +55,12 @@
   border: 0;
 }
 
-#fileMenu {
-}
-
-
-div.navbar-main {
-  background-color: #353535;
-  /* background-color: #284B63; */
-}
-
-.navbar-inverse .navbar-nav > li > a {
-  color: white;
-}
-
-.navbar {
-  min-height: 0;
-}
-
-.navbar-brand {
-  padding: 5px;
-}
-
-.navbar-collapse.in {
-  overflow: visible!important;
-}
-  
-.navbar-collapse.in #login-dropdown-list {
-  left: 0px!important;
-}
-
-.navbar-nav > li > a {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.brand-link {
-  width: 120px;
-  background-color: #353535;
-  /* font-size: 14pt;
-  font-weight: bold; */
-}
-
-
-
 @media (min-width: 768px) {
   #login-buttons {
     padding-top: 5px;
     padding-bottom: 5px;
   }
 }
-
-/* .login-link-text {
-  font-size: 14px;
-  line-height: 20px;
-  padding: 5px;
-  color: rgb(157, 157, 157);
-} */
-
-/* #login-buttons {
-  margin-right: 20px;
-  min-width: 150px;
-  text-align: center;
-}
-
-#login-buttons a {
-  text-decoration: none;  
-} */
 
 /* login styling */
 /* override positioning of sign in popup */

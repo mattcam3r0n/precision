@@ -7,7 +7,7 @@ angular.module('drillApp')
     templateUrl: 'client/components/header/header.component.ng.html',
     bindings: {
     },
-    controller: function ($scope, $rootScope, eventService, appStateService) {
+    controller: function ($scope, eventService, appStateService) {
       var ctrl = this;
 
       ctrl.$onInit = function() {
@@ -32,6 +32,12 @@ angular.module('drillApp')
 
       ctrl.onDebug = function() {
         console.log(appStateService.drill);
+      }
+
+      ctrl.drillName = function() {
+        if (!appStateService.drill) return;
+        
+        return appStateService.drill.name;
       }
     }
   });
