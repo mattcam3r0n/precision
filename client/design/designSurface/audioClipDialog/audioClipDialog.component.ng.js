@@ -6,6 +6,8 @@ import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js';
 import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
 import Metronome from './Metronome';
+import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 angular.module('drillApp')
   .component('audioClipDialog', {
@@ -330,13 +332,14 @@ angular.module('drillApp')
       }
 
       ctrl.$onInit = function () {
-        ctrl.unsubscribeAudioClipDialogActivated = eventService.subscribeAudioClipDialogActivated((evt, args) => {
+        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions.subscribe(Events.audioClipDialogActivated, (evt, args) => {
           ctrl.activate(args);
         });
       }
 
       ctrl.$onDestroy = function () {
-        ctrl.unsubscribeAudioClipDialogActivated();
+        ctrl.subscriptions.unsubscribeAll();
       }
     }
   });

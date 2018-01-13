@@ -47,7 +47,7 @@ angular.module('drillApp')
 
       ctrl.open = function(musicFile) {
         $('#chooseMusicDialog').modal('hide');
-        eventService.notifyAudioClipDialogActivated({ musicFile });
+        eventService.notify(Events.audioClipDialogActivated, { musicFile });
       }
 
       ctrl.isFile = function(musicFile) {
