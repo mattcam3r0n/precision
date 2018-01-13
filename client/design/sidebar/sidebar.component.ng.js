@@ -85,11 +85,11 @@ angular.module('drillApp')
       }
   
       $scope.zoomIn = function() {
-        eventService.notifyZoomIn();
+        eventService.notify(Events.zoomIn);
       }
   
       $scope.zoomOut = function() {
-        eventService.notifyZoomOut();
+        eventService.notify(Events.zoomOut);
       }
 
       function initStrideTypeSwitch() {

@@ -19,24 +19,6 @@ class EventService {
         this.$rootScope.$broadcast(event, args);
     }
     
-    subscribeZoomIn(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.zoomIn, cb);
-        return unsubscribe;
-    }
-
-    notifyZoomIn(args) {
-        this.$rootScope.$broadcast(Events.zoomIn, args);
-    }
-
-    subscribeZoomOut(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.zoomOut, cb);
-        return unsubscribe;
-    }
-
-    notifyZoomOut(args) {
-        this.$rootScope.$broadcast(Events.zoomOut, args);
-    }
-
     subscribeDeleteTurn(cb) {
         var unsubscribe = this.$rootScope.$on(Events.deleteTurn, cb);
         return unsubscribe;
