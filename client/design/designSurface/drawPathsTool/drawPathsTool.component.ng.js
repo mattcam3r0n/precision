@@ -29,26 +29,11 @@ angular.module('drillApp')
           activate(drillEditorService.getMemberSelection());        
         });
 
-        // var unsubscribeDrawPathsToolActivated = eventService.subscribeDrawPathsToolActivated(() => {
-        //   activate(drillEditorService.getMemberSelection());
-        // });
-  
-        // var unsubscribeStrideTypeChanged = drillEditorService.subscribeStrideTypeChanged((evt, args) => {
-        //   if (!ctrl.isActivated) return;
-        //   activate(drillEditorService.getMemberSelection());        
-        // });
       }
 
       ctrl.$onDestroy = function () {
         ctrl.subscriptions.unsubscribeAll();
-        // unsubscribeDrawPathsToolActivated();
-        // unsubscribeStrideTypeChanged();
       }
-
-      // $scope.activate = activate;
-
-      // $scope.deactivate = function () {
-      // }
 
       $scope.save = function () {
         save();

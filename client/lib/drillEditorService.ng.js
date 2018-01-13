@@ -173,24 +173,15 @@ class DrillEditorService {
 
     // Events
 
-    subscribeDrillStateChanged(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.drillStateChanged, cb);
-        return unsubscribe;
-    }
-
     notifyDrillStateChanged() {
         var memberSelection = this.drillBuilder.getMemberSelection();
-        this.$rootScope.$broadcast(Events.drillStateChanged, { memberSelection });
-    }
-
-    subscribeStrideTypeChanged(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.strideTypeChanged, cb);
-        return unsubscribe;
+//        this.$rootScope.$broadcast(Events.drillStateChanged, { memberSelection });
+        this.eventService.notify(Events.drillStateChanged, { memberSelection });
     }
 
     notifyStrideTypeChanged() {
         var strideType = this.strideType;
-        this.$rootScope.$broadcast(Events.strideTypeChanged, { strideType });
+        this.eventService.notify(Events.strideTypeChanged, { strideType });
     }
     
     subscribeMembersSelected(cb) {
@@ -203,23 +194,10 @@ class DrillEditorService {
         this.$rootScope.$broadcast(Events.membersSelected, { memberSelection });  
     }
 
-    subscribeMembersAdded(cb) {        
-        var unsubscribe = this.$rootScope.$on(Events.membersAdded, cb);
-        return unsubscribe;
-    }
-
     notifyMembersAdded() {
-        this.$rootScope.$broadcast(Events.membersAdded);
+        this.eventService.notify(Events.membersAdded);
     }
 
-    subscribeShowPaths(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.showPaths, cb);
-        return unsubscribe;
-    }
-
-    notifyShowPaths() {
-        this.$rootScope.$broadcast(Events.showPaths);
-    }
 }
 
 

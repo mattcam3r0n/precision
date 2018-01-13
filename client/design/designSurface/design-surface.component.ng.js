@@ -1,6 +1,7 @@
 'use strict';
 
 import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import FieldController from './field/FieldController';
 
 angular.module('drillApp')
@@ -11,76 +12,71 @@ angular.module('drillApp')
     },
     controller: function ($scope, $window, $timeout, appStateService, drillEditorService, eventService) {
       var ctrl = this;
-      eventService.notify(Events.showSpinner);
 
-      $timeout(function(){
-        ctrl.field = new FieldController(ctrl.drill, eventService);
-        appStateService.field = ctrl.field;
-        eventService.notifyHideSpinner();
-      });
+      ctrl.$onInit = function() {
+        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+
+        eventService.notify(Events.showSpinner);
+        $timeout(function(){
+          ctrl.field = new FieldController(ctrl.drill, eventService);
+          appStateService.field = ctrl.field;
+          eventService.notifyHideSpinner();
+        });
+  
+        angular.element($window).bind('resize', function () {
+          ctrl.field.resize();
+        });
+
+        ctrl.subscriptions.subscribe(Events.drillStateChanged, (evt, args) => {
+          if (!ctrl.field) return;
+          ctrl.field.drillStateChanged(args);
+        });
+  
+        ctrl.subscriptions.subscribe(Events.membersAdded, () => {
+          ctrl.field.membersChanged();        
+        });
+  
+        ctrl.subscriptions.subscribe(Events.showPaths, (evt, args) => {
+          ctrl.field.showPaths();        
+        });
+  
+        ctrl.subscriptions.subscribe(Events.strideTypeChanged, (evt, args) => {
+          ctrl.field.strideTypeChanged(args.strideType);
+        });
+  
+        ctrl.subscriptions.subscribe(Events.resize, () => {
+          ctrl.field.resize();
+        });
+  
+        ctrl.subscriptions.subscribe(Events.sizeToFit, () => {
+          ctrl.field.sizeToFit();
+        });
+  
+        ctrl.subscriptions.subscribe(Events.zoomIn, () => {
+          ctrl.field.zoomIn();
+        });
+  
+        ctrl.subscriptions.subscribe(Events.zoomOut, () => {
+          ctrl.field.zoomOut();
+        });
+  
+        ctrl.subscriptions.subscribe(Events.updateField, (evt, args) => {
+          ctrl.field.update();
+        });
+
+      }
+
+      ctrl.$onDestroy = function() {
+        ctrl.field.canvas.dispose();
+        appStateService.field = null;
+        ctrl.subscriptions.unsubscribeAll();
+      }
 
       ctrl.$onChanges = function(changes) {
         // if the drill changed, update field
         if (!ctrl.field) return;
         ctrl.field.setDrill(ctrl.drill);
       }
-
-      angular.element($window).bind('resize', function () {
-        ctrl.field.resize();
-      });
-
-      var unsubscribeDrillStateChanged = drillEditorService.subscribeDrillStateChanged((evt, args) => {
-        if (!ctrl.field) return;
-        ctrl.field.drillStateChanged(args);
-      });
-
-      var unsubscribeMembersAdded = drillEditorService.subscribeMembersAdded(() => {
-        ctrl.field.membersChanged();        
-      });
-
-      var unsubscribeShowPaths = drillEditorService.subscribeShowPaths((evt, args) => {
-        ctrl.field.showPaths();        
-      });
-
-      var unsubscribeStrideTypeChanged = drillEditorService.subscribeStrideTypeChanged((evt, args) => {
-        //ctrl.field.showPaths();        
-        ctrl.field.strideTypeChanged(args.strideType);
-      });
-
-      var unsubscribeResize = eventService.subscribeResize(() => {
-        ctrl.field.resize();
-      });
-
-      var unsubscribeSizeToFit = eventService.subscribeSizeToFit(() => {
-        ctrl.field.sizeToFit();
-      });
-
-      var unsubscribeZoomIn = eventService.subscribeZoomIn(() => {
-        ctrl.field.zoomIn();
-      });
-
-      var unsubscribeZoomOut = eventService.subscribeZoomOut(() => {
-        ctrl.field.zoomOut();
-      });
-
-      var unsubscribeUpdateField = eventService.subscribeUpdateField((evt, args) => {
-        ctrl.field.update();
-      });
-
-      $scope.$on("$destroy", function(){
-        ctrl.field.canvas.dispose();
-        appStateService.field = null;
-        unsubscribeDrillStateChanged();
-        unsubscribeMembersAdded();
-        unsubscribeShowPaths();
-        unsubscribeUpdateField();
-        unsubscribeStrideTypeChanged();
-        unsubscribeResize();
-        unsubscribeSizeToFit();
-        unsubscribeZoomIn();
-        unsubscribeZoomOut();
-      });
-
       
     }
   });

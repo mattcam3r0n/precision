@@ -7,6 +7,8 @@ import MarcherFactory from '../field/MarcherFactory';
 import SizableRect from './SizableRect';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
 import PositionCalculator from '/client/lib/PositionCalculator';
+import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 angular.module('drillApp')
   .component('addMemberTool', {
@@ -25,22 +27,23 @@ angular.module('drillApp')
         [Direction.W]: 'fa-caret-left'
       };
 
-      var unsubscribeAddMembersToolActivated = eventService.subscribeAddMembersToolActivated(() => {
-        activate();
-      });
-
-      var unsubscribeStrideTypeChanged = drillEditorService.subscribeStrideTypeChanged((evt, args) => {
-        if (!ctrl.isActivated) return;
-        console.log('strideTypeChanged');
-        activate();
-      });
-
       ctrl.$onInit = function () {
+        ctrl.isActivated = false;
+        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        var unsubscribeAddMembersToolActivated = eventService.subscribeAddMembersToolActivated(() => {
+          activate();
+        });
+  
+        ctrl.subscriptions.subscribe(Events.strideTypeChanged, (evt, args) => {
+          if (!ctrl.isActivated) return;
+          console.log('strideTypeChanged');
+          activate();
+        });
       }
 
       ctrl.$onDestroy = function () {
         unsubscribeAddMembersToolActivated();
-        unsubscribeStrideTypeChanged();
+        ctrl.unsubscribeAll();
       }
 
       $scope.activate = activate;

@@ -1,5 +1,7 @@
 'use strict';
 
+import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import Timeline from './Timeline';
 
 angular.module('drillApp')
@@ -13,16 +15,18 @@ angular.module('drillApp')
 
       ctrl.$onInit = function () {
         ctrl.isActivated = true;
+        ctrl.subscriptions = new EventSubscriptionManager(eventService);
         ctrl.timeline = new Timeline('timelineContainer');
         ctrl.timeline.setOnRemoveCallback(onRemove);
         ctrl.timeline.setOnGoToCountCallback(onGoToCount);
         ctrl.unsubscribeAudioClipAdded = eventService.subscribeAudioClipAdded(onAudioClipAdded);
-        ctrl.unsubscribeDrillStateChanged = drillEditorService.subscribeDrillStateChanged(onDrillStateChanged);
+        ctrl.subscriptions.subscribe(Events.drillStateChanged, onDrillStateChanged);
       }
 
       ctrl.$onDestroy = function() {
+        ctrl.subscriptions.unsubscribeAll();
+
         ctrl.unsubscribeAudioClipAdded();
-        ctrl.unsubscribeDrillStateChanged();
       }
 
       ctrl.$onChanges = function(changes) {
