@@ -98,10 +98,6 @@ angular.module('drillApp')
         ctrl.timeline.pageBackward();
       }
 
-      // ctrl.chooseMusic = function() {
-      //   eventService.notifyChooseMusicDialogActivated();
-      // }
-
 
     }
   });

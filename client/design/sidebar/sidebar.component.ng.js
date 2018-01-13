@@ -77,7 +77,7 @@ angular.module('drillApp')
       }
 
       $scope.addMusic = function() {
-        eventService.notifyChooseMusicDialogActivated();
+        eventService.notify(Events.chooseMusicDialogActivated);
       }
 
       $scope.sizeToFit = function() {

@@ -1,5 +1,8 @@
 'use strict';
 
+import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
+
 angular.module('drillApp')
   .component('chooseMusicDialog', {
     templateUrl: 'client/design/designSurface/chooseMusicDialog/chooseMusicDialog.view.ng.html',
@@ -25,10 +28,6 @@ angular.module('drillApp')
         $scope.getReactively('searchOptions.searchClips')
         ];
       });
-
-      // $scope.$watch('searchOptions', function() {
-      //   console.log($scope.searchOptions);
-      // });
       
       $scope.helpers({
         musicFileCount: function () {
@@ -68,13 +67,14 @@ angular.module('drillApp')
       }
 
       ctrl.$onInit = function () {
-        ctrl.unsubscribeChooseMusicDialogActivated = eventService.subscribeChooseMusicDialogActivated((evt, args) => {
+        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions.subscribe(Events.chooseMusicDialogActivated, (evt, args) => {
           ctrl.activate();
         });
       }
 
       ctrl.$onDestroy = function () {
-        ctrl.unsubscribeChooseMusicDialogActivated();
+        ctrl.subscriptions.unsubscribeAll();
       }
 
       $scope.pageChanged = function (newPage) {

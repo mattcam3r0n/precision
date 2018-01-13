@@ -76,7 +76,7 @@ angular.module('drillApp')
       }
 
       ctrl.chooseMusic = function() {
-        eventService.notifyChooseMusicDialogActivated();
+        eventService.notify(Events.chooseMusicDialogActivated);
       }
 
       function onAudioClipAdded(evt, args) {
