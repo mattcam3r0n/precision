@@ -81,3 +81,5 @@
 * NEW: drill name in header
 * NEW: drill info dialog
 * NEW: composed by field when uploading 
+* FIX: wavy file indicators when on odd count
+* FIX: show new step count when moving turn marker

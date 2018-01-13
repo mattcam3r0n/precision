@@ -161,14 +161,18 @@ class GuidePath {
     }
 
     createTurnMarker(point) {
-        // var stepPoint = new StepPoint(point.strideType, point.x, point.y);
-        // var fieldPoint = stepPoint.toFieldPoint();
         point.turnMarker = new TurnMarker(point.direction, {
             left: point.x,
             top: point.y
         });
         point.turnMarker.point = point;
-        point.turnMarker.on('moving', evt => { this.onMoveTurnMarker(evt, this.field, this, point, point.turnMarker); });
+        point.turnMarker.on('moving', evt => { 
+            this.onMoveTurnMarker(evt, this.field, this, point, point.turnMarker); 
+            this.turnMarkerMoving = true;
+        });
+        point.turnMarker.on('modified', evt => {
+            this.turnMarkerMoving = false;
+        });
         this.field.canvas.add(point.turnMarker);
     }
 
@@ -229,6 +233,7 @@ class GuidePath {
 
 
     onMouseMove(evt) {
+        if( this.turnMarkerMoving) return;
         var adjustedPoint = this.field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
         //var stepPoint = new FieldPoint(adjustedPoint).toStepPoint(this.strideType);
 this.shiftKey = evt.e.shiftKey;
@@ -251,9 +256,15 @@ this.shiftKey = evt.e.shiftKey;
 
     onMoveTurnMarker(evt, field, guidePath, point, turnMarker) {
         let adjustedMousePoint = field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
-        let moveToStepPoint = new FieldPoint(adjustedMousePoint).toStepPoint(this.strideType);
+        let precedingPoint = this.findPrecedingPoint(turnMarker.point);
+        let snappedPoint = PathUtils.snapPoint(this.strideType, precedingPoint, adjustedMousePoint);
+        //let moveToStepPoint = new FieldPoint(adjustedMousePoint).toStepPoint(this.strideType);
 
-        guidePath.movePoint(turnMarker.point, moveToStepPoint);
+        // this.setGuidelineLabel('foo');
+        // this.createGuideline(precedingPoint, moveToStepPoint);
+        this.createMoveStepsLabel(precedingPoint, snappedPoint);
+
+        guidePath.movePoint(turnMarker.point, snappedPoint);
 
         this.createGuidePathLine();
     }
@@ -293,6 +304,7 @@ this.shiftKey = evt.e.shiftKey;
         var steps = to.steps || 0;
 
         function formatSteps(x) {
+            if (x == 0) return '';
             return x.toFixed(1).replace(/\.0$/, '');     
         }
 
@@ -311,6 +323,33 @@ this.shiftKey = evt.e.shiftKey;
         this.field.canvas.add(this.guidelineLabel);
         this.bringTurnMarkersToFront();
         this.field.update();
+    }
+
+    setGuidelineLabel(text) {
+        if (!this.guidelineLabel) return;
+        this.guidelineLabel.setText(text);
+    }
+
+    createMoveStepsLabel(from, to) {
+        this.destroyMoveStepsLabel();
+        var steps = (to.steps || 0).toString();
+        this.moveStepsLabel = new fabric.Text(steps, {
+            left: to.x + 10,
+            top: to.y + 10,
+            fontSize: 20,
+            stroke: 'black',
+//            fontWeight: 'bold',
+//            lineHeight: 1,
+            selectable: false,
+            evented: false
+          });
+          
+        this.field.canvas.add(this.moveStepsLabel);        
+    }
+
+    destroyMoveStepsLabel() {
+        if (!this.moveStepsLabel) return;
+        this.field.canvas.remove(this.moveStepsLabel);
     }
 
     destroyGuideline() {
