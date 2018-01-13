@@ -290,7 +290,7 @@ class FieldController {
         var members = marchers.map(marcher => marcher.member);
 
         this.canvas.discardActiveGroup(); // import to call this BEFORE emitting event, causes strange effect on position
-        this.eventService.notifyObjectsSelected({ members: members, marchers: marchers });
+        this.eventService.notify(Events.objectsSelected, { members: members, marchers: marchers });
     }
 
     onObjectSelected(evt) {
@@ -304,7 +304,7 @@ class FieldController {
         if (!member || !member.isVisible) return;
 
         this.canvas.discardActiveObject();
-        this.eventService.notifyObjectsSelected({ members: [member] });
+        this.eventService.notify(Events.objectsSelected, { members: [member] });
     }
 
     // onSelectionCleared(evt) {

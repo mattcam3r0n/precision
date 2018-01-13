@@ -19,15 +19,6 @@ class EventService {
         this.$rootScope.$broadcast(event, args);
     }
 
-    subscribeObjectsSelected(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.objectsSelected, cb);
-        return unsubscribe;
-    }
-
-    notifyObjectsSelected(args) {
-        this.$rootScope.$broadcast(Events.objectsSelected, args);
-    }
-
     subscribePositionIndicator(cb) {
         var unsubscribe = this.$rootScope.$on(Events.positionIndicator, cb);
         return unsubscribe;
