@@ -18,15 +18,6 @@ class EventService {
 
         this.$rootScope.$broadcast(event, args);
     }
-
-    subscribeResize(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.resize, cb);
-        return unsubscribe;
-    }
-
-    notifyResize(args) {
-        this.$rootScope.$broadcast(Events.resize, args);
-    }
     
     subscribeSizeToFit(cb) {
         var unsubscribe = this.$rootScope.$on(Events.sizeToFit, cb);
