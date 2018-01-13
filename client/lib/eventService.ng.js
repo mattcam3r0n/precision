@@ -19,14 +19,6 @@ class EventService {
         this.$rootScope.$broadcast(event, args);
     }
     
-    subscribeUploadMusicDialogActivated(cb) {
-        return this.$rootScope.$on(Events.uploadMusicDialogActivated, cb);
-    }
-
-    notifyUploadMusicDialogActivated(args) {
-        this.$rootScope.$broadcast(Events.uploadMusicDialogActivated, args);
-    }
-
     subscribeAudioClipDialogActivated(cb) {
         return this.$rootScope.$on(Events.audioClipDialogActivated, cb);        
     }

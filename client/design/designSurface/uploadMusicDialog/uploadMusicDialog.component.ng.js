@@ -1,5 +1,7 @@
 'use strict';
 
+import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import Spinner from '/client/components/spinner/spinner';
 import FileUploader from '/lib/FileUploader';
 
@@ -75,13 +77,14 @@ angular.module('drillApp')
       }
 
       ctrl.$onInit = function () {
-        ctrl.unsubscribeUploadMusicDialogActivated = eventService.subscribeUploadMusicDialogActivated((evt, args) => {
+        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions.subscribe(Events.uploadMusicDialogActivated, (evt, args) => {
           ctrl.activate();
         });
       }
 
       ctrl.$onDestroy = function () {
-        ctrl.unsubscribeUploadMusicDialogActivated();
+        ctrl.subscriptions.unsubscribeAll();
       }
 
     }

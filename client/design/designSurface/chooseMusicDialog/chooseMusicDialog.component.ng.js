@@ -82,7 +82,7 @@ angular.module('drillApp')
       };
 
       $scope.upload = function() {
-        eventService.notifyUploadMusicDialogActivated();
+        eventService.notify(Events.uploadMusicDialogActivated);
       }
 
     }
