@@ -7,8 +7,7 @@ import DrillPlayer from '/client/lib/drill/DrillPlayer';
 import { appendFile } from 'fs';
 
 class DrillEditorService {
-    constructor($rootScope, $timeout, appStateService, eventService) {
-        this.$rootScope = $rootScope.$new(true);
+    constructor($timeout, appStateService, eventService) {
         this.$timeout = $timeout;
         this.appStateService = appStateService;
         this.eventService = eventService;
@@ -175,7 +174,6 @@ class DrillEditorService {
 
     notifyDrillStateChanged() {
         var memberSelection = this.drillBuilder.getMemberSelection();
-//        this.$rootScope.$broadcast(Events.drillStateChanged, { memberSelection });
         this.eventService.notify(Events.drillStateChanged, { memberSelection });
     }
 
@@ -184,14 +182,9 @@ class DrillEditorService {
         this.eventService.notify(Events.strideTypeChanged, { strideType });
     }
     
-    subscribeMembersSelected(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.membersSelected, cb);
-        return unsubscribe;
-    }
-
     notifyMembersSelected() {
         var memberSelection = this.drillBuilder.getMemberSelection();
-        this.$rootScope.$broadcast(Events.membersSelected, { memberSelection });  
+        this.eventService.notify(Events.membersSelected, { memberSelection });  
     }
 
     notifyMembersAdded() {

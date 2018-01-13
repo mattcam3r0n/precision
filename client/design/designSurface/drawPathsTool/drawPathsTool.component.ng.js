@@ -19,14 +19,14 @@ angular.module('drillApp')
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
         ctrl.turnMode = 'block';
         ctrl.toolDiv = angular.element('.draw-paths-tool')[0];
-      
+
         ctrl.subscriptions.subscribe(Events.drawPathsToolActivated, () => {
           activate(drillEditorService.getMemberSelection());
         });
 
         ctrl.subscriptions.subscribe(Events.strideTypeChanged, (evt, args) => {
           if (!ctrl.isActivated) return;
-          activate(drillEditorService.getMemberSelection());        
+          activate(drillEditorService.getMemberSelection());
         });
 
       }
@@ -42,25 +42,25 @@ angular.module('drillApp')
 
       $scope.cancel = deactivate;
 
-      $scope.reset = function() {
+      $scope.reset = function () {
         reset();
       }
 
-      $scope.isCurrentDirection= function(dir) {
+      $scope.isCurrentDirection = function (dir) {
         return ctrl.turnDirection == Direction[dir];
       }
 
       $scope.setTurnDirection = setTurnDirection;
 
-      $scope.isBlockMode = function() {
+      $scope.isBlockMode = function () {
         return ctrl.turnMode == 'block';
       }
 
-      $scope.isFileMode = function() {
-        return ctrl.turnMode == 'file';        
+      $scope.isFileMode = function () {
+        return ctrl.turnMode == 'file';
       }
 
-      $scope.setTurnMode = function(mode) {
+      $scope.setTurnMode = function (mode) {
         ctrl.turnMode = mode;
         createPathTool();
       }
@@ -79,19 +79,18 @@ angular.module('drillApp')
         ctrl.field.disablePositionIndicator();
         setTurnDirection(Direction.E);
         ctrl.field.canvas.on('mouse:up', onMouseUp);
-        ctrl.unsubscribeDeleteTurn = eventService.subscribeDeleteTurn(onBackspacePressed);
-        ctrl.unsubscribeMembersSelected = drillEditorService.subscribeMembersSelected((evt, args) => {
+        ctrl.subscriptions.subscribe(Events.deleteTurn, onBackspacePressed);
+        ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
           if (!ctrl.isActivated) return;
           ctrl.memberSelection = args.memberSelection;
           createPathTool();
-        });  
+        });
       }
 
       function deactivate() {
-        if (ctrl.unsubscribeDeleteTurn) 
-          ctrl.unsubscribeDeleteTurn();
-        if (ctrl.unsubscribeMembersSelected)
-          ctrl.unsubscribeMembersSelected();
+        ctrl.subscriptions.unsubscribe(Events.deleteTurn);
+        ctrl.subscriptions.unsubscribe(Events.membersSelected);
+
         ctrl.isActivated = false;
         ctrl.field.enablePositionIndicator();
         ctrl.field.canvas.selection = true;
@@ -100,7 +99,7 @@ angular.module('drillApp')
         destroyPathTool();
         eventService.notifyUpdateField();
         ctrl.field.update();
-        eventService.notify(Events.drawPathsToolDeactivated);        
+        eventService.notify(Events.drawPathsToolDeactivated);
       }
 
       function setTurnDirection(direction) {
@@ -108,24 +107,24 @@ angular.module('drillApp')
         ctrl.turnDirection = dir;
         ctrl.field.canvas.defaultCursor = "url(/icons/" + Direction.getDirectionName(dir) + ".svg) 8 8, auto";
         ctrl.activePathTool.setCurrentTurnDirection(Direction[dir]);
-      }      
+      }
 
       function reset() {
         deactivate();
         activate(ctrl.memberSelection);
       }
-      
+
       function createPathTool() {
         //if (ctrl.memberSelection.members.length == 0) return;
 
-        if (ctrl.activePathTool) 
+        if (ctrl.activePathTool)
           destroyPathTool();
 
         ctrl.activePathTool = new PathTool(ctrl.field, ctrl.memberSelection, ctrl.turnMode, ctrl.strideType);
         eventService.notifyUpdateField();
       }
 
-      function destroyPathTool(){
+      function destroyPathTool() {
         if (!ctrl.activePathTool) return;
 
         ctrl.activePathTool.dispose();
@@ -139,7 +138,7 @@ angular.module('drillApp')
 
         //removeTurnMarker(target);
         ctrl.activePathTool.removeTurnMarker(target);
-//        ctrl.guidePaths.forEach(gp => gp.removeTurnMarker(target));
+        //        ctrl.guidePaths.forEach(gp => gp.removeTurnMarker(target));
       }
 
       function onMouseUp(evt) {

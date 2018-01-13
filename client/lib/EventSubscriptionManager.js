@@ -20,9 +20,7 @@ class EventSubscriptionManager {
     }
 
     unsubscribe(event) {
-        if (!this.subscriptions[event]) {
-            throw new EventSubscriptionManagerException('Cannot unsubscribe from ' + event + ' because there is no current subscription.');
-        }
+        if (!this.subscriptions[event]) return;
         this.subscriptions[event]();
     }
 
