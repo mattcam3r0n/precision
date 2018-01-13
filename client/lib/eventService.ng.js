@@ -19,15 +19,6 @@ class EventService {
         this.$rootScope.$broadcast(event, args);
     }
 
-    subscribePositionIndicator(cb) {
-        var unsubscribe = this.$rootScope.$on(Events.positionIndicator, cb);
-        return unsubscribe;
-    }
-
-    notifyPositionIndicator(args) {
-        this.$rootScope.$broadcast(Events.positionIndicator, args);
-    }
-
     subscribeResize(cb) {
         var unsubscribe = this.$rootScope.$on(Events.resize, cb);
         return unsubscribe;

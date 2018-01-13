@@ -330,7 +330,7 @@ class FieldController {
         self.canvas.renderAll();
 
         var pos = PositionCalculator.getPositionDescription(snappedPoint, this.strideType || StrideType.SixToFive);
-        this.eventService.notifyPositionIndicator({ position: pos });
+        this.eventService.notify(Events.positionIndicator, { position: pos });
     }
 
     createPositionIndicator() {

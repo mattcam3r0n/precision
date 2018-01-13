@@ -1,7 +1,8 @@
 'use strict';
 
 import Audio from '/client/lib/audio/Audio';
-
+import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 angular.module('drillApp')
   .component('playbackControls', {
@@ -19,16 +20,17 @@ angular.module('drillApp')
       
       ctrl.$onInit = function () {
         ctrl.isActivated = true;
+        ctrl.subscriptions = new EventSubscriptionManager(eventService);
 
         // update position indicator
-        ctrl.unsubscribePositionIndicator = eventService.subscribePositionIndicator((event, args) => {
+        ctrl.subscriptions.subscribe(Events.positionIndicator, (event, args) => {
           $scope.currentPosition = args.position;
           $rootScope.$safeApply();
         });
       }
 
       ctrl.$onDestroy = function() {
-        ctrl.unsubscribePositionIndicator();
+        ctrl.subscriptions.unsubscribeAll();
       }
 
       ctrl.$onChanges = function(changes) {
