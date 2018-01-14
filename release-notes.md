@@ -83,3 +83,4 @@
 * NEW: composed by field when uploading 
 * FIX: wavy file indicators when on odd count
 * FIX: show new step count when moving turn marker
+* Clean up event related code
