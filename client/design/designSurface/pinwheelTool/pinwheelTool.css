@@ -1,0 +1,77 @@
+.pinwheel-tool {
+    background-color: gainsboro;
+}
+
+/* .pinwheel-tool .direction-button button {
+    border-radius: 0;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+} */
+
+.pinwheel-tool button {
+    border-radius: 0;
+    height: 32px;
+    width: 48px;
+    padding: 0;
+    font-size: 12px;
+}
+
+.pinwheel-tool button i {
+    color: black;
+}
+
+.pinwheel-tool button.active {
+    background-color: #e6e6e6;
+}
+
+.pinwheel-tool input {
+    color: black;
+    text-align: center;
+    height: 32px;
+    padding-left: 16px;
+    padding-right: 8px;
+}
+
+.pinwheel-tool .counts button {
+    width: 20px;
+    height: 32px;
+}
+
+/* .pinwheel-tool .turn-mode-button button {
+    border-radius: 0;
+    height: 32px;
+    width: 48px;
+    padding: 0;
+    font-size: 12px;
+} */
+
+.pinwheel-tool .turn-mode-button button.active {
+    background-color: #e6e6e6;
+    color: black;
+}
+            
+.pinwheel-tool .turn-mode-button span {
+    font-size: 12px;
+}
+
+.pinwheel-tool .save-cancel-button button {
+    border-radius: 0;
+    height: 32px;
+    width: 48px;
+    padding: 0;
+}
+
+.pinwheel-tool .reset-button button {
+    border-radius: 0;
+    width: 96px;
+}
+
+.pinwheel-tool .save-button i {
+    color: green;    
+}
+
+.pinwheel-tool .cancel-button i {
+    color: red;    
+}
+

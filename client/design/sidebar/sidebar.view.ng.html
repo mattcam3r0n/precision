@@ -29,10 +29,12 @@
             <div id="marcherOptions" class="collapse">
                 <ul class="side-sub-menu">
                     <li>
-                        <a ng-click="addMembers()"><i class="fa fa-plus"></i>Add Marchers</a>
+                        <a ng-click="addMembers()">
+                            <i class="fa fa-plus"></i>Add Marchers</a>
                     </li>
                     <li>
-                        <a ng-click="deleteSelectedMembers()"><i class="fa fa-times"></i>Delete Selected</a>
+                        <a ng-click="deleteSelectedMembers()">
+                            <i class="fa fa-times"></i>Delete Selected</a>
                     </li>
                 </ul>
             </div>
@@ -52,7 +54,6 @@
                 </ul>
             </div>
         </li>
-        </li>
         <li class="panel">
             <a href="#drawPaths" ng-click="drawPaths()" data-toggle="collapse" data-parent="#sideMenu">
                 <i class="fa fa-pencil"></i> Paths</a>
@@ -68,13 +69,30 @@
                 </ul>
             </div>
         </li>
-        </li>
+        <!-- <li class="panel">
+            <a href="#pinwheel" ng-click="pinwheel()" data-toggle="collapse" data-parent="#sideMenu">
+                <i class="fa fa-pencil"></i> Pinwheel</a>
+            <div id="pinwheel" class="collapse">
+                <ul class="side-sub-menu">
+                    <li>
+                        <input type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary" data-label-text="Stride"
+                            data-size="mini" data-label-width="55px" />
+                    </li>
+                    <li>
+                        <pinwheel-tool></pinwheel-tool>
+                    </li>
+                </ul>
+            </div>
+        </li> -->
         <li class="panel">
             <a href="#addMusic" data-toggle="collapse" data-parent="#sideMenu">
                 <i class="fa fa-music"></i> Music</a>
             <div id="addMusic" class="collapse">
                 <ul class="side-sub-menu">
-                    <li><a ng-click="addMusic()"><i class="fa fa-plus"></i>Add Music</a></li>
+                    <li>
+                        <a ng-click="addMusic()">
+                            <i class="fa fa-plus"></i>Add Music</a>
+                    </li>
                     <!-- <li>Music Library</li> -->
                 </ul>
             </div>

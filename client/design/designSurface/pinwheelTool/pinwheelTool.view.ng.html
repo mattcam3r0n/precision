@@ -1,0 +1,91 @@
+<div class="pinwheel-tool">
+    <div id="pinwheelTool" class="btn-group-vertical">
+        <!-- TODO: remove tables and use flexbox? -->
+        <table class="">
+            <tr>
+                <td>
+                    <button ng-click="" id="" ng-class="{ 'active': isCounterClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                        title="Counter clockwise">
+                        <i class="fa fa-rotate-left"></i>
+                    </button>
+                </td>
+                <td>
+                    <button ng-click="" id="" ng-class="{ 'active': isClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                        title="Clockwise">
+                        <i class="fa fa-rotate-right"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <table class="">
+            <tr>
+                <td>
+                    <button ng-click="" id="" ng-class="{ 'active': isCounterClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                        title="">
+                        1/4
+                    </button>
+                </td>
+                <td>
+                    <button ng-click="" id="" ng-class="{ 'active': isCounterClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                        title="">
+                        1/2
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button ng-click="" id="" ng-class="{ 'active': isCounterClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                        title="">
+                        4/4
+                    </button>
+                </td>
+                <td>
+                    <button ng-click="" id="" ng-class="{ 'active': isCounterClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                        title="">
+                        3/4
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="input-group counts">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">-</button>
+                        </span>
+                        <input type="number" class="form-control" />
+                        <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">+</button>
+                            </span>
+                        </div>
+                    <!-- <button></button>
+                    <input type="number" value="8"/>
+                    <button></button> -->
+                </td>
+            </tr>
+        </table>
+        <!-- <table class="reset-button">
+            <tr>
+                <td>
+                    <button ng-click="reset()" class="btn btn-default btn-sm">Reset</button>
+                </td>
+            </tr>
+        </table> -->
+        <table class="save-cancel-button">
+            <tr>
+                <td>
+                    <button ng-click="save()" id="savePinwheel" class="btn btn-default save-button" data-toggle="tooltip" data-placement="right"
+                        title="Save">
+                        <i class="fa fa-check context-button"></i>
+                    </button>
+                </td>
+                <td>
+                    <button ng-click="cancel()" id="cancelPinwheel" class="btn btn-default cancel-button" data-toggle="tooltip" data-placement="right"
+                        title="Cancel">
+                        <i class="fa fa-times context-button"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
