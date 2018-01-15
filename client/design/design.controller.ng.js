@@ -28,7 +28,7 @@ angular.module('drillApp')
       Audio.init();
 
       if ($scope.currentUser) {
-        appStateService.openLastDrillOrNew().then(openDrill);        
+        openLastDrillOrNew().then(openDrill);        
       }
 
       $scope.$watch('tempo', function () {
@@ -47,7 +47,7 @@ angular.module('drillApp')
           return;
         }
         
-        appStateService.openLastDrillOrNew().then(openDrill);
+        openLastDrillOrNew().then(openDrill);
       });
 
       // handle events
@@ -82,6 +82,16 @@ angular.module('drillApp')
       ctrl.subscriptions.unsubscribeAll();
     });
 
+    function openLastDrillOrNew() {
+      return appStateService.getLastDrillId()
+          .then(drillId => {
+              if (!drillId)
+                  return appStateService.newDrill();
+
+              return appStateService.openDrill(drillId);
+          });
+    }
+
     function newDrill() {
       var d = appStateService.newDrill();
       setDrill(d);
@@ -94,14 +104,13 @@ angular.module('drillApp')
         return;
       }
 
-      appStateService.openDrill(drill._id).then(openedDrill => {
-        setDrill(openedDrill);
-        drillEditorService.goToBeginning();
-      });
+      setDrill(drill);
+      drillEditorService.goToBeginning();
     }
 
     function setDrill(drill) {
       $scope.drill = drill;
+      appStateService.drill = drill;
       drillEditorService.setDrill(drill);
       drillEditorService.setTempo($scope.tempo);
       keyboardHandler = new DesignKeyboardHandler(drillEditorService, eventService);
@@ -116,10 +125,6 @@ angular.module('drillApp')
     $scope.debug = function () {
       console.log('drill', $scope.drill);
     }
-
-    // $scope.onNew = function () {
-    //   newDrill();
-    // }
 
     // used by openDrillDialog when a drill is chosen
     $scope.onOpen = function (drillId) {

@@ -91,7 +91,6 @@ console.log('userChanged', Meteor.user().profile);
     openLastDrillOrNew() {
         return this.getLastDrillId()
             .then(drillId => {
-
                 if (!drillId)
                     return this.newDrill();
 
@@ -138,23 +137,25 @@ console.log('userChanged', Meteor.user().profile);
     }
 
     insertDrill() {
-        this.drill.createdDate = new Date();
-        this.drill.updatedDate = new Date();
-        this.drill.userId = Meteor.userId();
-        this.drill.owner = getOwnerEmail(Meteor.user());
-        this.drill.name_sort = this.drill.name.toLowerCase();
-        //this.drill.owner = Meteor.userId();
-        Drills.insert(angular.copy(this.drill), (err, id) => {
+        var self = this;
+        self.drill.createdDate = new Date();
+        self.drill.updatedDate = new Date();
+        self.drill.userId = Meteor.userId();
+        self.drill.owner = getOwnerEmail(Meteor.user());
+        self.drill.name_sort = self.drill.name.toLowerCase();
+        //self.drill.owner = Meteor.userId();
+        Drills.insert(angular.copy(self.drill), (err, id) => {
             if (err) {
-                if (!Meteor.userId())
-                    this.alertService.warning('Unable to save drill. Please login to save your work.');
-                else
-                    this.alertService.danger('Unable to save drill. ' + err);
+                if (!Meteor.userId()) {
+                    self.alertService.warning('Unable to save drill. Please login to save your work.');
+                } else {
+                    self.alertService.danger('Unable to save drill. ' + err);
+                }
                 return;
             }
-            this.drill._id = id;
+            self.drill._id = id;
         });
-        this.updateUserProfile();
+        self.updateUserProfile();
     }
 
     updateDrill() {
@@ -254,7 +255,7 @@ function getOwnerEmail(user) {
 }
 
 function shouldUpgradeDrill(drill) {
-    return !drill.drillFormatVersion || drill.drillFormatVersion < _currentDrillFormatVersion;
+    return drill && (!drill.drillFormatVersion || drill.drillFormatVersion < _currentDrillFormatVersion);
 }
 
 function upgradeDrill(drill) {
