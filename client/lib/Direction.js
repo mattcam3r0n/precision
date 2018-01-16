@@ -1,49 +1,49 @@
-var directionNames = {
-    "-1": "CM",
-    "0": "N",
-    "90": "E",
-    "180": "S",
-    "270": "W",
-    "45": "NE",
-    "135": "SE",
-    "225": "SW",
-    "315": "NW"
+const directionNames = {
+    '-1': 'CM',
+    '0': 'N',
+    '90': 'E',
+    '180': 'S',
+    '270': 'W',
+    '45': 'NE',
+    '135': 'SE',
+    '225': 'SW',
+    '315': 'NW',
 };
 class Direction {
     // a special case for countermarch
-    static get CM(){
+    static get CM() {
         return -1;
     }
 
-    static get N(){
+    static get N() {
         return 0;
     }
 
-    static get E(){
+    static get E() {
         return 90;
     }
 
-    static get S(){
+    static get S() {
         return 180;
     }
 
-    static get W(){
+    static get W() {
         return 270;
     }
 
-    static get NE(){
+    static get NE() {
         return 45;
     }
 
-    static get SE(){
+    static get SE() {
         return 135;
     }
 
-    static get SW(){
+    static get SW() {
         return 225;
     }
 
-    static get NW(){
+    static get NW() {
         return 315;
     }
 
@@ -56,24 +56,32 @@ class Direction {
     }
 
     static getLineDirection(from, to) {
-        var slope = this.getLineSlope(from, to);
+        let slope = this.getLineSlope(from, to);
 
-        if (slope === -Infinity)
+        if (slope === -Infinity) {
             return Direction.N;
-        if (Object.is(slope, -0))
+        }
+        if (Object.is(slope, -0)) {
             return Direction.E;
-        if (slope === Infinity)
+        }
+        if (slope === Infinity) {
             return Direction.S;
-        if (Object.is(slope, +0))
+        }
+        if (Object.is(slope, +0)) {
             return Direction.W;
-        if (slope === 1 && from.x <= to.x && from.y <= to.y)
+        }
+        if (slope === 1 && from.x <= to.x && from.y <= to.y) {
             return Direction.NE;
-        if (slope === 1 && from.x >= to.x && from.y >= to.y)
+        }
+        if (slope === 1 && from.x >= to.x && from.y >= to.y) {
             return Direction.SW;
-        if (slope === -1 && from.x >= to.x && from.y <= to.y)
+        }
+        if (slope === -1 && from.x >= to.x && from.y <= to.y) {
             return Direction.NW;
-        if (slope === -1 && from.x <= to.x && from.y >= to.y)
+        }
+        if (slope === -1 && from.x <= to.x && from.y >= to.y) {
             return Direction.SE;
+        }
     }
 
     static isLineDirection(from, to, dir) {
@@ -81,12 +89,12 @@ class Direction {
     }
 
     static leftTurnDirection(from) {
-        var newDir = from - 90;
+        let newDir = from - 90;
         return newDir < 0 ? 360 + newDir : newDir;
     }
 
     static rightTurnDirection(from) {
-        var newDir = (from + 90);
+        let newDir = (from + 90);
         return newDir >= 360 ? newDir - 360 : newDir;
     }
 
@@ -101,12 +109,14 @@ class Direction {
 
     static isOblique(dir) {
         dir = this.getDirection(dir);
-        return dir == Direction.NW || dir == Direction.NE || dir == Direction.SE || dir == Direction.SW;
+        return dir == Direction.NW ||
+            dir == Direction.NE ||
+            dir == Direction.SE ||
+            dir == Direction.SW;
     }
-    
 }
 
-var slope = {
+const slope = {
     [Direction.N]: -Infinity,
     [Direction.E]: -0,
     [Direction.S]: Infinity,
@@ -114,7 +124,7 @@ var slope = {
     [Direction.NE]: -1,
     [Direction.SW]: -1,
     [Direction.SE]: 1,
-    [Direction.NW]: 1
+    [Direction.NW]: 1,
 };
 
 
