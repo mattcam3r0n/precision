@@ -1,30 +1,37 @@
 
-
+/**
+ * StepType
+ */
 class StepType {
-    static get Full(){
+    /** A full step */
+    static get Full() {
         return 0;
     }
 
-    static get Half(){
+    /** A half step */
+    static get Half() {
         return 1;
     }
 
-    static get MarkTime(){
+    /** Mark time in place */
+    static get MarkTime() {
         return 2;
     }
 
-    static get Halt(){
+    /** Halted */
+    static get Halt() {
         return 3;
     }
 
-    static get Gate(){
+    /** A gate/pinwheel step */
+    static get Gate() {
         return 4;
     }
 
-    static get Pinwheel(){
+    /** A gate/pinwheel step */
+    static get Pinwheel() {
         return 5;
     }
-
 };
 
 export default StepType;
