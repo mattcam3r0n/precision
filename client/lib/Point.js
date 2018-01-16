@@ -1,11 +1,15 @@
 import FieldDimensions from '/client/lib/FieldDimensions';
-import Direction from '/client/lib/Direction';
-import StrideType from '/client/lib/StrideType';
-import StepType from '/client/lib/StepType';
 
+/** Represents a Point on the field */
 class Point {
+    /**
+     * Constructor
+     * @param {number} x
+     * @param {number} y
+     */
     constructor(x, y) {
-        if (x.x && x.y)  { // x looks like an point object
+        // if x looks like a point object, initialize from it
+        if (x.x && x.y) {
             this.x = x.x;
             this.y = x.y;
         } else {
@@ -14,6 +18,12 @@ class Point {
         }
     }
 
+    /**
+     * Determine if two point are equal
+     * @param {number} a
+     * @param {number} b
+     * @return {boolean}
+     */
     static arePointsEqual(a, b) {
         return a.x == b.x && a.y == b.y;
     }
@@ -38,17 +48,16 @@ class FieldPoint extends Point {
     }
 
     toStepPoint(strideType) {
-        var stepPoint = FieldDimensions.toStepPoint(this, strideType);
+        let stepPoint = FieldDimensions.toStepPoint(this, strideType);
         return new StepPoint(strideType, stepPoint.x, stepPoint.y);
     }
 }
 
 class StepPoint extends Point {
     constructor(strideType, x, y) {
+// console.log(x,y);
 
-//console.log(x,y);
-
-        var p = x.x ? { x: x.x, y: x.y } : { x, y };
+        let p = x.x ? {x: x.x, y: x.y} : {x, y};
 
         p = FieldDimensions.toStepPoint(p, strideType);
 
@@ -58,10 +67,8 @@ class StepPoint extends Point {
     }
 
     toFieldPoint() {
-        var fieldPoint = FieldDimensions.toFieldPoint(this, this.strideType);
+        let fieldPoint = FieldDimensions.toFieldPoint(this, this.strideType);
         return new FieldPoint(fieldPoint.x, fieldPoint.y);
-//        return new FieldPoint(FieldDimensions.toFieldPoint(this, this.strideType));
-        
     }
 
     isEvenPoint() {
@@ -76,5 +83,5 @@ class StepPoint extends Point {
 export {
     Point,
     StepPoint,
-    FieldPoint
-}
+    FieldPoint,
+};

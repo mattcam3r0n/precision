@@ -1,4 +1,4 @@
-var style = 'growl-top-right';
+let style = 'growl-top-right';
 
 class AlertService {
     constructor() {
