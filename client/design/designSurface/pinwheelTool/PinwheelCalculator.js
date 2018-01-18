@@ -33,7 +33,58 @@ class PinwheelCalculator {
         return distance;
     }
 
-    getPathArcInfo() {
+    getPathArcInfo(rotationDirection, rotationAngle) {
+        let origin = this.pivotMember.currentState;
+        let farthest = this.getFarthestMemberFromPivot();
+        let angleOfFarthestPoint = this.calculateAngle(origin, farthest.point); // eslint-disable-line max-len
+        let radius = farthest.distance;
+
+        let arcStartAngle;
+        let arcEndAngle;
+        let arcEndPoint;
+        let arrowAngle;
+        if (rotationDirection === 'counter-clockwise') {
+            arcStartAngle = angleOfFarthestPoint - (rotationAngle * Math.PI);
+            arcEndAngle = angleOfFarthestPoint;
+            arcEndPoint = this.calculatePointOnCircle(origin,
+                radius,
+                arcStartAngle);
+            arrowAngle = (arcStartAngle * 180 / Math.PI);
+        } else {
+            arcStartAngle = angleOfFarthestPoint;
+            arcEndAngle = angleOfFarthestPoint + (rotationAngle * Math.PI);
+            arcEndPoint = this.calculatePointOnCircle(origin,
+                radius,
+                arcEndAngle);
+            arrowAngle = (arcEndAngle * 180 / Math.PI) + 180;
+        }
+
+
+        return {
+            origin: origin,
+            radius: radius,
+            farthestPoint: farthest.point,
+            angleOfFarthestPoint: angleOfFarthestPoint,
+            startAngle: arcStartAngle,
+            endAngle: arcEndAngle,
+            arcEndPoint: arcEndPoint,
+            arrowAngle: arrowAngle,
+        };
+    }
+
+    getFarthestMemberFromPivot() {
+        let distances = this.getMemberDistancesFromPivot();
+        let farthest = distances.reduce((a, b) => {
+            if (b.distance > a.distance) {
+                return b;
+            } else {
+                return a;
+            }
+        }, {distance: -1});
+        return farthest;
+    }
+
+    getMemberDistancesFromPivot() {
         let distances = this.members
             .map((m) => {
                 return {
@@ -44,19 +95,7 @@ class PinwheelCalculator {
                     distance: this.calculateRadius(this.pivotMember, m),
                 };
             });
-
-        let farthest = distances.reduce((a, b) => {
-            if (b.distance > a.distance) {
-                return b;
-            } else {
-                return a;
-            }
-        }, {distance: -1});
-        return {
-            distance: farthest.distance,
-            point: farthest.point,
-            angle: this.calculateAngle(this.pivotMember.currentState, farthest.point), // eslint-disable-line max-len
-        };
+        return distances;
     }
 
     calculatePointOnCircle(origin, radius, angle) {
@@ -98,7 +137,7 @@ class PinwheelCalculator {
         return steps;
     }
 
-    calculateMemberPosition(count) {}
+    calculateMemberPosition(count) { }
 }
 
 export default PinwheelCalculator;

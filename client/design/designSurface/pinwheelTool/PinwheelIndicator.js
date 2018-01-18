@@ -2,8 +2,6 @@
 
 import PivotPoint from './PivotPoint';
 import PathArc from './PathArc';
-import MarcherFactory from '../field/MarcherFactory';
-import StrideType from '/client/lib/StrideType';
 import PinwheelCalculator from './PinwheelCalculator';
 
 class PinwheelIndicator {
@@ -43,17 +41,10 @@ class PinwheelIndicator {
     }
 
     createPathArc() {
-        let info = this.pinwheelCalculator.getPathArcInfo();
-        let startAngle;
-        let endAngle;
-        if (this.rotationDirection === 'counter-clockwise') {
-            startAngle = info.angle - (this.rotationAngle * Math.PI);
-            endAngle = info.angle;
-        } else {
-            startAngle = info.angle;
-            endAngle = info.angle + (this.rotationAngle * Math.PI);
-        }
-        this.pathArc = new PathArc(this.pivotMember.currentState, info.distance, startAngle, endAngle); // eslint-disable-line max-len
+        let info = this.pinwheelCalculator
+                    .getPathArcInfo(this.rotationDirection,
+                                    this.rotationAngle);
+        this.pathArc = new PathArc(info);
         this.field.canvas.add(this.pathArc);
     }
 
@@ -65,15 +56,24 @@ class PinwheelIndicator {
         this.marchers = [];
         let endPositions = this.getEndPositions();
         endPositions.forEach((pos) => {
-            let marcher = MarcherFactory
-                .createMarcher(StrideType.SixToFive,
-                    pos.x,
-                    pos.y);
-            marcher.left = pos.x;
-            marcher.top = pos.y;
+            let marcher = this.createMarcher(pos.x, pos.y);
             this.marchers.push(marcher);
             this.field.canvas.add(marcher);
         });
+    }
+
+    createMarcher(x, y) {
+        let marcher = new fabric.Triangle({
+            originX: 'center',
+            originY: 'center',
+            left: x,
+            top: y,
+            height: 15,
+            width: 15,
+            fill: 'black',
+            opacity: .25,
+        });
+        return marcher;
     }
 
     getEndPositions() {

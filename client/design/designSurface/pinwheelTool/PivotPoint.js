@@ -18,7 +18,7 @@ let PivotPoint = fabric.util.createClass(fabric.Circle, {
     options.radius = FieldDimensions.marcherWidth * .75;
     options.left = pivotPoint.x,
     options.top = pivotPoint.y,
-    options.stroke = 'black';
+    options.stroke = 'white';
     options.strokeWidth = 1;
     options.fill = '';
 

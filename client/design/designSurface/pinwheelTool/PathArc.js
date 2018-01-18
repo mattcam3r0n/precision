@@ -1,36 +1,79 @@
-// start in radians 0PI = N, .5PI = E, 1PI = S, 1.5PI = W
-// rotation: 1/4 = .5PI
-// start + rotation
-let PivotPoint = fabric.util.createClass(fabric.Circle, {
-  type: 'PathArc',
-  // cosider center of object the origin. eg, rotate around center.
-  originX: 'center',
-  originY: 'center',
-  fill: false,
-  stroke: 'white',
-  strokeWidth: 2,
-  hasControls: false,
-  lockMovementX: true,
-  lockMovementY: true,
-  hoverCursor: 'pointer',
-  evented: false,
-  selectable: false,
+let PathArc = fabric.util.createClass(fabric.Group, {
+    type: 'PathArc',
 
-  initialize: function(pivotPoint, radius, startAngle, endAngle) {
-    options = {};
+    initialize: function(args) {
+        let options = {
+            selectable: false,
+            evented: false,
+        };
+        let objects = [
+            createArc(args.origin,
+                args.radius,
+                args.startAngle,
+                args.endAngle),
+            createArrow(args.origin,
+                args.radius,
+                args.startAngle,
+                args.endAngle,
+                args.arcEndPoint,
+                args.arrowAngle),
+        ];
 
-    options.radius = radius;
-    options.left = pivotPoint.x;
-    options.top = pivotPoint.y;
-    options.startAngle = startAngle;
-    options.endAngle = endAngle;
+        this.callSuper('initialize', objects, options);
+    },
 
-    this.callSuper('initialize', options);
-  },
+    toObject: function() {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+        });
+    },
 
-  _render: function(ctx) {
-    this.callSuper('_render', ctx);
-  },
+    _render: function(ctx) {
+        this.callSuper('_render', ctx);
+    },
 });
 
-export default PivotPoint;
+function createArc(pivotPoint, radius, startAngle, endAngle) {
+    let arc = new fabric.Circle({
+        originX: 'center',
+        originY: 'center',
+        fill: false,
+        stroke: 'white',
+        strokeWidth: 2,
+        hasControls: false,
+        lockMovementX: true,
+        lockMovementY: true,
+        hoverCursor: 'pointer',
+        evented: false,
+        selectable: false,
+        radius: radius,
+        left: pivotPoint.x,
+        top: pivotPoint.y,
+        startAngle: startAngle,
+        endAngle: endAngle,
+    });
+    return arc;
+}
+
+function createArrow(pivotPoint,
+                        radius,
+                        startAngle,
+                        endAngle,
+                        arcEndPoint,
+                        arrowAngle) {
+    let arrow = new fabric.Triangle({
+        type: 'PathArcArrow',
+        originX: 'center',
+        originY: 'center',
+        fill: 'white',
+        stroke: 'white',
+        selectable: false,
+        angle: arrowAngle,
+        left: arcEndPoint.x,
+        top: arcEndPoint.y,
+        width: 15,
+        height: 15,
+    });
+    return arrow;
+}
+
+export default PathArc;
