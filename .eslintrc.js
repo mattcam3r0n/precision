@@ -7,6 +7,10 @@ module.exports = {
         }
     },
     "rules": {
-        "require-jsdoc": "off"
+        "require-jsdoc": "off",
+        "max-len": ["error", {
+            "ignorePattern": "^import .*",
+            "ignoreComments": true
+        }]
     }
 };

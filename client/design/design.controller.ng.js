@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 import DesignKeyboardHandler from './DesignKeyboardHandler';
 import Audio from '/client/lib/audio/Audio';
@@ -6,15 +6,17 @@ import Spinner from '/client/components/spinner/spinner';
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
-import { Meteor } from 'meteor/meteor';
-
 angular.module('drillApp')
-  .controller('DesignCtrl', function ($scope, $window, appStateService, drillEditorService, eventService) {
-
-    var ctrl = this;
+  .controller('DesignCtrl', function($scope,
+                                      $window,
+                                      appStateService,
+                                      drillEditorService,
+                                      eventService) {
+    // eslint-disable-next-line
+    let ctrl = this;
     $scope.viewName = 'Design';
 
-    var keyboardHandler;
+    let keyboardHandler;
 
     init();
 
@@ -28,14 +30,14 @@ angular.module('drillApp')
       Audio.init();
 
       if ($scope.currentUser) {
-        openLastDrillOrNew().then(openDrill);        
+        openLastDrillOrNew().then(openDrill);
       }
 
-      $scope.$watch('tempo', function () {
+      $scope.$watch('tempo', function() {
         drillEditorService.setTempo($scope.tempo);
       });
 
-      $scope.$watch('currentUser', function (newValue, oldValue) {
+      $scope.$watch('currentUser', function(newValue, oldValue) {
         if ($scope.currentUser === undefined) return; // user not available yet
 
         if (newValue && oldValue && newValue._id === oldValue._id) return; // phantom change
@@ -46,7 +48,7 @@ angular.module('drillApp')
           newDrill();
           return;
         }
-        
+
         openLastDrillOrNew().then(openDrill);
       });
 
@@ -59,13 +61,14 @@ angular.module('drillApp')
         $('#openDrillDialog').modal('show');
       });
 
-      ctrl.subscriptions.subscribe(Events.showDrillPropertiesDialog, (evt, args) => {
+      ctrl.subscriptions
+        .subscribe(Events.showDrillPropertiesDialog, (evt, args) => {
+        });
 
-      });
-
-      ctrl.subscriptions.subscribe(Events.objectsSelected, (evt, args) => {
-        drillEditorService.selectMembers(args.members);
-      });
+      ctrl.subscriptions
+        .subscribe(Events.objectsSelected, (evt, args) => {
+          drillEditorService.selectMembers(args.members);
+        });
 
       ctrl.subscriptions.subscribe(Events.showSpinner, (event, args) => {
         ctrl.spinner.start();
@@ -77,23 +80,24 @@ angular.module('drillApp')
     }
 
 
-    $scope.$on("$destroy", function () {
+    $scope.$on('$destroy', function() {
       $window.removeEventListener('keydown', keydown);
       ctrl.subscriptions.unsubscribeAll();
     });
 
     function openLastDrillOrNew() {
       return appStateService.getLastDrillId()
-          .then(drillId => {
-              if (!drillId)
-                  return appStateService.newDrill();
+          .then((drillId) => {
+              if (!drillId) {
+                return appStateService.newDrill();
+              }
 
               return appStateService.openDrill(drillId);
           });
     }
 
     function newDrill() {
-      var d = appStateService.newDrill();
+      let d = appStateService.newDrill();
       setDrill(d);
       drillEditorService.goToBeginning();
     }
@@ -113,6 +117,7 @@ angular.module('drillApp')
       appStateService.drill = drill;
       drillEditorService.setDrill(drill);
       drillEditorService.setTempo($scope.tempo);
+      // eslint-disable-next-line max-len
       keyboardHandler = new DesignKeyboardHandler(drillEditorService, eventService);
       $scope.$safeApply(); // necessary for field painting?
     }
@@ -122,13 +127,12 @@ angular.module('drillApp')
       $scope.$safeApply();
     }
 
-    $scope.debug = function () {
+    $scope.debug = function() {
       console.log('drill', $scope.drill);
-    }
-
-    // used by openDrillDialog when a drill is chosen
-    $scope.onOpen = function (drillId) {
-      openDrill(drillId);
     };
 
+    // used by openDrillDialog when a drill is chosen
+    $scope.onOpen = function(drillId) {
+      openDrill(drillId);
+    };
   });

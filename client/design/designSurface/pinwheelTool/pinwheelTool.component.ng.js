@@ -2,101 +2,116 @@
 
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
-import { FieldPoint, StepPoint } from '/client/lib/Point';
-import FieldDimensions from '/client/lib/FieldDimensions';
-import Direction from '/client/lib/Direction';
+import PinwheelIndicator from './PinwheelIndicator';
 
 angular.module('drillApp')
   .component('pinwheelTool', {
+    // eslint-disable-next-line max-len
     templateUrl: 'client/design/designSurface/pinwheelTool/pinwheelTool.view.ng.html',
     bindings: {
     },
-    controller: function ($scope, $window, appStateService, drillEditorService, eventService) {
-      var ctrl = this;
+    controller: function($scope,
+                        $window,
+                        appStateService,
+                        drillEditorService,
+                        eventService) {
+      let ctrl = this;
 
-      ctrl.$onInit = function () {
+      ctrl.$onInit = function() {
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
 
-        ctrl.subscriptions.subscribe(Events.pinwheelToolActivated, () => {
-          //activate(drillEditorService.getMemberSelection());
+        ctrl.subscriptions.subscribe(Events.activatePinwheelTool, () => {
+          activate(drillEditorService.getMemberSelection());
         });
 
-        ctrl.subscriptions.subscribe(Events.strideTypeChanged, (evt, args) => {
+        ctrl.subscriptions.subscribe(Events.objectsSelected, (evt, args) => {
           if (!ctrl.isActivated) return;
-          //activate(drillEditorService.getMemberSelection());
+          ctrl.pivotMember = args.members[0];
+          ctrl.pivotMember.isSelected = true;
+          eventService.notify(Events.drillStateChanged);
+          createPinwheelIndicator();
+          console.log('pinwheel objectsSelected', ctrl.pivotMember);
         });
 
-        ctrl.turnDirection = 'clockwise';
-        ctrl.rotation = .25; // 1/4, 1/2, 3/4, full
+        ctrl.rotationDirection = 'clockwise';
+        ctrl.rotationAngle = 1; // 1/4, 1/2, 3/4, full
         ctrl.counts = 8;
-      }
+      };
 
-      ctrl.$onDestroy = function () {
+      ctrl.$onDestroy = function() {
         ctrl.subscriptions.unsubscribeAll();
-      }
+      };
 
-      $scope.save = function () {
+      $scope.save = function() {
         save();
         deactivate();
-      }
+      };
+
+      ctrl.setRotation = function(rotationPct) {
+        ctrl.rotationAngle = rotationPct * 2;
+        createPinwheelIndicator();
+      };
+
+      ctrl.setDirection = function(dir) {
+        ctrl.rotationDirection = dir;
+        createPinwheelIndicator();
+      };
 
       $scope.cancel = deactivate;
 
       function activate(memberSelection) {
-
-        if (ctrl.isActivated)
+        if (ctrl.isActivated) {
           deactivate();
+        }
 
         ctrl.isActivated = true;
         ctrl.field = appStateService.field;
         ctrl.memberSelection = memberSelection;
+        ctrl.pivotMember = memberSelection.members[0];
         ctrl.strideType = drillEditorService.strideType;
-
-//        createPathTool();
-
         ctrl.field.disablePositionIndicator();
+        // TODO: should we allow selection while this tool is active?
         ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
           if (!ctrl.isActivated) return;
           ctrl.memberSelection = args.memberSelection;
-//          createPathTool();
         });
+
+        createPinwheelIndicator();
       }
 
       function deactivate() {
+        if (ctrl.pinwheelIndicator) {
+          ctrl.pinwheelIndicator.dispose();
+        }
         ctrl.subscriptions.unsubscribe(Events.membersSelected);
 
         ctrl.isActivated = false;
         ctrl.field.enablePositionIndicator();
         ctrl.field.canvas.selection = true;
         ctrl.field.canvas.defaultCursor = 'default';
-//        destroyPathTool();
         eventService.notify(Events.updateField);
         eventService.notify(Events.pinwheelToolDeactivated);
       }
 
+      function createPinwheelIndicator() {
+        if (ctrl.pinwheelIndicator) {
+          ctrl.pinwheelIndicator.dispose();
+        }
 
-      function createPathTool() {
-        //if (ctrl.memberSelection.members.length == 0) return;
-
-        if (ctrl.activePathTool)
-          destroyPathTool();
-
-        ctrl.activePathTool = new PathTool(ctrl.field, ctrl.memberSelection, ctrl.turnMode, ctrl.strideType);
-        eventService.notify(Events.updateField);
-      }
-
-      function destroyPathTool() {
-        if (!ctrl.activePathTool) return;
-
-        ctrl.activePathTool.dispose();
+        ctrl.pinwheelIndicator = new PinwheelIndicator(ctrl.field,
+          ctrl.pivotMember,
+          ctrl.memberSelection.members,
+          ctrl.rotationDirection,
+          ctrl.rotationAngle,
+          ctrl.counts
+        );
+        ctrl.field.update();
       }
 
       function save() {
-
         drillEditorService.save(true);
       }
-
-    }
+    },
   });
 
 

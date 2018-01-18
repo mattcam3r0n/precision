@@ -34,7 +34,7 @@ class Events {
     static get hideSpinner() {
         return 'hideSpinner';
     }
-    
+
     static get showLogo() {
         return 'showLogo';
     }
@@ -51,12 +51,16 @@ class Events {
         return 'hideGrid';
     }
 
+    static get activatePinwheelTool() {
+        return 'activatePinwheelTool';
+    }
+
     // Events - notification that something has happened
 
     static get strideTypeChanged() {
         return 'strideTypeChanged';
     }
-    
+
     static get drillOpened() {
         return 'drillOpened';
     }
@@ -129,7 +133,6 @@ class Events {
     static get audioClipAdded() {
         return 'audioClipAdded';
     }
-
 }
 
 export default Events;

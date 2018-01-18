@@ -4,10 +4,10 @@ import FieldResizer from './FieldResizer';
 import FieldPainter from './FieldPainter';
 import MarcherFactory from './MarcherFactory';
 import PositionCalculator from '/client/lib/PositionCalculator';
-import Marcher from './Marcher';
-import TurnMarker from './TurnMarker';
-import MemberPath from './MemberPath';
-import { StepPoint, FieldPoint } from '/client/lib/Point';
+// import Marcher from './Marcher';
+// import TurnMarker from './TurnMarker';
+// import MemberPath from './MemberPath';
+import {StepPoint} from '/client/lib/Point';
 import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
@@ -15,7 +15,6 @@ import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import 'fabric-customise-controls';
 
 class FieldController {
-
     constructor(drill, eventService) {
         this.drill = drill;
         this.canvas = this.createCanvas();
@@ -26,7 +25,7 @@ class FieldController {
         this.paths = [];
         this.arePathsVisible = false;
 
-        //this.initCustomCorners();
+        // this.initCustomCorners();
         this.draw();
         this.resize();
         this.wireUpEvents();
@@ -53,7 +52,7 @@ class FieldController {
             height: FieldDimensions.height,
             width: FieldDimensions.width,
             uniScaleTransform: true,
-            renderOnAddRemove: false // performance optimization
+            renderOnAddRemove: false, // performance optimization
         });
     }
 
@@ -72,7 +71,7 @@ class FieldController {
         }
         this.arePathsVisible = true;
 
-        _.each(this.marchers, m => {
+        _.each(this.marchers, (m) => {
             let p = this.createMemberPath(m.member);
             if (p) {
                 this.paths.push(p);
@@ -84,7 +83,7 @@ class FieldController {
     hidePaths() {
         if (!this.paths) return;
         this.arePathsVisible = false;
-        this.paths.forEach(p => {
+        this.paths.forEach((p) => {
             this.canvas.remove(p);
         });
         this.paths = [];
@@ -94,8 +93,9 @@ class FieldController {
         let points = this.getMemberPathPoints(member);
         let pathExpr = this.getPathFromPoints(points);
 
-        if (!points || points.length == 0)
+        if (!points || points.length == 0) {
             return null;
+        }
 
         return new fabric.Path(pathExpr, {
             left: points[0].x,
@@ -103,16 +103,19 @@ class FieldController {
             stroke: 'black',
             strokeWidth: 2,
             opacity: .6,
-            fill: false
+            fill: false,
         });
     }
 
     getMemberPathPoints(member) {
-        var points = [];
-        points.push(new StepPoint(member.initialState.strideType, member.initialState.x, member.initialState.y).toFieldPoint());
+        let points = [];
+        points.push(new StepPoint(member.initialState.strideType,
+            member.initialState.x,
+            member.initialState.y
+        ).toFieldPoint());
 
-        var pos = null;
-        for (var i = 0; i < 30; i++) {
+        let pos = null;
+        for (let i = 0; i < 30; i++) {
             pos = MemberPositionCalculator.stepForward(member, pos);
             let p = new StepPoint(pos.strideType, pos.x, pos.y).toFieldPoint();
             points.push(p);
@@ -121,8 +124,8 @@ class FieldController {
     }
 
     getPathFromPoints(points) {
-        var pathExpr = "M ";
-        points.forEach(p => {
+        let pathExpr = 'M ';
+        points.forEach((p) => {
             pathExpr += p.x + ' ' + p.y + ' L ';
         });
         return pathExpr.slice(0, -2);
@@ -138,6 +141,7 @@ class FieldController {
 
     /**
      * drill state has changed, update marcher positions
+     * @param {object} args
      */
     drillStateChanged(args) {
         this.updateMarchers(args);
@@ -160,17 +164,18 @@ class FieldController {
         this.update();
     }
 
-    hideLogo(){
+    hideLogo() {
         this.fieldPainter.isLogoVisible = false;
         this.update();
     }
 
     strideTypeChanged(strideType) {
         this.strideType = strideType;
-        if (this.fieldPainter.isGridVisible)
+        if (this.fieldPainter.isGridVisible) {
             this.fieldPainter.showGrid(strideType);
-        else
+        } else {
             this.fieldPainter.hideGrid();
+        }
         this.update();
     }
 
@@ -185,11 +190,15 @@ class FieldController {
     updateMarchers(args) {
         if (!this.drill || !this.marchers) return;
 
-        for (var id in this.marchers) {
+        // eslint-disable-next-line guard-for-in
+        for (let id in this.marchers) {
             let marcher = this.marchers[id];
             let member = marcher.member;
 
-            let fieldPoint = FieldDimensions.toFieldPoint({ x: member.currentState.x, y: member.currentState.y }, member.currentState.strideType || StrideType.SixToFive);
+            let fieldPoint = FieldDimensions.toFieldPoint({
+                x: member.currentState.x,
+                y: member.currentState.y,
+            }, member.currentState.strideType || StrideType.SixToFive);
 
             let state = {
                 count: this.drill.count,
@@ -199,25 +208,25 @@ class FieldController {
                 y: fieldPoint.y,
                 direction: member.currentState.direction,
                 isSelected: member.isSelected,
-                isVisible: member.isVisible
+                isVisible: member.isVisible,
             };
 
             marcher.update(state);
             marcher.setCoords();
         }
-
     }
 
     synchronizeMarchers() {
         if (!this.drill) return;
 
-        for (var id in this.marchers) {
+        // eslint-disable-next-line guard-for-in
+        for (let id in this.marchers) {
             let marcher = this.marchers[id];
             this.destroyMarcher(marcher);
         }
         this.marchers = {};
 
-        this.drill.members.forEach(member => {
+        this.drill.members.forEach((member) => {
             let newMarcher = MarcherFactory.createMarcher(member.initialState);
             newMarcher.member = member;
             this.marchers[member.id] = newMarcher;
@@ -247,15 +256,10 @@ class FieldController {
     }
 
     wireUpEvents() {
-        var self = this;
-        var canvas = this.canvas;
+        let self = this;
 
         this.canvas.on('mouse:move', this.onMouseMove.bind(self));
-
         this.canvas.on('selection:created', this.onSelectionCreated.bind(self));
-
-        //this.canvas.on('selection:cleared', this.onSelectionCleared.bind(self));
-
         this.canvas.on('object:selected', this.onObjectSelected.bind(self));
 
         this.wireUpContextMenu();
@@ -264,17 +268,17 @@ class FieldController {
         this.subscriptions.subscribe(Events.hideGrid, this.hideGrid.bind(this));
         this.subscriptions.subscribe(Events.showLogo, this.showLogo.bind(this));
         this.subscriptions.subscribe(Events.hideLogo, this.hideLogo.bind(this));
-
     }
 
     wireUpContextMenu() {
-        var self = this;
-        $('.upper-canvas').bind('contextmenu', function (e) {
-            var clickPoint = self.adjustMousePoint(new fabric.Point(e.offsetX, e.offsetY));
+        let self = this;
+        $('.upper-canvas').bind('contextmenu', function(e) {
+            // eslint-disable-next-line max-len
+            let clickPoint = self.adjustMousePoint(new fabric.Point(e.offsetX, e.offsetY));
 
             e.preventDefault();
 
-            var objectFound = findMarcherAtPoint(self.canvas, clickPoint);
+            let objectFound = findMarcherAtPoint(self.canvas, clickPoint);
 
             console.log(objectFound);
         });
@@ -284,13 +288,20 @@ class FieldController {
     onSelectionCreated(evt) {
         evt.target.set({
             lockRotation: true,
-            hasControls: false
+            hasControls: false,
         });
-        var marchers = this.canvas.getActiveGroup().getObjects().filter(o => o.type == 'Marcher');
-        var members = marchers.map(marcher => marcher.member);
+        let marchers = this.canvas
+                        .getActiveGroup()
+                        .getObjects()
+                        .filter((o) => o.type == 'Marcher');
+        let members = marchers.map((marcher) => marcher.member);
 
-        this.canvas.discardActiveGroup(); // import to call this BEFORE emitting event, causes strange effect on position
-        this.eventService.notify(Events.objectsSelected, { members: members, marchers: marchers });
+        // important to call this BEFORE emitting event, causes strange effect on position
+        this.canvas.discardActiveGroup();
+        this.eventService.notify(Events.objectsSelected, {
+            members: members,
+            marchers: marchers,
+        });
     }
 
     onObjectSelected(evt) {
@@ -299,12 +310,12 @@ class FieldController {
 
         if (this.canvas.getActiveObject().type != 'Marcher') return;
 
-        var member = evt.target.member;
+        let member = evt.target.member;
 
         if (!member || !member.isVisible) return;
 
         this.canvas.discardActiveObject();
-        this.eventService.notify(Events.objectsSelected, { members: [member] });
+        this.eventService.notify(Events.objectsSelected, {members: [member]});
     }
 
     // onSelectionCleared(evt) {
@@ -312,29 +323,34 @@ class FieldController {
     // }
 
     onMouseMove(evt) {
-        //if (!this.positionIndicatorEnabled) return; 
+        // if (!this.positionIndicatorEnabled) return;
 
-        var isSelecting = !!this.canvas._groupSelector; // sneaky way of determinig if dragging selection box
-        if (evt.target == null && !isSelecting)
+        let isSelecting = !!this.canvas._groupSelector; // sneaky way of determinig if dragging selection box
+        if (evt.target == null && !isSelecting) {
             this.positionIndicator.set('visible', true);
-        else
+        } else {
             this.positionIndicator.set('visible', false);
+        }
 
-        var self = this;
-        var p = { x: evt.e.layerX, y: evt.e.layerY };
-        var snappedPoint = FieldDimensions.snapPoint(this.strideType || StrideType.SixToFive, self.adjustMousePoint(p));
+        let self = this;
+        let p = {x: evt.e.layerX, y: evt.e.layerY};
+        let snappedPoint = FieldDimensions
+                            .snapPoint(this.strideType || StrideType.SixToFive,
+                                self.adjustMousePoint(p));
 
         self.positionIndicator.set('visible', this.positionIndicatorEnabled);
         self.positionIndicator.set('left', snappedPoint.x);
         self.positionIndicator.set('top', snappedPoint.y);
         self.canvas.renderAll();
 
-        var pos = PositionCalculator.getPositionDescription(snappedPoint, this.strideType || StrideType.SixToFive);
-        this.eventService.notify(Events.positionIndicator, { position: pos });
+        let pos = PositionCalculator
+                    .getPositionDescription(snappedPoint,
+                        this.strideType || StrideType.SixToFive);
+        this.eventService.notify(Events.positionIndicator, {position: pos});
     }
 
     createPositionIndicator() {
-        var rect = new fabric.Rect({
+        let rect = new fabric.Rect({
             left: 0,
             top: 0,
             width: 12,
@@ -348,51 +364,56 @@ class FieldController {
             strokeWidth: 1,
             opacity: .5,
             originX: 'center',
-            originY: 'center'
+            originY: 'center',
         });
         this.canvas.add(rect);
         return rect;
     }
 
     adjustMousePoint(point) {
-        var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
+        let zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
         return {
             x: point.x * (1 / zoomFactor.x),
-            y: point.y * (1 / zoomFactor.y)
+            y: point.y * (1 / zoomFactor.y),
         };
     }
 
     getAbsoluteCoords(object) {
-        var zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
-        var coords = {};
+        let zoomFactor = FieldResizer.getZoomFactor(); // to account for scaling of canvas
+        let coords = {};
 
-        if (object.left)
+        if (object.left) {
+            // eslint-disable-next-line max-len
             coords.left = (object.left * zoomFactor.x) + this.canvas._offset.left;
+        }
 
-        if (object.top)
+        if (object.top) {
             coords.top = (object.top * zoomFactor.y) + this.canvas._offset.top;
+        }
 
-        if (object.width)
-            coords.width = (object.width * zoomFactor.x); // + this.canvas._offset.left
+        if (object.width) {
+            coords.width = (object.width * zoomFactor.x);
+        }
 
-        if (object.height)
+        if (object.height) {
             coords.height = (object.height * zoomFactor.y);
+        }
 
         return coords;
     }
 
     getLeftmostMarcherPosition() {
-        var sorted = _.sortBy(this.marchers, m => {
+        let sorted = _.sortBy(this.marchers, (m) => {
             return m.left;
         });
 
-        var leftmost = _.first(sorted);
+        let leftmost = _.first(sorted);
 
         return {
             x: leftmost.left,
             y: leftmost.top,
             left: leftmost.left,
-            top: leftmost.top
+            top: leftmost.top,
         };
     }
 }
@@ -400,9 +421,9 @@ class FieldController {
 export default FieldController;
 
 function findMarcherAtPoint(canvas, point) {
-    var objectFound;
+    let objectFound;
     // find marcher
-    canvas.forEachObject(function (obj) {
+    canvas.forEachObject(function(obj) {
         if (!objectFound && obj.type == 'Marcher' && obj.containsPoint(point)) {
             objectFound = obj;
         }
@@ -478,5 +499,5 @@ function findMarcherAtPoint(canvas, point) {
     //         }
     //     }, function() {
     //         canvas.renderAll();
-    //     } );        
+    //     } );
     // }
