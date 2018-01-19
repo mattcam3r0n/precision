@@ -4,13 +4,13 @@
         <table class="">
             <tr>
                 <td>
-                    <button ng-click="$ctrl.setDirection('counter-clockwise')" id="" ng-class="{ 'active': isCounterClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                    <button ng-click="$ctrl.setDirection('counter-clockwise')" id="" ng-class="{ 'active': $ctrl.isCounterClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                         title="Counter clockwise">
                         <i class="fa fa-rotate-left"></i>
                     </button>
                 </td>
                 <td>
-                    <button ng-click="$ctrl.setDirection('clockwise')" id="" ng-class="{ 'active': isClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                    <button ng-click="$ctrl.setDirection('clockwise')" id="" ng-class="{ 'active': $ctrl.isClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                         title="Clockwise">
                         <i class="fa fa-rotate-right"></i>
                     </button>
@@ -20,13 +20,13 @@
         <table class="">
             <tr>
                 <td>
-                    <button ng-click="$ctrl.setRotation(.25)" id="" ng-class="{ 'active': isCounterClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                    <button ng-click="$ctrl.setRotation(.25)" id="" ng-class="{ 'active': $ctrl.isRotation(.25) }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                         title="">
                         1/4
                     </button>
                 </td>
                 <td>
-                    <button ng-click="$ctrl.setRotation(.5)" id="" ng-class="{ 'active': isCounterClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                    <button ng-click="$ctrl.setRotation(.5)" id="" ng-class="{ 'active': $ctrl.isRotation(.5) }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                         title="">
                         1/2
                     </button>
@@ -34,13 +34,13 @@
             </tr>
             <tr>
                 <td>
-                    <button ng-click="$ctrl.setRotation(1)" id="" ng-class="{ 'active': isCounterClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                    <button ng-click="$ctrl.setRotation(1)" id="" ng-class="{ 'active': $ctrl.isRotation(1) }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                         title="">
                         4/4
                     </button>
                 </td>
                 <td>
-                    <button ng-click="$ctrl.setRotation(.75)" id="" ng-class="{ 'active': isCounterClockwise() }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                    <button ng-click="$ctrl.setRotation(.75)" id="" ng-class="{ 'active': $ctrl.isRotation(.75) }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                         title="">
                         3/4
                     </button>

@@ -11,6 +11,7 @@ module.exports = {
         "max-len": ["error", {
             "ignorePattern": "^import .*",
             "ignoreComments": true
-        }]
+        }],
+        "object-curly-spacing": "off"
     }
 };

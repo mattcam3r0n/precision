@@ -28,13 +28,13 @@ angular.module('drillApp')
           if (!ctrl.isActivated) return;
           ctrl.pivotMember = args.members[0];
           ctrl.pivotMember.isSelected = true;
+          ctrl.memberSelection = drillEditorService.getMemberSelection();
           eventService.notify(Events.drillStateChanged);
           createPinwheelIndicator();
-          console.log('pinwheel objectsSelected', ctrl.pivotMember);
         });
 
         ctrl.rotationDirection = 'clockwise';
-        ctrl.rotationAngle = 1; // 1/4, 1/2, 3/4, full
+        ctrl.rotationAngle = .5; // 1/4, 1/2, 3/4, full
         ctrl.counts = 8;
       };
 
@@ -49,12 +49,25 @@ angular.module('drillApp')
 
       ctrl.setRotation = function(rotationPct) {
         ctrl.rotationAngle = rotationPct * 2;
+        ctrl.counts = rotationPct * 32;
         createPinwheelIndicator();
       };
 
       ctrl.setDirection = function(dir) {
         ctrl.rotationDirection = dir;
         createPinwheelIndicator();
+      };
+
+      ctrl.isClockwise = function() {
+        return ctrl.rotationDirection == 'clockwise';
+      };
+
+      ctrl.isCounterClockwise = function() {
+        return ctrl.rotationDirection == 'counter-clockwise';
+      };
+
+      ctrl.isRotation = function(r) {
+        return ctrl.rotationAngle / 2 == r;
       };
 
       $scope.cancel = deactivate;
@@ -109,8 +122,15 @@ angular.module('drillApp')
       }
 
       function save() {
+        ctrl.memberSelection.members.forEach((member) => {
+          let steps = ctrl.pinwheelIndicator.steps[member.id];
+          drillEditorService.addMemberSteps(member, steps);
+        });
+
         drillEditorService.save(true);
+        deactivate();
       }
+
     },
   });
 

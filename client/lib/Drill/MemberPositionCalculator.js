@@ -7,11 +7,10 @@ import StrideType from '/client/lib/StrideType';
  * BUT DOES NOT CHANGE STATE
  */
 
-var deltaX = { 0: 0, 90: 1, 180: 0, 270: -1 };
-var deltaY = { 0: -1, 90: 0, 180: 1, 270: 0 };
+let deltaX = { 0: 0, 90: 1, 180: 0, 270: -1 };
+let deltaY = { 0: -1, 90: 0, 180: 1, 270: 0 };
 
 class MemberPositionCalculator {
-
     static areStatesSame(state1, state2) {
         return state1 && state2
             && state1.strideType == state2.strideType
@@ -27,10 +26,10 @@ class MemberPositionCalculator {
             && pos1.x == pos2.x
             && pos1.y == pos2.y;
     }
-    
+
     static getStateAtCount(member, count) {
-        var i = count - 1;
-        var state = member.script[i];
+        let i = count - 1;
+        let state = member.script[i];
         while (!state && i >= 0) {
             i--;
             state = member.script[i];
@@ -45,12 +44,17 @@ class MemberPositionCalculator {
         return this.goToCount(member, count);
     }
 
-    static getState(member, count) {   
-        var newState; 
+    static getState(member, count) {
+        let newState;
 
         newState = this.getStateAtCount(member, count);
 
-        var delta = StepDelta.getDelta(newState.strideType, newState.stepType, newState.direction);
+        let delta = (newState.deltaX != undefined
+                    && newState.deltaY != undefined)
+            ? { deltaX: newState.deltaX, deltaY: newState.deltaY }
+            : StepDelta.getDelta(newState.strideType,
+                                newState.stepType,
+                                newState.direction);
 
         return {
             strideType: newState.strideType || StrideType.SixToFive,
@@ -58,27 +62,26 @@ class MemberPositionCalculator {
             direction: newState.direction,
             deltaX: delta.deltaX,
             deltaY: delta.deltaY,
-            count: count
+            count: count,
         };
     }
 
     static stepForward(member, currentState, steps) {
         steps = steps || 1;
 
-        var currentState,
-            newState;
+        let newState;
 
-        for (var i = 0; i < steps; i++) {
+        for (let i = 0; i < steps; i++) {
             currentState = currentState || Object.assign({}, member.currentState);
-            newState = this.getState(member, currentState.count + 1); 
-            
+            newState = this.getState(member, currentState.count + 1);
+
             newState.x = currentState.x + newState.deltaX;
             newState.y = currentState.y + newState.deltaY;
 
             currentState = newState;
         }
 
-        // if (this.isBeyondEndOfDrill(member, position)) 
+        // if (this.isBeyondEndOfDrill(member, position))
         //     return position;
 
         return newState;
@@ -90,26 +93,26 @@ class MemberPositionCalculator {
         var currentState,
             newState;
 
-        for (var i = 0; i < steps; i++) {
+        for (let i = 0; i < steps; i++) {
             var currentState = currentState || Object.assign({}, member.currentState);
 
-            if (this.isBeginningOfDrill(member, currentState)) 
-                return currentState;
-    
+            if (this.isBeginningOfDrill(member, currentState))
+                {return currentState;}
+
             // if (this.isBeyondEndOfDrill(member, position)) {
             //     position.count--;
             //     return position;
             // }
-    
+
             // get the new state at count - 1, undo the currentState x,y
             var newState = this.getState(member, currentState.count - 1);
             newState.x = currentState.x - currentState.deltaX;
             newState.y = currentState.y - currentState.deltaY;
-            
+
             currentState = newState;
         }
 
-        
+
         return newState;
     }
 
@@ -120,18 +123,18 @@ class MemberPositionCalculator {
     static isEndOfDrill(member, currentState) {
         currentState = currentState || member.currentState;
 
-        return this.isAtFieldEdge(member, currentState) 
-            || (currentState.count >= member.script.length 
+        return this.isAtFieldEdge(member, currentState)
+            || (currentState.count >= member.script.length
                 && currentState.stepType == StepType.Halt);
     }
 
     static isAtFieldEdge(member, currentState) {
         currentState = currentState || member.currentState;
-        
-        return currentState.x >= 1560 
+
+        return currentState.x >= 1560
             || currentState.y >= 780
             || currentState.x <= 0
-            || currentState.y <= 0;                
+            || currentState.y <= 0;
     }
 
     static isBeyondEndOfDrill(member, currentState) {
@@ -147,13 +150,13 @@ class MemberPositionCalculator {
         // position.direction = member.initialState.direction;
         // position.x = member.initialState.x;
         // position.y = member.initialState.y;
-        
+
         // return position;
     }
 
     static goToEnd(member, currentState) {
         currentState = currentState || Object.assign({}, member.currentState);
-        while(!this.isEndOfDrill(member, currentState)) {
+        while (!this.isEndOfDrill(member, currentState)) {
             currentState = this.stepForward(member, currentState);
         }
         return currentState;
@@ -173,7 +176,6 @@ class MemberPositionCalculator {
 
         return currentState;
     }
-
 }
 
 export default MemberPositionCalculator;

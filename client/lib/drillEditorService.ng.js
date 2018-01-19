@@ -39,6 +39,10 @@ class DrillEditorService {
             this.drillPlayer.setTempo(tempo);
     }
 
+    get currentCount() {
+        return this.drill.count;
+    }
+
     // Playback
 
     play(cb, playLength, playMusic) {
@@ -136,11 +140,29 @@ class DrillEditorService {
         this.save();
     }
 
-    addStep(direction, stepType, strideType) {
+    addStep(direction, stepType, strideType, deltaX, deltaY) {
         stepType = stepType || StepType.Full;
         strideType = strideType || this.strideType;
-        this.drillBuilder.addStep(strideType, stepType, direction);
+        this.drillBuilder.addStep(strideType, stepType, direction, deltaX, deltaY);
         this.drillPlayer.stepForward();
+        this.notifyDrillStateChanged();
+        this.save();
+    }
+
+    addMemberSteps(member, steps, atCount) {
+        atCount = atCount === undefined ? this.currentCount + 1 : atCount;
+        for (let i = 0; i < steps.length; i++) {
+            let count = atCount + i;
+            let step = steps[i];
+            this.drillBuilder.addMemberStep(member, step, count);
+        }
+        this.notifyDrillStateChanged();
+        this.save();
+    }
+
+    addMemberStep(member, step, atCount) {
+        atCount = atCount === undefined ? this.drillBuilder.currentCount + 1 : atCount;
+        this.drillBuilder.addMemberStep(member, step, atCount);
         this.notifyDrillStateChanged();
         this.save();
     }

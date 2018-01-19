@@ -1,3 +1,5 @@
+import StepType from '/client/lib/StepType';
+
 class PinwheelCalculator {
     constructor(pivotMember, members) {
         this.pivotMember = pivotMember;
@@ -80,7 +82,7 @@ class PinwheelCalculator {
             } else {
                 return a;
             }
-        }, {distance: -1});
+        }, { distance: -1 });
         return farthest;
     }
 
@@ -114,30 +116,75 @@ class PinwheelCalculator {
     }
 
     // TODO: should calculate each step (delta), not absolute position
-    calculateSteps(rotationDirection, rotationAmount, counts) {
-        let anglePerStep = rotationAmount / counts * Math.PI;
-        let origin = this.pivotMember.currentState;
+    calculateSteps(origin, rotationDirection, rotationAngle, counts) {
         let pinwheelSteps = {};
         this.members.forEach((m) => {
-            pinwheelSteps[m.id] = this.calculateMemberSteps(m, rotationDirection, origin, anglePerStep, counts); // eslint-disable-line max-len
+            pinwheelSteps[m.id] = this.calculateMemberSteps(m, origin, rotationDirection, rotationAngle, counts); // eslint-disable-line max-len
         });
         return pinwheelSteps;
     }
 
-    calculateMemberSteps(member, rotationDirection, origin, anglePerStep, counts) { // eslint-disable-line max-len
-        // TODO: account for rotationDirection. +/- from current angle
-        let rotation = rotationDirection === 'counter-clockwise' ? -1 : 1;
+    calculateMemberSteps(member, origin, rotationDirection, rotationAngle, counts) { // eslint-disable-line max-len
+        let anglePerStep = rotationAngle / counts * Math.PI;
+        let rotationFactor = rotationDirection === 'counter-clockwise' ? -1 : 1;
         let radius = this.calculateRadius(this.pivotMember, member);
         let steps = [];
-        for (let c = 1; c <= counts; c++) {
-            let currentAngle = this.calculateAngle(origin, member.currentState);
-            let p = this.calculatePointOnCircle(origin, radius, currentAngle + (anglePerStep * c * rotation)); // eslint-disable-line max-len
-            steps.push(p);
+        let lastStep = member.currentState;
+        for (let count = 1; count <= counts; count++) {
+            let pos = this.calculateMemberPosition(member, count, origin,
+                radius, rotationFactor, anglePerStep);
+            let step = {
+                strideType: member.currentState.strideType,
+                stepType: StepType.Pinwheel,
+                x: pos.x,
+                y: pos.y,
+                deltaX: pos.x - lastStep.x,
+                deltaY: pos.y - lastStep.y,
+                direction: this.normalizeDirection(pos.direction),
+            };
+            steps.push(step);
+            lastStep = step;
         }
+        // add one more step to tell them to continue it last state (normal steps)
+        steps.push({
+            strideType: member.currentState.strideType,
+            stepType: member.currentState.stepType,
+            direction: this.normalizeDirection(lastStep.direction),
+        });
         return steps;
     }
 
-    calculateMemberPosition(count) { }
+    calculateMemberPosition(member, count, origin,
+        radius, rotationFactor, anglePerStep) {
+        // let currentAngle = this.calculateAngle(origin, member.currentState);
+        let currentAngle = member === this.pivotMember
+            ? this.degreesInRadians(member.currentState.direction)
+            : this.calculateAngle(origin, member.currentState);
+        let newAngle = currentAngle + (anglePerStep * count * rotationFactor);
+        let p = this.calculatePointOnCircle(origin, radius, newAngle);
+        let adjustment = rotationFactor < 0 ? 180 : 0;
+        let direction = this.radiansInDegrees(newAngle) + adjustment;
+        return {
+            count: count,
+            x: p.x,
+            y: p.y,
+            direction: this.normalizeDirection(direction),
+        };
+    }
+
+    normalizeDirection(dir) {
+        if (dir >= 0 && dir < 360) return dir;
+
+        return dir - (Math.floor(dir / 360) * 360);
+    }
+
+    degreesInRadians(degrees) {
+        return degrees * Math.PI / 180;
+    }
+
+    radiansInDegrees(radians) {
+        return ((radians * 180 / Math.PI) + 180);
+    }
 }
 
 export default PinwheelCalculator;

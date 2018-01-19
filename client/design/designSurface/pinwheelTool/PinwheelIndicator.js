@@ -19,16 +19,13 @@ class PinwheelIndicator {
 
     create() {
         this.steps = this.pinwheelCalculator
-                            .calculateSteps(this.rotationDirection,
+                            .calculateSteps(this.pivotMember.currentState,
+                                this.rotationDirection,
                                 this.rotationAngle,
                                 this.counts);
         this.createPivotMarker();
         this.createPathArc();
         this.createMarchers();
-    }
-
-    calculateMemberSteps() {
-
     }
 
     createPivotMarker() {
@@ -56,32 +53,37 @@ class PinwheelIndicator {
         this.marchers = [];
         let endPositions = this.getEndPositions();
         endPositions.forEach((pos) => {
-            let marcher = this.createMarcher(pos.x, pos.y);
+            let marcher = this.createMarcher(pos.x, pos.y, pos.direction);
             this.marchers.push(marcher);
             this.field.canvas.add(marcher);
         });
     }
 
-    createMarcher(x, y) {
+    createMarcher(x, y, direction) {
         let marcher = new fabric.Triangle({
             originX: 'center',
             originY: 'center',
             left: x,
             top: y,
+            angle: direction,
             height: 15,
             width: 15,
             fill: 'black',
             opacity: .25,
+            selectable: false,
+            evented: false,
         });
         return marcher;
     }
 
     getEndPositions() {
         return this.members.map((m) => {
+            let lastCount = this.counts - 1;
             return {
                 id: m.id,
-                x: this.steps[m.id][this.counts - 1].x,
-                y: this.steps[m.id][this.counts - 1].y,
+                x: this.steps[m.id][lastCount].x,
+                y: this.steps[m.id][lastCount].y,
+                direction: this.steps[m.id][lastCount].direction,
             };
         });
     }

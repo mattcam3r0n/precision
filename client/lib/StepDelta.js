@@ -139,6 +139,13 @@ class StepDelta {
         stepType = stepType || StepType.Full;
         steps = steps || 1;
 
+        if (stepType === StepType.Pinwheel) {
+            return {
+                deltaX: undefined,
+                deltaY: undefined,
+            };
+        }
+
         if (stepType === StepType.MarkTime || stepType === StepType.Halt) {
             return {
                 deltaX: 0,

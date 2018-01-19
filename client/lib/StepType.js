@@ -24,13 +24,8 @@ class StepType {
     }
 
     /** A gate/pinwheel step */
-    static get Gate() {
-        return 4;
-    }
-
-    /** A gate/pinwheel step */
     static get Pinwheel() {
-        return 5;
+        return 4;
     }
 };
 

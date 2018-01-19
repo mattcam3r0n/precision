@@ -12,8 +12,8 @@ class Action {
         this.direction = obj.direction || Direction.N;
 
         let delta = StepDelta.getDelta(this.strideType, this.stepType, this.direction);
-        this.deltaX = obj.deltaX || delta.deltaX;
-        this.deltaY = obj.deltaY || delta.deltaY;
+        this.deltaX = obj.deltaX === undefined ? delta.deltaX : obj.deltaX;
+        this.deltaY = obj.deltaY === undefined ? delta.deltaY : obj.deltaY;
     }
 }
 
