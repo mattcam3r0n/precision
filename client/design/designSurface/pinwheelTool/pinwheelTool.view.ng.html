@@ -50,11 +50,11 @@
                 <td colspan="2">
                     <div class="input-group counts">
                         <span class="input-group-btn">
-                            <button ng-click="$ctrl.counts = $ctrl.counts - 1" class="btn btn-default" type="button">-</button>
+                            <button ng-click="$ctrl.setCounts($ctrl.counts - 1)" class="btn btn-default" type="button">-</button>
                         </span>
-                        <input ng-model="$ctrl.counts" type="number" class="form-control" />
+                        <input ng-model="$ctrl.counts" ng-change="$ctrl.setCounts()" type="number" class="form-control" />
                         <span class="input-group-btn">
-                                <button ng-click="$ctrl.counts = $ctrl.counts + 1" class="btn btn-default" type="button">+</button>
+                                <button ng-click="$ctrl.setCounts($ctrl.counts + 1)" class="btn btn-default" type="button">+</button>
                             </span>
                         </div>
                 </td>

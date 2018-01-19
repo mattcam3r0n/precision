@@ -47,6 +47,13 @@ angular.module('drillApp')
         deactivate();
       };
 
+      ctrl.setCounts = function(counts) {
+        if (counts) {
+          ctrl.counts = counts;
+        }
+        createPinwheelIndicator();
+      };
+
       ctrl.setRotation = function(rotationPct) {
         ctrl.rotationAngle = rotationPct * 2;
         ctrl.counts = rotationPct * 32;
