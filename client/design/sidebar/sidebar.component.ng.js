@@ -24,6 +24,8 @@ angular.module('drillApp')
         initCollapseHighlighting();
         ctrl.subscriptions
           .subscribe(Events.drawPathsToolDeactivated, collapseDrawPaths);
+        ctrl.subscriptions
+          .subscribe(Events.pinwheelToolDeactivated, collapsePinwheelTool);
         ctrl.subscriptions.subscribe(Events.showGrid, onShowGrid);
         ctrl.subscriptions.subscribe(Events.hideGrid, onHideGrid);
         ctrl.subscriptions.subscribe(Events.showLogo, onShowLogo);
@@ -173,6 +175,10 @@ angular.module('drillApp')
 
       function collapseDrawPaths() {
         $('#drawPaths').collapse('hide');
+      }
+
+      function collapsePinwheelTool() {
+        $('#pinwheel').collapse('hide');
       }
     },
   });

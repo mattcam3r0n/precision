@@ -97,6 +97,14 @@ class Events {
         return 'addMembersToolActivated';
     }
 
+    static get pinwheelToolActivated() {
+        return 'pinwheelToolActivated';
+    }
+
+    static get pinwheelToolDeactivated() {
+        return 'pinwheelToolDeactivated';
+    }
+
     static get objectsSelected() {
         return 'objectsSelected';
     }
