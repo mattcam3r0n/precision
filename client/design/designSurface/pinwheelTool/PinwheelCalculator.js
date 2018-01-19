@@ -148,7 +148,7 @@ class PinwheelCalculator {
         // add one more step to tell them to continue it last state (normal steps)
         steps.push({
             strideType: member.currentState.strideType,
-            stepType: member.currentState.stepType,
+            stepType: StepType.Full,
             direction: this.normalizeDirection(lastStep.direction),
         });
         return steps;
