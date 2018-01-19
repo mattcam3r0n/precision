@@ -156,14 +156,14 @@ class PinwheelCalculator {
 
     calculateMemberPosition(member, count, origin,
         radius, rotationFactor, anglePerStep) {
-        // let currentAngle = this.calculateAngle(origin, member.currentState);
-        let currentAngle = member === this.pivotMember
-            ? this.degreesInRadians(member.currentState.direction)
-            : this.calculateAngle(origin, member.currentState);
-        let newAngle = currentAngle + (anglePerStep * count * rotationFactor);
-        let p = this.calculatePointOnCircle(origin, radius, newAngle);
-        let adjustment = rotationFactor < 0 ? 180 : 0;
-        let direction = this.radiansInDegrees(newAngle) + adjustment;
+        let pivotAngle = this.calculateAngle(origin, member.currentState);
+        let newPivotAngle = pivotAngle
+            + (anglePerStep * count * rotationFactor);
+        let dirAngle = this.degreesInRadians(member.currentState.direction);
+        let newDirAngle = dirAngle + (anglePerStep * count * rotationFactor);
+        let p = this.calculatePointOnCircle(origin, radius, newPivotAngle);
+        let adjustment = 180; // rotationFactor < 0 ? 180 : 0;
+        let direction = this.radiansInDegrees(newDirAngle) + adjustment;
         return {
             count: count,
             x: p.x,

@@ -52,6 +52,7 @@ class PinwheelIndicator {
     createMarchers() {
         this.marchers = [];
         let endPositions = this.getEndPositions();
+console.log(endPositions);
         endPositions.forEach((pos) => {
             let marcher = this.createMarcher(pos.x, pos.y, pos.direction);
             this.marchers.push(marcher);
