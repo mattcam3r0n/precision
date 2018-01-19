@@ -130,7 +130,6 @@ angular.module('drillApp')
         drillEditorService.save(true);
         deactivate();
       }
-
     },
   });
 

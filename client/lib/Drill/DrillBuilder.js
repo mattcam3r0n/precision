@@ -1,6 +1,4 @@
-import { Random } from 'meteor/random';
 import StepType from '/client/lib/StepType';
-import StepDelta from '/client/lib/StepDelta';
 import Direction from '/client/lib/Direction';
 import MemberFactory from '/client/lib/drill/MemberFactory';
 import StepFactory from '/client/lib/drill/StepFactory';
@@ -28,8 +26,9 @@ class DrillBuilder {
     }
 
     set addMode(mode) {
-        if (mode != AddMode.Block || mode != AddMode.File)
-            {return;}
+        if (mode != AddMode.Block || mode != AddMode.File) {
+            return;
+        }
 
         this._addMode = mode;
     }
@@ -48,16 +47,18 @@ class DrillBuilder {
     }
 
     addMembers(newMembers) {
-        if (!this.drill.members)
-            {this.drill.members = [];}
+        if (!this.drill.members) {
+            this.drill.members = [];
+        }
 
         this.drill.members.push(...newMembers);
         this.drill.isDirty = true;
     }
 
     deleteSelectedMembers() {
-        if (!this.drill.members)
-            {return;}
+        if (!this.drill.members) {
+            return;
+        }
 
         this.getSelectedMembers().forEach((m) => {
             let i = this.drill.members.indexOf(m);
@@ -94,9 +95,12 @@ class DrillBuilder {
         count = count === undefined ? this.drill.count + 1 : count;
         let defaultValue = (a, b) => a === null || a === undefined ? b : a;
         let action = new Action({
-            strideType: defaultValue(step.strideType, member.currentState.strideType),
-            stepType: defaultValue(step.stepType, member.currentState.stepType),
-            direction: defaultValue(step.direction, member.currentState.direction),
+            strideType: defaultValue(step.strideType,
+                member.currentState.strideType),
+            stepType: defaultValue(step.stepType,
+                member.currentState.stepType),
+            direction: defaultValue(step.direction,
+                member.currentState.direction),
             deltaX: step.deltaX,
             deltaY: step.deltaY,
         });
@@ -111,8 +115,12 @@ class DrillBuilder {
 
         members.forEach((m) => {
             let currentDir = m.currentState.direction;
-            let firstTurnDirection = isLeftTurn ? Direction.leftTurnDirection(currentDir) : Direction.rightTurnDirection(currentDir);
-            let secondTurnDirection = isLeftTurn ? Direction.leftTurnDirection(firstTurnDirection) : Direction.rightTurnDirection(firstTurnDirection);
+            let firstTurnDirection = isLeftTurn
+                ? Direction.leftTurnDirection(currentDir)
+                : Direction.rightTurnDirection(currentDir);
+            let secondTurnDirection = isLeftTurn
+                ? Direction.leftTurnDirection(firstTurnDirection)
+                : Direction.rightTurnDirection(firstTurnDirection);
 
             let firstTurn = new Action({
                 strideType: m.currentState.strideType,
@@ -146,6 +154,7 @@ class DrillBuilder {
 
     /**
      * Backup one step and delete
+     * @param {number} deleteCount
      */
     deleteBackspace(deleteCount) {
         let members = this.getSelectedMembers();

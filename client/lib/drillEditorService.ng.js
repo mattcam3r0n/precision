@@ -1,10 +1,8 @@
 import StepType from './StepType';
 import StrideType from './StrideType';
-import Direction from './Direction';
 import Events from './Events';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
 import DrillPlayer from '/client/lib/drill/DrillPlayer';
-import { appendFile } from 'fs';
 
 class DrillEditorService {
     constructor($timeout, appStateService, eventService) {
@@ -35,8 +33,9 @@ class DrillEditorService {
     }
 
     setTempo(tempo) {
-        if (this.drillPlayer)
+        if (this.drillPlayer) {
             this.drillPlayer.setTempo(tempo);
+        }
     }
 
     get currentCount() {
@@ -60,7 +59,7 @@ class DrillEditorService {
         this.drillPlayer.goToBeginning();
         this.notifyDrillStateChanged();
     }
-    
+
     goToEnd() {
         this.drillPlayer.goToEnd();
         this.notifyDrillStateChanged();
@@ -86,7 +85,7 @@ class DrillEditorService {
     selectMembers(members) {
         this.drillBuilder.select(members);
         this.notifyMembersSelected();
-        this.notifyDrillStateChanged();        
+        this.notifyDrillStateChanged();
     }
 
     selectAll() {
@@ -108,22 +107,22 @@ class DrillEditorService {
     deleteSelectedMembers() {
         this.drillBuilder.deleteSelectedMembers();
         this.notifyMembersAdded();
-        this.notifyDrillStateChanged();    
+        this.notifyDrillStateChanged();
         this.save(true);
     }
 
     hideUnselected() {
         this.drillBuilder.hideUnselected();
-        this.notifyDrillStateChanged();          
+        this.notifyDrillStateChanged();
     }
 
     showPaths() {
-        //TODO
+        // TODO
     }
-    
+
     showAll() {
         this.drillBuilder.showAll();
-        this.notifyDrillStateChanged();          
+        this.notifyDrillStateChanged();
     }
 
     deleteForward() {
@@ -133,7 +132,7 @@ class DrillEditorService {
     }
 
     deleteBackspace() {
-        var deleteCount = this.drill.count;
+        let deleteCount = this.drill.count;
         this.drillPlayer.stepBackward();
         this.drillBuilder.deleteBackspace(deleteCount);
         this.notifyDrillStateChanged();
@@ -143,7 +142,11 @@ class DrillEditorService {
     addStep(direction, stepType, strideType, deltaX, deltaY) {
         stepType = stepType || StepType.Full;
         strideType = strideType || this.strideType;
-        this.drillBuilder.addStep(strideType, stepType, direction, deltaX, deltaY);
+        this.drillBuilder.addStep(strideType,
+            stepType,
+            direction,
+            deltaX,
+            deltaY);
         this.drillPlayer.stepForward();
         this.notifyDrillStateChanged();
         this.save();
@@ -161,7 +164,9 @@ class DrillEditorService {
     }
 
     addMemberStep(member, step, atCount) {
-        atCount = atCount === undefined ? this.drillBuilder.currentCount + 1 : atCount;
+        atCount = atCount === undefined
+            ? this.drillBuilder.currentCount + 1
+            : atCount;
         this.drillBuilder.addMemberStep(member, step, atCount);
         this.notifyDrillStateChanged();
         this.save();
@@ -183,36 +188,36 @@ class DrillEditorService {
 
     save(forceSave) {
         if (!forceSave && !this.drill.isDirty) return;
-        
+
         // throttle saves
         if (this.saveTimeout) {
-            this.$timeout.cancel(this.saveTimeout)
+            this.$timeout.cancel(this.saveTimeout);
         }
 
-        this.saveTimeout = this.$timeout(() => this.appStateService.saveDrill(), 2000);
+        this.saveTimeout = this.$timeout(() => this.appStateService.saveDrill()
+            , 2000);
     }
 
     // Events
 
     notifyDrillStateChanged() {
-        var memberSelection = this.drillBuilder.getMemberSelection();
+        let memberSelection = this.drillBuilder.getMemberSelection();
         this.eventService.notify(Events.drillStateChanged, { memberSelection });
     }
 
     notifyStrideTypeChanged() {
-        var strideType = this.strideType;
+        let strideType = this.strideType;
         this.eventService.notify(Events.strideTypeChanged, { strideType });
     }
-    
+
     notifyMembersSelected() {
-        var memberSelection = this.drillBuilder.getMemberSelection();
-        this.eventService.notify(Events.membersSelected, { memberSelection });  
+        let memberSelection = this.drillBuilder.getMemberSelection();
+        this.eventService.notify(Events.membersSelected, { memberSelection });
     }
 
     notifyMembersAdded() {
         this.eventService.notify(Events.membersAdded);
     }
-
 }
 
 
