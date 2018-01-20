@@ -37,6 +37,13 @@ div.header {
   width: 240px;
 }
 
+.header input {
+  color: white;
+  background-color: #353535;
+  border: 0;
+  text-align: center;
+}
+
 
 /* before flexbox header */
 

@@ -84,3 +84,10 @@
 * FIX: wavy file indicators when on odd count
 * FIX: show new step count when moving turn marker
 * Clean up event related code
+
+1-20-18
+* NEW: Pinwheel and gate tool
+* FIX: playback bug
+* FIX: disallow go-to-beginning, step-forward, etc buttons during playback
+* FIX: zoom timeline and go to beginning on open
+* 
