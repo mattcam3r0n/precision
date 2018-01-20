@@ -10,7 +10,8 @@ module.exports = {
         "require-jsdoc": "off",
         "max-len": ["error", {
             "ignorePattern": "^import .*",
-            "ignoreComments": true
+            "ignoreComments": true,
+            "ignoreStrings": true,
         }],
         "object-curly-spacing": "off"
     }

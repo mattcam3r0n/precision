@@ -56,11 +56,13 @@ class DrillEditorService {
     }
 
     goToBeginning() {
+        if (this.drillPlayer.isPlaying) return;
         this.drillPlayer.goToBeginning();
         this.notifyDrillStateChanged();
     }
 
     goToEnd() {
+        if (this.drillPlayer.isPlaying) return;
         this.drillPlayer.goToEnd();
         this.notifyDrillStateChanged();
     }
@@ -71,11 +73,13 @@ class DrillEditorService {
     }
 
     stepBackward() {
+        if (this.drillPlayer.isPlaying) return;
         this.drillPlayer.stepBackward();
         this.notifyDrillStateChanged();
     }
 
     stepForward() {
+        if (this.drillPlayer.isPlaying) return;
         this.drillPlayer.stepForward();
         this.notifyDrillStateChanged();
     }
