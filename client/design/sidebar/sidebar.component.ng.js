@@ -171,6 +171,11 @@ angular.module('drillApp')
         $('div.collapse').on('shown.bs.collapse', function(args) {
           $(args.currentTarget.parentElement).addClass('opened');
         });
+
+        // $('#drawPaths').on('shown.bs.collapse', function(args) {
+        //   console.log('drawpaths opened');
+        //   eventService.notify(Events.drawPathsToolActivated);
+        // });
       }
 
       function collapseDrawPaths() {

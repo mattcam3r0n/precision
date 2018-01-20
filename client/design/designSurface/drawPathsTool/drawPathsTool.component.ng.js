@@ -2,8 +2,7 @@
 
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
-import { FieldPoint, StepPoint } from '/client/lib/Point';
-import FieldDimensions from '/client/lib/FieldDimensions';
+import { FieldPoint } from '/client/lib/Point';
 import Direction from '/client/lib/Direction';
 import PathTool from './PathTool';
 
@@ -12,10 +11,11 @@ angular.module('drillApp')
     templateUrl: 'client/design/designSurface/drawPathsTool/drawPathsTool.view.ng.html',
     bindings: {
     },
-    controller: function ($scope, $window, appStateService, drillEditorService, eventService) {
-      var ctrl = this;
+    controller: function($scope, $window, appStateService,
+          drillEditorService, eventService) {
+      let ctrl = this;
 
-      ctrl.$onInit = function () {
+      ctrl.$onInit = function() {
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
         ctrl.turnMode = 'block';
         ctrl.toolDiv = angular.element('.draw-paths-tool')[0];
@@ -28,47 +28,46 @@ angular.module('drillApp')
           if (!ctrl.isActivated) return;
           activate(drillEditorService.getMemberSelection());
         });
+      };
 
-      }
-
-      ctrl.$onDestroy = function () {
+      ctrl.$onDestroy = function() {
         ctrl.subscriptions.unsubscribeAll();
-      }
+      };
 
-      $scope.save = function () {
+      $scope.save = function() {
         save();
         deactivate();
-      }
+      };
 
       $scope.cancel = deactivate;
 
-      $scope.reset = function () {
+      $scope.reset = function() {
         reset();
-      }
+      };
 
-      $scope.isCurrentDirection = function (dir) {
+      $scope.isCurrentDirection = function(dir) {
         return ctrl.turnDirection == Direction[dir];
-      }
+      };
 
       $scope.setTurnDirection = setTurnDirection;
 
-      $scope.isBlockMode = function () {
+      $scope.isBlockMode = function() {
         return ctrl.turnMode == 'block';
-      }
+      };
 
-      $scope.isFileMode = function () {
+      $scope.isFileMode = function() {
         return ctrl.turnMode == 'file';
-      }
+      };
 
-      $scope.setTurnMode = function (mode) {
+      $scope.setTurnMode = function(mode) {
         ctrl.turnMode = mode;
         createPathTool();
-      }
+      };
 
       function activate(memberSelection) {
-
-        if (ctrl.isActivated)
-          deactivate();
+        if (ctrl.isActivated) {
+          deactivate(false);
+        }
 
         ctrl.isActivated = true;
         ctrl.field = appStateService.field;
@@ -88,7 +87,7 @@ angular.module('drillApp')
         });
       }
 
-      function deactivate() {
+      function deactivate(notify = true) {
         ctrl.subscriptions.unsubscribe(Events.deleteTurn);
         ctrl.subscriptions.unsubscribe(Events.membersSelected);
 
@@ -100,13 +99,15 @@ angular.module('drillApp')
         destroyPathTool();
         eventService.notify(Events.updateField);
         ctrl.field.update();
-        eventService.notify(Events.drawPathsToolDeactivated);
+        if (notify) {
+          eventService.notify(Events.drawPathsToolDeactivated);
+        }
       }
 
       function setTurnDirection(direction) {
         dir = Direction.getDirection(direction);
         ctrl.turnDirection = dir;
-        ctrl.field.canvas.defaultCursor = "url(/icons/" + Direction.getDirectionName(dir) + ".svg) 8 8, auto";
+        ctrl.field.canvas.defaultCursor = 'url(/icons/' + Direction.getDirectionName(dir) + '.svg) 8 8, auto';
         ctrl.activePathTool.setCurrentTurnDirection(Direction[dir]);
       }
 
@@ -116,12 +117,14 @@ angular.module('drillApp')
       }
 
       function createPathTool() {
-        //if (ctrl.memberSelection.members.length == 0) return;
+        // if (ctrl.memberSelection.members.length == 0) return;
 
-        if (ctrl.activePathTool)
+        if (ctrl.activePathTool) {
           destroyPathTool();
+        }
 
-        ctrl.activePathTool = new PathTool(ctrl.field, ctrl.memberSelection, ctrl.turnMode, ctrl.strideType);
+        ctrl.activePathTool = new PathTool(ctrl.field, ctrl.memberSelection,
+            ctrl.turnMode, ctrl.strideType);
         eventService.notify(Events.updateField);
       }
 
@@ -136,9 +139,9 @@ angular.module('drillApp')
         // how to get corresponding turn?
         if (!ctrl.field.canvas.getActiveObject()) return;
 
-        var target = ctrl.field.canvas.getActiveObject();
+        let target = ctrl.field.canvas.getActiveObject();
 
-        //removeTurnMarker(target);
+        // removeTurnMarker(target);
         ctrl.activePathTool.removeTurnMarker(target);
         //        ctrl.guidePaths.forEach(gp => gp.removeTurnMarker(target));
       }
@@ -148,8 +151,8 @@ angular.module('drillApp')
         if (evt.target !== null && !evt.target.isLogo) return; // clicked on an object
 
         // have to adjust point for zoom
-        var adjustedPoint = ctrl.field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
-        var stepPoint = new FieldPoint(adjustedPoint); //.toStepPoint(ctrl.strideType);
+        let adjustedPoint = ctrl.field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
+        let stepPoint = new FieldPoint(adjustedPoint); // .toStepPoint(ctrl.strideType);
 
         // add turn at step point
         ctrl.activePathTool.addTurnMarker(ctrl.turnDirection, stepPoint);
@@ -158,7 +161,7 @@ angular.module('drillApp')
       function destroyGuidePaths() {
         if (!ctrl.guidePaths) return;
 
-        ctrl.guidePaths.forEach(gp => gp.dispose());
+        ctrl.guidePaths.forEach((gp) => gp.dispose());
       }
 
       function save() {
@@ -168,8 +171,7 @@ angular.module('drillApp')
 
         drillEditorService.save(true);
       }
-
-    }
+    },
   });
 
 
