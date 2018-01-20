@@ -90,4 +90,4 @@
 * FIX: playback bug
 * FIX: disallow go-to-beginning, step-forward, etc buttons during playback
 * FIX: zoom timeline and go to beginning on open
-* 
+* NEW: edit drill name by clicking on it in header
