@@ -1,65 +1,70 @@
 'use strict';
 
+import Events from '/client/lib/Events';
+
 angular.module('drillApp')
   .component('openDrillDialog', {
     templateUrl: 'client/design/openDrillDialog/openDrillDialog.view.ng.html',
     bindings: {
-      onOpen: "&"
+      onOpen: '&',
     },
-    controller: function ($scope, appStateService) {
-      var ctrl = this;
+    controller: function($scope, appStateService, eventService) {
+      let ctrl = this;
 
       $scope.page = 1;
       $scope.perPage = 3;
-      $scope.sort = {}; //{ name_sort: 1 };
+      $scope.sort = {}; // { name_sort: 1 };
       $scope.orderProperty = '1';
 
-      $scope.subscribe('drills', function () {
+      $scope.subscribe('drills', function() {
         return [{
           sort: $scope.getReactively('sort'),
           limit: parseInt($scope.getReactively('perPage')),
-          skip: ((parseInt($scope.getReactively('page'))) - 1) * (parseInt($scope.getReactively('perPage')))
+          skip: ((parseInt($scope.getReactively('page'))) - 1)
+            * (parseInt($scope.getReactively('perPage'))),
         }, $scope.getReactively('search')];
       });
-          
+
       $scope.helpers({
-        drillCount: function () {
+        drillCount: function() {
           return Counts.get('numberOfDrills');
         },
-        drills: function () {
+        drills: function() {
           return Drills.find({}, {
-            sort: $scope.getReactively('sort')
+            sort: $scope.getReactively('sort'),
           });
-        }
+        },
       });
 
       $scope.open = function(drill) {
-        console.log('openDrillDialog open');
         ctrl.onOpen({ drill: drill });
-      }
+        eventService.notify(Events.drillOpened, {
+          drill: drill,
+        });
+      };
 
       $scope.delete = function(drill) {
         appStateService.deleteDrill(drill._id);
-      }
+      };
 
-      $scope.pageChanged = function (newPage) {
+      $scope.pageChanged = function(newPage) {
         $scope.page = newPage;
       };
 
-      return $scope.$watch('orderProperty', function () {
+      return $scope.$watch('orderProperty', function() {
         if ($scope.orderProperty) {
           $scope.sort = {
-            name_sort: parseInt($scope.orderProperty)
+            name_sort: parseInt($scope.orderProperty),
           };
         }
       });
 
-      ctrl.$onInit = function () {
-      }
+      ctrl.$onInit = function() {
+      };
 
-      ctrl.$onDestroy = function () {
-      }
-    }
+      ctrl.$onDestroy = function() {
+      };
+    },
   });
 
 

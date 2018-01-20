@@ -1,5 +1,3 @@
-import shortid from 'shortid';
-
 class Timeline {
     constructor(containerId) {
         this.containerId = containerId;
@@ -9,27 +7,27 @@ class Timeline {
     }
 
     initTimeline() {
-        var self = this;
-        var container = document.getElementById(this.containerId);
+        let self = this;
+        let container = document.getElementById(this.containerId);
 
-        var options = {
+        let options = {
             height: '70px',
             // zoomMin: 1000,                    // 1 second
             // zoomMax: 1000 * 60 * 60 * 24,     // 1 day
             verticalScroll: true,
             orientation: {
-                axis: 'bottom'
+                axis: 'bottom',
             },
             stack: false,
             editable: {
                 add: true,
                 updateTime: true,
                 updateGroup: false,
-                remove: true
+                remove: true,
             },
             margin: {
                 axis: 2,
-                item: 2
+                item: 2,
             },
             showMajorLabels: false,
             maxMinorChars: 4,
@@ -38,24 +36,24 @@ class Timeline {
             //     step: 4
             // },
             start: new Date(0),
-            end: new Date(1000 * 2),
+            end: new Date(25),
             min: new Date(0),
             max: new Date(1000 * 2),
             zoomMin: 20,
             zoomMax: 1000,
             format: {
-                minorLabels: function (date, scale, step) {
+                minorLabels: function(date, scale, step) {
                     return new Date(date).getTime();
-                }
+                },
             },
             onMove: this.onMove,
             onRemove: this.onRemove.bind(this),
-            template: this.itemTemplate
+            template: this.itemTemplate,
         };
 
         this.groups.add({
-            id: "music",
-            content: "Music"
+            id: 'music',
+            content: 'Music',
         });
         // this.groups.add({
         //     id: "labels",
@@ -63,14 +61,14 @@ class Timeline {
         // });
 
         // Create a Timeline
-        //var timeline = new vis.Timeline(container, items, options);
-        this.timeline = new vis.Timeline(container);
-        this.timeline.setOptions(options);
+        // var timeline = new vis.Timeline(container, items, options);
+        this.timeline = new vis.Timeline(container, null, options);
+//        this.timeline.setOptions(options);
         this.timeline.setGroups(this.groups);//
         this.timeline.setItems(this.items);
 
-        this.timeline.on('doubleClick', function (props) {
-            var count = props.time.getMilliseconds();
+        this.timeline.on('doubleClick', function(props) {
+            let count = props.time.getMilliseconds();
             self.moveTo(count);
             self.setCurrentCount(count);
             if (self.onGoToCountCallback) {
@@ -79,7 +77,8 @@ class Timeline {
             console.log(count);
         });
 
-        this.currentCountBar = this.timeline.addCustomTime(new Date(0), 'currentCountBar');
+        this.currentCountBar = this.timeline
+                                .addCustomTime(new Date(0), 'currentCountBar');
     }
 
     goToBeginning() {
@@ -99,19 +98,24 @@ class Timeline {
     }
 
     zoomIn() {
-        this.timeline.zoomIn(0.5);        
+        this.timeline.zoomIn(0.5);
     }
 
     zoomOut() {
-        this.timeline.zoomOut(0.5);        
+        this.timeline.zoomOut(0.5);
+    }
+
+    setWindow(startCount, endCount) {
+        this.timeline.setWindow(new Date(startCount), new Date(endCount));
     }
 
     zoomToCount(count) {
-        var offset = 10;
-        var start = count - offset <= 0 ? 1 : count - offset;
-        var end = start == 1 ? 25 : count + offset;
+        console.log('zoomToCount');
+        let offset = 10;
+        let start = count - offset <= 0 ? 1 : count - offset;
+        let end = start == 1 ? 25 : count + offset;
         this.timeline.setWindow(new Date(start), new Date(end), null, ()=> {
-            this.setCurrentCount(count);                    
+            this.setCurrentCount(count);
         });
     }
 
@@ -120,24 +124,24 @@ class Timeline {
     }
 
     isCountVisible(count) {
-        var countTime = new Date(count);
-        var window = this.timeline.getWindow();
+        let countTime = new Date(count);
+        let window = this.timeline.getWindow();
         return window.start <= countTime && window.end - 1 >= countTime;
     }
 
     getVisibleCountRange() {
-        var window = this.timeline.getWindow();
+        let window = this.timeline.getWindow();
         return {
             start: window.start.getMilliseconds(),
-            end: window.end.getMilliseconds()
+            end: window.end.getMilliseconds(),
         };
     }
 
     getVisibleCountRange() {
-        var window = this.timeline.getWindow();
+        let window = this.timeline.getWindow();
         return {
             start: window.start.getMilliseconds(),
-            end: window.end.getMilliseconds()
+            end: window.end.getMilliseconds(),
         };
     }
 
@@ -146,12 +150,12 @@ class Timeline {
     }
 
     move(percentage) {
-        var range = this.timeline.getWindow();
-        var interval = range.end - range.start;
+        let range = this.timeline.getWindow();
+        let interval = range.end - range.start;
 
         this.timeline.setWindow({
             start: range.start.valueOf() - interval * percentage,
-            end: range.end.valueOf() - interval * percentage
+            end: range.end.valueOf() - interval * percentage,
         });
     }
 
@@ -162,8 +166,8 @@ class Timeline {
             this.items.clear();
         }
 
-        musicList.forEach(m => {
-            var item = this.createMusicItem(m);
+        musicList.forEach((m) => {
+            let item = this.createMusicItem(m);
             this.items.update(item);
         });
     }
@@ -179,11 +183,11 @@ class Timeline {
     createMusicItem(music) {
         return {
             id: music.timelineId,
-            group: "music",
+            group: 'music',
             start: new Date(music.startCount),
             end: new Date(music.endCount + 1),
-            //content: music.title || music.fileName, // change to desc
-            music: music
+            // content: music.title || music.fileName, // change to desc
+            music: music,
         };
     }
 
@@ -195,25 +199,25 @@ class Timeline {
     }
 
     onRemove(item, callback) {
-        var self = this;
+        let self = this;
         if (self.onRemoveCallback) {
             if (self.onRemoveCallback(item)) {
                 callback(item); // remove
-            }
-            else {
+            } else {
                 callback(null); // cancel removal
             }
         }
     }
 
     itemTemplate(item, element, data) {
-        var html = `
-            <span>${item.music.title || item.music.fileName}</span>
+        const caption = item.music
+            ? (item.music.title || item.music.fileName)
+            : '';
+        const html = `
+            <span>${caption}</span>
         `;
         return html;
     }
-    
-        
 }
 
 export default Timeline;

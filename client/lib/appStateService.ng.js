@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
 import Events from '/client/lib/Events';
 
-var _currentDrillFormatVersion = 1;
+let _currentDrillFormatVersion = 1;
 
 class appStateService {
     constructor($rootScope, alertService, eventService) {
@@ -48,33 +48,35 @@ class appStateService {
 
     userChanged() {
         if (!Meteor.user()) return;
-console.log('userChanged', Meteor.user().profile);
 
         // get user profile
         this.userProfile = Meteor.user().profile;
-        // open new or last drill
-        // TODO: change from current way of opening last drill, in design view
-        //     fire drillOpened event 
 
         // update logo and grid based on profile
-        if (this.userProfile.isGridVisible)
+        if (this.userProfile.isGridVisible) {
             this.eventService.notify(Events.showGrid);
-        else
+        } else {
             this.eventService.notify(Events.hideGrid);
+        }
 
-        if (this.userProfile.isLogoVisible)
+        if (this.userProfile.isLogoVisible) {
             this.eventService.notify(Events.showLogo);
-        else
+        } else {
             this.eventService.notify(Events.hideLogo);
+        }
     }
 
     updateUserProfile() {
         if (!Meteor.user()) return;
 
-        var profile = {
+        let profile = {
             lastDrillId: this.drill._id,
-            isGridVisible: this.userProfile.isGridVisible === undefined ? false : this.userProfile.isGridVisible,
-            isLogoVisible: this.userProfile.isLogoVisible === undefined ? true : this.userProfile.isLogoVisible
+            isGridVisible: this.userProfile.isGridVisible === undefined
+                ? false
+                : this.userProfile.isGridVisible,
+            isLogoVisible: this.userProfile.isLogoVisible === undefined
+                ? true
+                : this.userProfile.isLogoVisible,
         };
 
         Meteor.call('updateUserProfile', profile);
@@ -90,9 +92,10 @@ console.log('userChanged', Meteor.user().profile);
 
     openLastDrillOrNew() {
         return this.getLastDrillId()
-            .then(drillId => {
-                if (!drillId)
+            .then((drillId) => {
+                if (!drillId) {
                     return this.newDrill();
+                }
 
                 return this.openDrill(drillId);
             });
@@ -100,11 +103,15 @@ console.log('userChanged', Meteor.user().profile);
 
     openDrill(id) {
         return this.getDrill(id)
-            .then(drill => {
+            .then((drill) => {
                 if (shouldUpgradeDrill(drill)) {
                     upgradeDrill(drill);
                 }
                 this.drill = drill;
+                this.eventService.notify(Events.drillOpened,
+                    {
+                        drill: drill,
+                    });
                 return drill;
             });
     }
@@ -118,7 +125,7 @@ console.log('userChanged', Meteor.user().profile);
         // save current drill before starting new drill
         this.saveDrill();
 
-        var builder = new DrillBuilder();
+        let builder = new DrillBuilder();
         this.drill = builder.createDrill();
         this.drill.drillFormatVersion = _currentDrillFormatVersion;
         return this.drill;
@@ -127,7 +134,7 @@ console.log('userChanged', Meteor.user().profile);
     saveDrill() {
         if (!this.drill) return;
 
-        var id = this.drill._id;
+        let id = this.drill._id;
         this.drill.isDirty = false;
         if (!id) {
             this.insertDrill();
@@ -137,17 +144,17 @@ console.log('userChanged', Meteor.user().profile);
     }
 
     insertDrill() {
-        var self = this;
+        let self = this;
         self.drill.createdDate = new Date();
         self.drill.updatedDate = new Date();
         self.drill.userId = Meteor.userId();
         self.drill.owner = getOwnerEmail(Meteor.user());
         self.drill.name_sort = self.drill.name.toLowerCase();
-        //self.drill.owner = Meteor.userId();
+        // self.drill.owner = Meteor.userId();
         Drills.insert(angular.copy(self.drill), (err, id) => {
             if (err) {
                 if (!Meteor.userId()) {
-                    self.alertService.warning('Unable to save drill. Please login to save your work.');
+                    self.alertService.warning('Unable to save drill. Please login to save your work.'); // eslint-disable-line max-len
                 } else {
                     self.alertService.danger('Unable to save drill. ' + err);
                 }
@@ -159,7 +166,8 @@ console.log('userChanged', Meteor.user().profile);
     }
 
     updateDrill() {
-        var id = this.drill._id;
+        const self = this;
+        let id = this.drill._id;
 
         if (!id) {
             console.log('Unable to update. No _id.');
@@ -171,17 +179,20 @@ console.log('userChanged', Meteor.user().profile);
         this.drill.userId = Meteor.userId();
         this.drill.owner = getOwnerEmail(Meteor.user());
 
-        var r = Drills.update({
-            _id: id
+        Drills.update({
+            _id: id,
         }, {
-                $set: angular.copy(this.drill)
+                $set: angular.copy(this.drill),
             },
-            function (error) {
+            function(error) {
                 if (error) {
-                    if (!Meteor.userId())
-                        this.alertService.warning('Unable to save drill. Please login to save your work.');
-                    else
-                        this.alertService.danger('Unable to save drill. ' + err);
+                    if (!Meteor.userId()) {
+                        // eslint-disable-next-line max-len
+                        self.alertService.warning('Unable to save drill. Please login to save your work.');
+                    } else {
+                        // eslint-disable-next-line max-len
+                        self.alertService.danger('Unable to save drill. ' + err);
+                    }
                 } else {
                     console.log('saved');
                 }
@@ -219,7 +230,7 @@ console.log('userChanged', Meteor.user().profile);
     }
 
     updateClip(clip) {
-        var id = clip._id;
+        let id = clip._id;
 
         if (!id) {
             console.log('Unable to update. No _id.');
@@ -231,12 +242,12 @@ console.log('userChanged', Meteor.user().profile);
         clip.userId = Meteor.userId();
         clip.owner = getOwnerEmail(Meteor.user());
 
-        var r = MusicFiles.update({
-            _id: id
+        MusicFiles.update({
+            _id: id,
         }, {
-                $set: angular.copy(clip)
+                $set: angular.copy(clip),
             },
-            function (error) {
+            function(error) {
                 if (error) {
                     console.log('Unable to update musicFile', error);
                 } else {
@@ -244,29 +255,32 @@ console.log('userChanged', Meteor.user().profile);
                 }
             });
     }
-
 }
 
 function getOwnerEmail(user) {
-    if (!user || !user.emails || user.emails.length == 0)
+    if (!user || !user.emails || user.emails.length == 0) {
         return 'unknown';
+    }
 
     return user.emails[0].address;
 }
 
 function shouldUpgradeDrill(drill) {
-    return drill && (!drill.drillFormatVersion || drill.drillFormatVersion < _currentDrillFormatVersion);
+    return drill
+        && (!drill.drillFormatVersion
+                || drill.drillFormatVersion < _currentDrillFormatVersion);
 }
 
 function upgradeDrill(drill) {
-    console.log('upgrading drill to format version ' + _currentDrillFormatVersion);
-    drill.members.forEach(m => {
+    console.log('upgrading drill to format version '
+        + _currentDrillFormatVersion);
+    drill.members.forEach((m) => {
         m.initialState.x *= 10;
         m.initialState.y *= 10;
         m.currentState.x *= 10;
         m.currentState.y *= 10;
 
-        m.script.forEach(a => {
+        m.script.forEach((a) => {
             if (a) {
                 a.deltaX *= 10;
                 a.deltaY *= 10;
@@ -278,4 +292,5 @@ function upgradeDrill(drill) {
 }
 
 angular.module('drillApp')
-    .service('appStateService', ['$rootScope', 'alertService', 'eventService', appStateService]);
+    .service('appStateService',
+        ['$rootScope', 'alertService', 'eventService', appStateService]);
