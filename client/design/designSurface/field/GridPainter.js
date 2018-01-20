@@ -22,40 +22,38 @@ class GridPainter {
     }
 
     addXLines(canvas, strideType) {
-        var stepSize = FieldDimensions.getStepSize(strideType);
-        var pathExpr = "";
-        for(var i = 0; i < FieldDimensions.widthInSteps(strideType); i++) {
-            var x = i * stepSize.x;
-            var coords = [x, 0, x, FieldDimensions.height];
+        let stepSize = FieldDimensions.getStepSize(strideType);
+        let pathExpr = '';
+        for (let i = 0; i < FieldDimensions.widthInSteps(strideType); i++) {
+            let x = i * stepSize.x;
             pathExpr += `M ${x} 0 L ${x} ${FieldDimensions.height} `;
         }
         this.xLines = new fabric.Path(pathExpr, {
-            fill: 'white',
+            fill: '',
             stroke: 'white',
             strokeWidth: 1,
             selectable: false,
             evented: false,
-            opacity: .3
+            opacity: .2,
         });
         canvas.add(this.xLines);
         this.xLines.sendToBack();
     }
 
     addYLines(canvas, strideType) {
-        var stepSize = FieldDimensions.getStepSize(strideType);
-        var pathExpr = "";
-        for(var i = 0; i < FieldDimensions.heightInSteps(strideType); i++) {
-            var y = (i * stepSize.y) - stepSize.yOffset; // - FieldDimensions.yOffset_8to5;
-            var coords = [y, 0, y, FieldDimensions.width];
+        let stepSize = FieldDimensions.getStepSize(strideType);
+        let pathExpr = '';
+        for (let i = 0; i < FieldDimensions.heightInSteps(strideType); i++) {
+            let y = (i * stepSize.y) - stepSize.yOffset; // - FieldDimensions.yOffset_8to5;
             pathExpr += `M 0 ${y} L ${FieldDimensions.width} ${y} `;
         }
         this.yLines = new fabric.Path(pathExpr, {
-            fill: 'white',
+            fill: '',
             stroke: 'white',
             strokeWidth: 1,
             selectable: false,
             evented: false,
-            opacity: .3
+            opacity: .2,
         });
         canvas.add(this.yLines);
         this.yLines.sendToBack();
