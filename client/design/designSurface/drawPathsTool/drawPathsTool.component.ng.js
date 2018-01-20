@@ -151,7 +151,10 @@ angular.module('drillApp')
         if (evt.target !== null && !evt.target.isLogo) return; // clicked on an object
 
         // have to adjust point for zoom
-        let adjustedPoint = ctrl.field.adjustMousePoint({ x: evt.e.layerX, y: evt.e.layerY });
+        let adjustedPoint = ctrl.field.adjustMousePoint({
+          x: evt.e.layerX,
+          y: evt.e.layerY,
+        });
         let stepPoint = new FieldPoint(adjustedPoint); // .toStepPoint(ctrl.strideType);
 
         // add turn at step point

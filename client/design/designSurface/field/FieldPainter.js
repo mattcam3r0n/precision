@@ -3,7 +3,6 @@ import YardLinePainter from './YardLinePainter';
 import GridPainter from './GridPainter';
 
 class FieldPainter {
-
     constructor(canvas) {
         this.canvas = canvas;
         this.gridPainter = new GridPainter(canvas);
@@ -14,15 +13,15 @@ class FieldPainter {
 
     dispose() {
         this.canvas.remove(this.logo);
-
     }
 
     paint() {
         YardLinePainter.paint(this.canvas);
-        if (this.isGridVisible) 
+        if (this.isGridVisible) {
             this.showGrid(this.strideType);
-        else   
+        } else {
             this.hideGrid();
+        }
         this.showFieldLogo(this.canvas);
         this.canvas.renderAll();
     }
@@ -33,44 +32,45 @@ class FieldPainter {
 
     set isLogoVisible(val) {
         this._isLogoVisible = val;
-        if (val) 
+        if (val) {
             this.showFieldLogo();
-        else
+        } else {
             this.hideFieldLogo();
+        }
         this.canvas.renderAll();
     }
 
     showFieldLogo() {
-        var self = this;
+        let self = this;
         if (self.logo) this.hideFieldLogo();
 
-        var scaleFactor = .75;
+        let scaleFactor = .75;
         fabric.Image.fromURL('/field-logo.png', function(img) {
             self.logo = img;
             img.isLogo = true;
             img.scale(scaleFactor);
             img.selectable = false;
-            img.evented = true;
-            img.set('left', (FieldDimensions.width  / 2) - (img.width * scaleFactor / 2));
+            img.evented = false;
+            img.set('left', (FieldDimensions.width / 2) - (img.width * scaleFactor / 2));
             img.set('top', (FieldDimensions.height / 2) - (img.height * scaleFactor / 2));
-            img.set('opacity', .25);
+            img.set('opacity', .2);
             img.hoverCursor = 'default';
             self.canvas.add(img);
 
-            img.on('mouseover', function() {
-                img.set('opacity', .15);
-                img.sendToBack();
-            });
+            // img.on('mouseover', function() {
+            //     img.set('opacity', .15);
+            //     img.sendToBack();
+            // });
 
-            img.on('mouseout', function() {
-                img.set('opacity', .25);
-                img.sendToBack();
-            });
+            // img.on('mouseout', function() {
+            //     img.set('opacity', .25);
+            //     img.sendToBack();
+            // });
 
             self.canvas.renderAll();
         });
     }
-    
+
     hideFieldLogo() {
         this.canvas.remove(this.logo);
     }
@@ -81,10 +81,11 @@ class FieldPainter {
 
     set isGridVisible(val) {
         this._isGridVisible = val;
-        if (val)
+        if (val) {
             this.showGrid(this.strideType);
-        else
+        } else {
             this.hideGrid();
+        }
     }
 
     showGrid(strideType) {
