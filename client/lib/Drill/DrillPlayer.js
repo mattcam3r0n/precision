@@ -1,9 +1,8 @@
+import Events from '/client/lib/Events';
 import MemberPlayer from '/client/lib/drill/MemberPlayer';
 import DrillScheduler from './DrillScheduler';
 import Audio from '/client/lib/audio/Audio';
 import AnimationLoop from '/client/lib/AnimationLoop';
-
-var lastTimestamp = 0;
 
 /**
  * Contains logic that manipulates current position/count of a drill.
@@ -20,9 +19,9 @@ class DrillPlayer {
     setTempo(tempo) {
         this.tempo = tempo || 120;
     }
-    
+
     play(stateChangedCallback, counts, playMusic) {
-        var self = this;
+        let self = this;
 
         if (self.isPlaying) return;
 
@@ -52,10 +51,10 @@ class DrillPlayer {
                 self.animationLoop.start();
                 self.isPlaying = true;
             })
-            .catch(err => {
+            .catch((err) => {
                 console.log(err);
                 self.isPlaying = false;
-            });    
+            });
     }
 
     loadMusic(playMusic) {
@@ -67,13 +66,15 @@ class DrillPlayer {
     }
 
     startSpinner() {
-        if (this.eventService) 
+        if (this.eventService) {
             this.eventService.notify(Events.showSpinner);
+        }
     }
 
     stopSpinner() {
-        if (this.eventService)
+        if (this.eventService) {
             this.eventService.notify(Events.hideSpinner);
+        }
     }
 
     stop() {
@@ -90,36 +91,42 @@ class DrillPlayer {
     }
 
     animate(timestamp) {
-        var self = this;
-        var tempoInMS = (60 / self.tempo) * 1000;
-        var nextStep = self.schedule.steps[self.drill.count - self.startCount];
-        if (self.startTimestamp == 0)
+        let self = this;
+        // let tempoInMS = (60 / self.tempo) * 1000;
+        let nextStep = self.schedule.steps[self.drill.count - self.startCount];
+        if (self.startTimestamp == 0) {
             self.startTimestamp = timestamp;
+        }
 
-        if (nextStep && timestamp >= self.startTimestamp + (nextStep.time * 1000)) {
+        if (nextStep && timestamp >= self.startTimestamp
+                                        + (nextStep.time * 1000)) {
             self.lastTimestamp = timestamp;
             self.stepForward();
             self.stateChangedCallback();
 
-            if (self.playMusic && nextStep && nextStep.music && nextStep.music.startCount == self.drill.count) {
+            if (self.playMusic
+                    && nextStep
+                    && nextStep.music
+                    && nextStep.music.startCount == self.drill.count) {
                 self.currentMusic = nextStep.music.url;
-                Audio.play(self.currentMusic, nextStep.music.startOffset, nextStep.music.duration);
+                Audio.play(self.currentMusic,
+                            nextStep.music.startOffset,
+                            nextStep.music.duration);
             }
-            
+
             nextStep = self.schedule.steps[self.drill.count - self.startCount];
-    
+
             if (self.isEndOfDrill() || self.isPastStopCount()) {
-                console.log("Reached end of drill.");
+                console.log('Reached end of drill.');
                 self.stop();
                 return;
-            }    
+            }
         }
-
     }
 
     stepForward() {
         if (this.isEndOfDrill()) return;
-        this.drill.members.forEach(m => {
+        this.drill.members.forEach((m) => {
             MemberPlayer.stepForward(m);
         });
         this.drill.count++;
@@ -127,31 +134,33 @@ class DrillPlayer {
 
     stepBackward() {
         if (this.isBeginningOfDrill()) return;
-        this.drill.members.forEach(m => MemberPlayer.stepBackward(m));
+        this.drill.members.forEach((m) => MemberPlayer.stepBackward(m));
         this.drill.count--;
     }
 
     isBeginningOfDrill() {
-        // true if all members are at 0;   
-        return this.drill.members.every(m => MemberPlayer.isBeginningOfDrill(m));
+        // true if all members are at 0;
+        return this.drill
+                    .members
+                    .every((m) => MemberPlayer.isBeginningOfDrill(m));
     }
 
     isEndOfDrill() {
         if (!this.drill.members || this.drill.members.length == 0) return true;
 
         // true if all members are at end
-        return this.drill.members.every(m => MemberPlayer.isEndOfDrill(m));
+        return this.drill.members.every((m) => MemberPlayer.isEndOfDrill(m));
     }
 
     goToBeginning() {
         this.drill.count = 0;
-        this.drill.members.forEach(m => MemberPlayer.goToBeginning(m));
+        this.drill.members.forEach((m) => MemberPlayer.goToBeginning(m));
     }
 
     goToCount(count) {
-        //TODO: need a better way to do this
+        // TODO: need a better way to do this
         this.goToBeginning();
-        while(this.drill.count < count && !this.isEndOfDrill()) {
+        while (this.drill.count < count && !this.isEndOfDrill()) {
             this.stepForward();
         }
     }
