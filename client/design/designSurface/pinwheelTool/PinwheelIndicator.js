@@ -18,6 +18,7 @@ class PinwheelIndicator {
     }
 
     create() {
+        if (!this.pivotMember) return;
         this.steps = this.pinwheelCalculator
                             .calculateSteps(this.pivotMember.currentState,
                                 this.rotationDirection,

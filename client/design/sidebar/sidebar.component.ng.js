@@ -22,10 +22,10 @@ angular.module('drillApp')
         initGridSwitch();
         initLogoSwitch();
         initCollapseHighlighting();
-        // ctrl.subscriptions
-        //   .subscribe(Events.drawPathsToolDeactivated, collapseDrawPaths);
-        // ctrl.subscriptions
-        //   .subscribe(Events.pinwheelToolDeactivated, collapsePinwheelTool);
+        ctrl.subscriptions
+          .subscribe(Events.drawPathsToolDeactivated, collapseDrawPaths);
+        ctrl.subscriptions
+          .subscribe(Events.pinwheelToolDeactivated, collapsePinwheelTool);
         ctrl.subscriptions.subscribe(Events.showGrid, onShowGrid);
         ctrl.subscriptions.subscribe(Events.hideGrid, onHideGrid);
         ctrl.subscriptions.subscribe(Events.showLogo, onShowLogo);
@@ -171,6 +171,14 @@ angular.module('drillApp')
         $('div.collapse').on('shown.bs.collapse', function(args) {
           $(args.currentTarget.parentElement).addClass('opened');
         });
+      }
+
+      function collapseDrawPaths() {
+        $('#drawPaths').collapse('hide');
+      }
+
+      function collapsePinwheelTool() {
+        $('#pinwheel').collapse('hide');
       }
     },
   });

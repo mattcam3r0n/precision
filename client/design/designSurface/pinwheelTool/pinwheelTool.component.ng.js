@@ -85,7 +85,7 @@ angular.module('drillApp')
         }
 
         appStateService.setActiveTool('pinwheel', () => {
-          deactivate();
+          deactivate(false);
         });
 
         ctrl.isActivated = true;
@@ -103,7 +103,7 @@ angular.module('drillApp')
         createPinwheelIndicator();
       }
 
-      function deactivate() {
+      function deactivate(notify = true) {
         if (ctrl.pinwheelIndicator) {
           ctrl.pinwheelIndicator.dispose();
         }
@@ -114,7 +114,9 @@ angular.module('drillApp')
         ctrl.field.canvas.selection = true;
         ctrl.field.canvas.defaultCursor = 'default';
         eventService.notify(Events.updateField);
-        eventService.notify(Events.pinwheelToolDeactivated);
+        if (notify) {
+          eventService.notify(Events.pinwheelToolDeactivated);
+        }
       }
 
       function createPinwheelIndicator() {

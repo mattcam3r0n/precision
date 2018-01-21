@@ -73,14 +73,14 @@ angular.module('drillApp')
         }
 
         appStateService.setActiveTool('addSteps', () => {
-          deactivate();
+          deactivate(false);
         });
 
         ctrl.isActivated = true;
         ctrl.memberSelection = memberSelection;
       }
 
-      function deactivate() {
+      function deactivate(notify = true) {
         ctrl.isActivated = false;
         // TODO: use events to signal this, if still needed?
         // ctrl.field.enablePositionIndicator();

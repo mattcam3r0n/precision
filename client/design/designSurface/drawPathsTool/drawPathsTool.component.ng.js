@@ -70,7 +70,7 @@ angular.module('drillApp')
         }
 
         appStateService.setActiveTool('drawPaths', () => {
-          deactivate();
+          deactivate(false);
         });
 
         ctrl.isActivated = true;
