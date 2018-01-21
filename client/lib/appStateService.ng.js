@@ -125,6 +125,7 @@ class appStateService {
                 this.drill = drill;
                 this.eventService.notify(Events.drillOpened,
                     {
+                        isNew: false,
                         drill: drill,
                     });
                 return drill;
@@ -143,6 +144,11 @@ class appStateService {
         let builder = new DrillBuilder();
         this.drill = builder.createDrill();
         this.drill.drillFormatVersion = _currentDrillFormatVersion;
+        this.eventService.notify(Events.drillOpened,
+            {
+                isNew: true,
+                drill: this.drill,
+            });
         return this.drill;
     }
 

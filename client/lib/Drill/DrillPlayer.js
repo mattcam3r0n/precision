@@ -34,7 +34,7 @@ class DrillPlayer {
         self.schedule = new DrillScheduler().createSchedule(self.drill);
 
         // TODO: remove
-        console.log(self.schedule);
+        console.log('schedule', self.schedule);
 
         self.startCount = self.drill.count;
         self.startTimestamp = 0; // get current audio timestamp?
@@ -48,8 +48,8 @@ class DrillPlayer {
             .then(() => {
                 this.stopSpinner();
                 self.animationLoop = new AnimationLoop(self.animate.bind(self));
-                self.animationLoop.start();
                 self.isPlaying = true;
+                self.animationLoop.start();
             })
             .catch((err) => {
                 console.log(err);
