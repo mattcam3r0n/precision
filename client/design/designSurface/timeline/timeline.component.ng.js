@@ -17,7 +17,7 @@ angular.module('drillApp')
       ctrl.$onInit = function() {
         ctrl.isActivated = true;
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
-        ctrl.timeline = new Timeline('timelineContainer');
+        ctrl.timeline = new Timeline('timelineContainer', eventService);
         ctrl.timeline.setOnRemoveCallback(onRemove);
         ctrl.timeline.setOnGoToCountCallback(onGoToCount);
         ctrl.subscriptions.subscribe(Events.audioClipAdded, onAudioClipAdded);
@@ -25,6 +25,8 @@ angular.module('drillApp')
                                       onDrillStateChanged);
         ctrl.subscriptions.subscribe(Events.drillOpened,
                                       onDrillOpened);
+        ctrl.subscriptions.subscribe(Events.musicChanged,
+                                      onMusicChanged);
       };
 
       ctrl.$onDestroy = function() {
@@ -109,6 +111,10 @@ angular.module('drillApp')
 
       function onDrillOpened(args) {
         zoomTimeline();
+      }
+
+      function onMusicChanged(args) {
+        drillEditorService.save(true);
       }
 
       function zoomTimeline() {

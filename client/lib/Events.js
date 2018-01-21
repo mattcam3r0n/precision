@@ -61,6 +61,10 @@ class Events {
         return 'strideTypeChanged';
     }
 
+    static get musicChanged() {
+        return 'musicChanged';
+    }
+
     static get drillOpened() {
         return 'drillOpened';
     }

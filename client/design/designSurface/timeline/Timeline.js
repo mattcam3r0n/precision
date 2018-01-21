@@ -1,5 +1,8 @@
+import Events from '/client/lib/Events';
+
 class Timeline {
-    constructor(containerId) {
+    constructor(containerId, eventService) {
+        this.eventService = eventService;
         this.containerId = containerId;
         this.items = new vis.DataSet();
         this.groups = new vis.DataSet();
@@ -46,9 +49,9 @@ class Timeline {
                     return new Date(date).getTime();
                 },
             },
-            onMove: this.onMove,
+            onMove: this.onMove.bind(this),
             onRemove: this.onRemove.bind(this),
-            template: this.itemTemplate,
+            template: this.itemTemplate.bind(this),
         };
 
         this.groups.add({
@@ -160,11 +163,9 @@ class Timeline {
     }
 
     setMusicItems(musicList) {
-        if (!musicList) return;
+        this.items.clear();
 
-        if (musicList.length == 0) {
-            this.items.clear();
-        }
+        if (!musicList) return;
 
         musicList.forEach((m) => {
             let item = this.createMusicItem(m);
@@ -192,10 +193,13 @@ class Timeline {
     }
 
     onMove(item, callback) {
+        const self = this;
         // update music item in drill when moved on timeline
         // each count is represented by a millisecond
         item.music.startCount = item.start.getMilliseconds();
         item.music.endCount = item.end.getMilliseconds() - 1;
+        // notify that music changed
+        self.eventService.notify(Events.musicChanged);
     }
 
     onRemove(item, callback) {
