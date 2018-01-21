@@ -84,6 +84,10 @@ angular.module('drillApp')
           deactivate();
         }
 
+        appStateService.setActiveTool('pinwheel', () => {
+          deactivate();
+        });
+
         ctrl.isActivated = true;
         ctrl.field = appStateService.field;
         ctrl.memberSelection = memberSelection;

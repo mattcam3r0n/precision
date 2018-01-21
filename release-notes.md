@@ -92,3 +92,4 @@
 * FIX: zoom timeline and go to beginning on open
 * NEW: edit drill name by clicking on it in header
 * FIX: draw paths tool collapsed when stride type changed
+* FIX: allow only one of path/add steps/pinwheel tool to be active at a time

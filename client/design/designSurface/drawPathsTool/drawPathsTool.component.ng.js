@@ -69,6 +69,10 @@ angular.module('drillApp')
           deactivate(false);
         }
 
+        appStateService.setActiveTool('drawPaths', () => {
+          deactivate();
+        });
+
         ctrl.isActivated = true;
         ctrl.field = appStateService.field;
         ctrl.memberSelection = memberSelection;
@@ -135,7 +139,6 @@ angular.module('drillApp')
       }
 
       function onBackspacePressed(evt) {
-        console.log('onBackspacePressed');
         // how to get corresponding turn?
         if (!ctrl.field.canvas.getActiveObject()) return;
 

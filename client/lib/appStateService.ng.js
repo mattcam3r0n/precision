@@ -46,6 +46,21 @@ class appStateService {
         this.userProfile.isLogoVisible = val;
     }
 
+    setActiveTool(toolName, deactivateFn) {
+        if (this.activeToolName === toolName) return;
+        this.deactivateActiveTool();
+        this.activeToolName = toolName;
+        this.deactivateActiveToolFn = deactivateFn;
+    }
+
+    deactivateActiveTool() {
+        if (this.deactivateActiveToolFn) {
+            this.deactivateActiveToolFn();
+        }
+        this.activeToolName = null;
+        this.deactivateActiveToolFn = null;
+    }
+
     userChanged() {
         if (!Meteor.user()) return;
 
