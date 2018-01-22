@@ -127,7 +127,6 @@ angular.module('drillApp')
     }
 
     function onKeydown(e) {
-      null.foo();
       keyboardHandler.handle(e);
       $scope.$safeApply();
     }
