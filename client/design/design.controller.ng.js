@@ -6,6 +6,8 @@ import Spinner from '/client/components/spinner/spinner';
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
+import Logger from '/client/Logger';
+
 angular.module('drillApp')
   .controller('DesignCtrl', function($scope,
                                       $window,
@@ -43,6 +45,9 @@ angular.module('drillApp')
         if (newValue && oldValue && newValue._id === oldValue._id) return; // phantom change
 
         appStateService.userChanged();
+
+  console.log($scope.currentUser);
+  Logger.info('test');
 
         if ($scope.currentUser === null) { // signed out
           newDrill();
