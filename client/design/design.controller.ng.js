@@ -126,6 +126,12 @@ angular.module('drillApp')
       $scope.$safeApply(); // necessary for field painting?
     }
 
+    function getDrillId() {
+      if (!$scope.drill) return null;
+      if (!$scope.drill._id) return 'new';
+      return $scope.drill._id;
+    }
+
     function onKeydown(e) {
       keyboardHandler.handle(e);
       $scope.$safeApply();
@@ -139,6 +145,7 @@ angular.module('drillApp')
         stack: e.error.stack,
         isTrusted: e.isTrusted,
         filename: e.filename,
+        drillId: getDrillId(),
       });
     }
 
