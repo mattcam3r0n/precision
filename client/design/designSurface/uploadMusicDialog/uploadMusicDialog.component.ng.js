@@ -1,5 +1,6 @@
 'use strict';
 
+import Logger from '/client/lib/Logger';
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import Spinner from '/client/components/spinner/spinner';
@@ -10,32 +11,32 @@ angular.module('drillApp')
     templateUrl: 'client/design/designSurface/uploadMusicDialog/uploadMusicDialog.view.ng.html',
     bindings: {
     },
-    controller: function ($rootScope, $scope, eventService, appStateService) {
-      var ctrl = this;
+    controller: function($rootScope, $scope, eventService, appStateService) {
+      let ctrl = this;
 
       ctrl.activate = function() {
         $('#uploadMusicDialog').modal('show');
         ctrl.file = null;
-      }
+      };
 
       ctrl.deactivate = function() {
-        $('#uploadMusicDialog').modal('hide');        
-      }
+        $('#uploadMusicDialog').modal('hide');
+      };
 
       ctrl.isValid = function() {
         return !empty(ctrl.title) && !empty(ctrl.file);
-      }
+      };
 
       function empty(val) {
         return val == undefined || val == null || val == '';
       }
 
-      $scope.fileChosen = function(event){
-        var files = event.target.files;
+      $scope.fileChosen = function(event) {
+        let files = event.target.files;
         ctrl.file = files[0];
         console.log(ctrl.file);
         $rootScope.$safeApply();
-      };      
+      };
 
       ctrl.upload = function() {
         console.log(ctrl.file);
@@ -43,20 +44,25 @@ angular.module('drillApp')
         spinner.start();
 
         FileUploader.upload(ctrl.file)
-        .then(url => {
+        .then((url) => {
           saveFile(ctrl.file, url);
           spinner.stop();
           Bert.alert('File uploaded successfully.', 'success', 'growl-top-right');
           ctrl.deactivate();
         })
-        .catch(err => {
-          console.log(err);
+        .catch((err) => {
+          let msg = 'Unable to upload file.';
+          Logger.error(msg, {
+            file: ctrl.file.name,
+            error: err,
+          });
+          spinner.stop();
         });
-      }
+      };
 
       function saveFile(file, url) {
-        var musicFile = {
-          type: "file",
+        let musicFile = {
+          type: 'file',
           fileName: file.name,
           key: FileUploader.key(file),
           url: url,
@@ -64,7 +70,7 @@ angular.module('drillApp')
           notes: ctrl.notes,
           composedBy: ctrl.composedBy,
           performedBy: ctrl.performedBy,
-          isPublic: ctrl.isPublic || false
+          isPublic: ctrl.isPublic || false,
         };
 
         appStateService.saveClip(musicFile);
@@ -74,20 +80,20 @@ angular.module('drillApp')
         if (!ctrl.file) return 0;
 
         return ctrl.file.size / 1024 / 1024;
-      }
+      };
 
-      ctrl.$onInit = function () {
+      ctrl.$onInit = function() {
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
-        ctrl.subscriptions.subscribe(Events.uploadMusicDialogActivated, (evt, args) => {
-          ctrl.activate();
-        });
-      }
+        ctrl.subscriptions.subscribe(Events.uploadMusicDialogActivated,
+          (evt, args) => {
+            ctrl.activate();
+          });
+      };
 
-      ctrl.$onDestroy = function () {
+      ctrl.$onDestroy = function() {
         ctrl.subscriptions.unsubscribeAll();
-      }
-
-    }
+      };
+    },
   });
 
 

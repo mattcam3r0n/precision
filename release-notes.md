@@ -91,9 +91,12 @@
 * FIX: disallow go-to-beginning, step-forward, etc buttons during playback
 * FIX: zoom timeline and go to beginning on open
 * NEW: edit drill name by clicking on it in header
-* FIX: draw paths tool collapsed when stride type changed
+* FIX: draw paths tool collapses when stride type changed
 * FIX: allow only one of path/add steps/pinwheel tool to be active at a time
 
 1-21-18
 * FIX: timeline was not properly clearing music from previous drill, after opening another
 * FIX: changes to music on timeline were not being saved in some cases
+
+1-22-18
+* NEW: log uncaught errors

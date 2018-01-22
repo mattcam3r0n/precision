@@ -1,21 +1,22 @@
 class Logger {
     static debug(msg, meta) {
-        Meteor.call('addLogEntry', 'debug', msg, meta);
+        this.log('debug', msg, meta);
     }
 
     static info(msg, meta) {
-        Meteor.call('addLogEntry', 'info', msg, meta);
+        this.log('ingo', msg, meta);
     }
 
     static warn(msg, meta) {
-        Meteor.call('addLogEntry', 'warn', msg, meta);
+        this.log('warn', msg, meta);
     }
 
     static error(msg, meta) {
-        Meteor.call('addLogEntry', 'error', msg, meta);
+        this.log('error', msg, meta);
     }
 
     static log(level, msg, meta) {
+        console.log(msg, meta);
         Meteor.call('addLogEntry', level, msg, meta);
     }
 }

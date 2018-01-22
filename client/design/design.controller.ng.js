@@ -6,7 +6,7 @@ import Spinner from '/client/components/spinner/spinner';
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
-import Logger from '/client/Logger';
+import Logger from '/client/lib/Logger';
 
 angular.module('drillApp')
   .controller('DesignCtrl', function($scope,

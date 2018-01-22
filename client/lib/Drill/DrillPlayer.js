@@ -1,3 +1,4 @@
+import Logger from '/client/lib/Logger';
 import Events from '/client/lib/Events';
 import MemberPlayer from '/client/lib/drill/MemberPlayer';
 import DrillScheduler from './DrillScheduler';
@@ -52,8 +53,12 @@ class DrillPlayer {
                 self.animationLoop.start();
             })
             .catch((err) => {
-                console.log(err);
+                let msg = 'Unable to load music.';
+                Logger.error(msg, {
+                    error: err,
+                });
                 self.isPlaying = false;
+                this.stopSpinner();
             });
     }
 
@@ -99,19 +104,19 @@ class DrillPlayer {
         }
 
         if (nextStep && timestamp >= self.startTimestamp
-                                        + (nextStep.time * 1000)) {
+            + (nextStep.time * 1000)) {
             self.lastTimestamp = timestamp;
             self.stepForward();
             self.stateChangedCallback();
 
             if (self.playMusic
-                    && nextStep
-                    && nextStep.music
-                    && nextStep.music.startCount == self.drill.count) {
+                && nextStep
+                && nextStep.music
+                && nextStep.music.startCount == self.drill.count) {
                 self.currentMusic = nextStep.music.url;
                 Audio.play(self.currentMusic,
-                            nextStep.music.startOffset,
-                            nextStep.music.duration);
+                    nextStep.music.startOffset,
+                    nextStep.music.duration);
             }
 
             nextStep = self.schedule.steps[self.drill.count - self.startCount];
@@ -141,8 +146,8 @@ class DrillPlayer {
     isBeginningOfDrill() {
         // true if all members are at 0;
         return this.drill
-                    .members
-                    .every((m) => MemberPlayer.isBeginningOfDrill(m));
+            .members
+            .every((m) => MemberPlayer.isBeginningOfDrill(m));
     }
 
     isEndOfDrill() {
