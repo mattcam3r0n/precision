@@ -37,7 +37,7 @@ div.header {
   width: 240px;
 }
 
-.header input {
+.header .drill-name input {
   color: white;
   background-color: #353535;
   border: 0;
