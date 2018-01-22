@@ -27,7 +27,8 @@ angular.module('drillApp')
       ctrl.subscriptions = new EventSubscriptionManager(eventService);
 
       $scope.tempo = 120;
-      $window.addEventListener('keydown', keydown);
+      $window.addEventListener('keydown', onKeydown);
+      $window.addEventListener('error', onError);
 
       Audio.init();
 
@@ -45,9 +46,6 @@ angular.module('drillApp')
         if (newValue && oldValue && newValue._id === oldValue._id) return; // phantom change
 
         appStateService.userChanged();
-
-  console.log($scope.currentUser);
-  Logger.info('test');
 
         if ($scope.currentUser === null) { // signed out
           newDrill();
@@ -86,8 +84,9 @@ angular.module('drillApp')
 
 
     $scope.$on('$destroy', function() {
-      $window.removeEventListener('keydown', keydown);
       ctrl.subscriptions.unsubscribeAll();
+      $window.removeEventListener('keydown', onKeydown);
+      $window.removeEventListener('error', onError);
     });
 
     function openLastDrillOrNew() {
@@ -127,9 +126,21 @@ angular.module('drillApp')
       $scope.$safeApply(); // necessary for field painting?
     }
 
-    function keydown(e) {
+    function onKeydown(e) {
+      null.foo();
       keyboardHandler.handle(e);
       $scope.$safeApply();
+    }
+
+    function onError(e) {
+      Logger.info('Uncaught error', {
+        message: e.message,
+        lineno: e.lineno,
+        colno: e.colno,
+        stack: e.error.stack,
+        isTrusted: e.isTrusted,
+        filename: e.filename,
+      });
     }
 
     $scope.debug = function() {

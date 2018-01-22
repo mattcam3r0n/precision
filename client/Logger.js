@@ -1,22 +1,22 @@
 class Logger {
-    static debug(msg) {
-        Meteor.call('addLogEntry', 'debug', msg);
+    static debug(msg, meta) {
+        Meteor.call('addLogEntry', 'debug', msg, meta);
     }
 
-    static info(msg) {
-        Meteor.call('addLogEntry', 'info', msg);
+    static info(msg, meta) {
+        Meteor.call('addLogEntry', 'info', msg, meta);
     }
 
-    static warn(msg) {
-        Meteor.call('addLogEntry', 'warn', msg);
+    static warn(msg, meta) {
+        Meteor.call('addLogEntry', 'warn', msg, meta);
     }
 
-    static error(msg) {
-        Meteor.call('addLogEntry', 'error', msg);
+    static error(msg, meta) {
+        Meteor.call('addLogEntry', 'error', msg, meta);
     }
 
-    static log(level, msg) {
-        Meteor.call('addLogEntry', level, msg);
+    static log(level, msg, meta) {
+        Meteor.call('addLogEntry', level, msg, meta);
     }
 }
 

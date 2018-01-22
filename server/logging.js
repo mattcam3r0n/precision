@@ -1,6 +1,5 @@
 if (Meteor.isServer) {
-    // creating a global server logger
-    // log = Winston;
+    // TODO: grab some of these from settings, like port, host name, etc.
 
     Winston.add(Winston_Papertrail, {
         levels: {
@@ -27,8 +26,9 @@ if (Meteor.isServer) {
             return level + ': ' + message;
         },
         program: 'precision',
+//        hostname: 'preision.local',
+//        inlineMeta: true,
     });
 
-    Winston.info(' =====> Meteor App restarted ' + new Date(Date.now()) + ' <=====', { foo: 'bar' });
-//    logger.info('testing logger');
+    Winston.info(' =====> Meteor App restarted ' + new Date(Date.now()) + ' <=====');
 }

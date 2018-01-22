@@ -1,14 +1,15 @@
 'use strict';
 
 Meteor.methods({
-    addLogEntry: function(level, msg) {
+    addLogEntry: function(level, msg, meta) {
         if (this.isSimulation) return;
 
-        const ip = this.connection.clientAddress;
-        const userAgent = this.connection.httpHeaders['user-agent'];
+        meta = meta || {};
+        meta.ip = this.connection.clientAddress;
+        meta.userAgent = this.connection.httpHeaders['user-agent'];
 
         if (Meteor.isServer) {
-            Logger.log(level, msg, { ip, userAgent });
+            Logger.log(level, msg, meta);
         }
     },
 });
