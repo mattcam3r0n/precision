@@ -23,7 +23,7 @@ class Timeline {
             },
             stack: false,
             editable: {
-                add: true,
+                add: false,
                 updateTime: true,
                 updateGroup: false,
                 remove: true,
