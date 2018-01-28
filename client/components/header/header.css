@@ -44,6 +44,10 @@ div.header {
   text-align: center;
 }
 
+.header i.fa.fa-pencil {
+  cursor: pointer;
+}
+
 
 /* before flexbox header */
 

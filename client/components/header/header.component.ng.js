@@ -40,6 +40,10 @@ angular.module('drillApp')
         console.log(drillEditorService.drill);
       };
 
+      ctrl.focusDrillName = function() {
+        angular.element('#txtDrillName').focus();
+      };
+
       ctrl.drillName = function() {
         if (!drillEditorService.drill) return;
 
