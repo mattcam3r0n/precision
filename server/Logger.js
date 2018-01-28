@@ -1,3 +1,5 @@
+import User from '/lib/User';
+
 class ServerSideLogger {
     static debug(msg) {
         this.log('debug', msg);
@@ -17,24 +19,11 @@ class ServerSideLogger {
 
     static log(level, msg, meta) {
         meta = meta || {};
-        meta.email = getEmail();
-        meta.userId = getUserId();
+        meta.email = User.getUserEmail();
+        meta.userId = User.getUserId();
         msg = meta.userId + ' - ' + meta.email + ' - ' + msg;
         Winston.log(level, msg, meta);
     }
-}
-
-function getEmail() {
-    const user = Meteor.user();
-    if (!user || !user.emails || user.emails.length < 1) return null;
-
-    return Meteor.user().emails[0].address;
-}
-
-function getUserId() {
-    if (!Meteor.user()) return null;
-
-    return Meteor.user()._id;
 }
 
 Logger = ServerSideLogger;

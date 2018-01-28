@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import User from '/lib/User';
 
 class UserService {
     constructor() {
@@ -17,21 +18,23 @@ class UserService {
     }
 
     getUserEmail() {
-        let user = Meteor.user();
-        if (!user || !user.emails || user.emails.length == 0) {
-            return null;
-        }
+        // let user = Meteor.user();
+        // if (!user || !user.emails || user.emails.length == 0) {
+        //     return null;
+        // }
 
-        return user.emails[0].address;
+        // return user.emails[0].address;
+        return User.getUserEmail();
     }
 
     getUserId() {
-        let user = Meteor.user();
-        if (!user || !user._id) {
-            return null;
-        }
+        // let user = Meteor.user();
+        // if (!user || !user._id) {
+        //     return null;
+        // }
 
-        return user._id;
+        // return user._id;
+        return User.getUserId();
     }
 }
 
