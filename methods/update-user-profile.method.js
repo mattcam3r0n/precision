@@ -3,10 +3,9 @@
 Meteor.methods({
     updateUserProfile: function(profile) {
         let user = Meteor.user();
-        if (!user || !user.profile) {
+        if (!user) {
             return null;
         }
-
         Meteor.users.update({ _id: Meteor.userId() }, {
             $set: {
                 'profile': profile,

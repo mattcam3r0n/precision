@@ -5,13 +5,14 @@ import Events from '/client/lib/Events';
 let _currentDrillFormatVersion = 1;
 
 class appStateService {
-    constructor($rootScope, alertService, eventService) {
+    constructor($rootScope, alertService, eventService, userService) {
         this._drill = null;
         this._field = null;
         this.alertService = alertService;
         this.eventService = eventService;
+        this.userService = userService;
         this.rootScope = $rootScope.$new(true);
-        this.userProfile = {};
+        this.userProfile = userService.getUserProfile();
     }
 
     get drill() {
@@ -65,7 +66,7 @@ class appStateService {
         if (!Meteor.user()) return;
 
         // get user profile
-        this.userProfile = Meteor.user().profile;
+        this.userProfile = this.userService.getUserProfile();
 
         // update logo and grid based on profile
         if (this.userProfile.isGridVisible) {
@@ -82,8 +83,6 @@ class appStateService {
     }
 
     updateUserProfile() {
-        if (!Meteor.user()) return;
-
         let profile = {
             lastDrillId: this.drill._id,
             isGridVisible: this.userProfile.isGridVisible === undefined
@@ -93,8 +92,7 @@ class appStateService {
                 ? true
                 : this.userProfile.isLogoVisible,
         };
-
-        Meteor.call('updateUserProfile', profile);
+        this.userService.updateUserProfile(profile);
     }
 
     getLastDrillId() {
@@ -168,13 +166,12 @@ class appStateService {
         let self = this;
         self.drill.createdDate = new Date();
         self.drill.updatedDate = new Date();
-        self.drill.userId = Meteor.userId();
-        self.drill.owner = getOwnerEmail(Meteor.user());
+        self.drill.userId = self.userService.getUserId(),
+        self.drill.owner = self.userService.getUserEmail(),
         self.drill.name_sort = self.drill.name.toLowerCase();
-        // self.drill.owner = Meteor.userId();
         Drills.insert(angular.copy(self.drill), (err, id) => {
             if (err) {
-                if (!Meteor.userId()) {
+                if (!this.userService.getUserId()) {
                     self.alertService.warning('Unable to save drill. Please login to save your work.'); // eslint-disable-line max-len
                 } else {
                     self.alertService.danger('Unable to save drill. ' + err);
@@ -197,8 +194,8 @@ class appStateService {
 
         this.drill.updatedDate = new Date();
         this.drill.name_sort = this.drill.name.toLowerCase();
-        this.drill.userId = Meteor.userId();
-        this.drill.owner = getOwnerEmail(Meteor.user());
+        this.drill.userId = this.userService.getUserId();
+        this.drill.owner = this.userService.getUserEmail();
 
         Drills.update({
             _id: id,
@@ -207,7 +204,7 @@ class appStateService {
             },
             function(error) {
                 if (error) {
-                    if (!Meteor.userId()) {
+                    if (!self.userService.getUserId()) {
                         // eslint-disable-next-line max-len
                         self.alertService.warning('Unable to save drill. Please login to save your work.');
                     } else {
@@ -238,8 +235,8 @@ class appStateService {
     insertClip(clip) {
         clip.createdDate = new Date();
         clip.updatedDate = new Date();
-        clip.userId = Meteor.userId();
-        clip.owner = getOwnerEmail(Meteor.user());
+        clip.userId = this.userService.getUserId();
+        clip.owner = this.userService.getUserEmail();
         clip.title_sort = clip.title.toLowerCase();
         MusicFiles.insert(angular.copy(clip), (err, id) => {
             if (err) {
@@ -260,8 +257,8 @@ class appStateService {
 
         clip.updatedDate = new Date();
         clip.title_sort = clip.title.toLowerCase();
-        clip.userId = Meteor.userId();
-        clip.owner = getOwnerEmail(Meteor.user());
+        clip.userId = this.userService.getUserId();
+        clip.owner = this.userService.getUserEmail();
 
         MusicFiles.update({
             _id: id,
@@ -276,14 +273,6 @@ class appStateService {
                 }
             });
     }
-}
-
-function getOwnerEmail(user) {
-    if (!user || !user.emails || user.emails.length == 0) {
-        return 'unknown';
-    }
-
-    return user.emails[0].address;
 }
 
 function shouldUpgradeDrill(drill) {
@@ -314,4 +303,4 @@ function upgradeDrill(drill) {
 
 angular.module('drillApp')
     .service('appStateService',
-        ['$rootScope', 'alertService', 'eventService', appStateService]);
+        ['$rootScope', 'alertService', 'eventService', 'userService', appStateService]);

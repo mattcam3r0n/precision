@@ -49,10 +49,12 @@ angular.module('drillApp')
 
         if ($scope.currentUser === null) { // signed out
           newDrill();
+          Logger.info('User ' + (oldValue ? oldValue._id : '') + ' logged out.');
           return;
         }
 
         openLastDrillOrNew().then(openDrill);
+        Logger.info('User ' + newValue._id + ' logged in.');
       });
 
       // handle events
