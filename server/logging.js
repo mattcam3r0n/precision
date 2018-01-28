@@ -19,7 +19,7 @@ if (Meteor.isServer) {
 
         host: 'logs.papertrailapp.com',
         port: 22145, // TODO: get this from settings
-        handleExceptions: true,
+        handleExceptions: false,
         json: true,
         colorize: true,
         logFormat: function(level, message) {

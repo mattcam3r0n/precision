@@ -4,7 +4,7 @@ class Logger {
     }
 
     static info(msg, meta) {
-        this.log('ingo', msg, meta);
+        this.log('info', msg, meta);
     }
 
     static warn(msg, meta) {
@@ -16,7 +16,6 @@ class Logger {
     }
 
     static log(level, msg, meta) {
-        console.log(msg, meta);
         Meteor.call('addLogEntry', level, msg, meta);
     }
 }

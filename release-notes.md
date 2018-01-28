@@ -100,3 +100,8 @@
 
 1-22-18
 * NEW: log uncaught errors
+
+1-28-18
+* NEW: pencil icon next to drill name in header
+* FIX: logging bug
+* 
