@@ -19,18 +19,18 @@
 }
 
 .add-steps-tool li button {
-    flex: none;
+    flex: 1 1 33%;
     border-radius: 0;
-    height: 32px;
-    width: 32px;
+    height: 24px;
+    width: 24px;
     padding: 0;
 }
 
 .add-steps-tool li.face-commands button {
-    flex: none;
+    flex: 1 1 25%;
     border-radius: 0;
-    height: 32px;
-    width: 48px;
+    height: 24px;
+    width: 24px;
     padding: 0;
 }
 

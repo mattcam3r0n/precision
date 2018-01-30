@@ -104,4 +104,7 @@
 1-28-18
 * NEW: pencil icon next to drill name in header
 * FIX: logging bug
-* 
+
+1-30-18
+* NEW: merged Select and Marchers side menus
+* NEW: re-organized buttons in Steps menu
