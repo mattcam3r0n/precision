@@ -1,15 +1,38 @@
-.add-steps-tool {
-}
-
 #addStepsToolbar i {
     color: black;
     margin: 0;
 }
 
-/* .add-steps-tool .button-svg {
-    height: 20px;
-    width: 20px;
-} */
+.add-steps-tool ul {
+    margin: 0;
+    width: 100%;
+    padding: 0px;
+}
+
+.add-steps-tool li {
+    list-style-type: none;
+    margin-top: 5px;
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.add-steps-tool li button {
+    flex: none;
+    border-radius: 0;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+}
+
+.add-steps-tool li.face-commands button {
+    flex: none;
+    border-radius: 0;
+    height: 32px;
+    width: 48px;
+    padding: 0;
+}
 
 .add-steps-tool .direction-button button {
     border-radius: 0;

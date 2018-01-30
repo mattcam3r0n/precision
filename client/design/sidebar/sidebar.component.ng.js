@@ -18,7 +18,6 @@ angular.module('drillApp')
 
       ctrl.$onInit = function() {
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
-        initStrideTypeSwitch();
         initGridSwitch();
         initLogoSwitch();
         initCollapseHighlighting();
@@ -99,23 +98,6 @@ angular.module('drillApp')
       $scope.zoomOut = function() {
         eventService.notify(Events.zoomOut);
       };
-
-      function initStrideTypeSwitch() {
-        // bootstrap toggle button
-        $('[name=\'stride-type-switch\']')
-          .bootstrapSwitch('state', drillEditorService.strideType);
-        $('input[name=\'stride-type-switch\']')
-          .on('switchChange.bootstrapSwitch', function(event, state) {
-            if (state) {
-              drillEditorService.strideType = StrideType.EightToFive;
-            } else {
-              drillEditorService.strideType = StrideType.SixToFive;
-            }
-            // sync other stride switches
-            $('[name=\'stride-type-switch\']')
-              .bootstrapSwitch('state', state, true);
-          });
-      }
 
       function initGridSwitch() {
         $('[name=\'grid-switch\']').bootstrapSwitch('state', false);

@@ -1,5 +1,6 @@
 'use strict';
 
+import StrideType from '/client/lib/StrideType';
 import StepType from '/client/lib/StepType';
 import Direction from '/client/lib/Direction';
 import Events from '/client/lib/Events';
@@ -23,6 +24,10 @@ angular.module('drillApp')
           });
 
         ctrl.toolDiv = angular.element('.add-steps-tool')[0];
+
+        initStrideTypeSwitch();
+
+        $('[data-toggle="tooltip"]').tooltip();
 
         $scope.strideType = drillEditorService.strideType;
       };
@@ -86,6 +91,23 @@ angular.module('drillApp')
         // ctrl.field.enablePositionIndicator();
         // ctrl.field.canvas.selection = true;
         // ctrl.field.canvas.defaultCursor = 'default';
+      }
+
+      function initStrideTypeSwitch() {
+        // bootstrap toggle button
+        $('[name=\'stride-type-switch\']')
+          .bootstrapSwitch('state', drillEditorService.strideType);
+        $('input[name=\'stride-type-switch\']')
+          .on('switchChange.bootstrapSwitch', function(event, state) {
+            if (state) {
+              drillEditorService.strideType = StrideType.EightToFive;
+            } else {
+              drillEditorService.strideType = StrideType.SixToFive;
+            }
+            // sync other stride switches
+            $('[name=\'stride-type-switch\']')
+              .bootstrapSwitch('state', state, true);
+          });
       }
     },
   });

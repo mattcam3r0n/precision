@@ -1,145 +1,85 @@
 <div class="add-steps-tool">
-    <div id="addStepsToolbar" class="btn-group-vertical">
-        <table class="btn-group direction-button">
-            <tr>
-                <td>
-                    <button ng-click="addStep('NW')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
-                        <i class="fa fa-arrow-up fa-rotate-NW context-button"></i>
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="addStep('N')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
-                        <i class="fa fa-arrow-up context-button"></i>
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="addStep('NE')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
-                        <i class="fa fa-arrow-up fa-rotate-NE context-button"></i>
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button ng-click="addStep('W')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
-                        <i class="fa fa-arrow-left context-button"></i>
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="addMarkTime()" id="" ng-class="{ 'active': isCurrentDirection('SW') }" class="btn btn-default" data-toggle="tooltip"
-                        data-placement="bottom" title="Mark time">
-                        <i class="fa fa-long-arrow-up context-button"></i>
-                        <i class="fa fa-long-arrow-down context-button"></i>
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="addStep('E')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
-                        <i class="fa fa-arrow-right context-button"></i>
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button ng-click="addStep('SW')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
-                        <i class="fa fa-arrow-up fa-rotate-SW context-button"></i>
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="addStep('S')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
-                        <i class="fa fa-arrow-down context-button"></i>
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="addStep('SE')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
-                        <i class="fa fa-arrow-up fa-rotate-SE context-button"></i>
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td class="row-spacer" colspan="3">&nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button ng-click="addLeftCountermarch()" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="left countermarch">
-                        <img class="left-countermarch" src="/icons/CM.svg" />
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="addRightCountermarch()" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="right countermarch">
-                        <img class="right-countermarch" src="/icons/CM.svg" />
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="addHalt()" id="" ng-class="{ 'active': isCurrentDirection('S') }" class="btn btn-default" data-toggle="tooltip"
-                        data-placement="bottom" title="halt">
-                        <i class="fa fa-stop context-button"></i>
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td class="row-spacer" colspan="3">
-                    <span>&nbsp;</span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button ng-click="" id="leftFace" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Left Face (2 ct)">
-                        L
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="" id="rightFace" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Right Face (2 ct)">
-                        R
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button ng-click="" id="aboutFace" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="About Face (2 ct)">
-                        A2
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="" id="aboutFace" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="About Face (2 ct)">
-                        A3
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td class="row-spacer" colspan="3">
-                    <span>&nbsp;</span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Drag Step Tool">
-                        D
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Pinwheel Tool">
-                        P
-                    </button>
-                </td>
-                <td>
-                    <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Gate Tool">
-                        G
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td class="row-spacer" colspan="3">&nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button ng-click="backspaceDelete()" id="" ng-class="{ 'active': isCurrentDirection('SE') }" class="btn btn-default" data-toggle="tooltip"
-                        data-placement="bottom" title="Backup and delete">
-                        <i class="fa fa-arrow-circle-left context-button" style="color: red"></i>
-                    </button>
-                </td>
-            </tr>
-        </table>
+    <div id="addStepsToolbar" class="">
+        <ul>
+            <li>
+                <input type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary" data-label-text="Stride"
+                    data-size="mini" data-label-width="55px" />
+            </li>
+            <li class="direction-buttons">
+                <button ng-click="addStep('NW')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
+                    <i class="fa fa-arrow-up fa-rotate-NW context-button"></i>
+                </button>
+                <button ng-click="addStep('N')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
+                    <i class="fa fa-arrow-up context-button"></i>
+                </button>
+                <button ng-click="addStep('NE')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
+                    <i class="fa fa-arrow-up fa-rotate-NE context-button"></i>
+                </button>
+                <button ng-click="addStep('W')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
+                    <i class="fa fa-arrow-left context-button"></i>
+                </button>
+                <button ng-click="addMarkTime()" id="" ng-class="{ 'active': isCurrentDirection('SW') }" class="btn btn-default" data-toggle="tooltip"
+                    data-placement="bottom" title="Mark time">
+                    <i class="fa fa-long-arrow-up context-button"></i>
+                    <i class="fa fa-long-arrow-down context-button"></i>
+                </button>
+                <button ng-click="addStep('E')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
+                    <i class="fa fa-arrow-right context-button"></i>
+                </button>
+                <button ng-click="addStep('SW')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
+                    <i class="fa fa-arrow-up fa-rotate-SW context-button"></i>
+                </button>
+                <button ng-click="addStep('S')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
+                    <i class="fa fa-arrow-down context-button"></i>
+                </button>
+                <button ng-click="addStep('SE')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
+                    <i class="fa fa-arrow-up fa-rotate-SE context-button"></i>
+                </button>
+            </li>
+            <li>
+                <button ng-click="addLeftCountermarch()" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Left Countermarch">
+                    <img class="left-countermarch" src="/icons/CM.svg" />
+                </button>
+                <button ng-click="addRightCountermarch()" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Right Countermarch">
+                    <img class="right-countermarch" src="/icons/CM.svg" />
+                </button>
+                <button ng-click="addHalt()" id="" ng-class="{ 'active': isCurrentDirection('S') }" class="btn btn-default" data-toggle="tooltip"
+                    data-placement="bottom" title="Halt">
+                    <i class="fa fa-stop context-button"></i>
+                </button>
+            </li>
+            <li class="face-commands">
+                <button ng-click="" id="leftFace" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Left Face (2 ct)">
+                    L
+                </button>
+                <button ng-click="" id="rightFace" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Right Face (2 ct)">
+                    R
+                </button>
+                <button ng-click="" id="aboutFace" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="About Face (2 ct)">
+                    A2
+                </button>
+                <button ng-click="" id="aboutFace" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="About Face (3 ct)">
+                    A3
+                </button>
+            </li>
+            <li>
+                <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Drag Step Tool">
+                    D
+                </button>
+                <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Pinwheel Tool">
+                    P
+                </button>
+                <button ng-click="" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Gate Tool">
+                    G
+                </button>
+            </li>
+            <li>
+                <button ng-click="backspaceDelete()" id="" ng-class="{ 'active': isCurrentDirection('SE') }" class="btn btn-default" data-toggle="tooltip"
+                    data-placement="bottom" title="Backup and delete">
+                    <i class="fa fa-arrow-circle-left context-button" style="color: red"></i>
+                </button>
+            </li>
+        </ul>
     </div>
 
 </div>
