@@ -6,10 +6,10 @@
     margin: 0;
 }
 
-.add-steps-tool .button-svg {
+/* .add-steps-tool .button-svg {
     height: 20px;
     width: 20px;
-}
+} */
 
 .add-steps-tool .direction-button button {
     border-radius: 0;
@@ -18,3 +18,23 @@
     padding: 0;
 }
 
+.add-steps-tool td.row-spacer {
+    /* margin-top: 4px; */
+    font-size: 6px;
+}
+
+.add-steps-tool img.left-countermarch {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.add-steps-tool img.right-countermarch {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg) scaleY(-1);
+}
