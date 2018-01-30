@@ -1,7 +1,7 @@
 <div id="sidebar" class="sidebar ">
 
     <ul id="sideMenu" class="side-menu">
-        <li class="panel">
+        <!-- <li class="panel">
             <a href="#selectOptions" data-toggle="collapse" data-parent="#sideMenu">
                 <i class="fa fa-mouse-pointer"></i> Select</a>
             <div id="selectOptions" class="collapse">
@@ -20,7 +20,7 @@
                     </li>
                 </ul>
             </div>
-        </li>
+        </li> -->
         <li class="panel">
             <a href="#marcherOptions" data-toggle="collapse" data-parent="#sideMenu">
                 <i class="fa fa-play"></i> Marchers</a>
@@ -33,6 +33,18 @@
                     <li>
                         <a ng-click="deleteSelectedMembers()">
                             <i class="fa fa-times"></i>Delete Selected</a>
+                    </li>
+                    <li>
+                        <a ng-click="selectAll()"><i class="fa fa-caret-square-o-right"></i>Select All</a>
+                    </li>
+                    <li>
+                        <a ng-click="deselectAll()"><i class="fa fa-caret-right"></i>Deselect All</a>
+                    </li>
+                    <li>
+                        <a ng-click="hideUnselected()"><i class="fa fa-caret-right"></i>Hide Unselected</a>
+                    </li>
+                    <li>
+                        <a ng-click="showAll()"><i class="fa fa-caret-right"></i>Show Unselected</a>
                     </li>
                 </ul>
             </div>
