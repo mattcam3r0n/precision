@@ -183,6 +183,38 @@ class DrillEditorService {
         this.save();
     }
 
+    addLeftCountermarch() {
+        let counts = this.drill.count % 2 === 0 ? 3 : 4;
+        this.drillBuilder.addLeftCountermarch();
+        this.play(null, counts);
+        this.notifyDrillStateChanged();
+        this.save();
+    }
+
+    addRightCountermarch() {
+        let counts = this.drill.count % 2 === 0 ? 4 : 3;
+        this.drillBuilder.addRightCountermarch();
+        this.play(null, counts);
+        this.notifyDrillStateChanged();
+        this.save();
+    }
+
+    addLeftFace() {
+
+    }
+
+    addRightFace() {
+
+    }
+
+    addAboutFace2() {
+
+    }
+
+    addAboutFace3() {
+
+    }
+
     addMembers(members) {
         this.drillBuilder.addMembers(members);
         this.notifyMembersAdded();

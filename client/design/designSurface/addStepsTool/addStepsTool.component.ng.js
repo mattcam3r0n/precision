@@ -59,6 +59,42 @@ angular.module('drillApp')
         drillEditorService.addCountermarch();
       };
 
+      $scope.addLeftCountermarch = () => {
+        drillEditorService.addLeftCountermarch();
+      };
+
+      $scope.addRightCountermarch = () => {
+        drillEditorService.addRightCountermarch();
+      };
+
+      $scope.addLeftFace = () => {
+        drillEditorService.addLeftFace();
+      };
+
+      $scope.addRightFace = () => {
+        drillEditorService.addRightFace();
+      };
+
+      $scope.addAboutFace2 = () => {
+        drillEditorService.addAboutFace2();
+      };
+
+      $scope.addAboutFace3 = () => {
+        drillEditorService.addAboutFace3();
+      };
+
+      $scope.addDragSteps = () => {
+        // activate drag step tool
+      };
+
+      $scope.addPinwheel = () => {
+        // activate pinwheel tool in pinwheel mode
+      };
+
+      $scope.addGate = () => {
+        // activate pinwheel tool in gate mode
+      };
+
       $scope.addMarkTime = function() {
         drillEditorService.addStep(null, StepType.MarkTime);
       };

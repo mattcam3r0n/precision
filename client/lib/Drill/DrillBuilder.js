@@ -140,6 +140,66 @@ class DrillBuilder {
         this.drill.isDirty = true;
     }
 
+    addLeftCountermarch() {
+        let members = this.getSelectedMembers();
+        // add an extra step if on odd count (right foot)
+        let extraStep = !(this.drill.count % 2 === 0);
+        let firstTurnCount = this.drill.count + 1 + (extraStep ? 1 : 0);
+        let secondTurnCount = this.drill.count + 3 + (extraStep ? 1 : 0);
+        members.forEach((m) => {
+            let currentDir = m.currentState.direction;
+            let firstTurnDirection = Direction.leftTurnDirection(currentDir);
+            let secondTurnDirection = Direction
+                .leftTurnDirection(firstTurnDirection);
+
+            let firstTurn = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.Half,
+                direction: firstTurnDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, firstTurn, firstTurnCount);
+
+            let secondTurn = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.Full,
+                direction: secondTurnDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, secondTurn, secondTurnCount);
+        });
+
+        this.drill.isDirty = true;
+    }
+
+    addRightCountermarch() {
+        let members = this.getSelectedMembers();
+        // add an extra step if on an even count (left foot)
+        let extraStep = this.drill.count % 2 === 0;
+        let firstTurnCount = this.drill.count + 1 + (extraStep ? 1 : 0);
+        let secondTurnCount = this.drill.count + 3 + (extraStep ? 1 : 0);
+        members.forEach((m) => {
+            let currentDir = m.currentState.direction;
+            let firstTurnDirection = Direction.rightTurnDirection(currentDir);
+            let secondTurnDirection = Direction
+                .rightTurnDirection(firstTurnDirection);
+
+            let firstTurn = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.Half,
+                direction: firstTurnDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, firstTurn, firstTurnCount);
+
+            let secondTurn = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.Full,
+                direction: secondTurnDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, secondTurn, secondTurnCount);
+        });
+
+        this.drill.isDirty = true;
+    }
+
     /**
      * Delete all state changes from current count forward
      */
