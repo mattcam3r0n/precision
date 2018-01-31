@@ -58,7 +58,10 @@ let Marcher = fabric.util.createClass(fabric.Triangle, {
   },
 
   setSize: function(state) {
-    if (state.stepType == StepType.MarkTime && state.count % 2 == 1) {
+    if ((state.stepType == StepType.MarkTime
+      || state.stepType == StepType.DeadStep
+      || state.stepType == StepType.FaceStep)
+      && state.count % 2 == 1) {
       this.set('height', FieldDimensions.marcherHeight + 2);
       this.set('width', FieldDimensions.marcherWidth + 2);
       return;

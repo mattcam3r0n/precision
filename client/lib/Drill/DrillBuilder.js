@@ -200,6 +200,142 @@ class DrillBuilder {
         this.drill.isDirty = true;
     }
 
+    addLeftFace() {
+        let members = this.getSelectedMembers();
+        members.forEach((m) => {
+            let currentDir = m.currentState.direction;
+            let firstStepDirection = Direction.leftTurnDirection(currentDir);
+
+            let firstStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.FaceStep,
+                direction: firstStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, firstStep, this.drill.count + 1);
+
+            let secondStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.FaceStep,
+                direction: firstStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, secondStep, this.drill.count + 2);
+
+            // continue with whatever state they were in prior to adding face, but in new dir
+            let thirdStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: m.currentState.stepType,
+                direction: firstStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, thirdStep, this.drill.count + 3);
+        });
+
+        this.drill.isDirty = true;
+    }
+
+    addRightFace() {
+        let members = this.getSelectedMembers();
+        members.forEach((m) => {
+            let currentDir = m.currentState.direction;
+            let firstStepDirection = Direction.rightTurnDirection(currentDir);
+
+            let firstStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.FaceStep,
+                direction: firstStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, firstStep, this.drill.count + 1);
+
+            let secondStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.FaceStep,
+                direction: firstStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, secondStep, this.drill.count + 2);
+
+            // continue with whatever state they were in prior to adding face, but in new dir
+            let thirdStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: m.currentState.stepType,
+                direction: firstStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, thirdStep, this.drill.count + 3);
+        });
+
+        this.drill.isDirty = true;
+    }
+
+    addAboutFace2() {
+        let members = this.getSelectedMembers();
+        members.forEach((m) => {
+            let currentDir = m.currentState.direction;
+            let firstStepDirection = Direction.aboutFaceFrom(currentDir);
+
+            let firstStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.FaceStep,
+                direction: firstStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, firstStep, this.drill.count + 1);
+
+            let secondStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.FaceStep,
+                direction: firstStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, secondStep, this.drill.count + 2);
+
+            // continue with whatever state they were in prior to adding face, but in new dir
+            let thirdStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: m.currentState.stepType,
+                direction: firstStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, thirdStep, this.drill.count + 3);
+        });
+
+        this.drill.isDirty = true;
+    }
+
+    addAboutFace3() {
+        let members = this.getSelectedMembers();
+        members.forEach((m) => {
+            let currentDir = m.currentState.direction;
+            let firstStepDirection = currentDir;
+            let secondStepDirection = Direction.aboutFaceFrom(currentDir);
+
+            let firstStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.FullStep,
+                direction: firstStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, firstStep, this.drill.count + 1);
+
+            let secondStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.FullStep,
+                direction: secondStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, secondStep, this.drill.count + 2);
+
+            let thirdStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: StepType.FaceStep,
+                direction: secondStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, thirdStep, this.drill.count + 3);
+
+            // continue with whatever state they were in prior to adding face, but in new dir
+            let fourthStep = new Action({
+                strideType: m.currentState.strideType,
+                stepType: m.currentState.stepType,
+                direction: secondStepDirection,
+            });
+            ScriptBuilder.addActionAtCount(m, fourthStep, this.drill.count + 4);
+        });
+
+        this.drill.isDirty = true;
+    }
+
     /**
      * Delete all state changes from current count forward
      */

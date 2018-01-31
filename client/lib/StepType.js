@@ -27,6 +27,16 @@ class StepType {
     static get Pinwheel() {
         return 4;
     }
+
+    // No change in direction or position
+    static get DeadStep() {
+        return 5;
+    }
+
+    // change in direction but not position
+    static get FaceStep() {
+        return 6;
+    }
 };
 
 export default StepType;

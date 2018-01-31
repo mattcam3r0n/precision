@@ -200,19 +200,31 @@ class DrillEditorService {
     }
 
     addLeftFace() {
-
+        this.drillBuilder.addLeftFace();
+        this.play(null, 2);
+        this.notifyDrillStateChanged();
+        this.save();
     }
 
     addRightFace() {
-
+        this.drillBuilder.addRightFace();
+        this.play(null, 2);
+        this.notifyDrillStateChanged();
+        this.save();
     }
 
     addAboutFace2() {
-
+        this.drillBuilder.addAboutFace2();
+        this.play(null, 2);
+        this.notifyDrillStateChanged();
+        this.save();
     }
 
     addAboutFace3() {
-
+        this.drillBuilder.addAboutFace3();
+        this.play(null, 3);
+        this.notifyDrillStateChanged();
+        this.save();
     }
 
     addMembers(members) {

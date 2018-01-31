@@ -98,6 +98,11 @@ class Direction {
         return newDir >= 360 ? newDir - 360 : newDir;
     }
 
+    static aboutFaceFrom(fromDir) {
+        let newDir = (fromDir + 180);
+        return newDir >= 360 ? newDir - 360 : newDir;
+    }
+
     static getDirection(dir) {
         return this[dir] == undefined ? dir : this[dir];
     }

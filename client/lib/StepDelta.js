@@ -146,7 +146,10 @@ class StepDelta {
             };
         }
 
-        if (stepType === StepType.MarkTime || stepType === StepType.Halt) {
+        if (stepType === StepType.MarkTime
+            || stepType === StepType.Halt
+            || stepType === StepType.FaceStep
+            || stepType === StepType.DeadStep) {
             return {
                 deltaX: 0,
                 deltaY: 0,
