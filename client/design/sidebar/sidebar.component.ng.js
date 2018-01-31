@@ -2,7 +2,6 @@
 
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
-import StrideType from '/client/lib/StrideType';
 
 angular.module('drillApp')
   .component('sidebar', {

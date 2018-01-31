@@ -12,7 +12,8 @@ angular.module('drillApp')
       let ctrl = this;
 
       ctrl.$onInit = function() {
-          ctrl.subscriptions = eventService.subscribe(Events.drillOpened,
+        // $('[data-toggle="tooltip"]').tooltip();
+        ctrl.subscriptions = eventService.subscribe(Events.drillOpened,
               onDrillOpened);
       };
 
