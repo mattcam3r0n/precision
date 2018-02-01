@@ -27,11 +27,26 @@
 }
 
 .add-steps-tool li.face-commands button {
-    flex: 1 1 25%;
+    flex: 1 1 50%;
     border-radius: 0;
     height: 24px;
     width: 24px;
     padding: 0;
+}
+
+#dragStepButton img {
+    height: 20px;
+    width: 20px;
+}
+
+#pinwheelButton img {
+    height: 20px;
+    width: 20px;
+}
+
+#gateButton img {
+    height: 20px;
+    width: 20px;
 }
 
 .add-steps-tool .direction-button button {
