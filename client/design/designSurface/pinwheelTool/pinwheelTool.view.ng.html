@@ -1,5 +1,8 @@
-<div class="pinwheel-tool">
-    <div id="pinwheelTool" class="btn-group-vertical">
+<div draggable class="pinwheel-tool panel panel-default" ng-show="$ctrl.isActivated">
+    <div class="panel-heading text-center drag-handle">
+        <i class="fa fa-bars fa-sm drag-handle"></i> Pinwheel / Gate
+    </div>
+    <div id="pinwheelTool" class="">
         <ul>
             <li>
                 <span>Direction</span>
@@ -24,11 +27,11 @@
                     <img src='/icons/half-rotation.svg' />
                 </button>
                 <button ng-click="$ctrl.setRotation(1)" id="" ng-class="{ 'active': $ctrl.isRotation(1) }" class="btn btn-default" data-toggle="tooltip"
-                    data-placement="bottom" title="Three-Quarter Rotation">
+                    data-placement="bottom" title="Full Rotation">
                     <img src='/icons/full-rotation.svg' />
                 </button>
                 <button ng-click="$ctrl.setRotation(.75)" id="" ng-class="{ 'active': $ctrl.isRotation(.75) }" class="btn btn-default" data-toggle="tooltip"
-                    data-placement="bottom" title="Full Rotation">
+                    data-placement="bottom" title="Three-Quarter Rotation">
                     <img src='/icons/three-quarter-rotation.svg' />
                 </button>
             </li>

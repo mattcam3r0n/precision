@@ -1,5 +1,13 @@
 .pinwheel-tool {
-    background-color: gainsboro;
+    position: absolute;
+   background-color: gainsboro;
+   width: 110px;
+   left: 150px;
+   top: 100px;
+}
+
+.pinwheel-tool div.panel-heading {
+    font-size: 12px;
 }
 
 .pinwheel-tool ul {
@@ -22,39 +30,13 @@
     color: black;
     background-color: #e6e6e6;
     text-align: center;
+    font-size: 10px;
 }
 
 .pinwheel-tool li button {
     flex: 1 1 50%;
     border-radius: 0;
-    height: 24px;
-    width: 24px;
-    padding: 0;
-}
-
-
-/* .pinwheel-tool .direction-button button {
-    border-radius: 0;
-    height: 32px;
-    width: 32px;
-    padding: 0;
-} */
-
-.pinwheel-tool button {
-    border-radius: 0;
-    height: 32px;
-    width: 48px;
-    padding: 0;
-    font-size: 12px;
-}
-
-.pinwheel-tool button img {
-    height: 20px;
-    width: 20px;
-}
-
-.pinwheel-tool button i {
-    color: black;
+    padding: 5px;
 }
 
 .pinwheel-tool button.active {
@@ -73,34 +55,9 @@
     width: 20px;
     height: 32px;
 }
-
-/* .pinwheel-tool .turn-mode-button button {
-    border-radius: 0;
-    height: 32px;
-    width: 48px;
-    padding: 0;
-    font-size: 12px;
-} */
-
-.pinwheel-tool .turn-mode-button button.active {
-    background-color: #e6e6e6;
-    color: black;
-}
             
 .pinwheel-tool .turn-mode-button span {
     font-size: 12px;
-}
-
-.pinwheel-tool .save-cancel-button button {
-    border-radius: 0;
-    height: 32px;
-    width: 48px;
-    padding: 0;
-}
-
-.pinwheel-tool .reset-button button {
-    border-radius: 0;
-    width: 96px;
 }
 
 .pinwheel-tool .save-button i {

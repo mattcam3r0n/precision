@@ -89,10 +89,16 @@ angular.module('drillApp')
 
       $scope.addPinwheel = () => {
         // activate pinwheel tool in pinwheel mode
+        eventService.notify(Events.activatePinwheelTool, {
+          mode: 'pinwheel',
+        });
       };
 
       $scope.addGate = () => {
         // activate pinwheel tool in gate mode
+        eventService.notify(Events.activatePinwheelTool, {
+          mode: 'gate',
+        });
       };
 
       $scope.addMarkTime = function() {

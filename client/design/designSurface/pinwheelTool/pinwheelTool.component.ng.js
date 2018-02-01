@@ -22,9 +22,10 @@ angular.module('drillApp')
 
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
 
-        ctrl.subscriptions.subscribe(Events.activatePinwheelTool, () => {
-          activate(drillEditorService.getMemberSelection());
-        });
+        ctrl.subscriptions.subscribe(Events.activatePinwheelTool,
+          (evt, args) => {
+            activate(drillEditorService.getMemberSelection(), args.mode);
+          });
 
         ctrl.subscriptions.subscribe(Events.objectsSelected, (evt, args) => {
           if (!ctrl.isActivated) return;
@@ -81,7 +82,7 @@ angular.module('drillApp')
 
       $scope.cancel = deactivate;
 
-      function activate(memberSelection) {
+      function activate(memberSelection, mode) {
         if (ctrl.isActivated) {
           deactivate();
         }
@@ -91,9 +92,10 @@ angular.module('drillApp')
         });
 
         ctrl.isActivated = true;
+        ctrl.mode = mode || 'gate';
         ctrl.field = appStateService.field;
         ctrl.memberSelection = memberSelection;
-        ctrl.pivotMember = memberSelection.members[0];
+        ctrl.pivotMember = getPivotMember(memberSelection, ctrl.mode); // memberSelection.members[0];
         ctrl.strideType = drillEditorService.strideType;
         ctrl.field.disablePositionIndicator();
         // TODO: should we allow selection while this tool is active?
@@ -119,6 +121,21 @@ angular.module('drillApp')
         if (notify) {
           eventService.notify(Events.pinwheelToolDeactivated);
         }
+      }
+
+      function getPivotMember(memberSelection, mode) {
+        let pivotPoint;
+        if (mode === 'pinwheel') {
+          const upperLeft = memberSelection.getUpperLeft();
+          const bottomLeft = memberSelection.getBottomLeft();
+          pivotPoint = {
+            x: (upperLeft.x + bottomLeft.x) / 2,
+            y: (upperLeft.y + bottomLeft.y) / 2,
+          };
+        } else {
+          pivotPoint = memberSelection.getUpperLeft();
+        }
+        return memberSelection.getClosestMember(pivotPoint);
       }
 
       function createPinwheelIndicator() {
