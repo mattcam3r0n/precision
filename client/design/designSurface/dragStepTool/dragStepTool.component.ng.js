@@ -2,12 +2,11 @@
 
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
-import PinwheelIndicator from './PinwheelIndicator';
 
 angular.module('drillApp')
-  .component('pinwheelTool', {
+  .component('dragStepTool', {
     // eslint-disable-next-line max-len
-    templateUrl: 'client/design/designSurface/pinwheelTool/pinwheelTool.view.ng.html',
+    templateUrl: 'client/design/designSurface/dragStepTool/dragStepTool.view.ng.html',
     bindings: {
     },
     controller: function($scope,
@@ -22,7 +21,7 @@ angular.module('drillApp')
 
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
 
-        ctrl.subscriptions.subscribe(Events.activatePinwheelTool, () => {
+        ctrl.subscriptions.subscribe(Events.activateDragStepTool, () => {
           activate(drillEditorService.getMemberSelection());
         });
 
@@ -32,7 +31,7 @@ angular.module('drillApp')
           ctrl.pivotMember.isSelected = true;
           ctrl.memberSelection = drillEditorService.getMemberSelection();
           eventService.notify(Events.drillStateChanged);
-          createPinwheelIndicator();
+          createDragStepIndicator();
         });
 
         ctrl.rotationDirection = 'clockwise';
@@ -53,18 +52,18 @@ angular.module('drillApp')
         if (counts) {
           ctrl.counts = counts;
         }
-        createPinwheelIndicator();
+        createDragStepIndicator();
       };
 
       ctrl.setRotation = function(rotationPct) {
         ctrl.rotationAngle = rotationPct * 2;
         ctrl.counts = rotationPct * 32;
-        createPinwheelIndicator();
+        createDragStepIndicator();
       };
 
       ctrl.setDirection = function(dir) {
         ctrl.rotationDirection = dir;
-        createPinwheelIndicator();
+        createDragStepIndicator();
       };
 
       ctrl.isClockwise = function() {
@@ -86,7 +85,7 @@ angular.module('drillApp')
           deactivate();
         }
 
-        appStateService.setActiveTool('pinwheel', () => {
+        appStateService.setActiveTool('dragStep', () => {
           deactivate(false);
         });
 
@@ -102,12 +101,12 @@ angular.module('drillApp')
           ctrl.memberSelection = args.memberSelection;
         });
 
-        createPinwheelIndicator();
+        createDragStepIndicator();
       }
 
       function deactivate(notify = true) {
-        if (ctrl.pinwheelIndicator) {
-          ctrl.pinwheelIndicator.dispose();
+        if (ctrl.dragStepIndicator) {
+          ctrl.dragStepIndicator.dispose();
         }
         ctrl.subscriptions.unsubscribe(Events.membersSelected);
 
@@ -121,12 +120,12 @@ angular.module('drillApp')
         }
       }
 
-      function createPinwheelIndicator() {
-        if (ctrl.pinwheelIndicator) {
-          ctrl.pinwheelIndicator.dispose();
+      function createDragStepIndicator() {
+        if (ctrl.dragStepIndicator) {
+          ctrl.dragStepIndicator.dispose();
         }
 
-        ctrl.pinwheelIndicator = new PinwheelIndicator(ctrl.field,
+        ctrl.dragStepIndicator = new PinwheelIndicator(ctrl.field,
           ctrl.pivotMember,
           ctrl.memberSelection.members,
           ctrl.rotationDirection,
@@ -138,7 +137,7 @@ angular.module('drillApp')
 
       function save() {
         ctrl.memberSelection.members.forEach((member) => {
-          let steps = ctrl.pinwheelIndicator.steps[member.id];
+          let steps = ctrl.dragStepIndicator.steps[member.id];
           drillEditorService.addMemberSteps(member, steps);
         });
 

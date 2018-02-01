@@ -2,6 +2,37 @@
     background-color: gainsboro;
 }
 
+.pinwheel-tool ul {
+    margin: 0;
+    width: 100%;
+    padding: 0px;
+}
+
+.pinwheel-tool li {
+    list-style-type: none;
+    margin-top: 0px;
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.pinwheel-tool li span {
+    flex: 1 1 100%;
+    color: black;
+    background-color: #e6e6e6;
+    text-align: center;
+}
+
+.pinwheel-tool li button {
+    flex: 1 1 50%;
+    border-radius: 0;
+    height: 24px;
+    width: 24px;
+    padding: 0;
+}
+
+
 /* .pinwheel-tool .direction-button button {
     border-radius: 0;
     height: 32px;
