@@ -17,6 +17,11 @@
     font-size: 12px;
 }
 
+.pinwheel-tool button img {
+    height: 20px;
+    width: 20px;
+}
+
 .pinwheel-tool button i {
     color: black;
 }
