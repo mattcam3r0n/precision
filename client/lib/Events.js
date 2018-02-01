@@ -55,6 +55,10 @@ class Events {
         return 'activatePinwheelTool';
     }
 
+    static get activateDragStepTool() {
+        return 'activateDragStepTool';
+    }
+
     // Events - notification that something has happened
 
     static get strideTypeChanged() {
@@ -107,6 +111,14 @@ class Events {
 
     static get pinwheelToolDeactivated() {
         return 'pinwheelToolDeactivated';
+    }
+
+    static get dragStepToolActivated() {
+        return 'dragStepToolActivated';
+    }
+
+    static get dragStepToolDeactivated() {
+        return 'dragStepToolDeactivated';
     }
 
     static get objectsSelected() {

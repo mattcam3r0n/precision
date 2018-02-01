@@ -149,7 +149,9 @@ class StepDelta {
         if (stepType === StepType.MarkTime
             || stepType === StepType.Halt
             || stepType === StepType.FaceStep
-            || stepType === StepType.DeadStep) {
+            || stepType === StepType.DeadStep
+            || stepType === StepType.DragStep
+        ) {
             return {
                 deltaX: 0,
                 deltaY: 0,

@@ -85,6 +85,7 @@ angular.module('drillApp')
 
       $scope.addDragSteps = () => {
         // activate drag step tool
+        eventService.notify(Events.activateDragStepTool);
       };
 
       $scope.addPinwheel = () => {

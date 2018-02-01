@@ -37,6 +37,10 @@ class StepType {
     static get FaceStep() {
         return 6;
     }
+
+    static get DragStep() {
+        return 7;
+    }
 };
 
 export default StepType;

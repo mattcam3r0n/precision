@@ -1,60 +1,63 @@
-<div class="drag-step-tool">
-    <div id="dragStepTool" class="btn-group-vertical">
-        <ul>
-            <li>
-                <span>Direction</span>
-                <button ng-click="$ctrl.setDirection('counter-clockwise')" id="" ng-class="{ 'active': $ctrl.isCounterClockwise() }" class="btn btn-default"
-                    data-toggle="tooltip" data-placement="bottom" title="Counter clockwise">
-                    <img src='/icons/counter-clockwise.svg' />
-                </button>
-                <button ng-click="$ctrl.setDirection('clockwise')" id="" ng-class="{ 'active': $ctrl.isClockwise() }" class="btn btn-default"
-                    data-toggle="tooltip" data-placement="bottom" title="Clockwise">
-                    <img src='/icons/clockwise.svg' />
-                </button>
-
-            </li>
-            <li>
-                <span>Rotation</span>
-                <button ng-click="$ctrl.setRotation(.25)" id="" ng-class="{ 'active': $ctrl.isRotation(.25) }" class="btn btn-default" data-toggle="tooltip"
-                    data-placement="bottom" title="Quarter Rotation">
-                    <img src='/icons/quarter-rotation.svg' />
-                </button>
-                <button ng-click="$ctrl.setRotation(.5)" id="" ng-class="{ 'active': $ctrl.isRotation(.5) }" class="btn btn-default" data-toggle="tooltip"
-                    data-placement="bottom" title="Half Rotation">
-                    <img src='/icons/half-rotation.svg' />
-                </button>
-                <button ng-click="$ctrl.setRotation(1)" id="" ng-class="{ 'active': $ctrl.isRotation(1) }" class="btn btn-default" data-toggle="tooltip"
-                    data-placement="bottom" title="Three-Quarter Rotation">
-                    <img src='/icons/full-rotation.svg' />
-                </button>
-                <button ng-click="$ctrl.setRotation(.75)" id="" ng-class="{ 'active': $ctrl.isRotation(.75) }" class="btn btn-default" data-toggle="tooltip"
-                    data-placement="bottom" title="Full Rotation">
-                    <img src='/icons/three-quarter-rotation.svg' />
-                </button>
-            </li>
-            <li>
-                <span>Counts</span>
-                <div class="input-group counts">
-                    <span class="input-group-btn">
-                        <button ng-click="$ctrl.setCounts($ctrl.counts - 1)" class="btn btn-default" type="button">-</button>
-                    </span>
-                    <input ng-model="$ctrl.counts" ng-change="$ctrl.setCounts()" type="number" class="form-control" />
-                    <span class="input-group-btn">
-                        <button ng-click="$ctrl.setCounts($ctrl.counts + 1)" class="btn btn-default" type="button">+</button>
-                    </span>
-                </div>
-            </li>
-            <li>
-                <button ng-click="save()" id="saveDragSteps" class="btn btn-default save-button" data-toggle="tooltip" data-placement="right"
-                    title="Save">
-                    <i class="fa fa-check context-button"></i>
-                </button>
-                <button ng-click="cancel()" id="cancelDragSteps" class="btn btn-default cancel-button" data-toggle="tooltip" data-placement="right"
-                    title="Cancel">
-                    <i class="fa fa-times context-button"></i>
-                </button>
-            </li>
-        </ul>
+<div draggable class="drag-step-tool panel panel-default" ng-show="$ctrl.isActivated">
+        <div class="panel-heading text-center drag-handle">
+            <i class="fa fa-bars fa-sm drag-handle"></i> Drag Step
+        </div>
+        <div id="dragStepTool" class="">
+            <ul>
+                <li>
+                    <span>Direction</span>
+                    <button ng-click="$ctrl.setDirection('counter-clockwise')" id="" ng-class="{ 'active': $ctrl.isCounterClockwise() }" class="btn btn-default"
+                        data-toggle="tooltip" data-placement="bottom" title="Counter clockwise">
+                        <img src='/icons/counter-clockwise.svg' />
+                    </button>
+                    <button ng-click="$ctrl.setDirection('clockwise')" id="" ng-class="{ 'active': $ctrl.isClockwise() }" class="btn btn-default"
+                        data-toggle="tooltip" data-placement="bottom" title="Clockwise">
+                        <img src='/icons/clockwise.svg' />
+                    </button>
+    
+                </li>
+                <li>
+                    <span>Rotation</span>
+                    <button ng-click="$ctrl.setRotation(.25)" id="" ng-class="{ 'active': $ctrl.isRotation(.25) }" class="btn btn-default" data-toggle="tooltip"
+                        data-placement="bottom" title="Quarter Rotation">
+                        <img src='/icons/quarter-rotation.svg' />
+                    </button>
+                    <button ng-click="$ctrl.setRotation(.5)" id="" ng-class="{ 'active': $ctrl.isRotation(.5) }" class="btn btn-default" data-toggle="tooltip"
+                        data-placement="bottom" title="Half Rotation">
+                        <img src='/icons/half-rotation.svg' />
+                    </button>
+                    <button ng-click="$ctrl.setRotation(1)" id="" ng-class="{ 'active': $ctrl.isRotation(1) }" class="btn btn-default" data-toggle="tooltip"
+                        data-placement="bottom" title="Full Rotation">
+                        <img src='/icons/full-rotation.svg' />
+                    </button>
+                    <button ng-click="$ctrl.setRotation(.75)" id="" ng-class="{ 'active': $ctrl.isRotation(.75) }" class="btn btn-default" data-toggle="tooltip"
+                        data-placement="bottom" title="Three-Quarter Rotation">
+                        <img src='/icons/three-quarter-rotation.svg' />
+                    </button>
+                </li>
+                <li>
+                    <span>Counts</span>
+                    <div class="input-group counts">
+                        <span class="input-group-btn">
+                            <button ng-click="$ctrl.setCounts($ctrl.counts - 1)" class="btn btn-default" type="button">-</button>
+                        </span>
+                        <input ng-model="$ctrl.counts" ng-change="$ctrl.setCounts()" type="number" class="form-control" />
+                        <span class="input-group-btn">
+                            <button ng-click="$ctrl.setCounts($ctrl.counts + 1)" class="btn btn-default" type="button">+</button>
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <button ng-click="save()" id="saveDragStep" class="btn btn-default save-button" data-toggle="tooltip" data-placement="right"
+                        title="Save">
+                        <i class="fa fa-check context-button"></i>
+                    </button>
+                    <button ng-click="cancel()" id="cancelDragStep" class="btn btn-default cancel-button" data-toggle="tooltip" data-placement="right"
+                        title="Cancel">
+                        <i class="fa fa-times context-button"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    
     </div>
-
-</div>

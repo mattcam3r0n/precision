@@ -2,6 +2,7 @@
 
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
+import DragStepCalculator from './DragStepCalculator';
 
 angular.module('drillApp')
   .component('dragStepTool', {
@@ -21,9 +22,10 @@ angular.module('drillApp')
 
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
 
-        ctrl.subscriptions.subscribe(Events.activateDragStepTool, () => {
-          activate(drillEditorService.getMemberSelection());
-        });
+        ctrl.subscriptions.subscribe(Events.activateDragStepTool,
+          (evt, args) => {
+            activate(drillEditorService.getMemberSelection());
+          });
 
         ctrl.subscriptions.subscribe(Events.objectsSelected, (evt, args) => {
           if (!ctrl.isActivated) return;
@@ -31,7 +33,7 @@ angular.module('drillApp')
           ctrl.pivotMember.isSelected = true;
           ctrl.memberSelection = drillEditorService.getMemberSelection();
           eventService.notify(Events.drillStateChanged);
-          createDragStepIndicator();
+          createDragStepCalculator();
         });
 
         ctrl.rotationDirection = 'clockwise';
@@ -52,18 +54,18 @@ angular.module('drillApp')
         if (counts) {
           ctrl.counts = counts;
         }
-        createDragStepIndicator();
+        createDragStepCalculator();
       };
 
       ctrl.setRotation = function(rotationPct) {
         ctrl.rotationAngle = rotationPct * 2;
-        ctrl.counts = rotationPct * 32;
-        createDragStepIndicator();
+        // ctrl.counts = rotationPct * 32;
+        createDragStepCalculator();
       };
 
       ctrl.setDirection = function(dir) {
         ctrl.rotationDirection = dir;
-        createDragStepIndicator();
+        createDragStepCalculator();
       };
 
       ctrl.isClockwise = function() {
@@ -94,50 +96,45 @@ angular.module('drillApp')
         ctrl.memberSelection = memberSelection;
         ctrl.pivotMember = memberSelection.members[0];
         ctrl.strideType = drillEditorService.strideType;
-        ctrl.field.disablePositionIndicator();
         // TODO: should we allow selection while this tool is active?
         ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
           if (!ctrl.isActivated) return;
           ctrl.memberSelection = args.memberSelection;
         });
 
-        createDragStepIndicator();
+        createDragStepCalculator();
       }
 
       function deactivate(notify = true) {
-        if (ctrl.dragStepIndicator) {
-          ctrl.dragStepIndicator.dispose();
+        if (ctrl.dragStepCalculator) {
+          ctrl.dragStepCalculator.dispose();
         }
         ctrl.subscriptions.unsubscribe(Events.membersSelected);
 
         ctrl.isActivated = false;
-        ctrl.field.enablePositionIndicator();
         ctrl.field.canvas.selection = true;
         ctrl.field.canvas.defaultCursor = 'default';
         eventService.notify(Events.updateField);
         if (notify) {
-          eventService.notify(Events.pinwheelToolDeactivated);
+          eventService.notify(Events.dragStepToolDeactivated);
         }
       }
 
-      function createDragStepIndicator() {
-        if (ctrl.dragStepIndicator) {
-          ctrl.dragStepIndicator.dispose();
+      function createDragStepCalculator() {
+        if (ctrl.dragStepCalculator) {
+          ctrl.dragStepCalculator.dispose();
         }
 
-        ctrl.dragStepIndicator = new PinwheelIndicator(ctrl.field,
-          ctrl.pivotMember,
-          ctrl.memberSelection.members,
-          ctrl.rotationDirection,
-          ctrl.rotationAngle,
-          ctrl.counts
-        );
+        ctrl.dragStepCalculator = new DragStepCalculator(ctrl.memberSelection.members); // eslint-disable-line max-len
         ctrl.field.update();
       }
 
       function save() {
+        const memberSteps = ctrl.dragStepCalculator
+          .calculateSteps(ctrl.rotationDirection,
+            ctrl.rotationAngle, ctrl.counts);
         ctrl.memberSelection.members.forEach((member) => {
-          let steps = ctrl.dragStepIndicator.steps[member.id];
+          let steps = memberSteps[member.id];
           drillEditorService.addMemberSteps(member, steps);
         });
 
