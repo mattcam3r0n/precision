@@ -103,6 +103,7 @@ class Lasso {
         this.guideline = new fabric.Line([lastPoint.x, lastPoint.y,
             point.x, point.y], {
             stroke: 'black',
+            strokeDashArray: [3, 3],
             selectable: false,
             evented: false,
         });
@@ -124,6 +125,7 @@ class Lasso {
         }
         this.lassoPath = new fabric.Path(this.getPathExpr(), {
             stroke: 'black',
+            strokeDashArray: [3, 3],
             fill: 'wheat',
             opacity: .5,
             evented: false,
