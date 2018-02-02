@@ -260,6 +260,7 @@ class DrillBuilder {
             });
             ScriptBuilder.addActionAtCount(m, thirdStep, this.drill.count + 3);
         });
+console.log(this.drill);
 
         this.drill.isDirty = true;
     }

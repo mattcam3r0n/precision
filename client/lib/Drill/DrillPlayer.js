@@ -23,7 +23,6 @@ class DrillPlayer {
 
     play(stateChangedCallback, counts, playMusic) {
         let self = this;
-
         if (self.isPlaying) return;
 
         self.playMusic = playMusic || false;
@@ -31,7 +30,6 @@ class DrillPlayer {
         if (counts) { // rework this around schedule? only schedule n counts?
             self.stopCount = self.drill.count + counts;
         }
-
         self.schedule = new DrillScheduler().createSchedule(self.drill);
 
         // TODO: remove

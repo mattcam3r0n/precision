@@ -125,7 +125,11 @@ class MemberPositionCalculator {
 
         return this.isAtFieldEdge(member, currentState)
             || (currentState.count >= member.script.length
-                && currentState.stepType == StepType.Halt);
+                && this.isNonMovingState(currentState));
+    }
+
+    static isNonMovingState(currentState) {
+        return (currentState.deltaX === 0 && currentState.deltaY === 0);
     }
 
     static isAtFieldEdge(member, currentState) {
