@@ -220,10 +220,10 @@ class DrillBuilder {
             });
             ScriptBuilder.addActionAtCount(m, secondStep, this.drill.count + 2);
 
-            // continue with whatever state they were in prior to adding face, but in new dir
+            // leave halted
             let thirdStep = new Action({
                 strideType: m.currentState.strideType,
-                stepType: m.currentState.stepType,
+                stepType: StepType.Halt,
                 direction: firstStepDirection,
             });
             ScriptBuilder.addActionAtCount(m, thirdStep, this.drill.count + 3);
@@ -252,15 +252,14 @@ class DrillBuilder {
             });
             ScriptBuilder.addActionAtCount(m, secondStep, this.drill.count + 2);
 
-            // continue with whatever state they were in prior to adding face, but in new dir
+            // leave halted
             let thirdStep = new Action({
                 strideType: m.currentState.strideType,
-                stepType: m.currentState.stepType,
+                stepType: StepType.Halt,
                 direction: firstStepDirection,
             });
             ScriptBuilder.addActionAtCount(m, thirdStep, this.drill.count + 3);
         });
-console.log(this.drill);
 
         this.drill.isDirty = true;
     }
@@ -285,10 +284,10 @@ console.log(this.drill);
             });
             ScriptBuilder.addActionAtCount(m, secondStep, this.drill.count + 2);
 
-            // continue with whatever state they were in prior to adding face, but in new dir
+            // leave halted
             let thirdStep = new Action({
                 strideType: m.currentState.strideType,
-                stepType: m.currentState.stepType,
+                stepType: StepType.Halt,
                 direction: firstStepDirection,
             });
             ScriptBuilder.addActionAtCount(m, thirdStep, this.drill.count + 3);
@@ -325,10 +324,10 @@ console.log(this.drill);
             });
             ScriptBuilder.addActionAtCount(m, thirdStep, this.drill.count + 3);
 
-            // continue with whatever state they were in prior to adding face, but in new dir
+            // leave halted
             let fourthStep = new Action({
                 strideType: m.currentState.strideType,
-                stepType: m.currentState.stepType,
+                stepType: StepType.Halt,
                 direction: secondStepDirection,
             });
             ScriptBuilder.addActionAtCount(m, fourthStep, this.drill.count + 4);

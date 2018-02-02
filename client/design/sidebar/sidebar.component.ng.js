@@ -35,6 +35,8 @@ angular.module('drillApp')
       };
 
       $scope.addMembers = function() {
+        // always go to beginning when adding new marchers
+        drillEditorService.goToBeginning();
         eventService.notify(Events.addMembersToolActivated);
       };
 
