@@ -115,3 +115,5 @@
 * NEW: Left, right and about face buttons.
 * NEW: Added 1 and 5 step spacing options when adding members
 * NEW: show number of selected marchers next to cursor position near timeline
+* NEW: free form (lasso) selection on dbl click. dbl click again to finish.
+* NEW: marchers face correct direction during pinwheels and gates

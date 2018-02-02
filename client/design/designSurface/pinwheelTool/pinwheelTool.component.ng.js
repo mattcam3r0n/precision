@@ -127,10 +127,10 @@ angular.module('drillApp')
         let pivotPoint;
         if (mode === 'pinwheel') {
           const upperLeft = memberSelection.getUpperLeft();
-          const bottomLeft = memberSelection.getBottomLeft();
+          const bottomRight = memberSelection.getBottomRight();
           pivotPoint = {
-            x: (upperLeft.x + bottomLeft.x) / 2,
-            y: (upperLeft.y + bottomLeft.y) / 2,
+            x: (upperLeft.x + bottomRight.x) / 2,
+            y: (upperLeft.y + bottomRight.y) / 2,
           };
         } else {
           pivotPoint = memberSelection.getUpperLeft();
