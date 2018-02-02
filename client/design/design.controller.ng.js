@@ -28,7 +28,6 @@ angular.module('drillApp')
 
       $scope.tempo = 120;
       $window.addEventListener('keydown', onKeydown);
-      $window.addEventListener('error', onError);
 
       Audio.init();
 
@@ -88,7 +87,6 @@ angular.module('drillApp')
     $scope.$on('$destroy', function() {
       ctrl.subscriptions.unsubscribeAll();
       $window.removeEventListener('keydown', onKeydown);
-      $window.removeEventListener('error', onError);
     });
 
     function openLastDrillOrNew() {
@@ -137,18 +135,6 @@ angular.module('drillApp')
     function onKeydown(e) {
       keyboardHandler.handle(e);
       $scope.$safeApply();
-    }
-
-    function onError(e) {
-      Logger.info('Uncaught error', {
-        message: e.message,
-        lineno: e.lineno,
-        colno: e.colno,
-        stack: e.error.stack,
-        isTrusted: e.isTrusted,
-        filename: e.filename,
-        drillId: getDrillId(),
-      });
     }
 
     $scope.debug = function() {
