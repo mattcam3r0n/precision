@@ -1,6 +1,6 @@
 import StepType from '/client/lib/StepType';
 import FieldDimensions from '/client/lib/FieldDimensions';
-import { StepPoint, FieldPoint } from '/client/lib/Point';
+import { StepPoint } from '/client/lib/Point';
 import SelectionBox from './SelectionBox';
 import FileIndicator from './FileIndicator';
 import GuidePath from './GuidePath';
@@ -22,21 +22,23 @@ class PathTool {
     }
 
     createSelectionBox() {
-        if (this.selectionBox)
+        if (this.selectionBox) {
             destroySelectionBox();
+        }
 
-        if (this.isEmptySelection())
+        if (this.isEmptySelection()) {
             return;
+        }
 
         // get box coords from selection
-        var ul = this.memberSelection.getUpperLeft().toFieldPoint();
-        var br = this.memberSelection.getBottomRight().toFieldPoint();
+        let ul = this.memberSelection.getUpperLeft().toFieldPoint();
+        let br = this.memberSelection.getBottomRight().toFieldPoint();
 
         this.selectionBox = new SelectionBox({
             left: ul.x - FieldDimensions.marcherWidth,
             top: ul.y - FieldDimensions.marcherHeight,
             height: (br.y - ul.y) + (FieldDimensions.marcherHeight * 2),
-            width: (br.x - ul.x) + (FieldDimensions.marcherWidth * 2)
+            width: (br.x - ul.x) + (FieldDimensions.marcherWidth * 2),
         });
         this.field.canvas.add(this.selectionBox);
     }
@@ -46,48 +48,56 @@ class PathTool {
     }
 
     isEmptySelection() {
-        return !this.memberSelection || this.memberSelection.members.length == 0;
+        return !this.memberSelection
+            || this.memberSelection.members.length == 0;
     }
 
     setCurrentTurnDirection(dir) {
         this.currentDir = dir;
-        this.guidePaths.forEach(gp => gp.setCurrentTurnDirection(dir));
+        this.guidePaths.forEach((gp) => gp.setCurrentTurnDirection(dir));
     }
 
     createGuides() {
-        if (this.isEmptySelection())
-        return;
+        if (this.isEmptySelection()) {
+            return;
+        }
 
-        if (this.turnMode == 'file')
+        if (this.turnMode == 'file') {
             return this.createFileGuides();
+        }
 
-        if (this.turnMode == 'rank')
+        if (this.turnMode == 'rank') {
             return this.createRankGuides();
+        }
 
         this.createBlockGuides();
     }
 
     destroyGuides() {
         if (!this.guides) return;
-        this.guides.forEach(g => {
+        this.guides.forEach((g) => {
             this.field.canvas.remove(g);
         });
         this.guides = [];
     }
 
     createFileGuides() {
-        var files = this.memberSelection.fileSelector.findFiles();
-        files.forEach(f => {
-            let points = f.getLinePoints().map(p => new StepPoint(f.leader.member.currentState.strideType, p.x, p.y).toFieldPoint());
+        let files = this.memberSelection.fileSelector.findFiles();
+        files.forEach((f) => {
+            let points = f.getLinePoints()
+                .map((p) => new StepPoint(f.leader.member.currentState.strideType, // eslint-disable-line max-len
+                    p.x, p.y)
+                .toFieldPoint());
 
-            let fi = new FileIndicator(points, f.leader.member.currentState.direction);
+            let fi = new FileIndicator(points,
+                f.leader.member.currentState.direction);
 
             let gp = new GuidePath(this.field, f, {
                 strideType: f.leader.member.currentState.strideType,
                 stepType: f.leader.member.currentState.stepType,
                 direction: f.leader.member.currentState.direction,
                 x: f.leader.member.currentState.x,
-                y: f.leader.member.currentState.y
+                y: f.leader.member.currentState.y,
             }, this.strideType);
 
             this.field.canvas.add(fi);
@@ -97,32 +107,34 @@ class PathTool {
     }
 
     createBlockGuides() {
-        var files = this.memberSelection.fileSelector.findFiles();
-        var sortedLeaderPositions = files
-            .map(f => f.leader.member.currentState)
+        let files = this.memberSelection.fileSelector.findFiles();
+        let sortedLeaderPositions = files
+            .map((f) => f.leader.member.currentState)
             .sort((a, b) => {
-                if (a.x < b.x || a.y < b.y)
+                if (a.x < b.x || a.y < b.y) {
                     return -1;
-                if (a.x > b.x || a.y > b.y)
+                }
+                if (a.x > b.x || a.y > b.y) {
                     return 1;
+                }
                 return 0;
             });
-        var file = files[0];
-        var guide = sortedLeaderPositions[0];
-        var fi = new FileIndicator([new StepPoint(guide.strideType, guide.x, guide.y).toFieldPoint()], guide.direction);
+        let file = files[0];
+        let guide = sortedLeaderPositions[0];
+        let fi = new FileIndicator([new StepPoint(guide.strideType,
+            guide.x, guide.y).toFieldPoint()], guide.direction);
 
-        var gp = new GuidePath(this.field, file, {
+        let gp = new GuidePath(this.field, file, {
             strideType: file.leader.member.currentState.strideType,
             stepType: file.leader.member.currentState.stepType,
             direction: file.leader.member.currentState.direction,
             x: file.leader.member.currentState.x,
-            y: file.leader.member.currentState.y
+            y: file.leader.member.currentState.y,
         }, this.strideType);
 
         this.field.canvas.add(fi);
         this.guides.push(fi);
         this.guidePaths.push(gp);
-
     }
 
     createRankGuides() {
@@ -132,20 +144,22 @@ class PathTool {
     destroyGuidePaths() {
         if (!this.guidePaths) return;
 
-        this.guidePaths.forEach(gp => gp.dispose());
+        this.guidePaths.forEach((gp) => gp.dispose());
     }
 
     findGuidePath(stepPoint) {
-        return this.guidePaths.find(p => p.isInPath(stepPoint));
+        return this.guidePaths.find((p) => p.isInPath(stepPoint));
     }
 
     addTurnMarker(turnDirection, stepPoint) {
-        var guidePath = this.findGuidePath(stepPoint);
+        let guidePath = this.findGuidePath(stepPoint);
 
         // don't allow turn to be added if not on a guidepath
         if (!guidePath) return;
 
-        turnDirection = turnDirection == undefined ? guidePath.lastPoint.direction : turnDirection;
+        turnDirection = turnDirection == undefined
+            ? guidePath.lastPoint.direction
+            : turnDirection;
 
         // if (turnDirection == Direction.CM) {
         //   return addCounterMarchMarker(guidePath, stepPoint);
@@ -157,38 +171,38 @@ class PathTool {
             y: stepPoint.y,
             direction: turnDirection,
             strideType: this.strideType,
-            stepType: StepType.Full
+            stepType: StepType.Full,
         });
     }
 
     removeTurnMarker(marker) {
-        this.guidePaths.forEach(gp => gp.removeTurnMarker(marker));
+        this.guidePaths.forEach((gp) => gp.removeTurnMarker(marker));
     }
 
     save() {
         if (!this.guidePaths) return;
 
-        if (this.turnMode == 'file')
+        if (this.turnMode == 'file') {
             this.saveFileMode();
-        else
+        } else {
             this.saveBlockMode();
+        }
     }
 
     saveBlockMode() {
-        this.guidePaths.forEach(gp => {
+        this.guidePaths.forEach((gp) => {
             let count = gp.startCount + 1;
             if (gp.points.length > 1) {
                 let action = new Action(gp.initialPoint);
-                this.memberSelection.members.forEach(m => {
-                    let added = ScriptBuilder.addActionAtCount(m, action, count);
-//                    let added = ScriptBuilder.addActionAtPoint(fm.member, action, gp.initialPoint);
+                this.memberSelection.members.forEach((m) => {
+                    ScriptBuilder.addActionAtCount(m, action, count);
                 });
                 // for each point in guide path
-                gp.points.slice(1).forEach(p => { // skip first point, since it is current position
+                gp.points.slice(1).forEach((p) => { // skip first point, since it is current position
                     count = count + p.stepsFromPrevious;
                     let action = new Action(p);
-                    this.memberSelection.members.forEach(m => {
-                        let added = ScriptBuilder.addActionAtCount(m, action, count);
+                    this.memberSelection.members.forEach((m) => {
+                        ScriptBuilder.addActionAtCount(m, action, count);
                     });
                 });
             }
@@ -196,16 +210,17 @@ class PathTool {
     }
 
     saveFileMode() {
-        this.guidePaths.forEach(gp => {
+        this.guidePaths.forEach((gp) => {
             if (gp.points.length > 1) {
                 // for each file member
-                gp.file.fileMembers.forEach(fm => {
+                gp.file.fileMembers.forEach((fm) => {
                     let action = new Action(gp.initialPoint);
-                    let added = ScriptBuilder.addActionAtPoint(fm.member, action, gp.initialPoint);
+                    ScriptBuilder.addActionAtPoint(fm.member, action,
+                        gp.initialPoint);
                     // for each point in guide path
-                    gp.points.slice(1).forEach(p => { // skip first point, since it is current position
+                    gp.points.slice(1).forEach((p) => { // skip first point, since it is current position
                         let action = new Action(p);
-                        let added = ScriptBuilder.addActionAtPoint(fm.member, action, p);
+                        ScriptBuilder.addActionAtPoint(fm.member, action, p);
                     });
                 });
             }
