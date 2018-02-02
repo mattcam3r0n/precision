@@ -40,6 +40,14 @@ class Lasso {
     }
 
     onDoubleClick(evt) {
+        const target = this.field.canvas.findTarget(evt);
+        // console.log(evt, target);
+
+        // if an object (like marcher) was targeted,
+        // the return. should be undefined if it
+        // occurred on field.
+        if (target) return;
+
         const point = this.field.adjustMousePoint({
             x: evt.layerX,
             y: evt.layerY,
@@ -102,7 +110,7 @@ class Lasso {
         const lastPoint = this.points[this.points.length - 1];
         this.guideline = new fabric.Line([lastPoint.x, lastPoint.y,
             point.x, point.y], {
-            stroke: 'black',
+            stroke: 'white',
             strokeDashArray: [3, 3],
             selectable: false,
             evented: false,
@@ -124,7 +132,7 @@ class Lasso {
             this.destroyPath();
         }
         this.lassoPath = new fabric.Path(this.getPathExpr(), {
-            stroke: 'black',
+            stroke: 'white',
             strokeDashArray: [3, 3],
             fill: 'wheat',
             opacity: .5,
