@@ -1,6 +1,5 @@
 'use strict';
 
-import StrideType from '/client/lib/StrideType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import Direction from '/client/lib/Direction';
 import MarcherFactory from '../field/MarcherFactory';
@@ -14,74 +13,75 @@ angular.module('drillApp')
   .component('addMemberTool', {
     templateUrl: 'client/design/designSurface/addMemberTool/addMemberTool.view.ng.html',
     bindings: {
-      field: '<'
+      field: '<',
     },
-    controller: function ($scope, $window, drillEditorService, eventService) {
-      var ctrl = this;
-      var toolDiv = angular.element('.add-member-tool')[0];
-      var builder = new DrillBuilder();
-      var directionClass = {
+    controller: function($scope, $window, drillEditorService, eventService) {
+      let ctrl = this;
+      let toolDiv = angular.element('.add-member-tool')[0];
+      let builder = new DrillBuilder();
+      let directionClass = {
         [Direction.N]: 'fa-caret-up',
         [Direction.E]: 'fa-caret-right',
         [Direction.S]: 'fa-caret-down',
-        [Direction.W]: 'fa-caret-left'
+        [Direction.W]: 'fa-caret-left',
       };
 
-      ctrl.$onInit = function () {
+      ctrl.$onInit = function() {
         ctrl.isActivated = false;
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
 
         ctrl.subscriptions.subscribe(Events.addMembersToolActivated, () => {
           activate();
         });
-  
+
         ctrl.subscriptions.subscribe(Events.strideTypeChanged, (evt, args) => {
           if (!ctrl.isActivated) return;
           console.log('strideTypeChanged');
           activate();
         });
-      }
+      };
 
-      ctrl.$onDestroy = function () {
-        ctrl.unsubscribeAll();
-      }
+      ctrl.$onDestroy = function() {
+        ctrl.subscriptions.unsubscribeAll();
+      };
 
       $scope.activate = activate;
 
-      $scope.deactivate = function () {
-      }
+      $scope.deactivate = function() {
+      };
 
-      $scope.setDirection = function (dir) {
+      $scope.setDirection = function(dir) {
         ctrl.direction = dir;
         updateMarchers(ctrl.sizableRect);
       };
 
-      $scope.setFileSpacing = function (s) {
+      $scope.setFileSpacing = function(s) {
         ctrl.fileSpacing = s;
         updateMarchers(ctrl.sizableRect);
-      }
+      };
 
-      $scope.setRankSpacing = function (s) {
+      $scope.setRankSpacing = function(s) {
         ctrl.rankSpacing = s;
         updateMarchers(ctrl.sizableRect);
-      }
+      };
 
-      $scope.getDirectionClass = function () {
+      $scope.getDirectionClass = function() {
         return directionClass[ctrl.direction];
       };
 
-      $scope.save = function () {
+      $scope.save = function() {
         updateMarchers(ctrl.sizableRect);
         drillEditorService.addMembers(ctrl.members);
         deactivate();
         eventService.notify(Events.updateField);
-      }
+      };
 
       $scope.cancel = deactivate;
 
       function activate() {
-        if (ctrl.isActivated)
+        if (ctrl.isActivated) {
           deactivate();
+        }
 
         ctrl.isActivated = true;
         ctrl.field.canvas.selection = false;
@@ -101,11 +101,11 @@ angular.module('drillApp')
 
         ctrl.field.disablePositionIndicator();
 
-        ctrl.field.canvas.on('sizableRect:sizing', r => {
+        ctrl.field.canvas.on('sizableRect:sizing', (r) => {
           updateMarchers(r);
         });
 
-        ctrl.field.canvas.on('sizableRect:moving', r => {
+        ctrl.field.canvas.on('sizableRect:moving', (r) => {
           positionTools(r);
           ctrl.group.left = r.left;
           ctrl.group.top = r.top;
@@ -131,12 +131,12 @@ angular.module('drillApp')
       }
 
       function positionTools(obj) {
-        var absCoords = ctrl.field.getAbsoluteCoords(obj);
-        var left = absCoords.left - 70;
+        let absCoords = ctrl.field.getAbsoluteCoords(obj);
+        let left = absCoords.left - 70;
         if (left < 0) {
           left = absCoords.left + absCoords.width + 20;
         }
-        var top = absCoords.top;
+        let top = absCoords.top;
         toolDiv.style.left = left + 'px';
         toolDiv.style.top = top + 'px';
       }
@@ -144,19 +144,31 @@ angular.module('drillApp')
       function createMarcherGroup() {
         ctrl.marchers = [];
         ctrl.members = [];
-        var files = getFilesInRect(ctrl.sizableRect);
-        var ranks = getRanksInRect(ctrl.sizableRect);
-        var x = 0, y = 0;
-        var stepSize = FieldDimensions.getStepSize(ctrl.strideType);
-        for (var i = 0; i < files; i++) {
-          for (var j = 0; j < ranks; j++) {
-            var upperLeftOfRect = { x: ctrl.sizableRect.left + ctrl.sizableRect.marcherOffsetX, y: ctrl.sizableRect.top + ctrl.sizableRect.marcherOffsetY };
-            var upperLeftInSteps = FieldDimensions.toStepPoint(upperLeftOfRect, ctrl.strideType);
-            var stepPoint = FieldDimensions.toStepPoint({ x: upperLeftInSteps.x + x, y: upperLeftInSteps.y + y }, ctrl.strideType);
-            var member = builder.createMember(ctrl.strideType, ctrl.direction, stepPoint);
+        let files = getFilesInRect(ctrl.sizableRect);
+        let ranks = getRanksInRect(ctrl.sizableRect);
+        let x = 0;
+        let y = 0;
+        let stepSize = FieldDimensions.getStepSize(ctrl.strideType);
+        for (let i = 0; i < files; i++) {
+          for (let j = 0; j < ranks; j++) {
+            let upperLeftOfRect = {
+              x: ctrl.sizableRect.left
+                  + ctrl.sizableRect.marcherOffsetX,
+              y: ctrl.sizableRect.top
+                  + ctrl.sizableRect.marcherOffsetY,
+            };
+            let upperLeftInSteps = FieldDimensions.toStepPoint(upperLeftOfRect,
+              ctrl.strideType);
+            let stepPoint = FieldDimensions.toStepPoint({
+                x: upperLeftInSteps.x + x,
+                y: upperLeftInSteps.y + y,
+              }, ctrl.strideType);
+            let member = builder.createMember(ctrl.strideType,
+              ctrl.direction, stepPoint);
             ctrl.members.push(member);
 
-            var marcher = createMarcher(ctrl.strideType, stepPoint.x, stepPoint.y, ctrl.direction);            
+            let marcher = createMarcher(ctrl.strideType, stepPoint.x,
+              stepPoint.y, ctrl.direction);
             ctrl.marchers.push(marcher);
 
             y += (ctrl.rankSpacing * stepSize.y);
@@ -168,10 +180,10 @@ angular.module('drillApp')
         ctrl.files = files;
         ctrl.ranks = ranks;
 
-        var g = new fabric.Group(ctrl.marchers, {
+        let g = new fabric.Group(ctrl.marchers, {
           left: ctrl.sizableRect.left,
           top: ctrl.sizableRect.top,
-          selectable: false
+          selectable: false,
         });
 
         ctrl.field.canvas.add(g);
@@ -182,11 +194,11 @@ angular.module('drillApp')
       }
 
       function createMarcher(strideType, x, y, dir) {
-        var marcher = MarcherFactory.createMarcher({
+        let marcher = MarcherFactory.createMarcher({
           strideType: strideType,
           x: x,
           y: y,
-          direction: dir
+          direction: dir,
         });
         marcher.originX = 'center';
         marcher.originY = 'center';
@@ -199,7 +211,7 @@ angular.module('drillApp')
 
       function destroyMarcherGroup() {
         while (ctrl.marchers.length > 0) {
-          var m = ctrl.marchers.pop();
+          let m = ctrl.marchers.pop();
           ctrl.group.remove(m);
           ctrl.field.canvas.remove(m);
         }
@@ -223,18 +235,18 @@ angular.module('drillApp')
       }
 
       function getFilesInRect(rect) {
-        var stepSize = FieldDimensions.getStepSize(ctrl.strideType);
+        let stepSize = FieldDimensions.getStepSize(ctrl.strideType);
         return Math.floor(rect.width / stepSize.x / ctrl.fileSpacing);
       }
 
       function getRanksInRect(rect) {
-        var stepSize = FieldDimensions.getStepSize(ctrl.strideType);
+        let stepSize = FieldDimensions.getStepSize(ctrl.strideType);
         return Math.floor(rect.height / stepSize.y / ctrl.rankSpacing);
       }
 
       function updateLabels(rect) {
-        var ranks = getRanksInRect(rect),
-            files = getFilesInRect(rect);
+        let ranks = getRanksInRect(rect);
+        let files = getFilesInRect(rect);
 
         ctrl.labels.rankLabel.setText(`${ranks}`);
         ctrl.labels.rankLabel.set('top', rect.top + (rect.height / 2) - 10);
@@ -252,32 +264,34 @@ angular.module('drillApp')
       }
 
       function updatePosition(rect) {
-        if (!ctrl.sizableRect) return; 
+        if (!ctrl.sizableRect) return;
 
-        var upperLeft = ctrl.sizableRect.position();
-        var p = PositionCalculator.getPositionDescription({ x: upperLeft.left, y: upperLeft.top });
-        $scope.$emit('positionIndicator', { position: p }); 
+        let upperLeft = ctrl.sizableRect.position();
+        let p = PositionCalculator.getPositionDescription({
+          x: upperLeft.left,
+          y: upperLeft.top,
+        });
+        $scope.$emit('positionIndicator', { position: p });
       }
 
       function createLabels() {
-        var labels = {};
-        var labelOptions = {
+        let labels = {};
+        let labelOptions = {
           fontSize: 20,
           fontWeight: 'bold',
           lineHeight: 1,
           selectable: false,
-          evented: false
+          evented: false,
         };
-        labels.rankLabel = new fabric.Text("", labelOptions);
-        labels.fileLabel = new fabric.Text("", labelOptions);
-        labels.totalLabel = new fabric.Text("", labelOptions);
+        labels.rankLabel = new fabric.Text('', labelOptions);
+        labels.fileLabel = new fabric.Text('', labelOptions);
+        labels.totalLabel = new fabric.Text('', labelOptions);
         ctrl.field.canvas.add(labels.rankLabel);
         ctrl.field.canvas.add(labels.fileLabel);
         ctrl.field.canvas.add(labels.totalLabel);
         return labels;
       }
-
-    }
+    },
   });
 
 

@@ -29,6 +29,17 @@ angular.module('drillApp')
             $scope.currentPosition = args.position;
             $rootScope.$safeApply();
           });
+
+        ctrl.subscriptions
+          .subscribe(Events.membersSelected, (evt, args) => {
+            let msg = '';
+            if (args.memberSelection
+                && args.memberSelection.members.length > 0) {
+              msg = args.memberSelection.members.length + ' selected marchers.';
+            }
+            $scope.membersSelected = msg;
+            $rootScope.$safeApply();
+          });
       };
 
       ctrl.$onDestroy = function() {

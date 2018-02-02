@@ -107,10 +107,11 @@
 
 1-30-18
 * NEW: merged Select and Marchers side menus
-* NEW: re-organized buttons in Steps menu
+* NEW: re-organized buttons in Steps menu. new icons.
 
 2-1-18
 * NEW: drag step tool
-* NEW: pinwheel and gate buttons in Steps menu. removed Pinwheel menu. Pinwheel/Gate buttons default to appropriate pivot point (but can still be changed)
-* NEW: Pinwhee/Gate/Drag Steps palette floats.
+* NEW: pinwheel, drag step, and gate buttons in Steps menu. removed Pinwheel menu. Pinwheel/Gate buttons default to appropriate pivot point (but can still be changed). Pinwheel/Gate/Drag Steps palette floats.
+* NEW: Left, right and about face buttons.
 * NEW: Added 1 and 5 step spacing options when adding members
+* NEW: show number of selected marchers next to cursor position near timeline

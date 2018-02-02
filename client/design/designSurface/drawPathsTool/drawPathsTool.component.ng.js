@@ -164,11 +164,11 @@ angular.module('drillApp')
         ctrl.activePathTool.addTurnMarker(ctrl.turnDirection, stepPoint);
       }
 
-      function destroyGuidePaths() {
-        if (!ctrl.guidePaths) return;
+      // function destroyGuidePaths() {
+      //   if (!ctrl.guidePaths) return;
 
-        ctrl.guidePaths.forEach((gp) => gp.dispose());
-      }
+      //   ctrl.guidePaths.forEach((gp) => gp.dispose());
+      // }
 
       function save() {
         if (!ctrl.activePathTool) return;

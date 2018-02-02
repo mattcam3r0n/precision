@@ -11,6 +11,7 @@ import {StepPoint} from '/client/lib/Point';
 import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
+import Lasso from '../lassoTool/Lasso';
 
 import 'fabric-customise-controls';
 
@@ -24,6 +25,7 @@ class FieldController {
         this.marchers = {};
         this.paths = [];
         this.arePathsVisible = false;
+        this.lasso = new Lasso(this);
 
         // this.initCustomCorners();
         this.draw();
@@ -36,6 +38,7 @@ class FieldController {
     }
 
     dispose() {
+        this.lasso.dispose();
         this.canvas.dispose();
         this.subscriptions.unsubscribeAll();
     }
@@ -258,6 +261,11 @@ class FieldController {
     wireUpEvents() {
         let self = this;
 
+        // fabric.util.addListener(this.canvas.upperCanvasEl, 'dblclick', function(e) {
+        //     console.log('dblclick', e);
+        // });
+
+        // this.canvas.on('mouse:up', this.onMouseUp.bind(self));
         this.canvas.on('mouse:move', this.onMouseMove.bind(self));
         this.canvas.on('selection:created', this.onSelectionCreated.bind(self));
         this.canvas.on('object:selected', this.onObjectSelected.bind(self));
@@ -298,7 +306,11 @@ class FieldController {
 
         // important to call this BEFORE emitting event, causes strange effect on position
         this.canvas.discardActiveGroup();
-        this.eventService.notify(Events.objectsSelected, {
+        // this.eventService.notify(Events.objectsSelected, {
+        //     members: members,
+        //     marchers: marchers,
+        // });
+        this.notifyObjectsSelected({
             members: members,
             marchers: marchers,
         });
@@ -315,12 +327,42 @@ class FieldController {
         if (!member || !member.isVisible) return;
 
         this.canvas.discardActiveObject();
-        this.eventService.notify(Events.objectsSelected, {members: [member]});
+//        this.eventService.notify(Events.objectsSelected, {members: [member]});
+        this.notifyObjectsSelected({members: [member]});
+    }
+
+    notifyObjectsSelected(args) {
+        this.eventService.notify(Events.objectsSelected, args);
     }
 
     // onSelectionCleared(evt) {
     //     console.log('selection cleared');
     // }
+
+    onMouseUp(evt) {
+        const self = this;
+        console.log(evt);
+        if (evt.isClick && evt.e.shiftKey) {
+            console.log('shift clicked');
+            self.startLasso(evt);
+        }
+
+        if (evt.isClick && self.lasso) {
+            self.addLassoPoint(evt);
+        }
+    }
+
+    startLasso(evt) {
+        const self = this;
+        const point = self.adjustMousePoint({x: evt.e.layerX, y: evt.e.layerY});
+        this.lasso = new Lasso(this, point);
+    }
+
+    addLassoPoint(evt) {
+        const self = this;
+        const point = self.adjustMousePoint({x: evt.e.layerX, y: evt.e.layerY});
+        self.lasso.addPoint(point);
+    }
 
     onMouseMove(evt) {
         // if (!this.positionIndicatorEnabled) return;
