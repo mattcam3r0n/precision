@@ -37,6 +37,7 @@ angular.module('drillApp')
         // if the drill changed, update field
         if (!ctrl.drill) return;
         ctrl.timeline.setMusicItems(ctrl.drill.music);
+        ctrl.timeline.setCurrentCount(0);
       };
 
       ctrl.activate = function() {
@@ -94,7 +95,7 @@ angular.module('drillApp')
         drillEditorService.goToCount(count);
       }
 
-      function onDrillStateChanged(args) {
+      function onDrillStateChanged(evt, args) {
         if (!ctrl.drill) {
           ctrl.timeline.setCurrentCount(0);
           return;
@@ -109,7 +110,7 @@ angular.module('drillApp')
         ctrl.timeline.setCurrentCount(ctrl.drill.count);
       }
 
-      function onDrillOpened(args) {
+      function onDrillOpened(evt, args) {
         zoomTimeline();
       }
 

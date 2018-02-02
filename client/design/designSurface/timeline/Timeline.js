@@ -77,7 +77,6 @@ class Timeline {
             if (self.onGoToCountCallback) {
                 self.onGoToCountCallback(count);
             }
-            console.log(count);
         });
 
         this.currentCountBar = this.timeline
