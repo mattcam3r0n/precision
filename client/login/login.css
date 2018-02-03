@@ -1,0 +1,13 @@
+.login {
+    margin-top: 25px;
+    /* width: 640px; */
+    display: flex;
+}
+
+.login div {
+    flex: 1 1 auto;
+}
+
+.login div.panel {
+    flex: 0 0 auto;
+}
