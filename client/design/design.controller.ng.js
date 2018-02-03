@@ -11,6 +11,7 @@ import Logger from '/client/lib/Logger';
 angular.module('drillApp')
   .controller('DesignCtrl', function($scope,
                                       $window,
+                                      $location,
                                       appStateService,
                                       drillEditorService,
                                       eventService) {
@@ -56,8 +57,8 @@ angular.module('drillApp')
         appStateService.userChanged();
 
         if ($scope.currentUser === null) { // signed out
-          newDrill();
           Logger.info('User ' + (oldValue ? oldValue._id : '') + ' logged out.');
+          $location.path('/login');
           return;
         }
 
