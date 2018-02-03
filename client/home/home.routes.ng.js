@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('drillApp')
 .config(function($stateProvider) {
@@ -6,6 +6,6 @@ angular.module('drillApp')
   .state('home', {
     url: '/home',
     templateUrl: 'client/home/home.view.ng.html',
-    controller: 'HomeCtrl'
+    controller: 'HomeCtrl',
   });
 });

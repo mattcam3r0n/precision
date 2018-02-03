@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('drillApp')
 .config(function($stateProvider) {
@@ -7,10 +7,10 @@ angular.module('drillApp')
     url: '/',
     templateUrl: 'client/design/design.view.ng.html',
     controller: 'DesignCtrl',
-    // resolve: {
-    //   currentUser: ['$meteor', function($meteor) {
-    //     return $meteor.requireUser();
-    //   }]
-    // }
+    resolve: {
+      currentUser: ['$meteor', function($meteor) {
+        return $meteor.requireUser();
+      }],
+    },
   });
 });

@@ -39,7 +39,16 @@ angular.module('drillApp')
         drillEditorService.setTempo($scope.tempo);
       });
 
+      console.log($scope.isLoggingIn);
+
       $scope.$watch('currentUser', function(newValue, oldValue) {
+        console.log($scope);
+        console.log($scope.isLoggingIn);
+
+        $scope.$awaitUser().then(() => {
+          console.log('awaitUser', $scope.currentUser);
+        });
+
         if ($scope.currentUser === undefined) return; // user not available yet
 
         if (newValue && oldValue && newValue._id === oldValue._id) return; // phantom change
