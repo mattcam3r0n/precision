@@ -1,7 +1,9 @@
 .login {
-    margin-top: 25px;
+    padding-top: 25px;
     /* width: 640px; */
     display: flex;
+    background-color: gainsboro;
+    height: 100vh;
 }
 
 .login div {
@@ -10,4 +12,5 @@
 
 .login div.panel {
     flex: 0 0 auto;
+    height: 550px;
 }
