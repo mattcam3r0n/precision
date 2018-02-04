@@ -1,23 +1,24 @@
 <div class="login">
     <div></div>
     <div class="panel panel-default">
-        <div class="panel-body">
+        <div class="panel-body text-center">
             <img src="splash.JPG" />
             <div class="login-group">
                 <div class="form-group text-left">
                     <label for="loginEmail" class="">Email</label>
-                    <input type="text" class="form-control" id="loginEmail" name="loginEmail" placeholder="Email">
+                    <input ng-model="email" type="text" class="form-control" id="loginEmail" name="loginEmail" placeholder="Email">
                 </div>
                 <div class="form-group text-left">
                     <label for="loginPw" class="">Password</label>
-                    <input type="password" class="form-control" id="loginPw" name="loginPw" placeholder="Password">
+                    <input ng-model="password" type="password" class="form-control" id="loginPw" name="loginPw" placeholder="Password">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button ng-click="test()"></button>
+            <button ng-click="logIn()" class="btn btn-primary">
                 Log In
             </button>
         </div>
-        <div class="panel-footer etc-login-form">
+        <div class="panel-footer">
             <p>forgot your password?
                 <a href="#">click here</a>
             </p>

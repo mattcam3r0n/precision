@@ -1,0 +1,18 @@
+.sign-up {
+    margin-top: 25px;
+    /* width: 640px; */
+    display: flex;
+}
+
+.sign-up .panel-title {
+    padding: 5px;
+}
+
+.sign-up div {
+    flex: 1 1 auto;
+}
+
+.sign-up div.panel {
+    flex: 0 0 auto;
+    width: 300px;
+}
