@@ -1,0 +1,112 @@
+div.design-header {
+  display: flex;
+  background-color: #353535;
+}
+
+.design-header .brand {
+  flex: none;
+  width: 120px;
+  text-align: center;
+  margin-top: 5px;
+  color: white;
+}
+
+.design-header .brand a {
+  color: white;  
+}
+
+.design-header .brand a:hover {
+  text-decoration: none;
+}
+
+.design-header .menu {
+  flex: none;
+  width: 150px;
+  display: flex;
+}
+
+.design-header .drill-name {
+  flex: 1 1 auto;
+  color: white;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.design-header .login-info {
+  flex: none;
+  width: 240px;
+}
+
+.design-header .drill-name input {
+  color: white;
+  background-color: #353535;
+  border: 0;
+  text-align: center;
+}
+
+.design-header i.fa.fa-pencil {
+  cursor: pointer;
+}
+
+
+/* before flexbox header */
+
+#login-buttons {
+  padding: 5px;
+  line-height: 20px;
+}
+
+.design-header .design-header-menu {
+  color: white;
+  margin-top: 5px;
+}
+
+.design-header .design-header-menu button {
+  background-color: #353535;
+  border: 0;
+}
+
+@media (min-width: 768px) {
+  #login-buttons {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+}
+
+/* login styling */
+/* override positioning of sign in popup */
+#login-buttons {
+  width: 200px;
+}
+.login-link-text {
+  font-size: 14px;
+  line-height: 20px;
+  padding: 5px;
+  color: rgb(157, 157, 157);
+}
+#login-buttons a {
+  font-weight: 500;
+  text-decoration: none;
+}
+#login-dropdown-list {
+  left: -80px
+}
+.user-icon {
+  color: white;
+  margin-right: 10px;
+}
+
+#login-buttons a.login-link-text:hover {
+  color: white;
+}
+
+.accounts-dialog a.login-close-text:hover {
+  color: black;
+}
+
+#login-dropdown-list.accounts-dialog {
+  margin-left: 0px;
+  margin-top: 30px;
+  width: 250px;
+  float: right;
+}
