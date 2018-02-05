@@ -7,8 +7,12 @@ angular.module('drillApp')
     templateUrl: 'client/design/header/header.component.ng.html',
     bindings: {
     },
-    controller: function($scope, eventService,
-              appStateService, drillEditorService) {
+    controller: function($scope,
+              eventService,
+              appStateService,
+              drillEditorService,
+              userService
+            ) {
       let ctrl = this;
 
       ctrl.$onInit = function() {
@@ -49,6 +53,14 @@ angular.module('drillApp')
         if (!drillEditorService.drill) return;
 
         return drillEditorService.drill.name;
+      };
+
+      ctrl.userName = function() {
+        return userService.getUserEmail();
+      };
+
+      ctrl.logOut = function() {
+        userService.logOut();
       };
 
       $scope.onNameChange = function() {
