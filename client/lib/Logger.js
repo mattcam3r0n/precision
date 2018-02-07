@@ -18,6 +18,13 @@ class Logger {
     static log(level, msg, meta) {
         Meteor.call('addLogEntry', level, msg, meta);
     }
+
+    static logException(ex) {
+        this.error(ex.message || ex, ex);
+        if (ex.stack || (ex.inner && ex.inner.stack)) {
+            this.error(ex.message || ex, ex.stack || ex.inner.stack);
+        }
+    }
 }
 
 export default Logger;

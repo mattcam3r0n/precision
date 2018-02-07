@@ -13,8 +13,7 @@ app.config(($provide) => {
   $provide.decorator('$exceptionHandler', ($delegate) => {
     return (exception, cause) => {
         $delegate(exception, cause);
-        Logger.error('Uncaught exception: ' + (exception.stack || exception.toString()));
-        console.log('Uncaught exception: ', exception, cause);
+        Logger.logException(exception);
     };
   });
 });

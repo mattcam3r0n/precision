@@ -60,6 +60,20 @@ class UserService {
             }
         });
     }
+
+    forgotPassword(email) {
+        Meteor.forgotPassword({ email: email }, (err) => {
+            if (err) {
+                console.log('forgotPassword', err);
+            } else {
+                // ? return true?
+            }
+        });
+    }
+
+    createAccount(info) {
+        
+    }
 }
 
 angular.module('drillApp')
