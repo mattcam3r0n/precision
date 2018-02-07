@@ -20,7 +20,7 @@ class Logger {
     }
 
     static logException(ex) {
-        this.error(ex.message || ex, ex);
+        this.error(ex.message || ex, { exception: ex });
         if (ex.stack || (ex.inner && ex.inner.stack)) {
             this.error(ex.message || ex, ex.stack || ex.inner.stack);
         }

@@ -91,17 +91,25 @@ angular.module('drillApp')
         let startCount = getStartCount();
         let clip = getClip();
 
-        clip.timelineId = shortid.generate(); // add a unique id for timeline to use
-        clip.startCount = startCount;
-        clip.endCount = startCount + ctrl.counts - 1;
+        try {
+          clip.timelineId = shortid.generate(); // add a unique id for timeline to use
+          clip.startCount = startCount;
+          clip.endCount = startCount + ctrl.counts - 1;
 
-        if (!ctrl.drill.music) {
-          ctrl.drill.music = [];
+          if (!ctrl.drill.music) {
+            ctrl.drill.music = [];
+          }
+          ctrl.drill.music.push(clip);
+          eventService.notify(Events.audioClipAdded, {
+            audioClip: clip,
+          });
+        } catch (ex) {
+          const msg = 'addAudioClip: ' + ex.message;
+          const ctx = {
+            clip: clip,
+          };
+          throw new AddAudioClipException(msg, ex, ctx);
         }
-        ctrl.drill.music.push(clip);
-        eventService.notify(Events.audioClipAdded, {
-          audioClip: clip,
-        });
       };
 
       ctrl.isValid = function() {
@@ -110,10 +118,10 @@ angular.module('drillApp')
 
       ctrl.isSavable = function() {
         return ctrl.musicFile != null
-            && $scope.currentUser != null
-            && ctrl.isValid()
-            && ( ctrl.musicFile.type == 'clip'
-            || ctrl.selection != null );
+          && $scope.currentUser != null
+          && ctrl.isValid()
+          && (ctrl.musicFile.type == 'clip'
+            || ctrl.selection != null);
       };
 
       ctrl.saveClip = function() {
@@ -123,23 +131,23 @@ angular.module('drillApp')
       };
 
       function getClip() {
-        if (!ctrl.selection) return null;
+        // if (!ctrl.selection) return null;
 
         let clip = {
-            type: ctrl.selection ? 'clip' : 'file',
-            fileName: ctrl.musicFile.fileName,
-            key: ctrl.musicFile.key,
-            url: ctrl.musicFile.url,
-            title: ctrl.title,
-            counts: ctrl.counts,
-            tempo: ctrl.tempo,
-            duration: ctrl.duration,
-            fileDuration: ctrl.wavesurfer.getDuration(),
-            startOffset: ctrl.startOffset || 0,
-            performedBy: ctrl.musicFile.performedBy,
-            isPublic: ctrl.isPublic,
-            userId: $scope.currentUser ? $scope.currentUser._id : null,
-            beats: ctrl.beats,
+          type: ctrl.selection ? 'clip' : 'file',
+          fileName: ctrl.musicFile.fileName,
+          key: ctrl.musicFile.key,
+          url: ctrl.musicFile.url,
+          title: ctrl.title,
+          counts: ctrl.counts,
+          tempo: ctrl.tempo,
+          duration: ctrl.duration,
+          fileDuration: ctrl.wavesurfer.getDuration(),
+          startOffset: ctrl.startOffset || 0,
+          performedBy: ctrl.musicFile.performedBy,
+          isPublic: ctrl.isPublic,
+          userId: $scope.currentUser ? $scope.currentUser._id : null,
+          beats: ctrl.beats,
         };
 
         if (ctrl.musicFile.type == 'clip' && ctrl.musicFile._id) {
@@ -238,7 +246,7 @@ angular.module('drillApp')
         Audio
           .load(musicFile.url)
           .then(() => {
-              ctrl.wavesurfer.loadDecodedBuffer(Audio.getBuffer(musicFile.url));
+            ctrl.wavesurfer.loadDecodedBuffer(Audio.getBuffer(musicFile.url));
           })
           .catch((err) => {
             let msg = 'Unable to load audio file.';
@@ -334,4 +342,14 @@ angular.module('drillApp')
     },
   });
 
+class AddAudioClipException {
+  constructor(msg, inner, context) {
+    this.message = msg;
+    this.inner = inner;
+    this.context = context;
+  }
 
+  toString() {
+    return this.message;
+  }
+}
