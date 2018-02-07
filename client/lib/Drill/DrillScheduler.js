@@ -102,6 +102,7 @@ class DrillScheduler {
                 tempo: tempo,
                 timeInterval: timeInterval,
                 time: time,
+                startCount: startCount,
             };
             throw new DrillSchedulerException(msg, err, context);
         }
