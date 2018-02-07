@@ -13,10 +13,7 @@ app.config(($provide) => {
   $provide.decorator('$exceptionHandler', ($delegate) => {
     return (exception, cause) => {
         $delegate(exception, cause);
-        Logger.logException({
-          message: exception.message,
-          stack: exception.stack,
-        });
+        Logger.logException(exception);
     };
   });
 });

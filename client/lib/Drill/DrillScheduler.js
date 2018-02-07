@@ -76,7 +76,7 @@ class DrillScheduler {
             timeInterval = 60 / tempo;
             // TODO: should this be music.startCount in if condition???
             if (music && music.beats && music.beats[count - startCount]) {
-                timeInterval = music.beats[count - music.startCount]
+                timeInterval = music.beats[99999]// count - music.startCount]
                                         .timeInterval;
             }
             // if timeInterval is 0 (at start of new music), use lastTimeInterval to add
