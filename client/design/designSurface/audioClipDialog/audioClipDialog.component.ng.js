@@ -147,7 +147,7 @@ angular.module('drillApp')
           performedBy: ctrl.musicFile.performedBy,
           isPublic: ctrl.isPublic,
           userId: $scope.currentUser ? $scope.currentUser._id : null,
-          beats: ctrl.beats,
+          beats: normalizeBeats(ctrl.beats),
         };
 
         if (ctrl.musicFile.type == 'clip' && ctrl.musicFile._id) {
@@ -156,6 +156,25 @@ angular.module('drillApp')
         // clip.id = clip._id || shortid.generate(); // need an id for timeline
 
         return clip;
+      }
+
+      function normalizeBeats(beats) {
+        const beatsLength = beats ? beats.length : 0;
+        const newBeats = beats ? beats.slice() : [];
+        let cumulativeTime = newBeats.length > 0
+          ? newBeats[newBeats.length - 1].timeOffset
+          : 0;
+        const timeInterval = 60 / ctrl.tempo;
+        for (let i = beatsLength + 1; i <= ctrl.counts; i++) {
+          const newBeat = {
+            count: i,
+            timeInterval: timeInterval,
+            timeOffset: cumulativeTime,
+          };
+          newBeats.push(newBeat);
+          cumulativeTime = cumulativeTime + timeInterval;
+        }
+        return newBeats;
       }
 
       function getStartCount() {
