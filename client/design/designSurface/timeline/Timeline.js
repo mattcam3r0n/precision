@@ -139,14 +139,6 @@ class Timeline {
         };
     }
 
-    getVisibleCountRange() {
-        let window = this.timeline.getWindow();
-        return {
-            start: window.start.getMilliseconds(),
-            end: window.end.getMilliseconds(),
-        };
-    }
-
     moveTo(count) {
         this.timeline.moveTo(new Date(count), { animation: false });
     }

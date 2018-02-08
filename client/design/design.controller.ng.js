@@ -46,9 +46,9 @@ angular.module('drillApp')
         console.log($scope);
         console.log($scope.isLoggingIn);
 
-        $scope.$awaitUser().then(() => {
-          console.log('awaitUser', $scope.currentUser);
-        });
+        // $scope.$awaitUser().then(() => {
+        //   console.log('awaitUser', $scope.currentUser);
+        // });
 
         if ($scope.currentUser === undefined) return; // user not available yet
 
