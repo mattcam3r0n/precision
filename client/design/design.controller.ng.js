@@ -40,11 +40,11 @@ angular.module('drillApp')
         drillEditorService.setTempo($scope.tempo);
       });
 
-      console.log($scope.isLoggingIn);
+      // console.log($scope.isLoggingIn);
 
       $scope.$watch('currentUser', function(newValue, oldValue) {
-        console.log($scope);
-        console.log($scope.isLoggingIn);
+        // console.log($scope);
+        // console.log($scope.isLoggingIn);
 
         // $scope.$awaitUser().then(() => {
         //   console.log('awaitUser', $scope.currentUser);
@@ -136,11 +136,11 @@ angular.module('drillApp')
       $scope.$safeApply(); // necessary for field painting?
     }
 
-    function getDrillId() {
-      if (!$scope.drill) return null;
-      if (!$scope.drill._id) return 'new';
-      return $scope.drill._id;
-    }
+    // function getDrillId() {
+    //   if (!$scope.drill) return null;
+    //   if (!$scope.drill._id) return 'new';
+    //   return $scope.drill._id;
+    // }
 
     function onKeydown(e) {
       keyboardHandler.handle(e);
