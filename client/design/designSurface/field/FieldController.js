@@ -147,9 +147,13 @@ class FieldController {
      * @param {object} args
      */
     drillStateChanged(args) {
-        this.updateMarchers(args);
+        this.updateMarchers();
         this.update();
-        this.canvas.renderAll();
+    }
+
+    selectionChanged(args) {
+        this.updateMarcherSelection();
+        this.update();
     }
 
     showGrid() {
@@ -190,7 +194,7 @@ class FieldController {
         this.positionIndicatorEnabled = true;
     }
 
-    updateMarchers(args) {
+    updateMarchers() {
         if (!this.drill || !this.marchers) return;
 
         // eslint-disable-next-line guard-for-in
@@ -215,8 +219,18 @@ class FieldController {
             };
 
             marcher.update(state);
-            marcher.setCoords();
+            // marcher.setCoords();
         }
+    }
+
+    updateSelectedMarchers() {
+        if (!this.drill || !this.marchers) return;
+        // eslint-disable-next-line guard-for-in
+        for (let id in this.marchers) {
+            let marcher = this.marchers[id];
+            marcher.updateSelection({ isSelected: marcher.member.isSelected });
+        }
+        this.update();
     }
 
     synchronizeMarchers() {
@@ -276,6 +290,8 @@ class FieldController {
         this.subscriptions.subscribe(Events.hideGrid, this.hideGrid.bind(this));
         this.subscriptions.subscribe(Events.showLogo, this.showLogo.bind(this));
         this.subscriptions.subscribe(Events.hideLogo, this.hideLogo.bind(this));
+        this.subscriptions.subscribe(Events.membersSelected,
+            this.updateSelectedMarchers.bind(this));
     }
 
     wireUpContextMenu() {

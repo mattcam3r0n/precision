@@ -71,6 +71,7 @@ class Timeline {
         this.timeline.setItems(this.items);
 
         this.timeline.on('doubleClick', function(props) {
+            if (!props.time) return;
             let count = props.time.getMilliseconds();
             self.moveTo(count);
             self.setCurrentCount(count);

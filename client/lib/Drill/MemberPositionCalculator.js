@@ -7,9 +7,6 @@ import StrideType from '/client/lib/StrideType';
  * BUT DOES NOT CHANGE STATE
  */
 
-let deltaX = { 0: 0, 90: 1, 180: 0, 270: -1 };
-let deltaY = { 0: -1, 90: 0, 180: 1, 270: 0 };
-
 class MemberPositionCalculator {
     static areStatesSame(state1, state2) {
         return state1 && state2
@@ -72,7 +69,8 @@ class MemberPositionCalculator {
         let newState;
 
         for (let i = 0; i < steps; i++) {
-            currentState = currentState || Object.assign({}, member.currentState);
+            currentState = currentState || Object.assign({},
+                member.currentState);
             newState = this.getState(member, currentState.count + 1);
 
             newState.x = currentState.x + newState.deltaX;
@@ -90,14 +88,16 @@ class MemberPositionCalculator {
     static stepBackward(member, currentState, steps) {
         steps = steps || 1;
 
-        var currentState,
-            newState;
+        // let currentState;
+        let newState;
 
         for (let i = 0; i < steps; i++) {
-            var currentState = currentState || Object.assign({}, member.currentState);
+            currentState = currentState || Object.assign({},
+                member.currentState);
 
-            if (this.isBeginningOfDrill(member, currentState))
-                {return currentState;}
+            if (this.isBeginningOfDrill(member, currentState)) {
+                return currentState;
+            }
 
             // if (this.isBeyondEndOfDrill(member, position)) {
             //     position.count--;
@@ -105,7 +105,7 @@ class MemberPositionCalculator {
             // }
 
             // get the new state at count - 1, undo the currentState x,y
-            var newState = this.getState(member, currentState.count - 1);
+            newState = this.getState(member, currentState.count - 1);
             newState.x = currentState.x - currentState.deltaX;
             newState.y = currentState.y - currentState.deltaY;
 
@@ -167,7 +167,8 @@ class MemberPositionCalculator {
     }
 
     static goToCount(member, goToCount, currentState) {
-        var currentState = currentState || Object.assign({}, member.currentState);
+        currentState = currentState || Object.assign({},
+            member.currentState);
         if (goToCount < member.currentState.count) {
             while (goToCount < currentState.count) {
                 currentState = this.stepBackward(member, currentState);

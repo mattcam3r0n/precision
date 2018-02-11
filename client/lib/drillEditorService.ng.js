@@ -44,11 +44,11 @@ class DrillEditorService {
 
     // Playback
 
-    play(cb, playLength, playMusic) {
+    play(cb, playLength, playMusic, playMetronome) {
         this.drillPlayer.play(() => {
             this.notifyDrillStateChanged();
             if (cb) cb();
-        }, playLength, playMusic);
+        }, playLength, playMusic, playMetronome);
     }
 
     stop() {
@@ -89,19 +89,19 @@ class DrillEditorService {
     selectMembers(members) {
         this.drillBuilder.select(members);
         this.notifyMembersSelected();
-        this.notifyDrillStateChanged();
+        // this.notifyDrillStateChanged();
     }
 
     selectAll() {
         this.drillBuilder.selectAll();
         this.notifyMembersSelected();
-        this.notifyDrillStateChanged();
+        // this.notifyDrillStateChanged();
     }
 
     deselectAll() {
         this.drillBuilder.deselectAll();
         this.notifyMembersSelected();
-        this.notifyDrillStateChanged();
+        // this.notifyDrillStateChanged();
     }
 
     getMemberSelection() {
@@ -249,8 +249,10 @@ class DrillEditorService {
     // Events
 
     notifyDrillStateChanged() {
-        let memberSelection = this.drillBuilder.getMemberSelection();
-        this.eventService.notify(Events.drillStateChanged, { memberSelection });
+        // TODO: is memberselection needed for this event? doesn't seem to be used anywhere?
+        // let memberSelection = this.drillBuilder.getMemberSelection();
+        // this.eventService.notify(Events.drillStateChanged, { memberSelection });
+        this.eventService.notify(Events.drillStateChanged);
     }
 
     notifyStrideTypeChanged() {

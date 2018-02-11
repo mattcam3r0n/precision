@@ -6,11 +6,12 @@ class AudioBufferLoader {
 
     load(urlList) {
         urlList = this.makeArray(urlList);
-        var promises = [];
-        for (var i = 0; i < urlList.length; ++i) {
+        let promises = [];
+        for (let i = 0; i < urlList.length; ++i) {
             let url = urlList[i];
-            if (!this.buffers[url])
+            if (!this.buffers[url]) {
                 promises.push(this.loadBuffer(url));
+            }
         }
 
         return Promise.all(promises).then(() => {
@@ -19,8 +20,9 @@ class AudioBufferLoader {
     }
 
     makeArray(val) {
-        if (Array.isArray(val))
+        if (Array.isArray(val)) {
             return val;
+        }
 
         return [val];
     }
@@ -34,41 +36,39 @@ class AudioBufferLoader {
     }
 
     loadBuffer(url) {
-        var loader = this;
+        let loader = this;
         return new Promise((resolve, reject) => {
             // Load buffer asynchronously
-            var request = new XMLHttpRequest();
-            request.open("GET", url, true);
-            request.responseType = "arraybuffer";
+            let request = new XMLHttpRequest();
+            request.open('GET', url, true);
+            request.responseType = 'arraybuffer';
 
-            request.onload = function () {
+            request.onload = function() {
                 // Asynchronously decode the audio file data in request.response
                 loader.context.decodeAudioData(
                     request.response,
-                    function (buffer) {
+                    function(buffer) {
                         if (!buffer) {
-                            reject({ status: this.status , statusText: 'error decoding file data: ' + url });
+                            reject({ status: this.status, statusText: 'error decoding file data: ' + url });
                             return;
                         }
                         loader.buffers[url] = buffer;
                         resolve(buffer);
                     },
-                    function (error) {
+                    function(error) {
                         console.error('decodeAudioData error', error, url);
                         reject(error);
                     }
                 );
-            }
+            };
 
-            request.onerror = function () {
+            request.onerror = function() {
                 reject('BufferLoader: XHR error');
-            }
+            };
 
             request.send();
         });
-
     }
-
 }
 
 export default AudioBufferLoader;

@@ -35,13 +35,17 @@ let Marcher = fabric.util.createClass(fabric.Triangle, {
     /* eslint-enable */
   },
 
+  updateSelection: function(state) {
+    this.setSelection(state.isSelected);
+  },
+
   update: function(state) {
     // set position and direction
     this.setPosition(state.x, state.y, state.direction);
 
     // set selection
     this.setSize(state);
-    this.setSelection(state.isSelected);
+    // this.setSelection(state.isSelected);
     this.setVisible(state.isVisible);
     this.setOpacity(state);
   },
@@ -58,18 +62,20 @@ let Marcher = fabric.util.createClass(fabric.Triangle, {
   },
 
   setSize: function(state) {
+    // NOTE: changing height and width is very expensive
+    // performance wise, so using scale instead.
     if ((state.stepType == StepType.MarkTime
       || state.stepType == StepType.DeadStep
       || state.stepType == StepType.FaceStep)
       && state.count % 2 == 1) {
-      this.set('height', FieldDimensions.marcherHeight + 2);
-      this.set('width', FieldDimensions.marcherWidth + 2);
+        this.set('scaleX', 1.1);
+        this.set('scaleY', 1.1);
       return;
     }
 
-    this.set('height', FieldDimensions.marcherHeight);
-    this.set('width', FieldDimensions.marcherWidth);
-  },
+    this.set('scaleX', 1);
+    this.set('scaleY', 1);
+},
 
   setPosition: function(x, y, dir) {
     this.set('left', x);
@@ -78,6 +84,7 @@ let Marcher = fabric.util.createClass(fabric.Triangle, {
   },
 
   setSelection: function(isSelected) {
+    // NOTE: changing stroke is very expensive
     this.set('stroke', isSelected ? 'yellow' : 'black');
   },
 

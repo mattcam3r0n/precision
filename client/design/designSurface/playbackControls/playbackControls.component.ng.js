@@ -56,9 +56,10 @@ angular.module('drillApp')
       };
 
       ctrl.onPlay = function(playMusic) {
+        Audio.ensureAudioIsInitialized();
         drillEditorService.play(() => {
           $rootScope.$safeApply();
-        }, 0, playMusic);
+        }, 0, playMusic, ctrl.isMetronomeEnabled);
       };
 
       ctrl.onStop = function() {
@@ -82,6 +83,10 @@ angular.module('drillApp')
         drillEditorService.stepForward();
       };
 
+      // ctrl.metronomeClick = function() {
+      //   Audio.ensureAudioIsInitialized();
+      //   Audio.playMetronome();
+      // };
 
       // ctrl.zoomIn = function() {
       //   ctrl.timeline.zoomIn();

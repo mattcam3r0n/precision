@@ -4,7 +4,6 @@ import MemberPositionCalculator from './MemberPositionCalculator';
  * Manipulates count/position of a single member.
  */
 class MemberPlayer {
-
     static stepForward(member) {
         member.currentState = MemberPositionCalculator.stepForward(member);
     }
@@ -19,13 +18,12 @@ class MemberPlayer {
 
     static isEndOfDrill(member) {
         // TODO: when one (or all?) member is on edge of field?
-        //return member.currentState.count >= member.script.length;
-        
+        // return member.currentState.count >= member.script.length;
         return MemberPositionCalculator.isEndOfDrill(member);
     }
 
     static isBeyondEndOfDrill(member) {
-        //return member.currentState.count > member.script.length;        
+        // return member.currentState.count > member.script.length;
         return MemberPositionCalculator.isBeyondEndOfDrill(member);
     }
 
@@ -33,7 +31,7 @@ class MemberPlayer {
         member.currentState.count = 0;
         member.currentState.direction = member.initialState.direction;
         member.currentState.x = member.initialState.x;
-        member.currentState.y = member.initialState.y;            
+        member.currentState.y = member.initialState.y;
     }
 }
 

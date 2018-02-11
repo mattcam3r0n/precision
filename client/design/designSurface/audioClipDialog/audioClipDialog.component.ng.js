@@ -16,7 +16,7 @@ angular.module('drillApp')
     bindings: {
       drill: '<',
     },
-    controller: function($scope, $rootScope, eventService, appStateService) {
+    controller: function($scope, $rootScope, $window, eventService, appStateService) {
       let ctrl = this;
 
       let slider = document.querySelector('#slider');
@@ -39,12 +39,14 @@ angular.module('drillApp')
 
         $('#audioClipDialog').on('shown.bs.modal', function() {
           loadAudio(ctrl.musicFile);
-          $(document).on('keydown', onSpacePressed);
-        });
+          // $(document).on('keydown', onSpacePressed);
+          $window.addEventListener('keydown', onSpacePressed);
+      });
 
         $('#audioClipDialog').on('hidden.bs.modal', function() {
           unloadAudio();
-          $(document).off('keydown');
+          // $(document).off('keydown');
+          $window.removeEventListener('keydown', onSpacePressed);
           $('#audioClipDialog').off('shown.bs.modal');
           $('#audioClipDialog').off('hidden.bs.modal');
         });
@@ -53,13 +55,13 @@ angular.module('drillApp')
       };
 
       ctrl.play = function(playMetronome) {
+        Audio.ensureAudioIsInitialized();
         playMetronome = playMetronome === undefined ? true : playMetronome;
         if (ctrl.wavesurfer.isPlaying()) {
           ctrl.wavesurfer.pause();
           ctrl.metronome.stop();
           return;
         }
-
         if (ctrl.selection) {
           ctrl.selection.play();
         } else {
@@ -187,9 +189,9 @@ angular.module('drillApp')
       }
 
       function onSpacePressed(e) {
-        if (e.key != ' ' || e.target.nodeName == 'INPUT') return;
-
         let thisTap = e.timeStamp;
+        if (e.key != ' ' || e.target.nodeName == 'INPUT') return;
+        Audio.playMetronome();
         if (!ctrl.wavesurfer.isPlaying()) {
           ctrl.beats = [{
             count: 1,
@@ -214,6 +216,7 @@ angular.module('drillApp')
         }
         let duration = (ctrl.lastTap - ctrl.firstTap) / 1000;
         ctrl.tempo = calcTempo(duration, ctrl.counts - 1);
+        $rootScope.$safeApply();
       }
 
       function formatDuration(duration) {

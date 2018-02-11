@@ -21,11 +21,12 @@ class DrillPlayer {
         this.tempo = tempo || 120;
     }
 
-    play(stateChangedCallback, counts, playMusic) {
+    play(stateChangedCallback, counts, playMusic, playMetronome) {
         let self = this;
         if (self.isPlaying) return;
 
         self.playMusic = playMusic || false;
+        self.playMetronome = playMetronome || false;
         self.stopCount = 0;
         if (counts) { // rework this around schedule? only schedule n counts?
             self.stopCount = self.drill.count + counts;
@@ -93,19 +94,25 @@ class DrillPlayer {
         return this.stopCount > 0 && this.drill.count >= this.stopCount;
     }
 
-    animate(timestamp) {
+    animate() {
         let self = this;
-        // let tempoInMS = (60 / self.tempo) * 1000;
         let nextStep = self.schedule.steps[self.drill.count - self.startCount];
+        const timestamp = Audio.currentTime;
+
         if (self.startTimestamp == 0) {
             self.startTimestamp = timestamp;
         }
 
-        if (nextStep && timestamp >= self.startTimestamp
-            + (nextStep.time * 1000)) {
+        if (nextStep && (timestamp >= self.startTimestamp
+            + nextStep.time)) {
             self.lastTimestamp = timestamp;
-            self.stepForward();
+
+            self.stepForward(true);
             self.stateChangedCallback();
+
+            if (self.playMetronome) {
+                Audio.playMetronome();
+            }
 
             if (self.playMusic
                 && nextStep
@@ -119,16 +126,16 @@ class DrillPlayer {
 
             nextStep = self.schedule.steps[self.drill.count - self.startCount];
 
-            if (self.isEndOfDrill() || self.isPastStopCount()) {
-                console.log('Reached end of drill.');
+            if (!nextStep || self.isPastStopCount()) {
+                    console.log('Reached end of drill.');
                 self.stop();
                 return;
             }
         }
     }
 
-    stepForward() {
-        if (this.isEndOfDrill()) return;
+    stepForward(skipEndCheck = false) {
+        if (!skipEndCheck && this.isEndOfDrill()) return;
         this.drill.members.forEach((m) => {
             MemberPlayer.stepForward(m);
         });
