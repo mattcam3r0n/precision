@@ -9,24 +9,28 @@
             <form ng-submit="signUp()">
                 <div class="sign-up-group">
                     <div class="form-group text-left">
-                        <label for="signUpName" class="">Name</label>
-                        <input ng-model="name" type="password" class="form-control" id="signUpName" name="signUpName" placeholder="Name">
+                        <label for="signUpFirstName" class="">First Name</label>
+                        <input ng-model="firstName" ng-required='true' type="text" class="form-control" id="signUpFirstName" name="signUpFirstName" placeholder="First Name">
                     </div>
                     <div class="form-group text-left">
+                            <label for="signUpLastName" class="">Last Name</label>
+                            <input ng-model="lastName" ng-required='true' type="text" class="form-control" id="signUpLastName" name="signUpLastName" placeholder="Last Name">
+                        </div>
+                        <div class="form-group text-left">
                         <label for="signUpOrgName" class="">Organization</label>
-                        <input ng-model="orgName" type="text" class="form-control" id="signUpOrgName" name="signUpOrgName" placeholder="Organization Name">
+                        <input ng-model="orgName" ng-required='true' type="text" class="form-control" id="signUpOrgName" name="signUpOrgName" placeholder="Organization Name">
                     </div>
                     <hr/>
                     <div class="form-group text-left">
                         <label for="signUpEmail" class="">Email</label>
-                        <input ng-model="email" type="text" class="form-control" id="signUpEmail" name="signUpEmail" placeholder="Email">
+                        <input ng-model="email" ng-required='true' type="text" class="form-control" id="signUpEmail" name="signUpEmail" placeholder="Email">
                     </div>
                     <div class="form-group text-left">
                         <label for="signUpPw" class="">Password</label>
-                        <input ng-model="password" type="password" class="form-control" id="signUpPw" name="signUpPw" placeholder="Password">
+                        <input ng-model="password" ng-required='true' type="password" class="form-control" id="signUpPw" name="signUpPw" placeholder="Password">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <button ng-click="signUp()" type="submit" class="btn btn-primary">
                     Create Account
                 </button>
             </form>

@@ -5,6 +5,10 @@ angular.module('drillApp')
   $scope.viewName = 'login';
 
   $scope.logIn = () => {
-      userService.logIn($scope.email, $scope.password);
+      userService
+        .logIn($scope.email, $scope.password)
+        .then(() => {
+          $location.path('/');
+        });
   };
 });

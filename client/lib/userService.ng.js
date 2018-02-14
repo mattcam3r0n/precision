@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import User from '/lib/User';
 
 class UserService {
-    constructor($location) {
-        this.$location = $location;
+    constructor() {
         this.userProfile = this.getUserProfile();
     }
 
@@ -19,44 +19,35 @@ class UserService {
     }
 
     getUserEmail() {
-        // let user = Meteor.user();
-        // if (!user || !user.emails || user.emails.length == 0) {
-        //     return null;
-        // }
-
-        // return user.emails[0].address;
         return User.getUserEmail();
     }
 
     getUserId() {
-        // let user = Meteor.user();
-        // if (!user || !user._id) {
-        //     return null;
-        // }
-
-        // return user._id;
         return User.getUserId();
     }
 
     logIn(email, password) {
-        Meteor.loginWithPassword(email, password, (err) => {
-            if (err) {
-                // The user might not have been found, or their passwword
-                // could be incorrect. Inform the user that their
-                // login attempt has failed.
-                console.log(err);
-            } else {
-                console.log('logged in');
-                this.$location.path('/');
-            }
-            // The user has been logged in.
+        return new Promise((resolve, reject) => {
+            Meteor.loginWithPassword(email, password, (err) => {
+                if (err) {
+                    // The user might not have been found, or their passwword
+                    // could be incorrect. Inform the user that their
+                    // login attempt has failed.
+                    // TODO: indicate issue?
+                    return reject(new UserServiceException('loginWithPassword failed.', err, {
+                        email: info.email,
+                    }));
+                }
+                // The user has been logged in.
+                resolve();
+            });
         });
     }
 
     logOut() {
         Meteor.logout(function(err) {
             if (err) {
-                console.log(err);
+                throw new UserServiceException('logOut failed.', err);
             }
         });
     }
@@ -64,18 +55,42 @@ class UserService {
     forgotPassword(email) {
         Meteor.forgotPassword({ email: email }, (err) => {
             if (err) {
-                console.log('forgotPassword', err);
-            } else {
-                // ? return true?
+                throw new UserServiceException('Error in forgotPassword.', err, {
+                    email: email,
+                });
             }
         });
     }
 
     createAccount(info) {
-        
+        return new Promise((resolve, reject) => {
+            Accounts.createUser(info, (err) => {
+                if (err) {
+                    return reject(new UserServiceException(err.reason, err, {
+                        email: info.email,
+                        firstName: info.profile.firstName,
+                        lastName: info.profile.lastName,
+                        orgName: info.profile.orgName,
+                    }));
+                }
+                resolve();
+            });
+        });
     }
 }
 
 angular.module('drillApp')
     .service('userService',
-    ['$location', UserService]);
+    [UserService]);
+
+class UserServiceException {
+    constructor(msg, inner, context) {
+        this.message = msg;
+        this.inner = inner;
+        this.context = context;
+    }
+
+    toString() {
+        return this.message;
+    }
+}

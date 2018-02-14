@@ -8,8 +8,8 @@ class AlertService {
             style: style,
             // Accepts: fixed-top, fixed-bottom, growl-top-left,   growl-top-right,
             // growl-bottom-left, growl-bottom-right.
-            type: 'default'
-            // Accepts: default, success, info, warning, danger.          
+            type: 'default',
+            // Accepts: default, success, info, warning, danger.
         };
     }
 
@@ -30,11 +30,11 @@ class AlertService {
     }
 
     danger(msg) {
-        this.alert(msg, 'danger', style);        
+        this.alert(msg, 'danger', style);
     }
 
     error(msg) {
-        this.alert(msg, 'danger', style);        
+        this.alert(msg, 'danger', style);
     }
 }
 

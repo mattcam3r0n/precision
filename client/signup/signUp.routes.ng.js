@@ -6,6 +6,6 @@ angular.module('drillApp')
   .state('sign-up', {
     url: '/sign-up',
     templateUrl: 'client/signup/signUp.view.ng.html',
-    controller: 'LoginCtrl',
+    controller: 'SignUpCtrl',
   });
 });
