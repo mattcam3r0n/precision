@@ -7,22 +7,26 @@ angular.module('drillApp')
     $scope.viewName = 'sign-up';
 
     $scope.signUp = () => {
-      const info = {
-        email: $scope.email,
-        password: $scope.password,
-        profile: {
-          firstName: $scope.firstName,
-          lastName: $scope.lastName,
-          orgName: $scope.orgName,
-        },
-      };
       userService
-        .createAccount(info)
+        .createAccount({
+          email: $scope.email,
+          password: $scope.password,
+          profile: {
+            firstName: $scope.firstName,
+            lastName: $scope.lastName,
+            orgName: $scope.orgName,
+          },
+        })
         .then(() => {
           $location.path('/');
+          Meteor.callPromise('sendNewUserEmail', {
+            firstName: $scope.firstName,
+            lastName: $scope.lastName,
+            orgName: $scope.orgName,
+            email: $scope.email,
+           });
         })
         .catch((ex) => {
-          console.log(ex);
           Logger.logException(ex);
           alertService.error('Unable to create account. ' + ex.message);
         });

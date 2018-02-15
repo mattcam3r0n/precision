@@ -53,7 +53,7 @@ class UserService {
     }
 
     forgotPassword(email) {
-        Meteor.forgotPassword({ email: email }, (err) => {
+        Accounts.forgotPassword({ email: email }, (err) => {
             if (err) {
                 throw new UserServiceException('Error in forgotPassword.', err, {
                     email: email,

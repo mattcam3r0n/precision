@@ -13,6 +13,7 @@ module.exports = {
             "ignoreComments": true,
             "ignoreStrings": true,
         }],
-        "object-curly-spacing": "off"
+        "object-curly-spacing": "off",
+        "switch-colon-spacing": "off",
     }
 };
