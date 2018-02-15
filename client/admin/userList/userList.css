@@ -1,0 +1,26 @@
+.user-list .search-box {
+    background-color: white;
+    padding: 5px;
+}
+
+.user-list .search-box input {
+    border: 0;
+}
+
+.user-list .search-box input:focus {
+    outline: 0;
+}
+
+.user-list ul {
+    padding: 5px;
+}
+
+.user-list li {
+    list-style-type: none;
+    padding: 5px;
+}
+
+.user-list li:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}
