@@ -8,5 +8,7 @@ Meteor.methods({
     };
 
     Roles.removeUsersFromRoles(id, ['disabled']);
+    if (this.isSimulation) return;
+    Logger.info('User ' + id + ' enabled by admin.');
   },
 });

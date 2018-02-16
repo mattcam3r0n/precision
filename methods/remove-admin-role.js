@@ -8,5 +8,7 @@ Meteor.methods({
     };
 
     Roles.removeUsersFromRoles(id, ['admin']);
+    if (this.isSimulation) return;
+    Logger.info('Removed admin privilege from user ' + id);
   },
 });

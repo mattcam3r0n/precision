@@ -10,5 +10,7 @@ Meteor.methods({
     }
 
     Roles.addUsersToRoles(id, ['admin']);
+    if (this.isSimulation) return;
+    Logger.info('Added admin privilege to user ' + id);
   },
 });

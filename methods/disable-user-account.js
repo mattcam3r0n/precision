@@ -8,5 +8,7 @@ Meteor.methods({
     };
 
     Roles.addUsersToRoles(id, ['disabled']);
+    if (this.isSimulation) return;
+    Logger.info('User ' + id + ' disabled by admin.');
   },
 });

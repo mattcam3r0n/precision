@@ -2,8 +2,6 @@
 
 Meteor.methods({
     deleteUser: function(id) {
-        if (this.isSimulation) return;
-
         const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
         if (!isAdmin) {
           if (!isAdmin) {
@@ -12,5 +10,7 @@ Meteor.methods({
         }
 
         Meteor.users.remove(id);
+        if (this.isSimulation) return;
+        Logger.info('User ' + id + ' deleted by admin.');
     },
 });
