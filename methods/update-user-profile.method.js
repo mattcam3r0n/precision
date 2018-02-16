@@ -6,9 +6,11 @@ Meteor.methods({
         if (!user) {
             return null;
         }
+        let currentProfile = user.profile || {};
+        let mergedProfile = Object.assign(currentProfile, profile);
         Meteor.users.update({ _id: Meteor.userId() }, {
             $set: {
-                'profile': profile,
+                'profile': mergedProfile,
             },
         },
             function(err) {

@@ -61,6 +61,10 @@ class Events {
 
     // Events - notification that something has happened
 
+    static get userSelected() {
+        return 'userSelected';
+    }
+
     static get strideTypeChanged() {
         return 'strideTypeChanged';
     }

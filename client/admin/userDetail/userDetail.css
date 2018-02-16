@@ -1,0 +1,17 @@
+.user-detail {
+    width: 50%;
+    padding: 10px;
+}
+
+.user-detail .heading {
+    height: 32px;
+    font-size: 18px;
+    margin-top: 5px;
+    border-bottom: solid 1px lightgrey;
+}
+
+.user-detail .row {
+    margin: 0px;
+    padding: 5px;
+    border-bottom: solid 1px lightgray;
+}

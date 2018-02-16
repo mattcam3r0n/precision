@@ -1,5 +1,11 @@
 'use strict';
 
+Meteor.users.deny({
+  update: function() {
+    return true;
+  },
+});
+
 Meteor.publish('users', function(options, searchString) {
   // const user = Meteor.user();
 
@@ -27,7 +33,6 @@ Meteor.publish('users', function(options, searchString) {
         },
       ],
     };
-    console.log(searchString, where.$or, options);
     return Meteor.users.find(where, options);
   }
   return null;

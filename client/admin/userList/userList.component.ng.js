@@ -8,7 +8,7 @@ angular.module('drillApp')
     templateUrl: 'client/admin/userList/userList.view.ng.html',
     bindings: {
     },
-    controller: function($scope, appStateService, eventService) {
+    controller: function($scope, eventService) {
       let ctrl = this;
 
       $scope.page = 1;
@@ -33,28 +33,14 @@ angular.module('drillApp')
         },
       });
 
-      $scope.open = function(drill) {
-        ctrl.onOpen({ drill: drill });
-        eventService.notify(Events.drillOpened, {
-          drill: drill,
-        });
-      };
-
-      $scope.delete = function(drill) {
-        appStateService.deleteDrill(drill._id);
+      $scope.selectUser = function(user) {
+        ctrl.user = user;
+        eventService.notify(Events.userSelected, { user: user });
       };
 
       $scope.pageChanged = function(newPage) {
         $scope.page = newPage;
       };
-
-      return $scope.$watch('orderProperty', function() {
-        if ($scope.orderProperty) {
-          $scope.sort = {
-            name_sort: parseInt($scope.orderProperty),
-          };
-        }
-      });
 
       ctrl.$onInit = function() {
       };

@@ -4,7 +4,7 @@
         <input ng-model="search" type="text" class="" placeholder="Enter search terms"/>
     </div>
     <ul>
-        <li  dir-paginate="user in users | itemsPerPage: perPage" total-items="userCount" current-page='page'>
+        <li ng-click="selectUser(user)" dir-paginate="user in users | itemsPerPage: perPage" total-items="userCount" current-page='page'>
             <div><strong>{{user.profile.firstName}} {{user.profile.lastName}}</strong></div>
             <div>{{user.profile.orgName}}</div>
         </li>

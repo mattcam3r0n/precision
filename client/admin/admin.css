@@ -8,13 +8,16 @@
   }
   
   .admin.nav {
-    background: lightblue;
+    background: rgb(213, 224, 231);
     width: 200px;
     flex: 0 1 auto;
   }
   
-  
   .admin.main {
-    background: gainsboro;
+    background: whitesmoke;
     flex: 1 1 auto;
+  }
+
+  .admin .panel {
+    margin: 10px;
   }
