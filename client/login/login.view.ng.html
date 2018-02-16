@@ -14,6 +14,9 @@
                         <label for="loginPw" class="">Password</label>
                         <input ng-model="password" type="password" class="form-control" id="loginPw" name="loginPw" placeholder="Password">
                     </div>
+                    <div ng-show="true">
+                        <div class="error">{{message}}</div>
+                    </div>
                 </div>
                 <button type="submit" ng-click="logIn()" class="btn btn-primary">
                     Log In

@@ -14,3 +14,7 @@
     flex: 0 0 auto;
     height: 550px;
 }
+
+.login .error {
+    color: red;
+}

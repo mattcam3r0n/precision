@@ -39,7 +39,7 @@ class UserService {
                     // login attempt has failed.
                     // TODO: indicate issue?
                     return reject(new UserServiceException('loginWithPassword failed.', err, {
-                        email: info.email,
+                        email: email,
                     }));
                 }
                 // The user has been logged in.
