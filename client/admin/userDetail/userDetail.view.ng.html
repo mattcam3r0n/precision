@@ -1,48 +1,53 @@
 <div class="user-detail">
     <div class="heading">User Information</div>
-    <div class="row">
-        <button ng-click="$ctrl.enableDisableAccount()" class="btn btn-primary">{{$ctrl.isDisabled() ? 'Enable Account' : 'Disable Account'}}</button>
-        <button class="btn btn-primary">Delete Account</button>
-        <button class="btn btn-primary">{{$ctrl.isAdmin() ? 'Remove Admin' : 'Make Admin'}}</button>
+    <div ng-show="!$ctrl.user">
+        <div class="no-user-selected">Select a user from the list on the left.</div>
     </div>
-    <div class="row">
-        <div class="col-md-6 text-left">ID</div>
-        <div class="col-md-6 text-right">{{$ctrl.user._id}}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 text-left">First Name</div>
-        <div class="col-md-6 text-right">{{$ctrl.user.profile.firstName}}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 text-left">Last Name</div>
-        <div class="col-md-6 text-right">{{$ctrl.user.profile.lastName}}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 text-left">Organization</div>
-        <div class="col-md-6 text-right">{{$ctrl.user.profile.orgName}}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 text-left">Administrator</div>
-        <div class="col-md-6 text-right">{{$ctrl.isAdmin() ? 'Yes' : 'No'}}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 text-left">Enabled</div>
-        <div class="col-md-6 text-right">{{$ctrl.isDisabled() ? 'No' : 'Yes'}}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 text-left">Email</div>
-        <div class="col-md-6 text-right">{{$ctrl.getEmail()}}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 text-left">Created</div>
-        <div class="col-md-6 text-right">{{$ctrl.getCreatedDate()}}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 text-left">Login Sessions</div>
-        <div class="col-md-6 text-right">0</div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 text-left">Drills</div>
-        <div class="col-md-6 text-right">{{$ctrl.userStats.drillCount}}</div>
+    <div ng-show="$ctrl.user">
+        <div class="row">
+            <button ng-click="$ctrl.enableDisableAccount()" class="btn btn-primary">{{$ctrl.isDisabled() ? 'Enable Account' : 'Disable Account'}}</button>
+            <button class="btn btn-primary">Delete Account</button>
+            <button class="btn btn-primary">{{$ctrl.isAdmin() ? 'Remove Admin' : 'Make Admin'}}</button>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-left">ID</div>
+            <div class="col-md-6 text-right">{{$ctrl.user._id}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-left">First Name</div>
+            <div class="col-md-6 text-right">{{$ctrl.user.profile.firstName}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-left">Last Name</div>
+            <div class="col-md-6 text-right">{{$ctrl.user.profile.lastName}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-left">Organization</div>
+            <div class="col-md-6 text-right">{{$ctrl.user.profile.orgName}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-left">Administrator</div>
+            <div class="col-md-6 text-right">{{$ctrl.isAdmin() ? 'Yes' : 'No'}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-left">Enabled</div>
+            <div class="col-md-6 text-right">{{$ctrl.isDisabled() ? 'No' : 'Yes'}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-left">Email</div>
+            <div class="col-md-6 text-right">{{$ctrl.getEmail()}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-left">Created</div>
+            <div class="col-md-6 text-right">{{$ctrl.getCreatedDate()}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-left">Login Sessions</div>
+            <div class="col-md-6 text-right">0</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-left">Drills</div>
+            <div class="col-md-6 text-right">{{$ctrl.userStats.drillCount}}</div>
+        </div>
     </div>
 </div>

@@ -3,6 +3,11 @@
     padding: 10px;
 }
 
+.user-detail .no-user-selected {
+    font-size: 16px;
+    margin-top: 20px;
+}
+
 .user-detail .heading {
     height: 32px;
     font-size: 18px;
