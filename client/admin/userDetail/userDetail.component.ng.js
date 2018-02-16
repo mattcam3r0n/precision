@@ -19,7 +19,6 @@ angular.module('drillApp')
             ctrl.userStats = userStats;
             $rootScope.$safeApply();
           });
-          console.log(ctrl.userStats);
         });
       };
 
