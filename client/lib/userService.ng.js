@@ -7,6 +7,10 @@ class UserService {
         this.userProfile = this.getUserProfile();
     }
 
+    isLoggedIn() {
+        return !!Meteor.user();
+    }
+
     getUserProfile() {
         if (!Meteor.user()) return {};
 

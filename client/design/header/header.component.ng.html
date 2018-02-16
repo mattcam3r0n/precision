@@ -47,20 +47,5 @@
     <i class="fa fa-pencil" ng-click="$ctrl.focusDrillName()" data-toggle="tooltip" data-placement="right" title="Edit Drill Name"></i>
   </div>
 
-  <div class="login-info menu">
-      <div class="dropdown design-header-menu">
-          <button class="dropdown-toggle" type="button" id="fileMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            {{$ctrl.userName()}}
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="#" ng-click="">Change Password...</a>
-            </li>
-            <li class="">
-              <a href="#" ng-click="$ctrl.logOut()">Log Out</a>
-            </li>
-          </ul>
-        </div>    
-  </div>
+  <user-menu></user-menu>
 </div>

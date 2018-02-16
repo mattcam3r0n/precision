@@ -1,6 +1,7 @@
 div.header {
   display: flex;
   background-color: #353535;
+  justify-content: space-between;
 }
 
 .header .brand {
@@ -30,11 +31,6 @@ div.header {
   color: white;
   text-align: center;
   margin-top: 5px;
-}
-
-.header .login-info {
-  flex: none;
-  width: 240px;
 }
 
 .header .drill-name input {
