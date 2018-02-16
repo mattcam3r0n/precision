@@ -6,8 +6,8 @@
     <div ng-show="$ctrl.user">
         <div class="row">
             <button ng-click="$ctrl.enableDisableAccount()" class="btn btn-primary">{{$ctrl.isDisabled() ? 'Enable Account' : 'Disable Account'}}</button>
-            <button class="btn btn-primary">Delete Account</button>
-            <button class="btn btn-primary">{{$ctrl.isAdmin() ? 'Remove Admin' : 'Make Admin'}}</button>
+            <button ng-click="$ctrl.deleteAccount()" class="btn btn-primary">Delete Account</button>
+            <button ng-click="$ctrl.addRemoveAdmin()" class="btn btn-primary">{{$ctrl.isAdmin() ? 'Remove Admin' : 'Make Admin'}}</button>
         </div>
         <div class="row">
             <div class="col-md-6 text-left">ID</div>

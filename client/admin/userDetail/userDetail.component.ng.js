@@ -46,12 +46,30 @@ angular.module('drillApp')
       };
 
       ctrl.enableDisableAccount = function() {
-        if (!ctrl.user) return false;
+        if (!ctrl.user) return;
         const isDisabled = Roles.userIsInRole(ctrl.user._id, 'disabled');
         if (isDisabled) {
           Meteor.call('enableUserAccount', ctrl.user._id);
         } else {
           Meteor.call('disableUserAccount', ctrl.user._id);
+        }
+      };
+
+      ctrl.deleteAccount = function() {
+        if (!ctrl.user) return;
+        Meteor.call('deleteUser', ctrl.user._id);
+        eventService.notify(Events.userSelected, {
+          user: Meteor.user(),
+        });
+      };
+
+      ctrl.addRemoveAdmin = function() {
+        if (!ctrl.user) return;
+        const isAdmin = Roles.userIsInRole(ctrl.user._id, 'admin');
+        if (isAdmin) {
+          Meteor.call('removeAdminRole', ctrl.user._id);
+        } else {
+          Meteor.call('addAdminRole', ctrl.user._id);
         }
       };
     },

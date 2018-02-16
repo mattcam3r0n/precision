@@ -83,6 +83,10 @@ class UserService {
             });
         });
     }
+
+    deleteAccount(id) {
+        Meteor.call('deleteUser', id);
+    }
 }
 
 angular.module('drillApp')

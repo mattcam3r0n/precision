@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
 import Events from '/client/lib/Events';
+import ApplicationException from '/client/lib/ApplicationException';
 
 let _currentDrillFormatVersion = 1;
 
@@ -209,8 +210,11 @@ class appStateService {
                         self.alertService.warning('Unable to save drill. Please login to save your work.');
                     } else {
                         // eslint-disable-next-line max-len
-                        self.alertService.danger('Unable to save drill. ' + err);
+                        self.alertService.danger('Unable to save drill. ' + error);
                     }
+                    throw new ApplicationException('Unable to update drill.', error, {
+                        drillId: id,
+                    });
                 } else {
                     console.log('saved');
                 }
