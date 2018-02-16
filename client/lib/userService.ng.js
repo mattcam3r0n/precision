@@ -11,6 +11,11 @@ class UserService {
         return !!Meteor.user();
     }
 
+    isAdmin() {
+        if (!Meteor.user()) return false;
+        return Roles.userIsInRole(Meteor.userId(), 'admin');
+    }
+
     getUserProfile() {
         if (!Meteor.user()) return {};
 

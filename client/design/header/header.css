@@ -21,8 +21,16 @@ div.design-header {
 
 .design-header .menu {
   flex: none;
-  width: 150px;
+  width: 180px;
   display: flex;
+}
+
+.design-header .menu a {
+  color: white;
+}
+
+.design-header .menu a:hover {
+  text-decoration: none;
 }
 
 .design-header .drill-name {

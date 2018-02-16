@@ -1,4 +1,3 @@
-
 <div class="design-header">
   <div class="brand">
     <a href="/">PRECISION</a>
@@ -41,9 +40,14 @@
         </li>
       </ul>
     </div>
+    <div class="design-header-menu" ng-show="$ctrl.isAdmin()">
+      <button ng-click="$ctrl.goToAdmin()" class="" type="button" id="adminMenu" aria-haspopup="true" aria-expanded="true">
+        Admin
+      </button>
+    </div>
   </div>
   <div class="drill-name">
-    <input id="txtDrillName" type="text" ng-model="drillName" ng-change="onNameChange()"/>
+    <input id="txtDrillName" type="text" ng-model="drillName" ng-change="onNameChange()" />
     <i class="fa fa-pencil" ng-click="$ctrl.focusDrillName()" data-toggle="tooltip" data-placement="right" title="Edit Drill Name"></i>
   </div>
 

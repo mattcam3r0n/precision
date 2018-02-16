@@ -8,6 +8,7 @@ angular.module('drillApp')
     bindings: {
     },
     controller: function($scope,
+              $location,
               eventService,
               appStateService,
               drillEditorService,
@@ -57,6 +58,14 @@ angular.module('drillApp')
 
       ctrl.userName = function() {
         return userService.getUserEmail();
+      };
+
+      ctrl.isAdmin = function() {
+        return userService.isAdmin();
+      };
+
+      ctrl.goToAdmin = function() {
+        $location.path('/admin');
       };
 
       ctrl.logOut = function() {
