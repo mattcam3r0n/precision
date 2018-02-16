@@ -1,9 +1,9 @@
 <div class="user-detail">
     <div class="heading">User Information</div>
     <div class="row">
-        <button class="btn btn-primary">Disable Account</button>
+        <button ng-click="$ctrl.enableDisableAccount()" class="btn btn-primary">{{$ctrl.isDisabled() ? 'Enable Account' : 'Disable Account'}}</button>
         <button class="btn btn-primary">Delete Account</button>
-        <button class="btn btn-primary">Make Admin</button>
+        <button class="btn btn-primary">{{$ctrl.isAdmin() ? 'Remove Admin' : 'Make Admin'}}</button>
     </div>
     <div class="row">
         <div class="col-md-6 text-left">ID</div>
@@ -20,6 +20,14 @@
     <div class="row">
         <div class="col-md-6 text-left">Organization</div>
         <div class="col-md-6 text-right">{{$ctrl.user.profile.orgName}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-left">Administrator</div>
+        <div class="col-md-6 text-right">{{$ctrl.isAdmin() ? 'Yes' : 'No'}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-left">Enabled</div>
+        <div class="col-md-6 text-right">{{$ctrl.isDisabled() ? 'No' : 'Yes'}}</div>
     </div>
     <div class="row">
         <div class="col-md-6 text-left">Email</div>

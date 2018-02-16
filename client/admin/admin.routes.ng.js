@@ -7,5 +7,12 @@ angular.module('drillApp')
     url: '/admin',
     templateUrl: 'client/admin/admin.view.ng.html',
     controller: 'AdminCtrl',
+    resolve: {
+      currentUser: ['$meteor', function($meteor) {
+        return $meteor.requireValidUser(function(user) {
+          return Roles.userIsInRole(user._id, 'admin');
+        });
+      }],
+    },
   });
 });
