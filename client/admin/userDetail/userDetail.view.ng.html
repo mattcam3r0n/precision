@@ -39,11 +39,15 @@
         </div>
         <div class="row">
             <div class="col-md-6 text-left">Created</div>
-            <div class="col-md-6 text-right">{{$ctrl.getCreatedDate()}}</div>
+            <div class="col-md-6 text-right">{{$ctrl.user.createdAt | date:'medium'}}</div>
         </div>
         <div class="row">
             <div class="col-md-6 text-left">Login Sessions</div>
-            <div class="col-md-6 text-right">0</div>
+            <div class="col-md-6 text-right">{{$ctrl.userStats.loginCount}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-left">Last Login</div>
+            <div class="col-md-6 text-right">{{$ctrl.userStats.lastLoginDate | date:'medium'}}</div>
         </div>
         <div class="row">
             <div class="col-md-6 text-left">Drills</div>

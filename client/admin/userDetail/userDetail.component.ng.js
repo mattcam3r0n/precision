@@ -31,11 +31,6 @@ angular.module('drillApp')
         console.log(ctrl.user);
       };
 
-      ctrl.getCreatedDate = function() {
-        if (!ctrl.user) return;
-        return moment(ctrl.user.createdAt).format('MMMM Do YYYY, h:mm:ss a');
-      };
-
       ctrl.getEmail = function() {
         if (!ctrl.user) return;
         return ctrl.user.emails[0].address;

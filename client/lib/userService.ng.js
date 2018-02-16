@@ -34,15 +34,12 @@ class UserService {
         return new Promise((resolve, reject) => {
             Meteor.loginWithPassword(email, password, (err) => {
                 if (err) {
-                    // The user might not have been found, or their passwword
-                    // could be incorrect. Inform the user that their
-                    // login attempt has failed.
-                    // TODO: indicate issue?
                     return reject(new UserServiceException('loginWithPassword failed.', err, {
                         email: email,
                     }));
                 }
                 // The user has been logged in.
+                Meteor.call('updateLoginStats', User.getUserId());
                 resolve();
             });
         });
