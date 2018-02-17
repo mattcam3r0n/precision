@@ -8,14 +8,15 @@ angular.module('drillApp')
     templateUrl: 'client/admin/userDetail/userDetail.view.ng.html',
     bindings: {
     },
-    controller: function($rootScope, $scope, eventService) {
+    controller: function($rootScope, $scope,
+      eventService, confirmationDialogService) {
       let ctrl = this;
 
       ctrl.$onInit = function() {
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
         ctrl.subscriptions.subscribe(Events.userSelected, (evt, args) => {
           ctrl.user = args.user;
-          Meteor.callPromise('getUserStats', ctrl.user._id).then((userStats)=>{
+          Meteor.callPromise('getUserStats', ctrl.user._id).then((userStats) => {
             ctrl.userStats = userStats;
             $rootScope.$safeApply();
           });
@@ -57,9 +58,19 @@ angular.module('drillApp')
 
       ctrl.deleteAccount = function() {
         if (!ctrl.user) return;
-        Meteor.call('deleteUser', ctrl.user._id);
-        eventService.notify(Events.userSelected, {
-          user: Meteor.user(),
+
+        confirmationDialogService.show({
+          heading: 'Delete User',
+          message: 'Are you sure you want to delete user '
+            + ctrl.user.emails[0].address + '?',
+          confirmText: 'Delete',
+        }).then((result) => {
+          if (result.confirmed) {
+            Meteor.call('deleteUser', ctrl.user._id);
+            eventService.notify(Events.userSelected, {
+              user: Meteor.user(),
+            });
+          }
         });
       };
 

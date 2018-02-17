@@ -24,3 +24,18 @@ function inside(point, vs) {
 
     return inside;
 };
+
+
+modalService.show(msg, type, etc).then(result => {
+
+});
+
+show() {
+    activateModal();
+    return new Promise((resolve, reject) => {
+        modal.on('hidden', () => {
+            modal.off();
+            resolve();
+        })
+    });
+}

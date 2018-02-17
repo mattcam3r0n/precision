@@ -1,0 +1,24 @@
+<!-- Modal -->
+<div class="confirmation-dialog modal fade" id="confirmationDialog" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="confirmationDialogLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="confirmationDialogHeading">{{$ctrl.heading}}</h4>
+            </div>
+            <div class="modal-body">
+                {{$ctrl.message}}
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-9">
+                </div>
+                <div class="col-md-3">
+                    <button ng-click="$ctrl.ok()" type="button" class="btn btn-default">{{$ctrl.confirmText}}</button>
+                    <button ng-click="$ctrl.cancel()" type="button" class="btn btn-default">{{$ctrl.cancelText}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

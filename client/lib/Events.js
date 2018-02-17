@@ -59,7 +59,15 @@ class Events {
         return 'activateDragStepTool';
     }
 
+    static get showConfirmationDialog() {
+        return 'showConfirmationDialog';
+    }
+
     // Events - notification that something has happened
+
+    static get confirmationDialogClosed() {
+        return 'confirmationDialogClosed';
+    }
 
     static get userSelected() {
         return 'userSelected';

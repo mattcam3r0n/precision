@@ -16,7 +16,8 @@ angular.module('drillApp')
     bindings: {
       drill: '<',
     },
-    controller: function($scope, $rootScope, $window, eventService, appStateService) {
+    controller: function($scope, $rootScope, $window,
+        eventService, appStateService) {
       let ctrl = this;
 
       let slider = document.querySelector('#slider');
