@@ -8,7 +8,8 @@ angular.module('drillApp')
     bindings: {
       onOpen: '&',
     },
-    controller: function($scope, appStateService, eventService) {
+    controller: function($scope, appStateService,
+        eventService, confirmationDialogService) {
       let ctrl = this;
 
       $scope.page = 1;
@@ -44,7 +45,15 @@ angular.module('drillApp')
       };
 
       $scope.delete = function(drill) {
-        appStateService.deleteDrill(drill._id);
+        confirmationDialogService.show({
+          heading: 'Delete Drill',
+          message: 'Are you sure you want to this drill?',
+          confirmText: 'Delete',
+        }).then((result) => {
+          if (result.confirmed) {
+            appStateService.deleteDrill(drill._id);
+          }
+        });
       };
 
       $scope.pageChanged = function(newPage) {

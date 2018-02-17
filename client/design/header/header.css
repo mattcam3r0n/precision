@@ -26,7 +26,8 @@ div.design-header {
 }
 
 .design-header .menu a {
-  color: white;
+  /* color: white; */
+  color: black;
 }
 
 .design-header .menu a:hover {
