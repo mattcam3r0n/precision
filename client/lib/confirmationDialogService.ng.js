@@ -19,7 +19,6 @@ class confirmationDialogService {
             const unsubscribe = self.eventService
                 .subscribe(Events.confirmationDialogClosed, (evt, args) => {
                     unsubscribe();
-                    console.log('dialog closed', args);
                     resolve(args);
                 });
         });

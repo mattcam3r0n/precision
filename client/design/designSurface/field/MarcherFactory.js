@@ -14,7 +14,7 @@ class MarcherFactory {
             left: fieldPoint.x,
             top: fieldPoint.y,
             angle: initialState.direction, // angle of object. correspond to direction.
-            fill: initialState.color,
+            fill: initialState.color || 'red',
         });
 
         return marcher;

@@ -12,6 +12,7 @@ angular.module('drillApp')
     controller: function($scope,
                           appStateService,
                           drillEditorService,
+                          confirmationDialogService,
                           eventService) {
       let ctrl = this;
 
@@ -41,7 +42,18 @@ angular.module('drillApp')
       };
 
       $scope.deleteSelectedMembers = function() {
-        drillEditorService.deleteSelectedMembers();
+        const selection = drillEditorService.getMemberSelection();
+        if (selection.members.length === 0) return;
+
+        confirmationDialogService.show({
+          heading: 'Delete Marchers',
+          message: 'Delete ' + selection.members.length + ' marchers?',
+          confirmText: 'Delete',
+        }).then((result) => {
+          if (result.confirmed) {
+            drillEditorService.deleteSelectedMembers();
+          }
+        });
       };
 
       $scope.marcherColors = function() {
