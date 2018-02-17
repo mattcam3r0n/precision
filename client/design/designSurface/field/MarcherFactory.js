@@ -4,18 +4,19 @@ import Marcher from './Marcher';
 
 class MarcherFactory {
     static createMarcher(initialState) {
+        let strideType = initialState.strideType || StrideType.SixToFive;
+        let fieldPoint = FieldDimensions.toFieldPoint({ x: initialState.x,
+            y: initialState.y }, strideType);
 
-        var strideType = initialState.strideType || StrideType.SixToFive;
-        var fieldPoint = FieldDimensions.toFieldPoint({ x: initialState.x, y: initialState.y }, strideType);
-
-        var marcher = new Marcher({
+        let marcher = new Marcher({
             width: FieldDimensions.marcherWidth,
             height: FieldDimensions.marcherHeight,
             left: fieldPoint.x,
             top: fieldPoint.y,
             angle: initialState.direction, // angle of object. correspond to direction.
+            fill: initialState.color,
         });
-        
+
         return marcher;
     }
 }

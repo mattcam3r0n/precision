@@ -1,0 +1,108 @@
+.marcher-colors-tool {
+    position: absolute;
+   background-color: gainsboro;
+   width: 110px;
+   left: 150px;
+   top: 100px;
+}
+
+.flute-color {
+    color: lightpink;
+}
+
+.clarinet-color {
+    color: gainsboro;
+}
+
+.low-reed-color {
+    color: indigo;
+}
+
+.saxophone-color {
+    color: green;
+}
+
+.trumpet-color {
+    color: blue;
+}
+
+.horn-color {
+    color: gold;
+}
+
+.trombone-color {
+    color: red;
+}
+
+.tuba-color {
+    color: orange;
+}
+
+.percussion-color {
+    color: grey;
+}
+
+.marcher-colors-tool div.panel-heading {
+    font-size: 12px;
+}
+
+.marcher-colors-tool ul {
+    margin: 0;
+    width: 100%;
+    padding: 0px;
+}
+
+.marcher-colors-tool li {
+    list-style-type: none;
+    margin-top: 0px;
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.marcher-colors-tool li span {
+    flex: 1 1 100%;
+    color: black;
+    background-color: #e6e6e6;
+    text-align: center;
+    font-size: 10px;
+}
+
+.marcher-colors-tool li button {
+    flex: 1 1 50%;
+    border-radius: 0;
+    padding: 5px;
+    font-size: 12px;
+    text-align: left;
+}
+
+.marcher-colors-tool button.active {
+    background-color: #e6e6e6;
+}
+
+.marcher-colors-tool input {
+    color: black;
+    text-align: center;
+    height: 32px;
+    padding-left: 16px;
+    padding-right: 8px;
+}
+
+.marcher-colors-tool .counts button {
+    width: 20px;
+    height: 32px;
+}
+            
+.marcher-colors-tool .turn-mode-button span {
+    font-size: 12px;
+}
+
+.marcher-colors-tool .save-button i {
+    color: green;    
+}
+
+.marcher-colors-tool .cancel-button i {
+    color: red;    
+}
+

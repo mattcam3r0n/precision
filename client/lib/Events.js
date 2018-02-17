@@ -59,6 +59,10 @@ class Events {
         return 'activateDragStepTool';
     }
 
+    static get activateMarcherColorsTool() {
+        return 'activateMarcherColorsTool';
+    }
+
     static get showConfirmationDialog() {
         return 'showConfirmationDialog';
     }
@@ -87,6 +91,10 @@ class Events {
 
     static get membersAdded() {
         return 'membersAdded';
+    }
+
+    static get membersChanged() {
+        return 'membersChanged';
     }
 
     static get membersSelected() {
@@ -123,6 +131,10 @@ class Events {
 
     static get pinwheelToolDeactivated() {
         return 'pinwheelToolDeactivated';
+    }
+
+    static get marcherColorsToolDeactivated() {
+        return 'marcherColorsToolDeactivated';
     }
 
     static get dragStepToolActivated() {

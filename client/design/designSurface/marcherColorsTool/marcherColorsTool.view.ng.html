@@ -1,0 +1,60 @@
+<div draggable class="marcher-colors-tool panel panel-default" ng-show="$ctrl.isActivated">
+    <div class="panel-heading text-center drag-handle">
+        <i class="fa fa-bars fa-sm drag-handle"></i> Marcher Colors
+    </div>
+    <div id="marcherColorsTool" class="">
+        <ul>
+            <li>
+                <button ng-click="setColor('flute')" class="btn btn-default">
+                    <i class="fa fa-stop flute-color"></i> Flutes
+                </button>
+            </li>
+            <li>
+                <button ng-click="setColor('clarinet')" class="btn btn-default">
+                    <i class="fa fa-stop clarinet-color"></i> Clarinets
+                </button>
+            </li>
+            <li>
+                <button ng-click="setColor('lowreed')" class="btn btn-default">
+                    <i class="fa fa-stop low-reed-color"></i> Low Reeds
+                </button>
+            </li>
+            <li>
+                <button ng-click="setColor('saxophone')" class="btn btn-default">
+                    <i class="fa fa-stop saxophone-color"></i> Saxophones
+                </button>
+            </li>
+            <li>
+                <button ng-click="setColor('trumpet')" class="btn btn-default">
+                    <i class="fa fa-stop trumpet-color"></i> Trumpets
+                </button>
+            </li>
+            <li>
+                <button ng-click="setColor('horn')" class="btn btn-default">
+                    <i class="fa fa-stop horn-color"></i> Horns
+                </button>
+            </li>
+            <li>
+                <button ng-click="setColor('trombone')" class="btn btn-default">
+                    <i class="fa fa-stop trombone-color"></i> Trombones
+                </button>
+            </li>
+            <li>
+                <button ng-click="setColor('tuba')" class="btn btn-default">
+                    <i class="fa fa-stop tuba-color"></i> Tubas
+                </button>
+            </li>
+            <li>
+                <button ng-click="setColor('percussion')" class="btn btn-default">
+                    <i class="fa fa-stop percussion-color"></i> Percussion
+                </button>
+            </li>
+            <li>
+                <button ng-click="cancel()" class="btn btn-default">
+                    <i class="fa fa-times"></i> Cancel
+                </button>
+            </li>
+        </ul>
+    </div>
+
+</div>

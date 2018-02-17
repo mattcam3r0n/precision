@@ -50,6 +50,10 @@ let Marcher = fabric.util.createClass(fabric.Triangle, {
     this.setOpacity(state);
   },
 
+  setColor: function(color) {
+    this.set('fill', color);
+  },
+
   setOpacity: function(state) {
     if (!state.isVisible) return;
 

@@ -37,6 +37,10 @@ angular.module('drillApp')
           ctrl.field.membersChanged();
         });
 
+        ctrl.subscriptions.subscribe(Events.membersChanged, () => {
+          ctrl.field.membersChanged();
+        });
+
         ctrl.subscriptions.subscribe(Events.showPaths, (evt, args) => {
           ctrl.field.showPaths();
         });

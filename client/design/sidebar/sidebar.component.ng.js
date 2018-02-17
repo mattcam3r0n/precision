@@ -44,6 +44,10 @@ angular.module('drillApp')
         drillEditorService.deleteSelectedMembers();
       };
 
+      $scope.marcherColors = function() {
+        eventService.notify(Events.activateMarcherColorsTool);
+      };
+
       $scope.addSteps = function() {
         eventService.notify(Events.addStepsToolActivated);
       };

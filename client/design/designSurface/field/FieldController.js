@@ -139,6 +139,7 @@ class FieldController {
      */
     membersChanged() {
         this.synchronizeMarchers();
+        // this.updateMarcherSelection();
         this.update();
     }
 
@@ -244,7 +245,13 @@ class FieldController {
         this.marchers = {};
 
         this.drill.members.forEach((member) => {
-            let newMarcher = MarcherFactory.createMarcher(member.initialState);
+            let newMarcher = MarcherFactory.createMarcher({
+                strideType: member.initialState.strideType,
+                x: member.initialState.x,
+                y: member.initialState.y,
+                direction: member.initialState.direction,
+                color: member.color || 'red',
+            });
             newMarcher.member = member;
             this.marchers[member.id] = newMarcher;
             this.canvas.add(newMarcher);
