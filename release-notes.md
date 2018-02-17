@@ -117,3 +117,17 @@
 * NEW: show number of selected marchers next to cursor position near timeline
 * NEW: free form (lasso) selection on dbl click. dbl click again to finish.
 * NEW: marchers face correct direction during pinwheels and gates
+
+v0.1 2-17-18
+* NEW: delete confirmations for
+  * delete marchers
+  * delete accounts
+  * delete drills
+* NEW: basic color settings for marchers
+* NEW: user signup
+* NEW: basic admin panel with...
+  * disable account
+  * delete account
+  * grant admin privileges
+  * basic usage stats 
+* 
