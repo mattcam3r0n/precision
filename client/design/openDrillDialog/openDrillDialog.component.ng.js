@@ -13,7 +13,7 @@ angular.module('drillApp')
       let ctrl = this;
 
       $scope.page = 1;
-      $scope.perPage = 3;
+      $scope.perPage = 7;
       $scope.sort = {}; // { name_sort: 1 };
       $scope.orderProperty = '1';
 
@@ -47,7 +47,7 @@ angular.module('drillApp')
       $scope.delete = function(drill) {
         confirmationDialogService.show({
           heading: 'Delete Drill',
-          message: 'Are you sure you want to this drill?',
+          message: 'Are you sure you want delete "' + drill.name + '"?',
           confirmText: 'Delete',
         }).then((result) => {
           if (result.confirmed) {
