@@ -152,10 +152,11 @@ class FieldController {
         this.update();
     }
 
-    selectionChanged(args) {
-        this.updateMarcherSelection();
-        this.update();
-    }
+    // selectionChanged(args) {
+    // console.log('selectionChanged');
+    //     this.updateMarcherSelection();
+    //     this.update();
+    // }
 
     showGrid() {
         this.fieldPainter.isGridVisible = true;
@@ -246,10 +247,10 @@ class FieldController {
 
         this.drill.members.forEach((member) => {
             let newMarcher = MarcherFactory.createMarcher({
-                strideType: member.initialState.strideType,
-                x: member.initialState.x,
-                y: member.initialState.y,
-                direction: member.initialState.direction,
+                strideType: member.currentState.strideType,
+                x: member.currentState.x,
+                y: member.currentState.y,
+                direction: member.currentState.direction,
                 color: member.color || 'red',
             });
             newMarcher.member = member;

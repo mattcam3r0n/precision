@@ -48,6 +48,7 @@ let Marcher = fabric.util.createClass(fabric.Triangle, {
     // this.setSelection(state.isSelected);
     this.setVisible(state.isVisible);
     this.setOpacity(state);
+    this.setCoords(); // important! otherwise selection may not work after movement
   },
 
   setColor: function(color) {

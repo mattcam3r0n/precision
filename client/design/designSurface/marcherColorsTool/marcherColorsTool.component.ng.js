@@ -37,12 +37,6 @@ angular.module('drillApp')
           (evt, args) => {
             activate(drillEditorService.getMemberSelection());
           });
-
-        ctrl.subscriptions.subscribe(Events.objectsSelected, (evt, args) => {
-          if (!ctrl.isActivated) return;
-          ctrl.memberSelection = drillEditorService.getMemberSelection();
-          eventService.notify(Events.drillStateChanged);
-        });
       };
 
       ctrl.$onDestroy = function() {

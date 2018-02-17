@@ -27,7 +27,7 @@ angular.module('drillApp')
             activate(drillEditorService.getMemberSelection(), args.mode);
           });
 
-        ctrl.subscriptions.subscribe(Events.objectsSelected, (evt, args) => {
+        ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
           if (!ctrl.isActivated) return;
           ctrl.pivotMember = args.members[0];
           ctrl.pivotMember.isSelected = true;
