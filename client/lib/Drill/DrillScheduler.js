@@ -117,10 +117,13 @@ class DrillScheduler {
         try {
             offset = 0;
             if (music.startCount < count) {
-                if (music && music.beats && music.beats.length > 0) {
-                    offset = music.beats[count - music.startCount].timeOffset;
+                const offsetCount = count - music.startCount;
+                if (music && music.beats
+                        && music.beats.length > 0
+                        && offsetCount < music.beats.length) {
+                            offset = music.beats[offsetCount].timeOffset;
                 } else {
-                    offset = (count - music.startCount) * tempoInterval;
+                    offset = offsetCount * tempoInterval;
                 }
             }
             startOffset = music.startOffset + offset;
