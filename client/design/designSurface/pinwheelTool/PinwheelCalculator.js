@@ -234,10 +234,12 @@ class PinwheelCalculator {
     }
 
     calculateGatePivotDirection(member, pivotAngle, rotationDirection) {
-        if (rotationDirection > 0 && member.currentState.direction == Direction.N) {
+        if (rotationDirection > 0
+            && member.currentState.direction == Direction.N) {
             return Direction.S;
         }
-        if (rotationDirection > 0 && member.currentState.direction == Direction.E) {
+        if (rotationDirection > 0
+            && member.currentState.direction == Direction.E) {
             return Direction.W;
         }
     }
