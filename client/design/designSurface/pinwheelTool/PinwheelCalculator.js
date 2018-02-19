@@ -1,7 +1,9 @@
 import StepType from '/client/lib/StepType';
+import Direction from '/client/lib/Direction';
 
 class PinwheelCalculator {
-    constructor(pivotMember, members) {
+    constructor(mode, pivotMember, members) {
+        this.mode = mode;
         this.pivotMember = pivotMember;
         this.members = members;
     }
@@ -116,23 +118,55 @@ class PinwheelCalculator {
     }
 
     // TODO: should calculate each step (delta), not absolute position
-    calculateSteps(origin, rotationDirection, rotationAngle, counts) {
-        let pinwheelSteps = {};
-        this.members.forEach((m) => {
-            pinwheelSteps[m.id] = this.calculateMemberSteps(m, origin, rotationDirection, rotationAngle, counts); // eslint-disable-line max-len
+    calculateSteps(origin,
+                    rotationDirection,
+                    rotationAngle,
+                    counts) {
+        const pinwheelSteps = {};
+        const rotationFactor = rotationDirection === 'counter-clockwise' ? -1 : 1;
+        const anglePerStep = rotationAngle / counts * Math.PI;
+        this.members.forEach((member) => {
+            pinwheelSteps[member.id] = this.calculateMemberSteps(member,
+                origin,
+                rotationFactor,
+                rotationAngle,
+                anglePerStep,
+                counts);
         });
         return pinwheelSteps;
     }
 
-    calculateMemberSteps(member, origin, rotationDirection, rotationAngle, counts) { // eslint-disable-line max-len
-        let anglePerStep = rotationAngle / counts * Math.PI;
-        let rotationFactor = rotationDirection === 'counter-clockwise' ? -1 : 1;
+    calculateMemberSteps(member,
+                        origin,
+                        rotationFactor,
+                        rotationAngle,
+                        anglePerStep,
+                        counts) {
+        const pivotAngle = member === this.pivotMember
+            ? this.degreesInRadians(member.currentState.direction + 180)
+            : this.calculateAngle(origin, member.currentState);
+        const startDirection = this.calculateStartDirection(member,
+                                                            pivotAngle,
+                                                            rotationFactor);
         let radius = this.calculateRadius(this.pivotMember, member);
         let steps = [];
         let lastStep = member.currentState;
         for (let count = 1; count <= counts; count++) {
-            let pos = this.calculateMemberPosition(member, count, origin,
-                radius, rotationFactor, anglePerStep);
+            let pos = this.calculateMemberPosition(member,
+                                                    count,
+                                                    origin,
+                                                    radius,
+                                                    startDirection,
+                                                    rotationFactor,
+                                                    anglePerStep);
+            let direction;
+            if (count === counts) {
+                // set last count to nearest 90 degrees
+                direction = Math.floor(pos.direction / 90) * 90;
+            } else {
+                direction = pos.direction;
+            }
+
             let step = {
                 strideType: member.currentState.strideType,
                 stepType: StepType.Pinwheel,
@@ -140,7 +174,7 @@ class PinwheelCalculator {
                 y: pos.y,
                 deltaX: pos.x - lastStep.x,
                 deltaY: pos.y - lastStep.y,
-                direction: this.normalizeDirection(pos.direction),
+                direction: this.normalizeDirection(direction),
             };
             steps.push(step);
             lastStep = step;
@@ -151,19 +185,32 @@ class PinwheelCalculator {
             stepType: StepType.Full,
             direction: this.normalizeDirection(lastStep.direction),
         });
+
         return steps;
     }
 
-    calculateMemberPosition(member, count, origin,
-        radius, rotationFactor, anglePerStep) {
+    calculateMemberPosition(member,
+                            count,
+                            origin,
+                            radius,
+                            startDirection,
+                            rotationFactor,
+                            anglePerStep) {
+            // remove?
         let pivotAngle = member === this.pivotMember
             ? this.degreesInRadians(member.currentState.direction + 180)
             : this.calculateAngle(origin, member.currentState);
         let newPivotAngle = pivotAngle
             + (anglePerStep * count * rotationFactor);
         let p = this.calculatePointOnCircle(origin, radius, newPivotAngle);
-        let direction = this.radiansInDegrees(newPivotAngle)
-            + (rotationFactor < 0 ? 180 : 0);
+        // let startDirectionRadians = this.degreesInRadians(startDirection);
+        // let newDirection = startDirectionRadians
+        //                     + (anglePerStep * count * rotationFactor);
+        // let direction = this.radiansInDegrees(newDirection);
+//        let direction = this.radiansInDegrees(newPivotAngle + this.degreesInRadians(90));
+        let direction = rotationFactor > 0
+            ? this.radiansInDegrees(newPivotAngle)
+            : this.radiansInDegrees(newPivotAngle) + 180;
         return {
             count: count,
             x: p.x,
@@ -172,7 +219,31 @@ class PinwheelCalculator {
         };
     }
 
+    calculateStartDirection(member, pivotAngle, rotationDirection) {
+        if (member === this.pivotMember && this.mode == 'pinwheel') {
+            return member.currentState.direction + 180;
+        }
+        if (member === this.pivotMember && this.mode == 'gate') {
+            return member.currentState.direction + (180 * rotationDirection);
+        }
+        const pivotAngleInDegrees = this.radiansInDegrees(pivotAngle);
+        const quadrant = Math.floor(pivotAngleInDegrees / 90);
+        const startDirection = (quadrant * 90)
+                                + (rotationDirection > 0 ? 180 : 0);
+        return startDirection;
+    }
+
+    calculateGatePivotDirection(member, pivotAngle, rotationDirection) {
+        if (rotationDirection > 0 && member.currentState.direction == Direction.N) {
+            return Direction.S;
+        }
+        if (rotationDirection > 0 && member.currentState.direction == Direction.E) {
+            return Direction.W;
+        }
+    }
+
     normalizeDirection(dir) {
+        dir = Number(dir.toFixed(2));
         if (dir >= 0 && dir < 360) return dir;
 
         return dir - (Math.floor(dir / 360) * 360);

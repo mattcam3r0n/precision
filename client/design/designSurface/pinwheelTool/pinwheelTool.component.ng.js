@@ -3,6 +3,7 @@
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import PinwheelIndicator from './PinwheelIndicator';
+import ApplicationException from '/client/lib/ApplicationException';
 
 angular.module('drillApp')
   .component('pinwheelTool', {
@@ -27,14 +28,8 @@ angular.module('drillApp')
             activate(drillEditorService.getMemberSelection(), args.mode);
           });
 
-        ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
-          if (!ctrl.isActivated) return;
-          ctrl.pivotMember = args.members[0];
-          ctrl.pivotMember.isSelected = true;
-          ctrl.memberSelection = drillEditorService.getMemberSelection();
-          eventService.notify(Events.drillStateChanged);
-          createPinwheelIndicator();
-        });
+        // ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
+        // });
 
         ctrl.rotationDirection = 'clockwise';
         ctrl.rotationAngle = .5; // 1/4, 1/2, 3/4, full
@@ -82,11 +77,30 @@ angular.module('drillApp')
 
       $scope.cancel = deactivate;
 
+      function onObjectsSelected(evt, args) {
+        if (!ctrl.isActivated) return;
+        console.log(args);
+        ctrl.pivotMember = args.members[0];
+        drillEditorService.selectMembers([ctrl.pivotMember]);
+        // ctrl.pivotMember.isSelected = true;
+        // eventService.notify(Events.drillStateChanged);
+        ctrl.memberSelection = drillEditorService.getMemberSelection();
+        createPinwheelIndicator();
+      }
+
+      // function onMembersSelected(evt, args) {
+      //   if (!ctrl.isActivated) return;
+      //   console.log('pinwheel onmembersselected', args);
+      //   activate(drillEditorService.getMemberSelection(), ctrl.mode);
+      //   ctrl.memberSelection = drillEditorService.getMemberSelection();
+      //   eventService.notify(Events.drillStateChanged);
+      //   createPinwheelIndicator();
+      // }
+
       function activate(memberSelection, mode) {
         if (ctrl.isActivated) {
           deactivate();
         }
-
         appStateService.setActiveTool('pinwheel', () => {
           deactivate(false);
         });
@@ -99,10 +113,8 @@ angular.module('drillApp')
         ctrl.strideType = drillEditorService.strideType;
         ctrl.field.disablePositionIndicator();
         // TODO: should we allow selection while this tool is active?
-        ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
-          if (!ctrl.isActivated) return;
-          ctrl.memberSelection = args.memberSelection;
-        });
+//        ctrl.subscriptions.subscribe(Events.membersSelected, onMembersSelected);
+        ctrl.subscriptions.subscribe(Events.objectsSelected, onObjectsSelected);
 
         createPinwheelIndicator();
       }
@@ -111,7 +123,8 @@ angular.module('drillApp')
         if (ctrl.pinwheelIndicator) {
           ctrl.pinwheelIndicator.dispose();
         }
-        ctrl.subscriptions.unsubscribe(Events.membersSelected);
+//        ctrl.subscriptions.unsubscribe(Events.membersSelected);
+        ctrl.subscriptions.unsubscribe(Events.objectsSelected);
 
         ctrl.isActivated = false;
         ctrl.field.enablePositionIndicator();
@@ -143,7 +156,7 @@ angular.module('drillApp')
           ctrl.pinwheelIndicator.dispose();
         }
 
-        ctrl.pinwheelIndicator = new PinwheelIndicator(ctrl.field,
+        ctrl.pinwheelIndicator = new PinwheelIndicator(ctrl.mode, ctrl.field,
           ctrl.pivotMember,
           ctrl.memberSelection.members,
           ctrl.rotationDirection,
@@ -154,10 +167,17 @@ angular.module('drillApp')
       }
 
       function save() {
-        ctrl.memberSelection.members.forEach((member) => {
-          let steps = ctrl.pinwheelIndicator.steps[member.id];
-          drillEditorService.addMemberSteps(member, steps);
-        });
+        let steps;
+        try {
+          ctrl.memberSelection.members.forEach((member) => {
+            steps = ctrl.pinwheelIndicator.steps[member.id];
+            drillEditorService.addMemberSteps(member, steps);
+          });
+        } catch (ex) {
+          throw new ApplicationException('Error in pinwheel tool save().', ex, {
+            steps: steps,
+          });
+        }
 
         drillEditorService.save(true);
         deactivate();

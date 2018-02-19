@@ -5,11 +5,20 @@ import PathArc from './PathArc';
 import PinwheelCalculator from './PinwheelCalculator';
 
 class PinwheelIndicator {
-    constructor(field, pivotMember, members, direction, rotation, counts) {
+    constructor(mode,
+                field,
+                pivotMember,
+                members,
+                direction,
+                rotation,
+                counts) {
+        this.mode = mode || 'gate';
         this.field = field;
         this.pivotMember = pivotMember;
         this.members = members;
-        this.pinwheelCalculator = new PinwheelCalculator(pivotMember, members);
+        this.pinwheelCalculator = new PinwheelCalculator(this.mode,
+                                                            pivotMember,
+                                                            members);
         this.rotationDirection = direction;
         this.rotationAngle = rotation;
         this.counts = counts;
