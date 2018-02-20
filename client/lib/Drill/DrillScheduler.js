@@ -74,8 +74,6 @@ class DrillScheduler {
             music = this.getMusicAtCount(drill, count);
             tempo = music ? music.tempo : drill.tempo || 120;
             timeInterval = 60 / tempo;
-            // TODO: should this be music.startCount in if condition???
-            // TODO: add check beats out of bounds?
             if (music && music.beats && music.beats[count - music.startCount]) {
                 timeInterval = music.beats[count - music.startCount]
                                         .timeInterval;
