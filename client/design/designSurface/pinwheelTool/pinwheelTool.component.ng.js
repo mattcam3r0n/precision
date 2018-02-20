@@ -180,6 +180,7 @@ angular.module('drillApp')
         }
 
         drillEditorService.save(true);
+        drillEditorService.notifyDrillStateChanged();
         deactivate();
       }
     },

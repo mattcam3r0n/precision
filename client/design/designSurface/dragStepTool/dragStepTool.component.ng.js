@@ -27,15 +27,6 @@ angular.module('drillApp')
             activate(drillEditorService.getMemberSelection());
           });
 
-        ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
-          if (!ctrl.isActivated) return;
-          ctrl.pivotMember = args.members[0];
-          ctrl.pivotMember.isSelected = true;
-          ctrl.memberSelection = drillEditorService.getMemberSelection();
-          eventService.notify(Events.drillStateChanged);
-          createDragStepCalculator();
-        });
-
         ctrl.rotationDirection = 'clockwise';
         ctrl.rotationAngle = .5; // 1/4, 1/2, 3/4, full
         ctrl.counts = 8;
@@ -96,10 +87,13 @@ angular.module('drillApp')
         ctrl.memberSelection = memberSelection;
         ctrl.pivotMember = memberSelection.members[0];
         ctrl.strideType = drillEditorService.strideType;
-        // TODO: should we allow selection while this tool is active?
         ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
           if (!ctrl.isActivated) return;
-          ctrl.memberSelection = args.memberSelection;
+          ctrl.pivotMember = args.members[0];
+          ctrl.pivotMember.isSelected = true;
+          ctrl.memberSelection = drillEditorService.getMemberSelection();
+          eventService.notify(Events.drillStateChanged);
+          createDragStepCalculator();
         });
 
         createDragStepCalculator();
@@ -131,14 +125,17 @@ angular.module('drillApp')
 
       function save() {
         const memberSteps = ctrl.dragStepCalculator
-          .calculateSteps(ctrl.rotationDirection,
-            ctrl.rotationAngle, ctrl.counts);
+                                .calculateSteps(ctrl.rotationDirection,
+                                              ctrl.rotationAngle,
+                                              ctrl.counts);
+
         ctrl.memberSelection.members.forEach((member) => {
           let steps = memberSteps[member.id];
           drillEditorService.addMemberSteps(member, steps);
         });
 
         drillEditorService.save(true);
+        drillEditorService.notifyDrillStateChanged();
         deactivate();
       }
     },

@@ -163,7 +163,9 @@ class DrillEditorService {
             let step = steps[i];
             this.drillBuilder.addMemberStep(member, step, count);
         }
-        this.notifyDrillStateChanged();
+        // This function is used in loops, so don't call drill state change.
+        // The caller needs to call it when done.
+        // this.notifyDrillStateChanged();
         this.save();
     }
 
@@ -172,7 +174,9 @@ class DrillEditorService {
             ? this.drillBuilder.currentCount + 1
             : atCount;
         this.drillBuilder.addMemberStep(member, step, atCount);
-        this.notifyDrillStateChanged();
+        // This function is used in loops, so don't call drill state change.
+        // The caller needs to call it when done.
+        // this.notifyDrillStateChanged();
         this.save();
     }
 
