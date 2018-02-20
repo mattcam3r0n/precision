@@ -6,16 +6,16 @@ import StepType from '/client/lib/StepType';
 import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
 
 /**
- * 
+ *
  * Action
- * { 
+ * {
  *      strideType,
  *      stepType
  *      direction,
  *      deltaX, // can be inferred from above, but convenient
  *      deltaY
  * }
- * 
+ *
  */
 
 // class Action {
@@ -27,13 +27,15 @@ import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator
 // }
 
 class ScriptBuilder {
-    
+
     static addActionAtCount(member, action, count) {
         // TODO: ensure action has deltas?
 
         // don't need to add if member is already in that state
-        var state = MemberPositionCalculator.getStateAtCount(member, count);
-        if (action.stepType != StepType.Halt && MemberPositionCalculator.areStatesSame(state, action)) {
+        let state = MemberPositionCalculator.getStateAtCount(member, count);
+        if (action.stepType != StepType.Halt
+            && action.stepType != StepType.MarkTime
+            && MemberPositionCalculator.areStatesSame(state, action)) {
             return;
         }
 
@@ -47,21 +49,26 @@ class ScriptBuilder {
             // problem: member may not currently be facing that dir, but eventually will
         // var lineDir = Direction.getLineDirection({ x: member.currentState.x, y: member.currentState.y }, stepPoint );
         // as a temporary solution, calc a rough number of steps and use that as limit?
-        var limit = 100; //(Math.abs(member.currentState.x - stepPoint.x) || Math.abs(member.currentState.y - stepPoint.y)) + 2;
+        let limit = 100; // (Math.abs(member.currentState.x - stepPoint.x) || Math.abs(member.currentState.y - stepPoint.y)) + 2;
 
         // advance member until at that point (failsafe to prevent infinite loop?)
         //  then add action
-        var pos = member.currentState;
-        var arePointsEqual = false;
-        var stepCount = 0;
-        while(stepCount < limit && !arePointsEqual) {
-            arePointsEqual = FieldPoint.arePointsEqual({ x: pos.x, y: pos.y }, stepPoint);
+        let pos = member.currentState;
+        let arePointsEqual = false;
+        let stepCount = 0;
+        while (stepCount < limit && !arePointsEqual) {
+            arePointsEqual = FieldPoint.arePointsEqual({
+                x: pos.x,
+                y: pos.y,
+            }, stepPoint);
             pos = MemberPositionCalculator.stepForward(member, pos);
             stepCount++;
         }
 
         if (arePointsEqual) {
-            return this.addActionAtCount(member, action, member.currentState.count + stepCount);
+            return this.addActionAtCount(member,
+                                        action,
+                                        member.currentState.count + stepCount);
         }
         console.log('addActionAtPoint failed');
         return false;
@@ -73,17 +80,19 @@ class ScriptBuilder {
     }
 
     static deleteForward(member, count) {
-        if (count >= member.script.length)
+        if (count >= member.script.length) {
             return;
+        }
 
-        for (var i = count; i < member.script.length; i++) {
+        for (let i = count; i < member.script.length; i++) {
             member.script[i] = null;
         }
     }
 
     static deleteBackspace(member, count) {
-        if (count >= member.script.length)
+        if (count >= member.script.length) {
             return;
+        }
 
         member.script[count] = null;
     }
@@ -91,19 +100,21 @@ class ScriptBuilder {
     static fromShorthand(script) {
         // expect something like 'E E E E E E S S S S S S'
 
-        var dirs = script.split(' ');
-        var action = {};
-        var newScript = [];
-        for (var i = 0; i < dirs.length; i++) {
+        let dirs = script.split(' ');
+        let action = {};
+        let newScript = [];
+        for (let i = 0; i < dirs.length; i++) {
             let dir = Direction[dirs[i]];
             if (action.direction !== dir) {
-                let delta = StepDelta.getDelta(StrideType.SixToFive, StepType.Full, dir);
+                let delta = StepDelta.getDelta(StrideType.SixToFive,
+                                                StepType.Full,
+                                                dir);
                 action = {
                     direction: dir,
                     strideType: StrideType.SixToFive,
                     stepType: StepType.Full,
                     deltaX: delta.deltaX,
-                    deltaY: delta.deltaY    
+                    deltaY: delta.deltaY,
                 };
                 newScript[i] = action;
             }
