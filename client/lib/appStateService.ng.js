@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
 import Events from '/client/lib/Events';
 import ApplicationException from '/client/lib/ApplicationException';
+import Logger from '/client/lib/Logger';
 
 let _currentDrillFormatVersion = 1;
 
@@ -116,11 +117,17 @@ class appStateService {
     }
 
     openDrill(id) {
+        const start = performance.now();
         return this.getDrill(id)
             .then((drill) => {
                 if (shouldUpgradeDrill(drill)) {
                     upgradeDrill(drill);
                 }
+                const end = performance.now();
+                Logger.info('Drill "' + drill.name + '" opened. ', {
+                    timing: end - start,
+                    drillId: drill._id.toString(),
+                });
                 this.drill = drill;
                 this.eventService.notify(Events.drillOpened,
                     {
@@ -165,61 +172,47 @@ class appStateService {
 
     insertDrill() {
         let self = this;
-        self.drill.createdDate = new Date();
-        self.drill.updatedDate = new Date();
-        self.drill.userId = self.userService.getUserId(),
-        self.drill.owner = self.userService.getUserEmail(),
-        self.drill.name_sort = self.drill.name.toLowerCase();
-        Drills.insert(angular.copy(self.drill), (err, id) => {
-            if (err) {
-                if (!this.userService.getUserId()) {
-                    self.alertService.warning('Unable to save drill. Please login to save your work.'); // eslint-disable-line max-len
-                } else {
-                    self.alertService.danger('Unable to save drill. ' + err);
-                }
-                return;
-            }
-            self.drill._id = id;
-        });
-        self.updateUserProfile();
+        const start = performance.now();
+        Meteor.callPromise('insertDrill', self.drill)
+            .then((id) => {
+                const end = performance.now();
+                self.drill._id = id;
+                self.updateUserProfile();
+                Logger.info('Drill inserted.', {
+                    timing: end - start,
+                    drillId: id.toString(),
+                });
+            }).catch((ex) => {
+                self.alertService.danger('Unable to save drill. ' + ex);
+                throw new ApplicationException('Error inserting drill.', ex, {
+                });
+            });
     }
 
     updateDrill() {
         const self = this;
-        let id = this.drill._id;
-
+        const id = self.drill._id;
+        const start = performance.now();
         if (!id) {
             console.log('Unable to update. No _id.');
             return;
         }
-
-        this.drill.updatedDate = new Date();
-        this.drill.name_sort = this.drill.name.toLowerCase();
-        this.drill.userId = this.userService.getUserId();
-        this.drill.owner = this.userService.getUserEmail();
-
-        Drills.update({
-            _id: id,
-        }, {
-                $set: angular.copy(this.drill),
-            },
-            function(error) {
-                if (error) {
-                    if (!self.userService.getUserId()) {
-                        // eslint-disable-next-line max-len
-                        self.alertService.warning('Unable to save drill. Please login to save your work.');
-                    } else {
-                        // eslint-disable-next-line max-len
-                        self.alertService.danger('Unable to save drill. ' + error);
-                    }
-                    throw new ApplicationException('Unable to update drill.', error, {
-                        drillId: id,
-                    });
-                } else {
-                    console.log('saved');
-                }
+        Meteor.callPromise('updateDrill', this.drill)
+            .then(() => {
+                const end = performance.now();
+                this.updateUserProfile();
+                console.log('save complete', end - start);
+                Logger.info('Drill updated.', {
+                    timing: end - start,
+                    drillId: id.toString(),
+                });
+            })
+            .catch((ex)=> {
+                self.alertService.danger('Unable to save drill. ' + ex);
+                throw new ApplicationException('Error updating drill.', ex, {
+                    drillId: id,
+                });
             });
-        this.updateUserProfile();
     }
 
     deleteDrill(id) {

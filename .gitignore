@@ -1,5 +1,6 @@
 node_modules/
 deploy.sh
+run-remote.sh
 public/audio/
 settings.json
 settings-development.json

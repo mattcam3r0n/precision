@@ -1,6 +1,14 @@
 'use strict';
 
 Meteor.publish('drills', function(options, searchString) {
+  options = options || {};
+  options.fields = {
+    name: 1,
+    description: 1,
+    userId: 1,
+    owner: 1,
+    updatedDate: 1,
+  };
   let where = {
     'name': {
 //      '$regex': '.*' + (searchString || '') + '.*',

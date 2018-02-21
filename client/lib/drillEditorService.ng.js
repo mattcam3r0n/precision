@@ -246,8 +246,9 @@ class DrillEditorService {
             this.$timeout.cancel(this.saveTimeout);
         }
 
-        this.saveTimeout = this.$timeout(() => this.appStateService.saveDrill()
-            , 2000);
+        this.saveTimeout = this.$timeout(() => {
+            this.appStateService.saveDrill();
+        }, 2000);
     }
 
     // Events

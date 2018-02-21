@@ -106,7 +106,12 @@ angular.module('drillApp')
                 return appStateService.newDrill();
               }
 
-              return appStateService.openDrill(drillId);
+              return appStateService
+                      .openDrill(drillId)
+                      .then((drill) => {
+                        eventService.notify(Events.hideSpinner);
+                        return drill;
+                      });
           });
     }
 
@@ -152,7 +157,7 @@ angular.module('drillApp')
     };
 
     // used by openDrillDialog when a drill is chosen
-    $scope.onOpen = function(drillId) {
-      openDrill(drillId);
+    $scope.onOpen = function(drill) {
+      openDrill(drill);
     };
   });
