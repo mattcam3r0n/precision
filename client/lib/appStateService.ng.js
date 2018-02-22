@@ -130,7 +130,6 @@ class appStateService {
 
     openDrill(id) {
         console.log('openDrill', id);
-        console.trace();
         const start = performance.now();
         console.log('about to getDrill');
         return this.getDrillZipped(id)
