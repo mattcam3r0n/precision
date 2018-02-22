@@ -3,6 +3,7 @@ import DrillBuilder from '/client/lib/drill/DrillBuilder';
 import Events from '/client/lib/Events';
 import ApplicationException from '/client/lib/ApplicationException';
 import Logger from '/client/lib/Logger';
+import DrillZipper from '/lib/DrillZipper';
 
 let _currentDrillFormatVersion = 1;
 
@@ -15,6 +16,7 @@ class appStateService {
         this.userService = userService;
         this.rootScope = $rootScope.$new(true);
         this.userProfile = userService.getUserProfile();
+        this.zipper = new DrillZipper();
     }
 
     get drill() {
@@ -105,21 +107,35 @@ class appStateService {
         return Meteor.callPromise('getDrill', id);
     }
 
+    getDrillZipped(id) {
+        return Meteor.callPromise('getDrillZipped', id)
+            .then((zippedDrill) => {
+                return this.zipper.unzip(zippedDrill)
+                    .then((unzippedDrill) => {
+                        return unzippedDrill;
+                    });
+            });
+    }
+
     openLastDrillOrNew() {
         return this.getLastDrillId()
             .then((drillId) => {
                 if (!drillId) {
                     return this.newDrill();
                 }
-
+                console.log('openLastDrillOrNew', drillId);
                 return this.openDrill(drillId);
             });
     }
 
     openDrill(id) {
+        console.log('openDrill', id);
+        console.trace();
         const start = performance.now();
-        return this.getDrill(id)
+        console.log('about to getDrill');
+        return this.getDrillZipped(id)
             .then((drill) => {
+                console.log('getDrill done', drill);
                 if (shouldUpgradeDrill(drill)) {
                     upgradeDrill(drill);
                 }
@@ -128,6 +144,7 @@ class appStateService {
                     timing: end - start,
                     drillId: drill._id.toString(),
                 });
+                console.log('getDrill timing', end - start);
                 this.drill = drill;
                 this.eventService.notify(Events.drillOpened,
                     {
@@ -166,7 +183,7 @@ class appStateService {
         if (!id) {
             this.insertDrill();
         } else {
-            this.updateDrill();
+            this.updateDrillZipped();
         }
     }
 
@@ -211,6 +228,36 @@ class appStateService {
                 self.alertService.danger('Unable to save drill. ' + ex);
                 throw new ApplicationException('Error updating drill.', ex, {
                     drillId: id,
+                });
+            });
+    }
+
+    updateDrillZipped() {
+        const self = this;
+        const id = self.drill._id;
+        const start = performance.now();
+        if (!id) {
+            console.log('Unable to update. No _id.');
+            return;
+        }
+
+        self.zipper.zip(self.drill)
+            .then((zippedDrill) => {
+                Meteor.callPromise('updateDrillZipped', zippedDrill)
+                .then(() => {
+                    const end = performance.now();
+                    this.updateUserProfile();
+                    console.log('save complete', end - start);
+                    Logger.info('Drill updated.', {
+                        timing: end - start,
+                        drillId: id.toString(),
+                    });
+                })
+                .catch((ex)=> {
+                    self.alertService.danger('Unable to save drill. ' + ex);
+                    throw new ApplicationException('Error updating drill.', ex, {
+                        drillId: id,
+                    });
                 });
             });
     }
