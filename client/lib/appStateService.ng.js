@@ -141,7 +141,7 @@ class appStateService {
                 const end = performance.now();
                 Logger.info('Drill "' + drill.name + '" opened. ', {
                     timing: end - start,
-                    drillId: drill._id.toString(),
+                    drillId: drill._id,
                 });
                 console.log('getDrill timing', end - start);
                 this.drill = drill;
@@ -218,9 +218,9 @@ class appStateService {
                 const end = performance.now();
                 this.updateUserProfile();
                 console.log('save complete', end - start);
-                Logger.info('Drill updated.', {
+                Logger.info('Drill ' + self.drill.name + ' updated.', {
                     timing: end - start,
-                    drillId: id.toString(),
+                    drillId: id,
                 });
             })
             .catch((ex)=> {
@@ -247,9 +247,9 @@ class appStateService {
                     const end = performance.now();
                     this.updateUserProfile();
                     console.log('save complete', end - start);
-                    Logger.info('Drill updated.', {
+                    Logger.info('Drill ' + self.drill.name + 'updated.', {
                         timing: end - start,
-                        drillId: id.toString(),
+                        drillId: id,
                     });
                 })
                 .catch((ex)=> {
