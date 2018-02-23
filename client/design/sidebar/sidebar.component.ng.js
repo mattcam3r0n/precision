@@ -30,6 +30,11 @@ angular.module('drillApp')
         ctrl.subscriptions.subscribe(Events.hideGrid, onHideGrid);
         ctrl.subscriptions.subscribe(Events.showLogo, onShowLogo);
         ctrl.subscriptions.subscribe(Events.hideLogo, onHideLogo);
+
+        $('#undo-button, #redo-button').on('show.bs.tooltip', function() {
+          // Only one tooltip should ever be open at a time
+          $('.tooltip').not(this).hide(); // eslint-disable-line
+        });
       };
 
       ctrl.$onDestroy = function() {
@@ -41,13 +46,13 @@ angular.module('drillApp')
       };
 
       $scope.undoLabel = function() {
-        if (!UndoManager.hasUndo()) return;
-        return UndoManager.getUndoLabel();
+        if (!UndoManager.hasUndo()) return 'Nothing to Undo';
+        return 'Undo ' + UndoManager.getUndoLabel();
       };
 
       $scope.redoLabel = function() {
-        if (!UndoManager.hasRedo()) return;
-        return UndoManager.getRedoLabel();
+        if (!UndoManager.hasRedo()) return 'Nothing to Redo';
+        return 'Redo ' + UndoManager.getRedoLabel();
       };
 
       $scope.redo = function() {

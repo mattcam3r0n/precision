@@ -81,8 +81,7 @@ class DrillBuilder {
         return MemberFactory.createMember(strideType, dir, point);
     }
 
-    getMemberSteps(fromCount, toCount) {
-        let members = this.getSelectedMembers();
+    getMemberSteps(members, fromCount, toCount) {
         let steps = members.map((m) => {
             return {
                 member: m,
@@ -170,8 +169,8 @@ class DrillBuilder {
         this.drill.isDirty = true;
     }
 
-    addLeftCountermarch() {
-        let members = this.getSelectedMembers();
+    addLeftCountermarch(members) {
+        members = members || this.getSelectedMembers();
         // add an extra step if on odd count (right foot)
         let extraStep = !(this.drill.count % 2 === 0);
         let firstTurnCount = this.drill.count + 1 + (extraStep ? 1 : 0);
@@ -200,8 +199,8 @@ class DrillBuilder {
         this.drill.isDirty = true;
     }
 
-    addRightCountermarch() {
-        let members = this.getSelectedMembers();
+    addRightCountermarch(members) {
+        members = members || this.getSelectedMembers();
         // add an extra step if on an even count (left foot)
         let extraStep = this.drill.count % 2 === 0;
         let firstTurnCount = this.drill.count + 1 + (extraStep ? 1 : 0);
@@ -230,8 +229,8 @@ class DrillBuilder {
         this.drill.isDirty = true;
     }
 
-    addLeftFace() {
-        let members = this.getSelectedMembers();
+    addLeftFace(members) {
+        members = members || this.getSelectedMembers();
         members.forEach((m) => {
             let currentDir = m.currentState.direction;
             let firstStepDirection = Direction.leftTurnDirection(currentDir);
@@ -262,8 +261,8 @@ class DrillBuilder {
         this.drill.isDirty = true;
     }
 
-    addRightFace() {
-        let members = this.getSelectedMembers();
+    addRightFace(members) {
+        members = members || this.getSelectedMembers();
         members.forEach((m) => {
             let currentDir = m.currentState.direction;
             let firstStepDirection = Direction.rightTurnDirection(currentDir);
@@ -294,8 +293,8 @@ class DrillBuilder {
         this.drill.isDirty = true;
     }
 
-    addAboutFace2() {
-        let members = this.getSelectedMembers();
+    addAboutFace2(members) {
+        members = members || this.getSelectedMembers();
         members.forEach((m) => {
             let currentDir = m.currentState.direction;
             let firstStepDirection = Direction.aboutFaceFrom(currentDir);
@@ -326,8 +325,8 @@ class DrillBuilder {
         this.drill.isDirty = true;
     }
 
-    addAboutFace3() {
-        let members = this.getSelectedMembers();
+    addAboutFace3(members) {
+        members = members || this.getSelectedMembers();
         members.forEach((m) => {
             let currentDir = m.currentState.direction;
             let firstStepDirection = currentDir;

@@ -37,6 +37,20 @@
     cursor: pointer;
 }
 
+.side-menu li.undo-redo {
+    display: flex;
+}
+
+.side-menu li.undo-redo button {
+    flex: 1 1 100%;
+    border-radius: 0;
+    padding: 0px;
+}
+
+.side-menu li.undo-redo button i {
+    color: black;
+}
+
 .side-menu li.opened {
     background-color: #1E3749;
 }
