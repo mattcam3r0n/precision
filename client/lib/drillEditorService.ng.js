@@ -3,6 +3,7 @@ import StrideType from './StrideType';
 import Events from './Events';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
 import DrillPlayer from '/client/lib/drill/DrillPlayer';
+import UndoManager from '/client/lib/UndoManager';
 
 class DrillEditorService {
     constructor($timeout, appStateService, eventService) {
@@ -108,11 +109,48 @@ class DrillEditorService {
         return this.drillBuilder.getMemberSelection();
     }
 
+    addMembers(members, skipUndo) {
+        const self = this;
+
+        self.drillBuilder.addMembers(members);
+        self.notifyMembersAdded();
+        self.notifyDrillStateChanged();
+        self.save();
+
+        if (skipUndo) return;
+        UndoManager.add({
+            label: 'Add Members',
+            undo: () => {
+                self.deleteMembers(members, true);
+            },
+            redo: () => {
+                self.addMembers(members, true);
+            },
+        });
+    }
+
+    deleteMembers(members, skipUndo) {
+        const self = this;
+        self.drillBuilder.deleteMembers(members);
+        self.notifyMembersAdded();
+        self.notifyDrillStateChanged();
+        self.save(true);
+
+        if (skipUndo) return;
+        UndoManager.add({
+            label: 'Delete Members',
+            undo: () => {
+                self.addMembers(members, true);
+            },
+            redo: () => {
+                self.deleteMembers(members, true);
+            },
+        });
+    }
+
     deleteSelectedMembers() {
-        this.drillBuilder.deleteSelectedMembers();
-        this.notifyMembersAdded();
-        this.notifyDrillStateChanged();
-        this.save(true);
+        const self = this;
+        self.deleteMembers(self.drillBuilder.getSelectedMembers());
     }
 
     hideUnselected() {
@@ -227,13 +265,6 @@ class DrillEditorService {
     addAboutFace3() {
         this.drillBuilder.addAboutFace3();
         this.play(null, 3);
-        this.notifyDrillStateChanged();
-        this.save();
-    }
-
-    addMembers(members) {
-        this.drillBuilder.addMembers(members);
-        this.notifyMembersAdded();
         this.notifyDrillStateChanged();
         this.save();
     }

@@ -2,6 +2,7 @@
 
 import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
+import UndoManager from '/client/lib/UndoManager';
 
 angular.module('drillApp')
   .component('sidebar', {
@@ -33,6 +34,24 @@ angular.module('drillApp')
 
       ctrl.$onDestroy = function() {
         ctrl.subscriptions.unsubscribeAll();
+      };
+
+      $scope.undo = function() {
+        UndoManager.undo();
+      };
+
+      $scope.undoLabel = function() {
+        if (!UndoManager.hasUndo()) return;
+        return UndoManager.getUndoLabel();
+      };
+
+      $scope.redoLabel = function() {
+        if (!UndoManager.hasRedo()) return;
+        return UndoManager.getRedoLabel();
+      };
+
+      $scope.redo = function() {
+        UndoManager.redo();
       };
 
       $scope.addMembers = function() {

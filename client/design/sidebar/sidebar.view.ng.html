@@ -2,6 +2,10 @@
 
     <ul id="sideMenu" class="side-menu">
         <li class="panel">
+            <button ng-click="undo()" class="btn btn-default">Undo {{undoLabel()}}</button>
+            <button ng-click="redo()" class="btn btn-default">Redo {{redoLabel()}}</button>
+        </li>
+        <li class="panel">
             <a href="#marcherOptions" data-toggle="collapse" data-parent="#sideMenu">
                 <i class="fa fa-play"></i> Marchers</a>
             <div id="marcherOptions" class="collapse">

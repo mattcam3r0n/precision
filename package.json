@@ -11,6 +11,7 @@
     "meteor-node-stubs": "~0.2.4",
     "moment": "^2.20.1",
     "shortid": "^2.2.8",
+    "undo-manager": "^1.0.5",
     "wavesurfer.js": "^2.0.0-beta02"
   },
   "devDependencies": {

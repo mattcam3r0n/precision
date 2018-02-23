@@ -47,12 +47,14 @@ class DrillBuilder {
     }
 
     addMembers(newMembers) {
-        if (!this.drill.members) {
+        const self = this;
+        if (!self.drill.members) {
             this.drill.members = [];
         }
 
-        this.drill.members.push(...newMembers);
-        this.drill.isDirty = true;
+        self.drill.members.push(...newMembers);
+
+        self.drill.isDirty = true;
     }
 
     deleteMembers(members) {
