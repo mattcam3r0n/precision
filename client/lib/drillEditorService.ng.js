@@ -234,6 +234,52 @@ class DrillEditorService {
         return savedSteps;
     }
 
+    addDragSteps(members, memberSteps, counts) {
+        members = members || this.drillBuilder.getSelectedMembers();
+        this.makeUndoable(
+            'Drag Step',
+            members,
+            counts + 1,
+            () => {
+                this.doAddDragSteps(members, memberSteps, counts);
+            }
+        );
+    }
+
+    doAddDragSteps(members, memberSteps, counts) {
+        // TODO: push addMemberSteps etc into drillbuilder?
+        members.forEach((member) => {
+            let steps = memberSteps[member.id];
+            this.addMemberSteps(member, steps);
+        });
+
+        this.save(true);
+        this.notifyDrillStateChanged();
+    }
+
+    addPinwheel(mode, members, memberSteps, counts) {
+        members = members || this.drillBuilder.getSelectedMembers();
+        this.makeUndoable(
+            mode == 'gate' ? 'Gate' : 'Pinwheel',
+            members,
+            counts + 1,
+            () => {
+                this.doAddPinwheel(members, memberSteps, counts);
+            }
+        );
+    }
+
+    doAddPinwheel(members, memberSteps, counts) {
+        // TODO: push addMemberSteps etc into drillbuilder?
+        members.forEach((member) => {
+            let steps = memberSteps[member.id];
+            this.addMemberSteps(member, steps);
+        });
+
+        this.save(true);
+        this.notifyDrillStateChanged();
+    }
+
     addMemberSteps(member, steps, atCount) {
         atCount = atCount === undefined ? this.currentCount + 1 : atCount;
         for (let i = 0; i < steps.length; i++) {

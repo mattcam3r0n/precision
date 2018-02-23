@@ -124,18 +124,14 @@ angular.module('drillApp')
       }
 
       function save() {
+        const members = ctrl.memberSelection.members;
         const memberSteps = ctrl.dragStepCalculator
                                 .calculateSteps(ctrl.rotationDirection,
                                               ctrl.rotationAngle,
                                               ctrl.counts);
 
-        ctrl.memberSelection.members.forEach((member) => {
-          let steps = memberSteps[member.id];
-          drillEditorService.addMemberSteps(member, steps);
-        });
+        drillEditorService.addDragSteps(members, memberSteps, ctrl.counts);
 
-        drillEditorService.save(true);
-        drillEditorService.notifyDrillStateChanged();
         deactivate();
       }
     },

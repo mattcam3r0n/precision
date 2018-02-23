@@ -167,20 +167,20 @@ angular.module('drillApp')
       }
 
       function save() {
-        let steps;
+        const members = ctrl.memberSelection.members;
+        const steps = ctrl.pinwheelIndicator.steps;
         try {
-          ctrl.memberSelection.members.forEach((member) => {
-            steps = ctrl.pinwheelIndicator.steps[member.id];
-            drillEditorService.addMemberSteps(member, steps);
-          });
+          drillEditorService.addPinwheel(
+            ctrl.mode,
+            members,
+            steps,
+            ctrl.counts
+          );
         } catch (ex) {
           throw new ApplicationException('Error in pinwheel tool save().', ex, {
             steps: steps,
           });
         }
-
-        drillEditorService.save(true);
-        drillEditorService.notifyDrillStateChanged();
         deactivate();
       }
     },
