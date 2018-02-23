@@ -35,14 +35,14 @@ class DesignKeyboardHandler {
 
             'ArrowUp': (e) => {
                 if (e.altKey) {
-                    this.drillEditorService.addStep(Direction.N);
+                    this.drillEditorService.addStep({ direction: Direction.N });
                     return;
                 }
             },
 
             'ArrowDown': (e) => {
                 if (e.altKey) {
-                    this.drillEditorService.addStep(Direction.S);
+                    this.drillEditorService.addStep({ direction: Direction.S });
                     return;
                 }
             },
@@ -54,7 +54,7 @@ class DesignKeyboardHandler {
                 }
 
                 if (e.altKey) {
-                    this.drillEditorService.addStep(Direction.W);
+                    this.drillEditorService.addStep({ direction: Direction.W });
                     return;
                 }
 
@@ -68,7 +68,7 @@ class DesignKeyboardHandler {
                 }
 
                 if (e.altKey) {
-                    this.drillEditorService.addStep(Direction.E);
+                    this.drillEditorService.addStep({ direction: Direction.E });
                     // TODO: detect shift for 1/2 step?
                     return;
                 }

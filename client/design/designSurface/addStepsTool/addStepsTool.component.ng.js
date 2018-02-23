@@ -52,7 +52,7 @@ angular.module('drillApp')
       };
 
       $scope.addStep = function(dir) {
-        drillEditorService.addStep(Direction[dir]);
+        drillEditorService.addStep({ direction: Direction[dir] });
       };
 
       $scope.addCountermarch = function() {
@@ -103,12 +103,18 @@ angular.module('drillApp')
       };
 
       $scope.addMarkTime = function() {
-        drillEditorService.addStep(null, StepType.MarkTime);
+        drillEditorService.addStep({
+          direction: null,
+          stepType: StepType.MarkTime,
+        });
       };
 
       $scope.addHalt = function() {
         // using null direction so it will default to current dir
-        drillEditorService.addStep(null, StepType.Halt);
+        drillEditorService.addStep({
+          direction: null,
+          stepType: StepType.Halt,
+        });
       };
 
       $scope.backspaceDelete = function() {

@@ -81,16 +81,39 @@ class DrillBuilder {
         return MemberFactory.createMember(strideType, dir, point);
     }
 
-    addStep(strideType, stepType, direction, deltaX, deltaY) {
+    getMemberSteps(fromCount, toCount) {
         let members = this.getSelectedMembers();
+        let steps = members.map((m) => {
+            return {
+                member: m,
+                fromCount: fromCount,
+                toCount: toCount,
+                steps: m.script.slice(fromCount - 1, toCount),
+            };
+        });
+        return steps;
+    }
+
+    restoreMemberSteps(memberSteps) {
+        memberSteps.forEach((ms) => {
+            const start = ms.fromCount - 1;
+            const replaceCount = ms.toCount - ms.fromCount + 1;
+            ms.member.script.splice(start, replaceCount, ...ms.steps);
+        });
+    }
+
+    addStep(members, step) {
         let defaultValue = (a, b) => a === null || a === undefined ? b : a;
         members.forEach((m) => {
             let action = new Action({
-                strideType: defaultValue(strideType, m.currentState.strideType),
-                stepType: defaultValue(stepType, m.currentState.stepType),
-                direction: defaultValue(direction, m.currentState.direction),
-                deltaX: deltaX,
-                deltaY: deltaY,
+                strideType: defaultValue(step.strideType,
+                                m.currentState.strideType),
+                stepType: defaultValue(step.stepType,
+                                m.currentState.stepType),
+                direction: defaultValue(step.direction,
+                                m.currentState.direction),
+                deltaX: step.deltaX,
+                deltaY: step.deltaY,
             });
             ScriptBuilder.addActionAtCount(m, action, this.drill.count + 1);
         });

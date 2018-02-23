@@ -181,17 +181,57 @@ class DrillEditorService {
         this.save();
     }
 
-    addStep(direction, stepType, strideType, deltaX, deltaY) {
-        stepType = stepType || StepType.Full;
-        strideType = strideType || this.strideType;
-        this.drillBuilder.addStep(strideType,
-            stepType,
-            direction,
-            deltaX,
-            deltaY);
-        this.drillPlayer.stepForward();
-        this.notifyDrillStateChanged();
-        this.save();
+    addStep(step, members, skipUndo) {
+        const self = this;
+
+        members = members || self.drillBuilder.getSelectedMembers();
+        step.stepType = step.stepType || StepType.Full;
+        step.strideType = step.strideType || self.strideType;
+
+        const addCount = self.drill.count + 1;
+        const savedSteps = self.drillBuilder.getMemberSteps(addCount, addCount);
+
+        self.drillBuilder.addStep(members, step);
+        self.drillPlayer.stepForward();
+        self.notifyDrillStateChanged();
+        self.save();
+
+        if (skipUndo) return;
+        UndoManager.add({
+            label: 'Add Step at count ' + addCount,
+            undo: () => {
+                self.undoAddStep(savedSteps, addCount - 1);
+            },
+            redo: () => {
+                self.redoAddStep(members, step, addCount - 1);
+            },
+        });
+    }
+
+    undoAddStep(savedSteps, count) {
+        const self = this;
+        self.restoreSteps(savedSteps, true);
+        self.goToCount(count);
+    }
+
+    redoAddStep(members, step, count) {
+        const self = this;
+        self.goToCount(count);
+        self.addStep(step, members, true);
+    }
+
+    restoreSteps(memberSteps, skipUndo) {
+        this.drillBuilder.restoreMemberSteps(memberSteps);
+        // if (skipUndo) return;
+        // UndoManager.add({
+        //     label: 'Restore Step',
+        //     undo: () => {
+
+        //     },
+        //     redo: () => {
+
+        //     },
+        // });
     }
 
     addMemberSteps(member, steps, atCount) {
