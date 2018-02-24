@@ -50,6 +50,21 @@ class appStateService {
         this.userProfile.isLogoVisible = val;
     }
 
+    getDrillId() {
+        if (!this.drill) return null;
+        return this.drill._id;
+    }
+
+    getDrillCount() {
+        if (!this.drill) return null;
+        return this.drill.count;
+    }
+
+    getDrillName() {
+        if (!this.drill) return null;
+        return this.drill.name;
+    }
+
     setActiveTool(toolName, deactivateFn) {
         if (this.activeToolName === toolName) return;
         this.deactivateActiveTool();
@@ -242,7 +257,7 @@ class appStateService {
                     const end = performance.now();
                     this.updateUserProfile();
                     console.log('save complete', end - start);
-                    Logger.info('Drill ' + self.drill.name + 'updated.', {
+                    Logger.info('Drill "' + self.drill.name + '" updated.', {
                         timing: end - start,
                         drillId: id,
                     });

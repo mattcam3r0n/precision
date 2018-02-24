@@ -5,6 +5,7 @@ import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import { FieldPoint } from '/client/lib/Point';
 import Direction from '/client/lib/Direction';
 import PathTool from './PathTool';
+import ExceptionHelper from '/client/lib/ExceptionHelper';
 
 angular.module('drillApp')
   .component('drawPathsTool', {
@@ -12,7 +13,7 @@ angular.module('drillApp')
     bindings: {
     },
     controller: function($scope, $window, appStateService,
-          drillEditorService, eventService) {
+      drillEditorService, eventService) {
       let ctrl = this;
 
       ctrl.$onInit = function() {
@@ -65,47 +66,52 @@ angular.module('drillApp')
       };
 
       function activate(memberSelection) {
-        if (ctrl.isActivated) {
-          deactivate(false);
-        }
+        ExceptionHelper.handle(() => {
+          if (ctrl.isActivated) {
+            deactivate(false);
+          }
+          appStateService.setActiveTool('drawPaths', () => {
+            deactivate(false);
+          });
 
-        appStateService.setActiveTool('drawPaths', () => {
-          deactivate(false);
-        });
+          ctrl.isActivated = true;
+          ctrl.field = appStateService.field;
+          ctrl.memberSelection = memberSelection;
+          ctrl.strideType = drillEditorService.strideType;
 
-        ctrl.isActivated = true;
-        ctrl.field = appStateService.field;
-        ctrl.memberSelection = memberSelection;
-        ctrl.strideType = drillEditorService.strideType;
-
-        createPathTool();
-
-        ctrl.field.disablePositionIndicator();
-        setTurnDirection(Direction.E);
-        ctrl.field.canvas.on('mouse:up', onMouseUp);
-        ctrl.subscriptions.subscribe(Events.deleteTurn, onBackspacePressed);
-        ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
-          if (!ctrl.isActivated) return;
-          ctrl.memberSelection = args.memberSelection;
           createPathTool();
-        });
+
+          ctrl.field.disablePositionIndicator();
+          setTurnDirection(Direction.E);
+          ctrl.field.canvas.on('mouse:up', onMouseUp);
+          ctrl.subscriptions.subscribe(Events.deleteTurn, onBackspacePressed);
+          ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
+            if (!ctrl.isActivated) return;
+            ctrl.memberSelection = args.memberSelection;
+            createPathTool();
+          });
+        },
+        'drawPathsTool.activate', getContextInfo());
       }
 
       function deactivate(notify = true) {
-        ctrl.subscriptions.unsubscribe(Events.deleteTurn);
-        ctrl.subscriptions.unsubscribe(Events.membersSelected);
+        ExceptionHelper.handle(() => {
+          ctrl.subscriptions.unsubscribe(Events.deleteTurn);
+          ctrl.subscriptions.unsubscribe(Events.membersSelected);
 
-        ctrl.isActivated = false;
-        ctrl.field.enablePositionIndicator();
-        ctrl.field.canvas.selection = true;
-        ctrl.field.canvas.off('mouse:up', onMouseUp);
-        ctrl.field.canvas.defaultCursor = 'default';
-        destroyPathTool();
-        eventService.notify(Events.updateField);
-        ctrl.field.update();
-        if (notify) {
-          eventService.notify(Events.drawPathsToolDeactivated);
-        }
+          ctrl.isActivated = false;
+          ctrl.field.enablePositionIndicator();
+          ctrl.field.canvas.selection = true;
+          ctrl.field.canvas.off('mouse:up', onMouseUp);
+          ctrl.field.canvas.defaultCursor = 'default';
+          destroyPathTool();
+          eventService.notify(Events.updateField);
+          ctrl.field.update();
+          if (notify) {
+            eventService.notify(Events.drawPathsToolDeactivated);
+          }
+        },
+        'drawPathsTool.deactivate', getContextInfo());
       }
 
       function setTurnDirection(direction) {
@@ -121,15 +127,16 @@ angular.module('drillApp')
       }
 
       function createPathTool() {
-        // if (ctrl.memberSelection.members.length == 0) return;
+        ExceptionHelper.handle(() => {
+          if (ctrl.activePathTool) {
+            destroyPathTool();
+          }
 
-        if (ctrl.activePathTool) {
-          destroyPathTool();
-        }
-
-        ctrl.activePathTool = new PathTool(ctrl.field, ctrl.memberSelection,
+          ctrl.activePathTool = new PathTool(ctrl.field, ctrl.memberSelection,
             ctrl.turnMode, ctrl.strideType);
-        eventService.notify(Events.updateField);
+
+          eventService.notify(Events.updateField);
+        }, 'drawPathsTool.createPathTool', getContextInfo());
       }
 
       function destroyPathTool() {
@@ -146,22 +153,21 @@ angular.module('drillApp')
 
         // removeTurnMarker(target);
         ctrl.activePathTool.removeTurnMarker(target);
-        //        ctrl.guidePaths.forEach(gp => gp.removeTurnMarker(target));
       }
 
       function onMouseUp(evt) {
-        if (!evt.isClick) return;
-        if (evt.target !== null && !evt.target.isLogo) return; // clicked on an object
-
-        // have to adjust point for zoom
-        let adjustedPoint = ctrl.field.adjustMousePoint({
-          x: evt.e.layerX,
-          y: evt.e.layerY,
-        });
-        let stepPoint = new FieldPoint(adjustedPoint); // .toStepPoint(ctrl.strideType);
-
-        // add turn at step point
-        ctrl.activePathTool.addTurnMarker(ctrl.turnDirection, stepPoint);
+        ExceptionHelper.handle(() => {
+          if (!evt.isClick) return;
+          if (evt.target !== null && !evt.target.isLogo) return; // clicked on an object
+          // have to adjust point for zoom
+          let adjustedPoint = ctrl.field.adjustMousePoint({
+            x: evt.e.layerX,
+            y: evt.e.layerY,
+          });
+          let stepPoint = new FieldPoint(adjustedPoint); // .toStepPoint(ctrl.strideType);
+          // add turn at step point
+          ctrl.activePathTool.addTurnMarker(ctrl.turnDirection, stepPoint);
+        }, 'drawPathsTool.onMouseUp', getContextInfo());
       }
 
       // function destroyGuidePaths() {
@@ -173,9 +179,21 @@ angular.module('drillApp')
       function save() {
         if (!ctrl.activePathTool) return;
 
-        ctrl.activePathTool.save();
+        ExceptionHelper.handle(() => {
+          ctrl.activePathTool.save();
+          drillEditorService.save(true);
+        }, 'drawPathsTool.save', getContextInfo());
+      }
 
-        drillEditorService.save(true);
+      function getContextInfo() {
+        return {
+          drillId: appStateService.getDrillId(),
+          drillName: appStateService.getDrillName(),
+          drillCount: appStateService.getDrillCount(),
+          strideType: ctrl.strideType,
+          turnMode: ctrl.turnMode,
+          turnDirection: ctrl.turnDirection,
+        };
       }
     },
   });
