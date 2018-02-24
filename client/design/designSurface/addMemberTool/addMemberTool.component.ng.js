@@ -7,7 +7,6 @@ import SizableRect from './SizableRect';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
 import PositionCalculator from '/client/lib/PositionCalculator';
 import Events from '/client/lib/Events';
-import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 angular.module('drillApp')
   .component('addMemberTool', {
@@ -28,7 +27,7 @@ angular.module('drillApp')
 
       ctrl.$onInit = function() {
         ctrl.isActivated = false;
-        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions = eventService.createSubscriptionManager();
 
         ctrl.subscriptions.subscribe(Events.addMembersToolActivated, () => {
           activate();

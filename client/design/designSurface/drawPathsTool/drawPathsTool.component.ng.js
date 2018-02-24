@@ -1,7 +1,6 @@
 'use strict';
 
 import Events from '/client/lib/Events';
-import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import { FieldPoint } from '/client/lib/Point';
 import Direction from '/client/lib/Direction';
 import PathTool from './PathTool';
@@ -17,7 +16,7 @@ angular.module('drillApp')
       let ctrl = this;
 
       ctrl.$onInit = function() {
-        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions = eventService.createSubscriptionManager();
         ctrl.turnMode = 'block';
         ctrl.toolDiv = angular.element('.draw-paths-tool')[0];
 

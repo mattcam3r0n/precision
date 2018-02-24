@@ -1,7 +1,6 @@
 'use strict';
 
 import Events from '/client/lib/Events';
-import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 angular.module('drillApp')
   .component('userDetail', {
@@ -13,7 +12,7 @@ angular.module('drillApp')
       let ctrl = this;
 
       ctrl.$onInit = function() {
-        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions = eventService.createSubscriptionManager();
         ctrl.subscriptions.subscribe(Events.userSelected, (evt, args) => {
           ctrl.user = args.user;
           Meteor.callPromise('getUserStats', ctrl.user._id).then((userStats) => {

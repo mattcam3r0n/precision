@@ -7,7 +7,6 @@ import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js
 import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
 import Metronome from './Metronome';
 import Events from '/client/lib/Events';
-import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import Logger from '/client/lib/Logger';
 
 angular.module('drillApp')
@@ -352,7 +351,7 @@ angular.module('drillApp')
       }
 
       ctrl.$onInit = function() {
-        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions = eventService.createSubscriptionManager();
         ctrl.subscriptions.subscribe(Events.audioClipDialogActivated,
           (evt, args) => {
             ctrl.activate(args);

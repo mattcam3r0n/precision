@@ -1,7 +1,6 @@
 'use strict';
 
 import Events from '/client/lib/Events';
-import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import DragStepCalculator from './DragStepCalculator';
 
 angular.module('drillApp')
@@ -20,7 +19,7 @@ angular.module('drillApp')
       ctrl.$onInit = function() {
         $('[data-toggle="tooltip"]').tooltip();
 
-        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions = eventService.createSubscriptionManager();
 
         ctrl.subscriptions.subscribe(Events.activateDragStepTool,
           (evt, args) => {

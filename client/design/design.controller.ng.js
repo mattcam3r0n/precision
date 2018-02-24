@@ -4,7 +4,6 @@ import DesignKeyboardHandler from './DesignKeyboardHandler';
 import Audio from '/client/lib/audio/Audio';
 import Spinner from '/client/components/spinner/spinner';
 import Events from '/client/lib/Events';
-import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 import Logger from '/client/lib/Logger';
 
@@ -25,7 +24,7 @@ angular.module('drillApp')
 
     function init() {
       ctrl.spinner = new Spinner($('div.design')[0]);
-      ctrl.subscriptions = new EventSubscriptionManager(eventService);
+      ctrl.subscriptions = eventService.createSubscriptionManager();
 
       $scope.tempo = 120;
       $window.addEventListener('keydown', onKeydown);

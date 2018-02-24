@@ -1,7 +1,6 @@
 'use strict';
 
 import Events from '/client/lib/Events';
-import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 angular.module('drillApp')
   .component('drillPropertiesDialog', {
@@ -33,7 +32,7 @@ angular.module('drillApp')
       };
 
       ctrl.$onInit = function() {
-        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions = eventService.createSubscriptionManager();
 
         ctrl.subscriptions.subscribe(Events.showDrillPropertiesDialog,
           ctrl.activate.bind(this));

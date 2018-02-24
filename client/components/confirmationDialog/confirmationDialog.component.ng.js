@@ -1,7 +1,6 @@
 'use strict';
 
 import Events from '/client/lib/Events';
-import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 angular.module('drillApp')
   .component('confirmationDialog', {
@@ -12,7 +11,7 @@ angular.module('drillApp')
       let ctrl = this;
 
       ctrl.$onInit = function() {
-        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions = eventService.createSubscriptionManager();
         ctrl.subscriptions
           .subscribe(Events.showConfirmationDialog, (evt, args) => {
             ctrl.heading = args.heading;

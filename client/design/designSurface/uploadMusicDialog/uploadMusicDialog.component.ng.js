@@ -2,7 +2,6 @@
 
 import Logger from '/client/lib/Logger';
 import Events from '/client/lib/Events';
-import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import Spinner from '/client/components/spinner/spinner';
 import FileUploader from '/lib/FileUploader';
 
@@ -83,7 +82,7 @@ angular.module('drillApp')
       };
 
       ctrl.$onInit = function() {
-        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions = eventService.createSubscriptionManager();
         ctrl.subscriptions.subscribe(Events.uploadMusicDialogActivated,
           (evt, args) => {
             ctrl.activate();

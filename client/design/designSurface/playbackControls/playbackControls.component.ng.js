@@ -2,7 +2,6 @@
 
 import Audio from '/client/lib/audio/Audio';
 import Events from '/client/lib/Events';
-import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 angular.module('drillApp')
   .component('playbackControls', {
@@ -21,7 +20,7 @@ angular.module('drillApp')
 
       ctrl.$onInit = function() {
         ctrl.isActivated = true;
-        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions = eventService.createSubscriptionManager();
 
         // update position indicator
         ctrl.subscriptions

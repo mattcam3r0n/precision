@@ -10,7 +10,6 @@ import PositionCalculator from '/client/lib/PositionCalculator';
 import {StepPoint} from '/client/lib/Point';
 import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
 import Events from '/client/lib/Events';
-import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import Lasso from '../lassoTool/Lasso';
 
 import 'fabric-customise-controls';
@@ -21,7 +20,7 @@ class FieldController {
         this.canvas = this.createCanvas();
         this.fieldPainter = new FieldPainter(this.canvas);
         this.eventService = eventService;
-        this.subscriptions = new EventSubscriptionManager(eventService);
+        this.subscriptions = eventService.createSubscriptionManager();
         this.marchers = {};
         this.paths = [];
         this.arePathsVisible = false;

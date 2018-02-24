@@ -30,7 +30,7 @@ class EventSubscriptionManager {
     }
 
     unsubscribeAll() {
-        for(var k in this.subscriptions) {
+        for(var k in this.subscriptions) { //eslint-disable-line
             let unsub = this.subscriptions[k];
             unsub();
             delete this.subscriptions[k];

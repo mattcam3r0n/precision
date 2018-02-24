@@ -4,7 +4,6 @@ import StrideType from '/client/lib/StrideType';
 import StepType from '/client/lib/StepType';
 import Direction from '/client/lib/Direction';
 import Events from '/client/lib/Events';
-import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 angular.module('drillApp')
   .component('addStepsTool', {
@@ -17,7 +16,7 @@ angular.module('drillApp')
 
       ctrl.$onInit = function() {
         ctrl.isActivated = false;
-        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+        ctrl.subscriptions = eventService.createSubscriptionManager();
         ctrl.subscriptions
           .subscribe(Events.addStepsToolActivated, (evt, args) => {
             activate(drillEditorService.getMemberSelection());
