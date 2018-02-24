@@ -470,6 +470,14 @@ class DrillEditorService {
         this.save();
     }
 
+    undo() {
+        UndoManager.undo();
+    }
+
+    redo() {
+        UndoManager.redo();
+    }
+
     save(forceSave) {
         if (!forceSave && !this.drill.isDirty) return;
 

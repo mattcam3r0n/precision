@@ -28,10 +28,10 @@
       </button>
       <ul class="dropdown-menu" aria-labelledby="editMenu">
         <li>
-          <a href="#" ng-click="$ctrl.undo()" ng-disabled="!$ctrl.hasUndo()"><i class="fa fa-undo"></i> {{$ctrl.undoLabel()}}</a>
+          <a href="#" ng-click="$ctrl.undo()" title="CMD+Z"><i class="fa fa-undo"></i> {{$ctrl.undoLabel()}}</a>
         </li>
         <li>
-            <a href="#" ng-click="$ctrl.redo()" ng-disabled="!$ctrl.hasRedo()"><i class="fa fa-undo fa-flip-horizontal"></i> {{$ctrl.redoLabel()}}</a>
+            <a href="#" ng-click="$ctrl.redo()" title="CMD+SHIFT+Z"><i class="fa fa-undo fa-flip-horizontal"></i> {{$ctrl.redoLabel()}}</a>
         </li>
       </ul>
     </div>

@@ -23,6 +23,17 @@ class DesignKeyboardHandler {
                 }
             },
 
+            'z': (e) => {
+                console.log(e);
+                if ((e.ctrlKey || e.metaKey) && !e.shiftKey) {
+                    this.drillEditorService.undo();
+                }
+
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+                    this.drillEditorService.redo();
+                }
+            },
+
             'Backspace': (e) => {
                 if (e.altKey) {
                     this.drillEditorService.deleteBackspace();
