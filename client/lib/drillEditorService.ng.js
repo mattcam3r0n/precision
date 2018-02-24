@@ -173,20 +173,42 @@ class DrillEditorService {
         this.save();
     }
 
-    deleteBackspace() {
-        let deleteCount = this.drill.count;
+    deleteBackspace(members) {
+        members = members || this.drillBuilder.getSelectedMembers();
+        const count = this.drill.count;
+        const counts = 1;
+        this.makeUndoable(
+            'Delete Step',
+            members,
+            count,
+            counts,
+            () => {
+                this.doDeleteBackspace(this.drill.count);
+            },
+            null,
+            () => {
+                this.goToCount(count);
+                this.doDeleteBackspace(this.drill.count);
+            }
+        );
+    }
+
+    doDeleteBackspace(count) {
+        // let deleteCount = this.drill.count;
         this.drillPlayer.stepBackward();
-        this.drillBuilder.deleteBackspace(deleteCount);
+        this.drillBuilder.deleteBackspace(count);
         this.notifyDrillStateChanged();
         this.save();
     }
 
     addStep(step, members) {
         members = members || this.drillBuilder.getSelectedMembers();
+        const count = this.drill.count + 1;
         const counts = 1;
         this.makeUndoable(
             'Add Step', // TODO: generate a better label? flank, halt, etc?
             members,
+            count,
             counts,
             () => {
                 this.doAddStep(step, members);
@@ -206,25 +228,30 @@ class DrillEditorService {
 
     restoreSteps(memberSteps) {
         this.drillBuilder.restoreMemberSteps(memberSteps);
+        this.save();
     }
 
-    makeUndoable(label, members, counts, action) {
-        const count = this.drill.count + 1;
+    makeUndoable(label, members, count, counts, action, undo, redo) {
         // save the steps prior to change
         const savedSteps = this.saveSteps(members, count, count + counts);
         // do the change
         action();
+
+        undo = undo || (() => {
+            this.restoreSteps(savedSteps);
+            this.goToCount(count - 1);
+        });
+
+        redo = redo || (() => {
+            this.goToCount(count - 1);
+            action();
+        });
+
         // add action to undo/redo
         UndoManager.add({
             label: label + ' at count ' + count,
-            undo: () => {
-                this.restoreSteps(savedSteps);
-                this.goToCount(count - 1);
-            },
-            redo: () => {
-                this.goToCount(count - 1);
-                action();
-            },
+            undo: undo,
+            redo: redo,
         });
     }
 
@@ -236,9 +263,11 @@ class DrillEditorService {
 
     addDragSteps(members, memberSteps, counts) {
         members = members || this.drillBuilder.getSelectedMembers();
+        const count = this.drill.count + 1;
         this.makeUndoable(
             'Drag Step',
             members,
+            count,
             counts + 1,
             () => {
                 this.doAddDragSteps(members, memberSteps, counts);
@@ -259,9 +288,11 @@ class DrillEditorService {
 
     addPinwheel(mode, members, memberSteps, counts) {
         members = members || this.drillBuilder.getSelectedMembers();
+        const count = this.drill.count + 1;
         this.makeUndoable(
             mode == 'gate' ? 'Gate' : 'Pinwheel',
             members,
+            count,
             counts + 1,
             () => {
                 this.doAddPinwheel(members, memberSteps, counts);
@@ -314,9 +345,11 @@ class DrillEditorService {
     addLeftCountermarch(members) {
         members = members || this.drillBuilder.getSelectedMembers();
         const counts = this.drill.count % 2 === 0 ? 3 : 4;
+        const count = this.drill.count + 1;
         this.makeUndoable(
             'Left Countermarch',
             members,
+            count,
             counts,
             () => {
                 this.doAddLeftCountermarch(members, counts);
@@ -333,10 +366,12 @@ class DrillEditorService {
 
     addRightCountermarch(members) {
         members = members || this.drillBuilder.getSelectedMembers();
+        const count = this.drill.count + 1;
         const counts = this.drill.count % 2 === 0 ? 4 : 3;
         this.makeUndoable(
             'Right Countermarch',
             members,
+            count,
             counts,
             () => {
                 this.doAddRightCountermarch(members, counts);
@@ -352,10 +387,12 @@ class DrillEditorService {
     }
 
     addLeftFace(members) {
-        members = members || this.drillBuilder.getSelectedMembers(),
+        members = members || this.drillBuilder.getSelectedMembers();
+        const count = this.drill.count + 1;
         this.makeUndoable(
             'Left Face',
             members,
+            count,
             2,
             () => {
                 this.doAddLeftFace(members);
@@ -371,10 +408,12 @@ class DrillEditorService {
     }
 
     addRightFace(members) {
-        members = members || this.drillBuilder.getSelectedMembers(),
+        members = members || this.drillBuilder.getSelectedMembers();
+        const count = this.drill.count + 1;
         this.makeUndoable(
             'Right Face',
             members,
+            count,
             2,
             () => {
                 this.doAddRightFace(members);
@@ -390,10 +429,12 @@ class DrillEditorService {
     }
 
     addAboutFace2(members) {
-        members = members || this.drillBuilder.getSelectedMembers(),
+        members = members || this.drillBuilder.getSelectedMembers();
+        const count = this.drill.count + 1;
         this.makeUndoable(
             'About Face (2 ct)',
             members,
+            count,
             2,
             () => {
                 this.doAddAboutFace2(members);
@@ -409,10 +450,12 @@ class DrillEditorService {
     }
 
     addAboutFace3(members) {
-        members = members || this.drillBuilder.getSelectedMembers(),
+        members = members || this.drillBuilder.getSelectedMembers();
+        const count = this.drill.count + 1;
         this.makeUndoable(
             'About Face (3 ct)',
             members,
+            count,
             3,
             () => {
                 this.doAddAboutFace3(members);
@@ -437,7 +480,7 @@ class DrillEditorService {
 
         this.saveTimeout = this.$timeout(() => {
             this.appStateService.saveDrill();
-        }, 2000);
+        }, 10000);
     }
 
     // Events

@@ -8,13 +8,12 @@ import DrillZipper from '/lib/DrillZipper';
 let _currentDrillFormatVersion = 1;
 
 class appStateService {
-    constructor($rootScope, alertService, eventService, userService) {
+    constructor(alertService, eventService, userService) {
         this._drill = null;
         this._field = null;
         this.alertService = alertService;
         this.eventService = eventService;
         this.userService = userService;
-        this.rootScope = $rootScope.$new(true);
         this.userProfile = userService.getUserProfile();
         this.zipper = new DrillZipper();
     }
@@ -346,4 +345,4 @@ function upgradeDrill(drill) {
 
 angular.module('drillApp')
     .service('appStateService',
-        ['$rootScope', 'alertService', 'eventService', 'userService', appStateService]);
+        ['alertService', 'eventService', 'userService', appStateService]);
