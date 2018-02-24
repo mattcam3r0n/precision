@@ -1,6 +1,7 @@
 'use strict';
 
 import Events from '/client/lib/Events';
+import UndoManager from '/client/lib/UndoManager';
 
 angular.module('drillApp')
   .component('designHeader', {
@@ -70,6 +71,32 @@ angular.module('drillApp')
 
       ctrl.logOut = function() {
         userService.logOut();
+      };
+
+      ctrl.undo = function() {
+        UndoManager.undo();
+      };
+
+      ctrl.undoLabel = function() {
+        if (!UndoManager.hasUndo()) return 'Undo';
+        return 'Undo ' + UndoManager.getUndoLabel();
+      };
+
+      ctrl.hasUndo = function() {
+        return UndoManager.hasUndo();
+      };
+
+      ctrl.redo = function() {
+        UndoManager.redo();
+      };
+
+      ctrl.redoLabel = function() {
+        if (!UndoManager.hasRedo()) return 'Redo';
+        return 'Redo ' + UndoManager.getRedoLabel();
+      };
+
+      ctrl.hasRedo = function() {
+        return UndoManager.hasRedo();
       };
 
       $scope.onNameChange = function() {
