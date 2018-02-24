@@ -128,12 +128,9 @@ class appStateService {
     }
 
     openDrill(id) {
-        console.log('openDrill', id);
         const start = performance.now();
-        console.log('about to getDrill');
         return this.getDrillZipped(id)
             .then((drill) => {
-                console.log('getDrill done', drill);
                 if (shouldUpgradeDrill(drill)) {
                     upgradeDrill(drill);
                 }
@@ -142,7 +139,6 @@ class appStateService {
                     timing: end - start,
                     drillId: drill._id,
                 });
-                console.log('getDrill timing', end - start);
                 this.drill = drill;
                 this.eventService.notify(Events.drillOpened,
                     {
