@@ -15,6 +15,12 @@
         <li>
           <a href="#" ng-click="$ctrl.onOpenDrill()">Open...</a>
         </li>
+        <li>
+          <a href="#" ng-click="$ctrl.onSave()">Save</a>
+        </li>
+        <li>
+          <a href="#" ng-click="$ctrl.onSaveAs()">Save As...</a>
+        </li>
         <li role="separator" class="divider"></li>
         <li class="">
           <a href="#" ng-click="$ctrl.onDrillProperties()">Drill Info...</a>
@@ -28,10 +34,12 @@
       </button>
       <ul class="dropdown-menu" aria-labelledby="editMenu">
         <li>
-          <a href="#" ng-click="$ctrl.undo()" title="CMD+Z"><i class="fa fa-undo"></i> {{$ctrl.undoLabel()}}</a>
+          <a href="#" ng-click="$ctrl.undo()" title="CMD+Z">
+            <i class="fa fa-undo"></i> {{$ctrl.undoLabel()}}</a>
         </li>
         <li>
-            <a href="#" ng-click="$ctrl.redo()" title="CMD+SHIFT+Z"><i class="fa fa-undo fa-flip-horizontal"></i> {{$ctrl.redoLabel()}}</a>
+          <a href="#" ng-click="$ctrl.redo()" title="CMD+SHIFT+Z">
+            <i class="fa fa-undo fa-flip-horizontal"></i> {{$ctrl.redoLabel()}}</a>
         </li>
       </ul>
     </div>

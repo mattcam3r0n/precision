@@ -15,6 +15,10 @@ class Events {
         return 'showDrillPropertiesDialog';
     }
 
+    static get showSaveAsDialog() {
+        return 'showSaveAsDialog';
+    }
+
     static get sizeToFit() {
         return 'sizeToFit';
     }
@@ -89,6 +93,10 @@ class Events {
         return 'drillOpened';
     }
 
+    static get drillSavedAs() {
+        return 'drillSavedAs';
+    }
+
     static get membersAdded() {
         return 'membersAdded';
     }
@@ -103,6 +111,10 @@ class Events {
 
     static get showPaths() {
         return 'showPaths';
+    }
+
+    static get drillPropertiesChanged() {
+        return 'drillPropertiesChanged';
     }
 
     static get drillStateChanged() {

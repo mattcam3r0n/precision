@@ -4,8 +4,8 @@ import Events from '/client/lib/Events';
 import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 
 angular.module('drillApp')
-  .component('drillPropertiesDialog', {
-    templateUrl: 'client/design/drillPropertiesDialog/drillPropertiesDialog.view.ng.html',
+  .component('saveAsDialog', {
+    templateUrl: 'client/design/saveAsDialog/saveAsDialog.view.ng.html',
     bindings: {
       drill: '<',
     },
@@ -15,27 +15,24 @@ angular.module('drillApp')
       ctrl.activate = function(args) {
         ctrl.name = appStateService.drill.name;
         ctrl.description = appStateService.drill.description;
-        $('#drillPropertiesDialog').modal('show');
+        $('#saveAsDialog').modal('show');
       };
 
       ctrl.isValid = function() {
         return true;
       };
 
-      ctrl.save = function() {
-        appStateService.drill.name = ctrl.name;
-        appStateService.drill.description = ctrl.description;
-        eventService.notify(Events.drillPropertiesChanged, {
+      ctrl.saveAs = function() {
+        appStateService.saveDrillAs({
           name: ctrl.name,
           description: ctrl.description,
         });
-        appStateService.saveDrill();
       };
 
       ctrl.$onInit = function() {
         ctrl.subscriptions = new EventSubscriptionManager(eventService);
 
-        ctrl.subscriptions.subscribe(Events.showDrillPropertiesDialog,
+        ctrl.subscriptions.subscribe(Events.showSaveAsDialog,
           ctrl.activate.bind(this));
       };
 

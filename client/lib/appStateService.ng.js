@@ -184,6 +184,19 @@ class appStateService {
         return this.drill;
     }
 
+    saveDrillAs(drillInfo) {
+        if (!this.drill) return;
+
+        this.drill.isDirty = false;
+        delete this.drill._id;
+        this.drill.name = drillInfo.name;
+        this.drill.description = drillInfo.description;
+
+        return this.insertDrill().then(() => {
+            this.eventService.notify(Events.drillSavedAs);
+        });
+    }
+
     saveDrill() {
         if (!this.drill) return;
 
@@ -199,7 +212,7 @@ class appStateService {
     insertDrill() {
         let self = this;
         const start = performance.now();
-        Meteor.callPromise('insertDrill', self.drill)
+        return Meteor.callPromise('insertDrill', self.drill)
             .then((id) => {
                 const end = performance.now();
                 self.drill._id = id;
@@ -223,7 +236,7 @@ class appStateService {
             console.log('Unable to update. No _id.');
             return;
         }
-        Meteor.callPromise('updateDrill', this.drill)
+        return Meteor.callPromise('updateDrill', this.drill)
             .then(() => {
                 const end = performance.now();
                 this.updateUserProfile();

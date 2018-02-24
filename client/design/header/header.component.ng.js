@@ -1,6 +1,7 @@
 'use strict';
 
 import Events from '/client/lib/Events';
+import EventSubscriptionManager from '/client/lib/EventSubscriptionManager';
 import UndoManager from '/client/lib/UndoManager';
 
 angular.module('drillApp')
@@ -19,8 +20,15 @@ angular.module('drillApp')
 
       ctrl.$onInit = function() {
         // $('[data-toggle="tooltip"]').tooltip();
-        ctrl.subscriptions = eventService.subscribe(Events.drillOpened,
+        ctrl.subscriptions = new EventSubscriptionManager(eventService);
+
+        ctrl.subscriptions.subscribe(Events.drillOpened,
               onDrillOpened);
+
+        ctrl.subscriptions.subscribe(Events.drillPropertiesChanged,
+            onDrillPropertiesChanged);
+
+        ctrl.subscriptions.subscribe(Events.drillSavedAs, onDrillSavedAs);
       };
 
       ctrl.$onChanges = function(changes) {
@@ -28,7 +36,7 @@ angular.module('drillApp')
       };
 
       ctrl.$onDestroy = function() {
-
+        ctrl.subscriptions.unsubscribeAll();
       };
 
       ctrl.onNewDrill = function() {
@@ -37,6 +45,15 @@ angular.module('drillApp')
 
       ctrl.onOpenDrill = function() {
         eventService.notify(Events.showOpenDrillDialog);
+      };
+
+      ctrl.onSave = function() {
+        // save immediately
+        appStateService.saveDrill();
+      };
+
+      ctrl.onSaveAs = function() {
+        eventService.notify(Events.showSaveAsDialog);
       };
 
       ctrl.onDrillProperties = function() {
@@ -104,7 +121,15 @@ angular.module('drillApp')
         drillEditorService.save(true);
       };
 
-      function onDrillOpened() {
+      function onDrillOpened(evt, args) {
+        $scope.drillName = appStateService.drill.name;
+      }
+
+      function onDrillSavedAs(evt, args) {
+        $scope.drillName = appStateService.drill.name;
+      }
+
+      function onDrillPropertiesChanged(evt, args) {
         $scope.drillName = appStateService.drill.name;
       }
     },
