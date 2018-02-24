@@ -119,7 +119,7 @@ class DrillEditorService {
 
         if (skipUndo) return;
         UndoManager.add({
-            label: 'Add Members',
+            label: 'Add Marchers',
             undo: () => {
                 self.deleteMembers(members, true);
             },
@@ -138,7 +138,7 @@ class DrillEditorService {
 
         if (skipUndo) return;
         UndoManager.add({
-            label: 'Delete Members',
+            label: 'Delete Marchers',
             undo: () => {
                 self.addMembers(members, true);
             },
