@@ -102,6 +102,7 @@ angular.module('drillApp')
       return appStateService.getLastDrillId()
           .then((drillId) => {
               if (!drillId) {
+                eventService.notify(Events.hideSpinner);
                 return appStateService.newDrill();
               }
 

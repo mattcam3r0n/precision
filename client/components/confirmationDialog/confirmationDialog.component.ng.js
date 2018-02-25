@@ -34,6 +34,16 @@ angular.module('drillApp')
         $('#confirmationDialog').modal('hide');
       };
 
+      ctrl.confirmationButtonClass = function() {
+        // TODO: better way to do this. let caller specify?
+        const danger = ['Delete', 'Remove', 'Disable'];
+        if (danger.includes(ctrl.confirmText)) {
+          return 'btn-danger';
+        } else {
+          return 'btn-primary';
+        }
+      };
+
       ctrl.ok = function() {
         ctrl.hide();
         eventService.notify(Events.confirmationDialogClosed, {

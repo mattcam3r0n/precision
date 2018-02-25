@@ -49,9 +49,9 @@ angular.module('drillApp')
         if (!ctrl.user) return;
         const isDisabled = Roles.userIsInRole(ctrl.user._id, 'disabled');
         if (isDisabled) {
-          Meteor.call('enableUserAccount', ctrl.user._id);
+          enableAccount();
         } else {
-          Meteor.call('disableUserAccount', ctrl.user._id);
+          disableAccount();
         }
       };
 
@@ -76,12 +76,73 @@ angular.module('drillApp')
       ctrl.addRemoveAdmin = function() {
         if (!ctrl.user) return;
         const isAdmin = Roles.userIsInRole(ctrl.user._id, 'admin');
+
         if (isAdmin) {
-          Meteor.call('removeAdminRole', ctrl.user._id);
+          removeAdmin();
         } else {
-          Meteor.call('addAdminRole', ctrl.user._id);
+          makeAdmin();
         }
       };
+
+      function disableAccount() {
+        confirmationDialogService.show({
+          heading: 'Disable Account',
+          message: 'Are you sure you want to disable '
+            + ctrl.user.emails[0].address + '?',
+          confirmText: 'Disable',
+        }).then((result) => {
+          if (result.confirmed) {
+            Meteor.callPromise('disableUserAccount', ctrl.user._id).then(() => {
+              $rootScope.$safeApply();
+            });
+          }
+        });
+      }
+
+      function enableAccount() {
+        confirmationDialogService.show({
+          heading: 'Enable Account',
+          message: 'Are you sure you want to enable '
+            + ctrl.user.emails[0].address + '?',
+          confirmText: 'Enable',
+        }).then((result) => {
+          if (result.confirmed) {
+            Meteor.callPromise('enableUserAccount', ctrl.user._id).then(() => {
+              $rootScope.$safeApply();
+            });
+          }
+        });
+      }
+
+      function makeAdmin() {
+        confirmationDialogService.show({
+          heading: 'Make Admin',
+          message: 'Are you sure you want to make '
+            + ctrl.user.emails[0].address + ' an administrator?',
+          confirmText: 'Ok',
+        }).then((result) => {
+          if (result.confirmed) {
+            Meteor.callPromise('addAdminRole', ctrl.user._id).then(() => {
+              $rootScope.$safeApply();
+            });
+          }
+        });
+      }
+
+      function removeAdmin() {
+        confirmationDialogService.show({
+          heading: 'Remove Admin',
+          message: 'Are you sure you want to remove administrator priveleges for '
+            + ctrl.user.emails[0].address + '?',
+          confirmText: 'Remove',
+        }).then((result) => {
+          if (result.confirmed) {
+            Meteor.callPromise('removeAdminRole', ctrl.user._id).then(() => {
+              $rootScope.$safeApply();
+            });
+          }
+        });
+      }
     },
   });
 
