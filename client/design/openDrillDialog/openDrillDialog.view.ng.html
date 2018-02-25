@@ -27,13 +27,34 @@
                     </span>
                 </div>
 
-                <div class="list-group">
-                    <a class="list-group-item" dir-paginate="drill in drills | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
+                <div class="">
+                    <ul class="list-group">
+                        <li class="list-group-item drill-item" dir-paginate="drill in drills | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
+                            <div class="drill-item-header">
+                                <div class="drill-name">
+                                    <a ng-click="open(drill)" data-toggle="modal" data-target="#openDrillDialog">
+                                        <h3 class="drill-title">{{drill.name}}</h3>
+                                    </a>
+                                </div>
+                                <div class="drill-delete">
+                                    <a ng-show="canDelete(drill)" ng-click="delete(drill)">
+                                        <i class="fa fa-trash fa-lg delete-button"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="drill-desc">
+                                {{drill.description}}
+                            </div>
+                            <div class="drill-item-footer">
+                                <div class="drill-owner">Owned by {{drill.owner}}</div>
+                                <div class="drill-last-edited">Last edited {{drill.updatedDate | date}}</div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!-- <a class="list-group-item" dir-paginate="drill in drills | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
                         <table width="100%">
                             <tr>
-                                <!-- <td class="drill-img">
-                                    <img src="" style="width: 100px; height: 100px" />
-                                </td> -->
                                 <td class="drill-desc">
                                     <div>
                                         <a ng-click="open(drill)" data-toggle="modal" data-target="#openDrillDialog">
@@ -58,10 +79,11 @@
                             </tr>
                         </table>
                     </a>
-                </div>
+                </div> -->
 
+                </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer button-row">
                 <div class="col-md-9">
                     <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" class=""></dir-pagination-controls>
                 </div>

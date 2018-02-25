@@ -1,30 +1,82 @@
+.open-drill-dialog .modal-lg {
+    width: 600px;
+}
+
+.open-drill-dialog .button-row {
+    padding: 10px;
+}
+
+.open-drill-dialog .button-row div {
+    height: 50px;
+}
+
+
+.open-drill-dialog .drill-item {
+    padding: 5px;
+}
+
+.open-drill-dialog .drill-item-header {
+    display: flex;
+}
+
+.open-drill-dialog .drill-item-header div.drill-name {
+    flex: 1;
+}
+
+.open-drill-dialog .drill-item-header div.drill-delete {
+    flex: 0;
+    width: 50px;
+    font-size: 16px;
+}
+
+.open-drill-dialog .drill-item .drill-desc {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+.open-drill-dialog .drill-item-footer {
+    display: flex;
+    font-style: italic;
+    font-size: 10pt;
+}
+
+.open-drill-dialog .drill-item-footer div {
+    flex: 1 1 auto;
+}
+
+.open-drill-dialog .drill-item-footer div.drill-last-edited {
+    max-width: 200px;
+}
+
 .drill-img {
     padding: 5px;
     width: 100px;
 }
 
-.drill-desc {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
 .drill-title {
     margin: 0;
     cursor: pointer;
+    font-size: 16px;
 }
 
-.open-drill-dialog .list-group-item {
+
+.open-drill-dialog ul.pagination {
+    display: block;
+    margin: 0;
+}
+
+/* .open-drill-dialog .list-group-item {
     padding: 5px;
 }
 
-.open-drill-dialog .pagination {
-    display: block;
-}
 
 .open-drill-dialog .small-text {
     font-style: italic;
     font-size: 10pt;
-}
+} */
 
 .open-drill-dialog .delete-button {
     color: red;

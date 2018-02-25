@@ -14,7 +14,7 @@ angular.module('drillApp')
 
       $scope.searchOptions = { searchText: '', searchMyDrills: true, searchSharedDrills: false };
       $scope.page = 1;
-      $scope.perPage = 7;
+      $scope.perPage = 5;
       $scope.sort = {}; // { name_sort: 1 };
       $scope.orderProperty = '1';
 
@@ -66,7 +66,7 @@ angular.module('drillApp')
       };
 
       $scope.canDelete = function(drill) {
-        return drill.userId === $scope.currentUser._id;
+        return $scope.currentUser && drill && (drill.userId === $scope.currentUser._id);
       };
 
       $scope.pageChanged = function(newPage) {
@@ -81,11 +81,12 @@ angular.module('drillApp')
         }
       });
 
-      const unwatchSharedDrills = $scope.$watch('searchOptions.searchSharedDrills', function(newValue, oldValue) {
-        if (!$scope.searchOptions.searchSharedDrills
-            && !$scope.searchOptions.searchMyDrills) {
-          $scope.searchOptions.searchMyDrills = true;
-        }
+      const unwatchSharedDrills = $scope.$watch('searchOptions.searchSharedDrills',
+        function(newValue, oldValue) {
+          if (!$scope.searchOptions.searchSharedDrills
+              && !$scope.searchOptions.searchMyDrills) {
+            $scope.searchOptions.searchMyDrills = true;
+          }
       });
 
       ctrl.$onInit = function() {
