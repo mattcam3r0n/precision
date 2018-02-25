@@ -7,6 +7,14 @@ Meteor.methods({
         return null;
     }
 
-    return user.profile.lastDrillId;
+    const lastDrillId = user.profile.lastDrillId;
+
+    const drill = Drills.findOne(lastDrillId);
+
+    if (!drill) {
+        return null;
+    }
+
+    return lastDrillId;
 },
 });
