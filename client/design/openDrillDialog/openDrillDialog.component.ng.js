@@ -12,6 +12,7 @@ angular.module('drillApp')
         eventService, confirmationDialogService) {
       let ctrl = this;
 
+      $scope.searchOptions = { searchText: '', searchMyDrills: true, searchSharedDrills: false };
       $scope.page = 1;
       $scope.perPage = 7;
       $scope.sort = {}; // { name_sort: 1 };
@@ -23,7 +24,11 @@ angular.module('drillApp')
           limit: parseInt($scope.getReactively('perPage')),
           skip: ((parseInt($scope.getReactively('page'))) - 1)
             * (parseInt($scope.getReactively('perPage'))),
-        }, $scope.getReactively('search')];
+        },
+          $scope.getReactively('searchOptions.searchText'),
+          $scope.getReactively('searchOptions.searchMyDrills'),
+          $scope.getReactively('searchOptions.searchSharedDrills'),
+        ];
       });
 
       $scope.helpers({
@@ -60,11 +65,15 @@ angular.module('drillApp')
         });
       };
 
+      $scope.canDelete = function(drill) {
+        return drill.userId === $scope.currentUser._id;
+      };
+
       $scope.pageChanged = function(newPage) {
         $scope.page = newPage;
       };
 
-      return $scope.$watch('orderProperty', function() {
+      const unwatchOrderProperty = $scope.$watch('orderProperty', function() {
         if ($scope.orderProperty) {
           $scope.sort = {
             name_sort: parseInt($scope.orderProperty),
@@ -72,10 +81,19 @@ angular.module('drillApp')
         }
       });
 
+      const unwatchSharedDrills = $scope.$watch('searchOptions.searchSharedDrills', function(newValue, oldValue) {
+        if (!$scope.searchOptions.searchSharedDrills
+            && !$scope.searchOptions.searchMyDrills) {
+          $scope.searchOptions.searchMyDrills = true;
+        }
+      });
+
       ctrl.$onInit = function() {
       };
 
       ctrl.$onDestroy = function() {
+        unwatchOrderProperty();
+        unwatchSharedDrills();
       };
     },
   });

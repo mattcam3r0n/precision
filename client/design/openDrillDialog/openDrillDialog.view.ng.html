@@ -11,11 +11,19 @@
             <div class="modal-body" style="min-height: 450px">
 
                 <div class="input-group">
-                    <input type="search" ng-model="search" class="form-control" placeholder="Search">
+                    <input type="search" ng-model="searchOptions.searchText" class="form-control" placeholder="Search">
                     <span class="input-group-btn">
-                        <button ng-click="search = ''" class="btn btn-default" type="button">
+                        <button ng-click="searchOptions.searchText = ''" class="btn btn-default" type="button">
                             <i class="fa fa-times-circle"></i>
                         </button>
+                    </span>
+                    <span class="input-group-addon">
+                        <input type="checkbox" ng-model="searchOptions.searchMyDrills" />&nbsp;
+                        <i class="fa fa-file-audio-o"></i>&nbsp;My Drills
+                    </span>
+                    <span class="input-group-addon">
+                        <input type="checkbox" ng-model="searchOptions.searchSharedDrills" />&nbsp;
+                        <i class="fa fa-scissors"></i>&nbsp;Shared With Me
                     </span>
                 </div>
 
@@ -43,7 +51,7 @@
                                     </table>
                                 </td>
                                 <td>
-                                    <a ng-click="delete(drill)">
+                                    <a ng-show="canDelete(drill)" ng-click="delete(drill)">
                                         <i class="fa fa-times fa-lg delete-button"></i>
                                     </a>
                                 </td>
