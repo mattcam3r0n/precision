@@ -269,14 +269,18 @@ class appStateService {
                 .then(() => {
                     const end = performance.now();
                     this.updateUserProfile();
-                    console.log('save complete', end - start);
                     Logger.info('Drill "' + self.drill.name + '" updated.', {
                         timing: end - start,
                         drillId: id,
                     });
                 })
                 .catch((ex)=> {
-                    self.alertService.danger('Unable to save drill. ' + ex);
+                    let message = 'Unable to save drill. ' + ex;
+                    if (ex.details && ex.details.error == 'not-your-drill') {
+                        message = 'You cannot save changes to a drill that is not yours. ';
+                        message += 'Use "Save As..." to save a copy of the drill.';
+                    }
+                    self.alertService.danger(message);
                     throw new ApplicationException('Error updating drill.', ex, {
                         drillId: id,
                     });
@@ -285,7 +289,19 @@ class appStateService {
     }
 
     deleteDrill(id) {
-        Drills.remove(id);
+        if (id === this.drill._id) {
+            this.alertService.info('You cannot delete this drill while it is open.');
+            return;
+        }
+
+        // Drills.remove(id);
+        Meteor.call('deleteDrill', id, (err, res) => {
+            if (err) {
+                throw new ApplicationException('Error deleting drill.', ex, {
+                    drillId: id,
+                });
+            }
+        });
     }
 
     saveClip(clip) {
