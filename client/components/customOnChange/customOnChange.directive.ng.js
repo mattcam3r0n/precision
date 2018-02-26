@@ -8,7 +8,6 @@ angular.module('drillApp')
                 element.on('$destroy', function() {
                     element.off('change', onChangeHandler);
                 });
-
-            }
+            },
         };
     });
