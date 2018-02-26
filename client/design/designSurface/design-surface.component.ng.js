@@ -23,10 +23,7 @@ angular.module('drillApp')
           // eventService.notify(Events.hideSpinner);
         });
 
-        angular.element($window).bind('resize', function() {
-          if ($location.path() != '/') return; // only resize if we're on field page
-          ctrl.field.resize();
-        });
+        angular.element($window).on('resize', onResize);
 
         ctrl.subscriptions.subscribe(Events.drillStateChanged, (evt, args) => {
           if (!ctrl.field) return;
@@ -77,6 +74,7 @@ angular.module('drillApp')
         }
         appStateService.field = null;
         ctrl.subscriptions.unsubscribeAll();
+        angular.element($window).off('resize', onResize);
       };
 
       ctrl.$onChanges = function(changes) {
@@ -84,6 +82,11 @@ angular.module('drillApp')
         if (!ctrl.field) return;
         ctrl.field.setDrill(ctrl.drill);
       };
+
+      function onResize() {
+        // if ($location.path() != '/') return; // only resize if we're on field page
+        ctrl.field.resize();
+      }
     },
   });
 
