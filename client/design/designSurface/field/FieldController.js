@@ -230,7 +230,6 @@ class FieldController {
     }
 
     updateSelectedMarchers() {
-console.log('canvas eventlisteners', this.canvas.__eventListeners);
         if (!this.drill || !this.marchers) return;
         // eslint-disable-next-line guard-for-in
         for (let id in this.marchers) {
