@@ -40,6 +40,7 @@ class FieldController {
         this.lasso.dispose();
         this.canvas.dispose();
         this.subscriptions.unsubscribeAll();
+        this.canvas = null;
     }
 
     setDrill(drill) {
