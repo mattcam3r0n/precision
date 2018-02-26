@@ -1,0 +1,25 @@
+<!-- Modal -->
+<div class="share-dialog modal fade" id="shareDialog" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="shareDialoglabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="shareDialogLabel">Share Drill</h4>
+            </div>
+            <div class="modal-body" style="min-height: 450px">
+                <user-list enable-multi-select="true" selected-users="$ctrl.selectedUsers" on-selected="$ctrl.onSelected(user, selected)" page-size="25"></user-list>
+            </div>
+            <div class="modal-footer button-row">
+                <div class="col-md-8 text-left">
+                    <span class="label label-primary" ng-repeat="user in $ctrl.selectedUsers">{{user.profile.firstName}}</span>
+                </div>
+                <div class="col-md-4">
+                        <button ng-click="$ctrl.share()" type="button" class="btn btn-primary" data-dismiss="modal">Share</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

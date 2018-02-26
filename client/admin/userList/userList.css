@@ -1,3 +1,6 @@
+.user-list {
+}
+
 .user-list .search-box {
     background-color: white;
     padding: 5px;
@@ -18,9 +21,30 @@
 .user-list li {
     list-style-type: none;
     padding: 5px;
+    display: flex;
+}
+
+.user-list li div.check-box {
+    width: 30px;
+    flex: 0 1 auto;
+    font-size: 20px;
+    color: lightseagreen;
+}
+
+.user-list li div.user-info {
+    flex: 1 1 auto;
 }
 
 .user-list li:hover {
     background-color: whitesmoke;
     cursor: pointer;
+}
+
+.user-list div.pagination {
+    width: 100%;
+    text-align: center;
+}
+
+.user-list div.pagination ul.pagination {
+    width: 50%;
 }

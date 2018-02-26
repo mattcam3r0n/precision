@@ -1,0 +1,98 @@
+.share-dialog .modal-lg {
+    width: 600px;
+}
+
+.share-dialog .modal-body {
+    max-height: 400px;
+}
+
+.share-dialog .user-list ul {
+    max-height: 400px;
+    overflow: scroll;    
+}
+
+.share-dialog .button-row {
+    padding: 10px;
+}
+
+.share-dialog .button-row div {
+    height: 50px;
+}
+
+.share-dialog .drill-item {
+    padding: 5px;
+}
+
+.share-dialog .drill-item-header {
+    display: flex;
+}
+
+.share-dialog .drill-item-header div.drill-name {
+    flex: 1;
+}
+
+.share-dialog .drill-item-header div.drill-delete {
+    flex: 0;
+    width: 50px;
+    font-size: 16px;
+}
+
+.share-dialog .drill-item .drill-desc {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+.share-dialog .drill-item-footer {
+    display: flex;
+    font-style: italic;
+    font-size: 10pt;
+}
+
+.share-dialog .drill-item-footer div {
+    flex: 1 1 auto;
+}
+
+.share-dialog .drill-item-footer div.drill-last-edited {
+    max-width: 200px;
+}
+
+.drill-img {
+    padding: 5px;
+    width: 100px;
+}
+
+.drill-title {
+    margin: 0;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+.share-dialog ul.pagination {
+    display: block;
+    margin: 0;
+}
+
+/* .open-drill-dialog .list-group-item {
+    padding: 5px;
+}
+
+
+.open-drill-dialog .small-text {
+    font-style: italic;
+    font-size: 10pt;
+} */
+
+.share-dialog .delete-button {
+    color: red;
+    cursor: pointer;
+}
+
+.share-dialog .label {
+    font-size: 12px;
+    margin: 4px;
+    display: inline-block;
+}

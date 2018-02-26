@@ -11,6 +11,10 @@ class Events {
         return 'showOpenDrillDialog';
     }
 
+    static get showShareDialog() {
+        return 'showShareDialog';
+    }
+
     static get showDrillPropertiesDialog() {
         return 'showDrillPropertiesDialog';
     }

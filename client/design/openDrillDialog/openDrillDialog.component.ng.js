@@ -66,7 +66,9 @@ angular.module('drillApp')
       };
 
       $scope.canDelete = function(drill) {
-        return $scope.currentUser && drill && (drill.userId === $scope.currentUser._id);
+        return $scope.currentUser
+          && drill
+          && (drill.userId === $scope.currentUser._id);
       };
 
       $scope.pageChanged = function(newPage) {

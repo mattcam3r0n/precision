@@ -33,6 +33,8 @@ Meteor.publish('users', function(options, searchString) {
         },
       ],
     };
+    // eslint-disable-next-line no-invalid-this
+    Counts.publish(this, 'numberOfUsers', Meteor.users.find(where), { noReady: true });
     return Meteor.users.find(where, options);
   }
   return null;

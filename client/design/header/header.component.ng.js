@@ -55,6 +55,10 @@ angular.module('drillApp')
         eventService.notify(Events.showSaveAsDialog);
       };
 
+      ctrl.onShare = function() {
+        eventService.notify(Events.showShareDialog);
+      };
+
       ctrl.onDrillProperties = function() {
         eventService.notify(Events.showDrillPropertiesDialog);
       };
