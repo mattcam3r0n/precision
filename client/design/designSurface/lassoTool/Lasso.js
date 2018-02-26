@@ -35,8 +35,9 @@ class Lasso {
     dispose() {
         this.destroyPath();
         this.destroyGuideline();
-        fabric.util.removeListener(this.field.canvas.upperCanvasEl, 'dblclick', this.dblClickHandler);
         this.field.canvas.off('mouse:up', this.clickHandler);
+        this.field.canvas.off('mouse:move', this.moveHandler);
+        fabric.util.removeListener(this.field.canvas.upperCanvasEl, 'dblclick', this.dblClickHandler);
     }
 
     onDoubleClick(evt) {

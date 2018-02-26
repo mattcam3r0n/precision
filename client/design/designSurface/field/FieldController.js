@@ -40,6 +40,10 @@ class FieldController {
         this.lasso.dispose();
         this.canvas.dispose();
         this.subscriptions.unsubscribeAll();
+        this.canvas.off('mouse:move', this.onMouseMoveHandler);
+        this.canvas.off('selection:created', this.onSelectionCreatedHandler);
+        this.canvas.off('object:selected', this.onObjectSelectedHandler);
+        this.canvas.__eventListeners = [];
         this.canvas = null;
     }
 
@@ -226,6 +230,7 @@ class FieldController {
     }
 
     updateSelectedMarchers() {
+console.log('canvas eventlisteners', this.canvas.__eventListeners);
         if (!this.drill || !this.marchers) return;
         // eslint-disable-next-line guard-for-in
         for (let id in this.marchers) {
@@ -287,10 +292,14 @@ class FieldController {
         //     console.log('dblclick', e);
         // });
 
+        this.onMouseMoveHandler = this.onMouseMove.bind(self);
+        this.onSelectionCreatedHandler = this.onSelectionCreated.bind(self);
+        this.onObjectSelectedHandler = this.onObjectSelected.bind(self);
+
         // this.canvas.on('mouse:up', this.onMouseUp.bind(self));
-        this.canvas.on('mouse:move', this.onMouseMove.bind(self));
-        this.canvas.on('selection:created', this.onSelectionCreated.bind(self));
-        this.canvas.on('object:selected', this.onObjectSelected.bind(self));
+        this.canvas.on('mouse:move', this.onMouseMoveHandler);
+        this.canvas.on('selection:created', this.onSelectionCreatedHandler);
+        this.canvas.on('object:selected', this.onObjectSelectedHandler);
 
         this.wireUpContextMenu();
 

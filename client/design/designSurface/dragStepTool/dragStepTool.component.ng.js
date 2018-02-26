@@ -32,6 +32,7 @@ angular.module('drillApp')
       };
 
       ctrl.$onDestroy = function() {
+        ctrl.field = null;
         ctrl.subscriptions.unsubscribeAll();
       };
 
