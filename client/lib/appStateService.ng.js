@@ -171,7 +171,9 @@ class appStateService {
 
     newDrill() {
         // save current drill before starting new drill
-        this.saveDrill();
+        if (this.drill && this.drill.isDirty) {
+            this.saveDrill();
+        }
 
         let builder = new DrillBuilder();
         this.drill = builder.createDrill();
