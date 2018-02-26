@@ -4,7 +4,6 @@ angular.module('drillApp')
     link: function(scope, element, attr) {
       let startX = 0;
       let startY = 0;
-          
       let startPos;
 
       element.css({
