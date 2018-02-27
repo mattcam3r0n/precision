@@ -25,7 +25,7 @@ import StrideType from './StrideType';
 */
 
 var fieldWidth = 1560, //624 * 2, //1560,
-    fieldHeight = 780 //312 * 2 //780;
+    fieldHeight = 760 //312 * 2 //780;
 
 var widthInSteps = {
     [StrideType.SixToFive]: 156,
@@ -33,7 +33,7 @@ var widthInSteps = {
 };
 
 var heightInSteps = {
-    [StrideType.SixToFive]: 78,
+    [StrideType.SixToFive]: 76, // 6 + 24 + 16 + 24 + 6
     [StrideType.EightToFive]: 100
 };
 
@@ -137,11 +137,11 @@ class FieldDimensions {
     }
 
     static get farHashY(){
-        return (oneStepY_6to5 * 22) + this.farSidelineY;
+        return (oneStepY_6to5 * 24) + this.farSidelineY;
     }
 
     static get nearHashY() {
-        return this.nearSidelineY - (oneStepY_6to5 * 22);
+        return this.nearSidelineY - (oneStepY_6to5 * 24);
     }
 
     static get marcherWidth() {
