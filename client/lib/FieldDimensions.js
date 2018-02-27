@@ -34,13 +34,13 @@ var widthInSteps = {
 
 var heightInSteps = {
     [StrideType.SixToFive]: 76, // 6 + 24 + 16 + 24 + 6
-    [StrideType.EightToFive]: 100
+    [StrideType.EightToFive]: 100 // 8 + 32 + 20 + 32 + 8
 };
 
 var oneStepY_6to5 = fieldHeight / heightInSteps[StrideType.SixToFive],
     oneStepX_6to5 = fieldWidth / widthInSteps[StrideType.SixToFive];
 
-var oneStepY_8to5 = oneStepY_6to5 * (22/28), //fieldHeight / heightInSteps[StrideType.EightToFive],
+var oneStepY_8to5 = fieldHeight / 100; // oneStepY_6to5 * (24/32), //fieldHeight / heightInSteps[StrideType.EightToFive],
     oneStepX_8to5 = fieldWidth / widthInSteps[StrideType.EightToFive];
     
 var fiveYardsX = oneStepX_6to5 * 6,
@@ -109,7 +109,8 @@ class FieldDimensions {
     
 
     static get yOffset_8to5() {
-        return 8 * (this.oneStepY_8to5 - this.oneStepX_8to5);
+        // return 8 * (this.oneStepY_8to5 - this.oneStepX_8to5);
+        return 0;
     }
 
     static get fiftyYardlineX() {
