@@ -26,3 +26,13 @@ function inside(point, vs) {
 };
 
 
+8/5 modified stride between hashes
+----------------------------------
+* when executing step, if it is between hashes, modify deltaY?
+  * pros
+    * less invasive - can be implemented in position calculator
+    * does not affect drill files
+    * does not affect deleting/moving of steps?
+  * cons - adds more work to playback (slower)
+* what would this do to obliques?  would it work the same?
+

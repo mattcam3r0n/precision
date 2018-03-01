@@ -1,3 +1,4 @@
+import FieldDimensions from '/client/lib/FieldDimensions';
 import StepDelta from '/client/lib/StepDelta';
 import StepType from '/client/lib/StepType';
 import StrideType from '/client/lib/StrideType';
@@ -47,11 +48,11 @@ class MemberPositionCalculator {
         newState = this.getStateAtCount(member, count);
 
         let delta = (newState.deltaX != undefined
-                    && newState.deltaY != undefined)
+            && newState.deltaY != undefined)
             ? { deltaX: newState.deltaX, deltaY: newState.deltaY }
             : StepDelta.getDelta(newState.strideType,
-                                newState.stepType,
-                                newState.direction);
+                newState.stepType,
+                newState.direction);
 
         return {
             strideType: newState.strideType || StrideType.SixToFive,
@@ -75,6 +76,10 @@ class MemberPositionCalculator {
 
             newState.x = currentState.x + newState.deltaX;
             newState.y = currentState.y + newState.deltaY;
+
+            if (this.needs8to5Adjustment(newState)) {
+                newState.y = currentState.y + this.adjustedDeltaY(newState);
+            }
 
             currentState = newState;
         }
@@ -109,11 +114,44 @@ class MemberPositionCalculator {
             newState.x = currentState.x - currentState.deltaX;
             newState.y = currentState.y - currentState.deltaY;
 
+            // when stepping backward, check adjustment based on
+            // currentState.
+            if (!this.isBeginningOfDrill(member, newState)
+                    && this.needs8to5Adjustment(currentState)) {
+                newState.y = currentState.y - this.adjustedDeltaY(newState);
+            }
+
             currentState = newState;
         }
 
 
         return newState;
+    }
+
+    static needs8to5Adjustment(state) {
+        if (state.strideType == StrideType.EightToFive
+            && state.deltaY > 0
+            && this.isBetweenHashes(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    static adjustedDeltaY(state) {
+        if (state.deltaY > 0
+            && state.deltaX == 0) {
+            return FieldDimensions.oneStepY_8to5_Adj;
+        }
+        if (state.deltaY > 0
+            && state.deltaX > 0) {
+            return FieldDimensions.eightToFiveObliqueDeltaY;
+        }
+        return state.deltaY;
+    }
+
+    static isBetweenHashes(state) {
+        return (state.y >= FieldDimensions.farHashY
+            && state.y <= FieldDimensions.nearHashY);
     }
 
     static isBeginningOfDrill(member, position) {

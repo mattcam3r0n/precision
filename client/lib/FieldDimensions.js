@@ -4,7 +4,7 @@ import StrideType from './StrideType';
 *
 * 6/5 and 8/5 steps across field
 *
-*						  156 / 208
+*                       156 / 208
 * -----------------------------------------------------------
 * |                       6 / 8                             |
 * |   ---------------------------------------------------   |
@@ -40,8 +40,9 @@ var heightInSteps = {
 var oneStepY_6to5 = fieldHeight / heightInSteps[StrideType.SixToFive],
     oneStepX_6to5 = fieldWidth / widthInSteps[StrideType.SixToFive];
 
-var oneStepY_8to5 = fieldHeight / 100; // oneStepY_6to5 * (24/32), //fieldHeight / heightInSteps[StrideType.EightToFive],
+var oneStepY_8to5 = (oneStepY_6to5 * 30) / 40; // fieldHeight / heightInSteps[StrideType.EightToFive]; // oneStepY_6to5 * (24/32), //fieldHeight / heightInSteps[StrideType.EightToFive],
     oneStepX_8to5 = fieldWidth / widthInSteps[StrideType.EightToFive];
+const oneStepY_8to5_Adj = (oneStepY_6to5 * 16) / 20;
     
 var fiveYardsX = oneStepX_6to5 * 6,
     fiveYardsY = oneStepY_6to5 * 6;
@@ -87,6 +88,10 @@ class FieldDimensions {
         return oneStepY_8to5;
     }
 
+    static get oneStepY_8to5_Adj() {
+        return oneStepY_8to5_Adj;
+    }
+
     static get oneStepX_8to5() {
         return oneStepX_8to5;
     }
@@ -106,7 +111,6 @@ class FieldDimensions {
     static get eightToFiveObliqueDeltaY() {
         return (8 / 12) * oneStepY_8to5;
     }
-    
 
     static get yOffset_8to5() {
         // return 8 * (this.oneStepY_8to5 - this.oneStepX_8to5);
