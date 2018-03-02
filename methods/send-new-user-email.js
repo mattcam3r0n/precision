@@ -3,11 +3,20 @@
 Meteor.methods({
     sendNewUserEmail: function(info) {
         if (this.isSimulation) return;
+
+        SSR.compileTemplate('newUserEmail', Assets.getText('new-user-email.html'));
+
+        let emailData = {
+          name: info.firstName + ' ' + info.lastName,
+          orgName: info.orgName,
+          email: info.email,
+        };
+
         Email.send({
-            to: 'cameron.matt@gmail.com',
-            from: 'cameron.matt@gmail.com',
-            subject: 'New user registration',
-            text: 'The contents of our email in plain text.',
-          });
+          to: Meteor.settings.ADMIN_EMAIL,
+          from: Meteor.settings.ADMIN_EMAIL,
+          subject: 'New Precision User',
+          html: SSR.render('newUserEmail', emailData),
+        });
     },
 });

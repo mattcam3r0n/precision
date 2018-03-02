@@ -45,12 +45,16 @@ angular.module('drillApp')
 
       $scope.selectUser = function(user) {
         ctrl.user = user;
-        if (ctrl.isSelected(user)) {
-          ctrl.selectedUsers = ctrl.selectedUsers
-                                  .filter((u) => u._id !== user._id);
-        } else {
-          ctrl.selectedUsers.push(user);
+
+        if (ctrl.enableMultiSelect) {
+          if (ctrl.isSelected(user)) {
+            ctrl.selectedUsers = ctrl.selectedUsers
+                                    .filter((u) => u._id !== user._id);
+          } else {
+            ctrl.selectedUsers.push(user);
+          }
         }
+
         if (ctrl.onSelected) {
           ctrl.onSelected({ user: user, selected: ctrl.selectedUsers });
         }
