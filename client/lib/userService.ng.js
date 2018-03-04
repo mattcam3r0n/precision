@@ -63,6 +63,19 @@ class UserService {
         });
     }
 
+    changePassword(oldPassword, newPassword) {
+        return new Promise((resolve, reject) => {
+            Accounts.changePassword(oldPassword, newPassword, (err) => {
+                if (err) {
+                    console.log('err', oldPassword, newPassword, err);
+                    return reject(new UserServiceException('Error in changePassword.', err));
+                }
+                Logger.info(User.getUserEmail() + ' changed their password.');
+                resolve();
+            });
+        });
+    }
+
     forgotPassword(email) {
         return new Promise((resolve, reject) => {
             Accounts.forgotPassword({ email: email }, (err) => {
