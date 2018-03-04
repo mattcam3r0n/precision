@@ -25,6 +25,10 @@
     cursor: pointer;
 }
 
+.upload-music-dialog .required {
+    color: red;
+}
+
 .upload-area .alert {
     position: relative;
   }

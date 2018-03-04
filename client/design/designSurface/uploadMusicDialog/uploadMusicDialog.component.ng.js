@@ -23,7 +23,7 @@ angular.module('drillApp')
       };
 
       ctrl.isValid = function() {
-        return !empty(ctrl.title) && !empty(ctrl.file);
+        return !empty(ctrl.title) && !empty(ctrl.file) && ctrl.licenseConfirmed;
       };
 
       function empty(val) {
