@@ -31,7 +31,7 @@ angular.module('drillApp')
 
       ctrl.logOut = function() {
         userService.logOut();
-        $location.path('/login');
+        // $location.path('/login');
       };
     },
   });

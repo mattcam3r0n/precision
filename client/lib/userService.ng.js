@@ -1,9 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import User from '/lib/User';
+import Logger from '/client/lib/Logger';
 
 class UserService {
-    constructor() {
+    constructor($location) {
+        this.$location = $location;
         this.userProfile = this.getUserProfile();
     }
 
@@ -51,20 +53,39 @@ class UserService {
     }
 
     logOut() {
+        const self = this;
         Meteor.logout(function(err) {
             if (err) {
                 throw new UserServiceException('logOut failed.', err);
+            } else {
+                self.$location.path('/login');
             }
         });
     }
 
     forgotPassword(email) {
-        Accounts.forgotPassword({ email: email }, (err) => {
-            if (err) {
-                throw new UserServiceException('Error in forgotPassword.', err, {
-                    email: email,
-                });
-            }
+        return new Promise((resolve, reject) => {
+            Accounts.forgotPassword({ email: email }, (err) => {
+                if (err) {
+                    return reject(new UserServiceException('Error in forgotPassword.', err, {
+                        email: email,
+                    }));
+                }
+                Logger.info(email + ' requested password reset.');
+                resolve();
+            });
+        });
+    }
+
+    resetPassword(token, newPassword) {
+        return new Promise((resolve, reject) => {
+            Accounts.resetPassword(token, newPassword, (err) => {
+                if (err) {
+                    return reject(new UserServiceException('Error in resetPassword.', err));
+                }
+                Logger.info(User.getUserEmail() + ' completed a password reset.');
+                resolve();
+            });
         });
     }
 
@@ -91,7 +112,7 @@ class UserService {
 
 angular.module('drillApp')
     .service('userService',
-    [UserService]);
+        ['$location', UserService]);
 
 class UserServiceException {
     constructor(msg, inner, context) {
