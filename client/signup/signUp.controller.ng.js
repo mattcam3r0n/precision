@@ -27,6 +27,14 @@ angular.module('drillApp')
             email: $scope.email,
            });
         })
+        .then(() => {
+          Meteor.callPromise('sendWelcomeEmail', {
+            firstName: $scope.firstName,
+            lastName: $scope.lastName,
+            orgName: $scope.orgName,
+            email: $scope.email,
+           });
+        })
         .catch((ex) => {
           Logger.logException(ex);
           alertService.error('Unable to create account. ' + ex.message);
