@@ -1,54 +1,57 @@
 .draw-paths-tool {
-    background-color: gainsboro;
+    /* background-color: gainsboro; */
 }
 
-.draw-paths-tool .button-svg {
-    height: 20px;
-    width: 20px;
-}
-
-.draw-paths-tool .direction-button button {
-    border-radius: 0;
-    height: 32px;
-    width: 32px;
-    padding: 0;
-}
-
-.draw-paths-tool .direction-button button i {
+.draw-paths-tool button i {
     color: black;
+    margin: 0;
 }
 
-.draw-paths-tool .direction-button button.active {
-    background-color: #e6e6e6;
+.draw-paths-tool ul {
+    margin: 0;
+    width: 100%;
+    padding: 0px;
 }
 
-.draw-paths-tool .turn-mode-button button {
-    border-radius: 0;
-    height: 32px;
-    width: 48px;
-    padding: 0;
-    font-size: 12px;
-}
-
-.draw-paths-tool .turn-mode-button button.active {
-    background-color: #e6e6e6;
-    color: black;
-}
-            
-.draw-paths-tool .turn-mode-button span {
-    font-size: 12px;
-}
-
-.draw-paths-tool .save-cancel-button button {
-    border-radius: 0;
-    height: 32px;
-    width: 48px;
+.draw-paths-tool li {
+    list-style-type: none;
+    margin-top: 5px;
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
     padding: 0;
 }
 
-.draw-paths-tool .reset-button button {
+.draw-paths-tool li button {
+    flex: 1 1 33%;
     border-radius: 0;
-    width: 96px;
+    height: 24px;
+    width: 24px;
+    padding: 0;
+}
+
+.draw-paths-tool li div.placeholder {
+    flex: 1 1 33%;
+    border-radius: 0;
+    height: 24px;
+    width: 24px;
+    padding: 0;    
+}
+
+.draw-paths-tool img.left-countermarch {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.draw-paths-tool img.right-countermarch {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg) scaleY(-1);
 }
 
 .draw-paths-tool .save-button i {

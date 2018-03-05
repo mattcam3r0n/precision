@@ -159,8 +159,8 @@ class GuidePath {
         tm.point2 = point2;
 
         tm.on('moving', (evt) => {
-this.onMoveTurnMarker(evt, this.field, this, point, tm);
-});
+            this.onMoveTurnMarker(evt, this.field, this, point, tm);
+        });
 
         this.createGuidePathLine();
     }
