@@ -28,7 +28,7 @@
                 </div>
 
                 <ul class="list-group">
-                    <li class="list-group-item" dir-paginate="musicFile in musicFiles | itemsPerPage: perPage" total-items="musicFileCount" current-page='page'>
+                    <li class="list-group-item" pagination-id="chooseMusic" dir-paginate="musicFile in musicFiles | itemsPerPage: perPage" total-items="musicFileCount" current-page='page'>
                         <div class="row">
                             <div class="col-md-12">
                                 <span>
@@ -58,7 +58,7 @@
                     <button ng-click="upload()" ng-disabled="!$ctrl.isUserLoggedIn()" type="button" class="btn btn-default" data-dismiss="modal">Upload...</button>
                 </div>
                 <div class="col-md-6 text-center">
-                    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" class=""></dir-pagination-controls>
+                    <dir-pagination-controls pagination-id="chooseMusic" on-page-change="pageChanged(newPageNumber)" class=""></dir-pagination-controls>
                 </div>
                 <div class="col-md-3 text-right">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

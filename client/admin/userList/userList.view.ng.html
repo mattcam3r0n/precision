@@ -4,7 +4,7 @@
         <input ng-model="search" type="text" class="" placeholder="Enter search terms" />
     </div>
     <ul>
-        <li ng-click="selectUser(user)" dir-paginate="user in users | itemsPerPage: perPage" total-items="userCount" current-page='page'>
+        <li ng-click="selectUser(user)" pagination-id="userList" dir-paginate="user in users | itemsPerPage: perPage" total-items="userCount" current-page='page'>
             <div class="check-box">
                 <i class="fa fa-check" ng-show="$ctrl.enableMultiSelect && $ctrl.isSelected(user)"></i>
             </div>
@@ -17,6 +17,6 @@
         </li>
     </ul>
     <div class="pagination">
-        <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" class=""></dir-pagination-controls>
+        <dir-pagination-controls pagination-id="userList" on-page-change="pageChanged(newPageNumber)" class=""></dir-pagination-controls>
     </div>
 </div>

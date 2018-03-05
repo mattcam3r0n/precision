@@ -29,7 +29,7 @@
 
                 <div class="">
                     <ul class="list-group">
-                        <li class="list-group-item drill-item" dir-paginate="drill in drills | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
+                        <li class="list-group-item drill-item" pagination-id="openDrill" dir-paginate="drill in drills | itemsPerPage: perPage" total-items="drillCount" current-page='page'>
                             <div class="drill-item-header">
                                 <div class="drill-name">
                                     <a ng-click="open(drill)" data-toggle="modal" data-target="#openDrillDialog">
@@ -85,7 +85,7 @@
             </div>
             <div class="modal-footer button-row">
                 <div class="col-md-9">
-                    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" class=""></dir-pagination-controls>
+                    <dir-pagination-controls pagination-id="openDrill" on-page-change="pageChanged(newPageNumber)" class=""></dir-pagination-controls>
                 </div>
                 <div class="col-md-3">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
