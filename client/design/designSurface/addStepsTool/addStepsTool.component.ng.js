@@ -156,6 +156,8 @@ angular.module('drillApp')
             $('[name=\'stride-type-switch\']')
               .bootstrapSwitch('state', state, true);
           });
+        // FOR NOW, leave switch disabled
+        $('[name=\'stride-type-switch\']').bootstrapSwitch('disabled', true);
       }
     },
   });
