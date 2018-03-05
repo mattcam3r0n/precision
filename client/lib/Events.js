@@ -15,6 +15,10 @@ class Events {
         return 'showShareDialog';
     }
 
+    static get showKeyboardShortcuts() {
+        return 'showKeyboardShortcuts';
+    }
+
     static get showDrillPropertiesDialog() {
         return 'showDrillPropertiesDialog';
     }

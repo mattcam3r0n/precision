@@ -86,6 +86,30 @@ class DesignKeyboardHandler {
 
                 this.drillEditorService.stepForward();
             },
+
+            '=': (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+                    this.drillEditorService.zoomIn();
+                    return;
+                }
+
+                if (e.ctrlKey || e.metaKey) {
+                    this.drillEditorService.zoomToFit();
+                }
+            },
+
+            // '+': (e) => {
+            //     if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+            //         console.log('+ zoom in');
+            //         this.drillEditorService.zoomIn();
+            //     }
+            // },
+
+            '-': (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    this.drillEditorService.zoomOut();
+                }
+            },
         };
     };
 
@@ -102,6 +126,8 @@ class DesignKeyboardHandler {
 
         // ignore keys we don't have a handler for
         if (!this.handlers[e.key]) return;
+
+        // console.log(e);
 
         // call key handler
         this.handlers[e.key](e);

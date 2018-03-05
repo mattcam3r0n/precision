@@ -55,12 +55,18 @@
       </button>
       <ul class="dropdown-menu" aria-labelledby="helpMenu">
         <li class="disabled">
-          <a href="/help">TODO: Help Topics</a>
+          <a href="/help">How To Videos</a>
         </li>
-        <li role="separator" class="divider"></li>
+        <li class="disabled">
+          <a href="/help">FAQ</a>
+        </li>
+        <li>
+          <a href="#" ng-click="$ctrl.showKeyboardShortcuts()">Keyboard Shortcuts</a>
+        </li>
+        <!-- <li role="separator" class="divider"></li>
         <li>
           <a href="#" ng-click="$ctrl.onDebug()">Debug</a>
-        </li>
+        </li> -->
         <li role="separator" class="divider"></li>
         <li class="disabled">
           <a href="/about">About</a>

@@ -89,6 +89,11 @@ angular.module('drillApp')
         $location.path('/admin');
       };
 
+      ctrl.showKeyboardShortcuts = function() {
+        console.log('showKeyboardShortcuts');
+        eventService.notify(Events.showKeyboardShortcuts);
+      };
+
       ctrl.logOut = function() {
         userService.logOut();
       };

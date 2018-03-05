@@ -1,0 +1,70 @@
+<div draggable class="keyboard-shortcuts panel panel-default" ng-show="$ctrl.isActivated">
+    <div class="panel-heading text-center drag-handle text-left">
+        <i class="fa fa-times fa-sm drag-handle" ng-click="cancel()"></i> Keyboard Shortcuts
+    </div>
+    <div class="panel-body floating-toolbar">
+        <ul>
+            <li class="divider">
+                <div>Editing</div>
+            </li>
+            <li>
+                <div class="shortcut-description">Select All</div>
+                <div class="shortcut">{{$ctrl.commandKey()}} A</div>
+            </li>
+            <li>
+                <div class="shortcut-description">Deselect All</div>
+                <div class="shortcut">{{$ctrl.commandKey()}} D</div>
+            </li>
+            <li>
+                <div class="shortcut-description">Undo</div>
+                <div class="shortcut">{{$ctrl.commandKey()}} Z</div>
+            </li>
+            <li>
+                <div class="shortcut-description">Redo</div>
+                <div class="shortcut">{{$ctrl.commandKey()}} Shift Z</div>
+            </li>
+            <li>
+                <div class="shortcut-description">Delete Step</div>
+                <div class="shortcut">Alt Backspace</div>
+            </li>
+            <li>
+                <div class="shortcut-description">Add Step</div>
+                <div class="shortcut">Alt &#x2190; &#x2191; &#x2192; &#x2193; </div>
+            </li>
+            <li class="divider">
+                <div>Drill</div>
+            </li>
+            <li>
+                <div class="shortcut-description">Beginning of Drill</div>
+                <div class="shortcut">{{$ctrl.commandKey()}} &#x2190;</div>
+            </li>
+            <li>
+                <div class="shortcut-description">End of Drill</div>
+                <div class="shortcut">{{$ctrl.commandKey()}} &#x2192;</div>
+            </li>
+            <li>
+                <div class="shortcut-description">Step Forward</div>
+                <div class="shortcut">&#x2192;</div>
+            </li>
+            <li>
+                <div class="shortcut-description">Step Backward</div>
+                <div class="shortcut">&#x2190;</div>
+            </li>
+            <li class="divider">
+                <div>Field</div>
+            </li>
+            <li>
+                <div class="shortcut-description">Zoom In</div>
+                <div class="shortcut">{{$ctrl.commandKey()}} Shift + </div>
+            </li>
+            <li>
+                <div class="shortcut-description">Zoom Out</div>
+                <div class="shortcut">{{$ctrl.commandKey()}} -</div>
+            </li>
+            <li>
+                <div class="shortcut-description">Zoom To Fit</div>
+                <div class="shortcut">{{$ctrl.commandKey()}} = </div>
+            </li>
+        </ul>
+    </div>
+</div>

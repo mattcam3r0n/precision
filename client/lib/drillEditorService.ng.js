@@ -478,6 +478,18 @@ class DrillEditorService {
         UndoManager.redo();
     }
 
+    zoomIn() {
+        this.eventService.notify(Events.zoomIn);
+    }
+
+    zoomOut() {
+        this.eventService.notify(Events.zoomOut);
+    }
+
+    zoomToFit() {
+        this.eventService.notify(Events.sizeToFit);
+    }
+
     save(forceSave) {
         if (!forceSave && !this.drill.isDirty) return;
 
