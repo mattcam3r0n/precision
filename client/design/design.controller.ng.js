@@ -119,6 +119,7 @@ angular.module('drillApp')
       let d = appStateService.newDrill();
       setDrill(d);
       drillEditorService.goToBeginning();
+      eventService.notify(Events.showNewDrillDialog);
     }
 
     function openDrill(drill) {

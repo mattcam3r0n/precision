@@ -48,7 +48,10 @@ function updateDrill(drill) {
 }
 
 function checkOwnership(drill) {
-  if (drill.userId !== Meteor.userId()) {
-    throwError('not-your-drill', 'Cannot update another user\'s drill');
+  if (drill.userId && drill.userId !== Meteor.userId()) {
+    throwError('not-your-drill', 'Cannot update another user\'s drill', {
+      drillUserId: drill.userId,
+      userId: Meteor.userId(),
+    });
   }
 }

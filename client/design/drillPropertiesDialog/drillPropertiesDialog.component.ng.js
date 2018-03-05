@@ -11,7 +11,27 @@ angular.module('drillApp')
     controller: function($scope, $rootScope, eventService, appStateService) {
       let ctrl = this;
 
-      ctrl.activate = function(args) {
+      ctrl.$onInit = function() {
+        ctrl.subscriptions = eventService.createSubscriptionManager();
+
+        ctrl.subscriptions.subscribe(Events.showDrillPropertiesDialog, () => {
+          ctrl.activate('drillProperties');
+        });
+
+        ctrl.subscriptions.subscribe(Events.showNewDrillDialog, () => {
+          ctrl.activate('newDrill');
+        });
+
+        // FOR NOW, leave switch disabled
+        $('[name=\'stride-type-switch\']').bootstrapSwitch('disabled', true);
+      };
+
+      ctrl.$onDestroy = function() {
+        ctrl.subscriptions.unsubscribeAll();
+      };
+
+      ctrl.activate = function(mode) {
+        ctrl.title = mode == 'newDrill' ? 'New Drill' : 'Drill Properties';
         ctrl.name = appStateService.drill.name;
         ctrl.description = appStateService.drill.description;
         $('#drillPropertiesDialog').modal('show');
@@ -29,17 +49,6 @@ angular.module('drillApp')
           description: ctrl.description,
         });
         appStateService.saveDrill();
-      };
-
-      ctrl.$onInit = function() {
-        ctrl.subscriptions = eventService.createSubscriptionManager();
-
-        ctrl.subscriptions.subscribe(Events.showDrillPropertiesDialog,
-          ctrl.activate.bind(this));
-      };
-
-      ctrl.$onDestroy = function() {
-        ctrl.subscriptions.unsubscribeAll();
       };
     },
   });

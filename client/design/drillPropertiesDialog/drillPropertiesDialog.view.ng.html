@@ -7,13 +7,24 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="drillPropertiesLabel">Drill Properties</h4>
+                <h4 class="modal-title" id="drillPropertiesLabel">{{$ctrl.title}}</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12 form-group-sm">
                         <label class="control-label">Drill Name</label>
                         <input type="text" ng-model="$ctrl.name" ng-required='true' class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group-sm">
+                        <div>
+                            <label class="control-label">Default Stride</label>
+                        </div>
+                        <div>
+                            <input ng-disabled="true" type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary" data-label-text="Stride"
+                                data-size="mini" data-label-width="55px" />
+                        </div>
                     </div>
                 </div>
                 <div class="row">
