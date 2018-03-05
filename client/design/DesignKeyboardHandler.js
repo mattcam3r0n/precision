@@ -110,6 +110,17 @@ class DesignKeyboardHandler {
                     this.drillEditorService.zoomOut();
                 }
             },
+
+            'h': (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+                    this.drillEditorService.showAll();
+                    return;
+                }
+
+                if (e.ctrlKey || e.metaKey) {
+                    this.drillEditorService.hideUnselected();
+                }
+            },
         };
     };
 

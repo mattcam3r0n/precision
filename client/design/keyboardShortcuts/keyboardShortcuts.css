@@ -10,6 +10,7 @@
     padding: 5px;
     background-color: lightgray;
     color: black;
+    font-size: 12px;
 }
 
 .keyboard-shortcuts .panel-heading i {
@@ -28,12 +29,13 @@
     list-style-type: none;
     display: flex;
     border-bottom: solid 1px gray;
+    cursor: default;
 }
 
 .keyboard-shortcuts .panel-body li.divider {
     background-color: whitesmoke;
     text-align: center;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .keyboard-shortcuts .panel-body li div {
@@ -44,11 +46,11 @@
     background-color: whitesmoke;
     max-width: 40%;
     min-width: 40%;
-    padding: 5px;
-    font-size: 12px;
+    padding: 3px;
+    font-size: 11px;
 }
 
 .keyboard-shortcuts .panel-body li div.shortcut {
     padding: 5px;
-    font-size: 12px;
+    font-size: 11px;
 }
