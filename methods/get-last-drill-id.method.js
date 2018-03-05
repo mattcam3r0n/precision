@@ -9,12 +9,16 @@ Meteor.methods({
 
     const lastDrillId = user.profile.lastDrillId;
 
-    const drill = Drills.findOne(lastDrillId);
+    try {
+        const sanitizedId = sanitizeId(lastDrillId);
+        const drill = Drills.findOne(sanitizedId);
 
-    if (!drill) {
-        return null;
+        if (!drill) {
+            return null;
+        }
+        return lastDrillId;
+    } catch (ex) {
+        throwError('get-last-drill-id-error', ex.message, ex);
     }
-
-    return lastDrillId;
 },
 });

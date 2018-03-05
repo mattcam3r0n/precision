@@ -101,6 +101,9 @@ class appStateService {
     }
 
     updateUserProfile() {
+        // const id = this.drill._id && this.drill._id._str
+        //     ? this.drill._id._str
+        //     : this.drill._id;
         let profile = {
             lastDrillId: this.drill._id,
             isGridVisible: this.userProfile.isGridVisible === undefined
@@ -134,10 +137,10 @@ class appStateService {
     openLastDrillOrNew() {
         return this.getLastDrillId()
             .then((drillId) => {
+                console.log('lastDrillId', drillId);
                 if (!drillId) {
                     return this.newDrill();
                 }
-                console.log('openLastDrillOrNew', drillId);
                 return this.openDrill(drillId);
             });
     }
@@ -160,6 +163,7 @@ class appStateService {
                         isNew: false,
                         drill: drill,
                     });
+                this.updateUserProfile(); // set last drill id
                 return drill;
             });
     }
