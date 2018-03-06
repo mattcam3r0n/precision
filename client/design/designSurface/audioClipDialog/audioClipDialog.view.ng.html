@@ -12,11 +12,6 @@
 
                 <div class="row">
                     <div class="col-md-12 text-left">
-                        <p>
-                            <i class="fa fa-info-circle "></i>&nbsp;Drag the mouse on the sound wave to select only a portion of the music for use. You
-                            can move and drag each end of the selection to refine it. Use the zoom buttons to zoom in for
-                            more precise control.
-                        </p>
                     </div>
                 </div>
 
@@ -28,72 +23,214 @@
                 </div>
 
                 <div class="row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs">
+                            <li role="presentation" class="" ng-class="{ active: $ctrl.isTabActive('selectClip') }">
+                                <a href="#" ng-click="$ctrl.setActiveTab('selectClip')">
+                                    <h4>1. Select Audio Clip</h4>
+                                </a>
+                            </li>
+                            <li role="presentation" class="" ng-class="{ active: $ctrl.isTabActive('setTempo') }">
+                                <a href="#" ng-click="$ctrl.setActiveTab('setTempo')">
+                                    <h4>2. Set Tempo</h4>
+                                </a>
+                            </li>
+                            <li role="presentation" class="" ng-class="{ active: $ctrl.isTabActive('saveClip') }">
+                                <a href="#" ng-click="$ctrl.setActiveTab('saveClip')">
+                                    <h4>3. Save Clip</h4>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab" ng-show="$ctrl.isTabActive('selectClip')">
+                            <div class="row">
 
-                    <div class="col-md-3 form-group-sm">
-                        <div class="row">
-                            <div class="col-md-1">
-                                <button class="btn btn-default btn-sm" ng-click="$ctrl.zoomOut()">
-                                    <i class="glyphicon glyphicon-zoom-out zoom-out"></i>
-                                </button>
+                                <div class="col-md-3 text-center form-group-sm">
+                                        <label class="control-label">Zoom</label>                                    
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <button class="btn btn-default btn-sm" ng-click="$ctrl.zoomOut()">
+                                                <i class="glyphicon glyphicon-zoom-out zoom-out"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input id="slider" type="range" min="1" max="50" value="1" style="top: 20px; width: 100%;" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-default btn-sm" ng-click="$ctrl.zoomIn()">
+                                                <i ng-click="$ctrl.zoomIn()" class="glyphicon glyphicon-zoom-in zoom-in"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-5 text-center form-group-sm">
+                                        <label class="control-label">Play / Pause</label>
+                                        <br/>
+                                        <button ng-click="$ctrl.play()" class="btn btn-default btn-sm">
+                                        <i class="fa fa-play"></i> /
+                                        <i class="fa fa-pause"></i>
+                                    </button>
+                                    <!-- <label class="checkbox-inline">
+                                        <input type='checkbox' class="" ng-model="$ctrl.isMetronomeEnabled" /> Metronome
+                                    </label> -->
+                                </div>
+
+                                <div class="col-md-2 form-group-sm">
+                                    <label class="control-label">Length</label>
+                                    <input ng-disabled="true" type="text" ng-model="$ctrl.formattedDuration()" ng-model-options="{ getterSetter: true }" class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-2 text-right form-group-sm">
+                                    <label class="control-label">&nbsp;</label>
+                                    <br/>
+                                    <button ng-click="$ctrl.clearRegion()" class="btn btn-default btn-sm">Clear Selection</button>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <input id="slider" type="range" min="1" max="50" value="1" style="top: 20px" />
+                            <p></p>
+                            <p>
+                                <strong>Select the portion of the audio that you'd like to use</strong> by dragging the mouse on
+                                the sound wave, or
+                                <a href="#">select it all.</a> You can move the selection or refine it by dragging each end of the selected
+                                area. Use the zoom buttons to zoom in for more precise control.
+                            </p>
+                            <p>
+                                <strong>Make sure that the clip begins on a downbeat.</strong> Clip out any blank space at the beginning
+                                of the file.
+                            </p>
+                            <p>
+                                Use the Play button to double-check your selection. When you're happy with the clip, click Next.
+                            </p>
+                            <div class="text-center">
+                                <button class="btn btn-primary" ng-click="$ctrl.setActiveTab('setTempo')">Next</button>
                             </div>
-                            <div class="col-md-1">
-                                <button class="btn btn-default btn-sm" ng-click="$ctrl.zoomIn()">
-                                    <i ng-click="$ctrl.zoomIn()" class="glyphicon glyphicon-zoom-in zoom-in"></i>
-                                </button>
+                            <!-- <i class="fa fa-info-circle fa-lg"></i>&nbsp;Drag the mouse on the sound wave to select only a portion of the music for use.
+                                You can move and drag each end of the selection to refine it. Use the zoom buttons to zoom
+                                in for more precise control. -->
+                        </div>
+                        <div class="tab" ng-show="$ctrl.isTabActive('setTempo')">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-2 text-center form-group-sm">
+                                            <label class="control-label">Mode</label>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button ng-click="$ctrl.tempoMode = 'tempo'" type="button" class="btn btn-default" ng-class="{ active : $ctrl.tempoMode == 'tempo' }">Tempo</button>
+                                                <button ng-click="$ctrl.tempoMode = 'beats'" type="button" class="btn btn-default" ng-class="{ active : $ctrl.tempoMode != 'tempo' }">Beats</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 text-center form-group-sm">
+                                            <label class="control-label">Play/Pause</label>
+                                            <br/>
+                                            <button ng-click="$ctrl.play()" class="btn btn-default btn-sm">
+                                                <i class="fa fa-play"></i> /
+                                                <i class="fa fa-pause"></i>
+                                            </button>
+                                            <!-- <label class="checkbox-inline">
+                                                <input type='checkbox' class="" ng-model="$ctrl.isMetronomeEnabled" /> Metronome
+                                            </label> -->
+                                        </div>
+
+                                        <div class="col-md-2 form-group-sm">
+                                            <label class="control-label">Counts</label>
+                                            <input ng-disabled="true" type="number" ng-model="$ctrl.counts" ng-required='true' class="form-control" />
+                                        </div>
+                                        <div class="col-md-2 form-group-sm">
+                                            <label class="control-label">Tempo</label>
+                                            <input ng-disabled="$ctrl.tempoMode == 'beats'" type="number" ng-model="$ctrl.tempo" ng-required='true' ng-change="$ctrl.onTempoChange()"
+                                                class="form-control" />
+                                        </div>
+                                        <div class="col-md-2 form-group-sm">
+                                            <label class="control-label">Length</label>
+                                            <input ng-disabled="true" type="text" ng-model="$ctrl.formattedDuration()" ng-model-options="{ getterSetter: true }" class="form-control"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="$ctrl.tempoMode == 'tempo'">
+                                        <div class="col-md-12">
+                                            <p></p>
+                                            <p>
+                                                <strong>Tap the space key for a few bars to establish the tempo.
+                                                </strong> The clip will start playing on first tap. Or, if you know the tempo,
+                                                just enter it.
+                                            </p>
+                                            <p>To double-check the tempo setting, click the Play button to listen to the clip
+                                                again. A metronome will tick along. If the beats don't align well, you can
+                                                repeat the process above.
+                                            </p>
+                                            <p>
+                                                <i>This method works best when the music has a strong, consistent beat</i>.
+                                                If there is a lot of variation in the recording's tempo, try using
+                                                <a href="#" ng-click="$ctrl.tempoMode = 'beats'">Beats mode</a>.
+                                            </p>
+                                            <div class="text-center">
+                                                <button class="btn btn-primary" ng-click="$ctrl.setActiveTab('saveClip')">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="$ctrl.tempoMode == 'beats'">
+                                        <div class="col-md-12">
+                                            <p></p>
+                                            <p>
+                                                <strong>Tap the space key in time with the music for the entire clip.
+                                                </strong> Instead of calculating the tempo and assuming a steady beat, the
+                                                timing of each of your taps will be recorded and used when animating the
+                                                drill. This method is useful when there are significant tempo variations
+                                                in the recording.
+                                            </p>
+                                            <p>To double-check the tempo setting, click the Play button to listen to the clip
+                                                again. A metronome will tick along. If the beats don't align well, you can
+                                                repeat the process above.
+                                            </p>
+                                            <p>
+                                                If the tempo of the recording is very consistent, it may be simpler to use
+                                                <a ng-click="$ctrl.tempoMode = 'tempo'" href="#">Tempo mode</a>.
+                                            </p>
+                                            <div class="text-center">
+                                                <button class="btn btn-primary" ng-click="$ctrl.setActiveTab('saveClip')">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-
-                    <div class="col-md-6 text-center form-group-sm">
-                        <button ng-click="$ctrl.play()" class="btn btn-default btn-sm">
-                            <i class="fa fa-play"></i> /
-                            <i class="fa fa-pause"></i>
-                        </button>
-                        <label class="checkbox-inline">
-                            <input type='checkbox' class="" ng-model="$ctrl.isMetronomeEnabled" /> Metronome
-                        </label>
-                    </div>
-
-                    <div class="col-md-3 text-right form-group-sm">
-                        <button ng-click="$ctrl.clearRegion()" class="btn btn-default btn-sm">Clear Selection</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <p></p>
-                        <p class="text-left">
-                            <i class="fa fa-info-circle "></i>&nbsp;Make sure the number of
-                            <b>counts</b> and
-                            <b>tempo</b> are set correctly, either by entering them manually or by tapping the spacebar in time
-                            with the music (the clip will start playing on first tap).</p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-2 form-group-sm">
-                        <label class="control-label">Counts</label>
-                        <input type="number" ng-model="$ctrl.counts" ng-required='true' class="form-control" />
-                    </div>
-                    <div class="col-md-2 form-group-sm">
-                        <label class="control-label">Tempo</label>
-                        <input type="number" ng-model="$ctrl.tempo" ng-required='true' class="form-control" />
-                    </div>
-                    <div class="col-md-2 form-group-sm">
-                        <label class="control-label">Duration</label>
-                        <input type="text" ng-model="$ctrl.formattedDuration()" ng-model-options="{ getterSetter: true }" class="form-control" />
-                    </div>
-                    <div class="col-md-5 form-group-sm">
-                        <label class="control-label">Title</label>
-                        <input type="text" ng-model="$ctrl.title" class="title form-control" />
-                    </div>
-                    <div class="col-md-1 form-group-sm">
-                        <label class="control-label">Public</label>
-                        <input type='checkbox' class="form-control" ng-model="$ctrl.isPublic" />
+                        <div class="tab" ng-show="$ctrl.isTabActive('saveClip')">
+                            <div class="row">
+                                <div class="col-md-2 form-group-sm">
+                                    <label class="control-label">Counts</label>
+                                    <input ng-disabled="true" type="number" ng-model="$ctrl.counts" ng-required='true' class="form-control" />
+                                </div>
+                                <div class="col-md-2 form-group-sm">
+                                    <label class="control-label">Tempo</label>
+                                    <input ng-disabled="true" type="number" ng-model="$ctrl.tempo" ng-required='true' class="form-control" />
+                                </div>
+                                <div class="col-md-2 form-group-sm">
+                                    <label class="control-label">Length</label>
+                                    <input ng-disabled="true" type="text" ng-model="$ctrl.formattedDuration()" ng-model-options="{ getterSetter: true }" class="form-control"
+                                    />
+                                </div>
+                                <div class="col-md-6 form-group-sm">
+                                    <label class="control-label">Title</label>
+                                    <input type="text" ng-model="$ctrl.title" class="title form-control" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p></p>
+                                    <p>
+                                        <strong>Give the clip a title.</strong>
+                                    </p>
+                                    <p>Optionally, you can save this clip to your library so you can easily use it in other
+                                        drills. The tempo settings will be saved along with the clip. To save the clip for
+                                        later use, click
+                                        <i>Save Clip To Library</i>
+                                    </p>
+                                    <p>Click
+                                        <i>Add To Drill</i> to add this clip to the drill.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

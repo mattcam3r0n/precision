@@ -16,7 +16,7 @@ angular.module('drillApp')
       drill: '<',
     },
     controller: function($scope, $rootScope, $window,
-        eventService, appStateService) {
+      eventService, appStateService) {
       let ctrl = this;
 
       let slider = document.querySelector('#slider');
@@ -28,12 +28,14 @@ angular.module('drillApp')
       ctrl.activate = function(args) {
         ctrl.musicFile = args.musicFile;
 
+        ctrl.activeTab = 'selectClip';
         ctrl.isMetronomeEnabled = true;
         ctrl.isPublic = args.musicFile.isPublic || false;
         ctrl.title = args.musicFile.title;
         ctrl.tempo = args.musicFile.tempo;
         ctrl.duration = args.musicFile.duration;
         ctrl.counts = args.musicFile.counts;
+        ctrl.tempoMode = 'tempo';
 
         $('#audioClipDialog').modal('show');
 
@@ -41,7 +43,7 @@ angular.module('drillApp')
           loadAudio(ctrl.musicFile);
           // $(document).on('keydown', onSpacePressed);
           $window.addEventListener('keydown', onSpacePressed);
-      });
+        });
 
         $('#audioClipDialog').on('hidden.bs.modal', function() {
           unloadAudio();
@@ -68,12 +70,21 @@ angular.module('drillApp')
           ctrl.wavesurfer.playPause();
         }
         if (playMetronome && ctrl.isMetronomeEnabled) {
+          if (ctrl.tempoMode == 'tempo') {
+            ctrl.beats = interpolateBeats();
+          }
           ctrl.metronome = new Metronome(ctrl.wavesurfer,
             ctrl.beats || ctrl.musicFile.beats);
           ctrl.metronome.start();
         }
+        if (document.activeElement) {
+          document.activeElement.blur();
+        }
       };
 
+      ctrl.onTempoChange = function() {
+        ctrl.counts = calcCounts(ctrl.duration, ctrl.tempo);
+      };
 
       ctrl.clearRegion = function() {
         ctrl.wavesurfer.clearRegions();
@@ -132,6 +143,14 @@ angular.module('drillApp')
         Bert.alert('Clip saved.', 'success', 'growl-top-right');
       };
 
+      ctrl.isTabActive = function(tab) {
+        return ctrl.activeTab == tab;
+      };
+
+      ctrl.setActiveTab = function(tab) {
+        ctrl.activeTab = tab;
+      };
+
       function getClip() {
         // if (!ctrl.selection) return null;
 
@@ -158,6 +177,22 @@ angular.module('drillApp')
         // clip.id = clip._id || shortid.generate(); // need an id for timeline
 
         return clip;
+      }
+
+      function interpolateBeats() {
+        const newBeats = [];
+        let cumulativeTime = 0;
+        const timeInterval = 60 / ctrl.tempo;
+        for (let i = 1; i <= ctrl.counts; i++) {
+          const newBeat = {
+            count: i,
+            timeInterval: timeInterval,
+            timeOffset: cumulativeTime,
+          };
+          newBeats.push(newBeat);
+          cumulativeTime = cumulativeTime + timeInterval;          
+        }
+        return newBeats;
       }
 
       function normalizeBeats(beats) {
@@ -199,23 +234,24 @@ angular.module('drillApp')
             timeOffset: 0,
           }];
           ctrl.play(false);
-          ctrl.counts = 1;
+          ctrl.tapCounts = 1;
           ctrl.firstTap = thisTap;
           ctrl.lastTap = thisTap;
           ctrl.cumulativeTime = 0;
         } else {
           let timeSinceLastTap = thisTap - ctrl.lastTap;
           ctrl.cumulativeTime += timeSinceLastTap;
-          ctrl.counts++;
+          ctrl.tapCounts++;
           ctrl.lastTap = thisTap;
-          ctrl.beats[ctrl.counts - 1] = {
-            count: ctrl.counts,
+          ctrl.beats[ctrl.tapCounts - 1] = {
+            count: ctrl.tapCounts,
             timeInterval: timeSinceLastTap / 1000,
             timeOffset: ctrl.cumulativeTime / 1000,
           };
         }
         let duration = (ctrl.lastTap - ctrl.firstTap) / 1000;
-        ctrl.tempo = calcTempo(duration, ctrl.counts - 1);
+        ctrl.tempo = calcTempo(duration, ctrl.tapCounts - 1);
+        ctrl.counts = calcCounts(ctrl.duration, ctrl.tempo);
         $rootScope.$safeApply();
       }
 
@@ -237,6 +273,11 @@ angular.module('drillApp')
       function calcTempo(duration, counts) {
         let tempo = Math.floor(counts * 60 / duration);
         return tempo;
+      }
+
+      function calcCounts(duration, tempo) {
+        let counts = Math.ceil(duration / (60 / tempo));
+        return counts;
       }
 
       function showSpinner() {

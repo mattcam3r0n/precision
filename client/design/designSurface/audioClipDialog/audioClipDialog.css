@@ -3,6 +3,21 @@
     padding: 10px;
 }
 
+.audio-clip-dialog .tab {
+    padding: 10px;
+    border-left: solid 1px silver;
+    border-right: solid 1px silver;
+    border-bottom: solid 1px silver;
+}
+
+.audio-clip-dialog .nav-tabs {
+    margin-top: 10px;
+}
+
+.audio-clip-dialog button.active {
+    background-color: lightblue;
+}
+
 .audio-clip-dialog p {
     font-size: 10pt;
 }
