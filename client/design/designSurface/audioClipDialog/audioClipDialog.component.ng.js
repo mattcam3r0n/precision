@@ -190,7 +190,7 @@ angular.module('drillApp')
             timeOffset: cumulativeTime,
           };
           newBeats.push(newBeat);
-          cumulativeTime = cumulativeTime + timeInterval;          
+          cumulativeTime = cumulativeTime + timeInterval;
         }
         return newBeats;
       }
