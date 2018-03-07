@@ -86,6 +86,14 @@ angular.module('drillApp')
         ctrl.counts = calcCounts(ctrl.duration, ctrl.tempo);
       };
 
+      ctrl.selectAll = function() {
+        ctrl.wavesurfer.clearRegions();
+        ctrl.wavesurfer.addRegion({
+          start: 0,
+          end: ctrl.wavesurfer.getDuration(),
+        });
+      };
+
       ctrl.clearRegion = function() {
         ctrl.wavesurfer.clearRegions();
         ctrl.wavesurfer.seekTo(0); // beginning

@@ -45,7 +45,7 @@
                             <div class="row">
 
                                 <div class="col-md-3 text-center form-group-sm">
-                                        <label class="control-label">Zoom</label>                                    
+                                    <label class="control-label">Zoom</label>
                                     <div class="row">
                                         <div class="col-md-2">
                                             <button class="btn btn-default btn-sm" ng-click="$ctrl.zoomOut()">
@@ -64,10 +64,10 @@
                                 </div>
 
 
-                                <div class="col-md-5 text-center form-group-sm">
-                                        <label class="control-label">Play / Pause</label>
-                                        <br/>
-                                        <button ng-click="$ctrl.play()" class="btn btn-default btn-sm">
+                                <div class="col-md-3 text-center form-group-sm">
+                                    <label class="control-label">Play / Pause</label>
+                                    <br/>
+                                    <button ng-click="$ctrl.play()" class="btn btn-default btn-sm">
                                         <i class="fa fa-play"></i> /
                                         <i class="fa fa-pause"></i>
                                     </button>
@@ -85,6 +85,12 @@
                                 <div class="col-md-2 text-right form-group-sm">
                                     <label class="control-label">&nbsp;</label>
                                     <br/>
+                                    <button ng-click="$ctrl.selectAll()" class="btn btn-default btn-sm">Select All</button>
+                                </div>
+
+                                <div class="col-md-2 text-right form-group-sm">
+                                    <label class="control-label">&nbsp;</label>
+                                    <br/>
                                     <button ng-click="$ctrl.clearRegion()" class="btn btn-default btn-sm">Clear Selection</button>
                                 </div>
                             </div>
@@ -92,7 +98,7 @@
                             <p>
                                 <strong>Select the portion of the audio that you'd like to use</strong> by dragging the mouse on
                                 the sound wave, or
-                                <a href="#">select it all.</a> You can move the selection or refine it by dragging each end of the selected
+                                <a href="#" ng-click="$ctrl.selectAll()">select it all.</a> You can move the selection or refine it by dragging each end of the selected
                                 area. Use the zoom buttons to zoom in for more precise control.
                             </p>
                             <p>
