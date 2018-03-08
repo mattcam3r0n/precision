@@ -1,0 +1,25 @@
+.intro-dialog .modal-lg {
+    width: 600px;
+}
+
+.intro-dialog .modal-body {
+    max-height: 400px;
+}
+
+.intro-dialog .modal-body .intro-image {
+    /* height: 350px; */
+}
+
+.intro-dialog video {
+    width: 100%;
+}
+
+.intro-dialog .button-row {
+    padding: 10px;
+}
+
+.intro-dialog .button-row div {
+    height: 50px;
+}
+
+

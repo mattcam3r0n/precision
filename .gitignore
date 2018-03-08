@@ -2,6 +2,7 @@ node_modules/
 deploy.sh
 run-remote.sh
 public/audio/
+public/intro/
 settings.json
 settings-development.json
 settings-production.json

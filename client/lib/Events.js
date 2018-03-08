@@ -27,6 +27,10 @@ class Events {
         return 'showDrillPropertiesDialog';
     }
 
+    static get showIntroDialog() {
+        return 'showIntroDialog';
+    }
+
     static get showSaveAsDialog() {
         return 'showSaveAsDialog';
     }

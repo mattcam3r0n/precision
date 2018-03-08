@@ -34,6 +34,14 @@ class appStateService {
         this._field = f;
     }
 
+    get dontShowIntro() {
+        return this.userProfile.dontShowIntro;
+    }
+
+    set dontShowIntro(val) {
+        this.userProfile.dontShowIntro = val;
+    }
+
     get isGridVisible() {
         return this.userProfile.isGridVisible;
     }
@@ -112,6 +120,7 @@ class appStateService {
             isLogoVisible: this.userProfile.isLogoVisible === undefined
                 ? true
                 : this.userProfile.isLogoVisible,
+            dontShowIntro: this.dontShowIntro,
         };
         this.userService.updateUserProfile(profile);
     }

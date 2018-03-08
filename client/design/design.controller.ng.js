@@ -11,6 +11,7 @@ angular.module('drillApp')
   .controller('DesignCtrl', function($scope,
                                       $window,
                                       $location,
+                                      $timeout,
                                       appStateService,
                                       drillEditorService,
                                       eventService) {
@@ -90,8 +91,16 @@ angular.module('drillApp')
       ctrl.subscriptions.subscribe(Events.hideSpinner, (event, args) => {
         ctrl.spinner.stop();
       });
-    }
 
+      // show intro dialog
+      $timeout(() => {
+        if (Meteor.user() && !Meteor.user().profile.dontShowIntro) {
+          eventService.notify(Events.showIntroDialog);
+          appStateService.dontShowIntro = true;
+          appStateService.updateUserProfile();
+        }
+      }, 1500);
+    }
 
     $scope.$on('$destroy', function() {
       ctrl.subscriptions.unsubscribeAll();

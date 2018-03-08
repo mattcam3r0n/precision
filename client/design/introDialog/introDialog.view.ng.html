@@ -1,0 +1,78 @@
+<!-- Modal -->
+<div class="intro-dialog modal fade" id="introDialog" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="introDialoglabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="introDialogLabel">{{$ctrl.current.title}}</h4>
+            </div>
+            <div class="modal-body" style="min-height: 450px">
+                <div class="row">
+                    <div class="col-md-12 intro-image">
+                        <img ng-show="$ctrl.current.img" class="img-responsive center-block" ng-src="{{$ctrl.current.img}}" />
+                        <video controls autoplay ng-show="$ctrl.current.video" ng-src="{{$ctrl.current.video}}"></video>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ng-show="$ctrl.current.title == 'Add Marchers'">
+                            <p></p>
+                            <p>To add a block of marchers to the field, click the
+                                <strong>Marchers</strong> menu and then
+                                <strong>Add Marchers</strong>.</p>
+                            <p>You can resize the block, move it, and set the initial direction and interval. Click the green
+                                checkmark when you're done setting them up.</p>
+                        </div>
+                        <div ng-show="$ctrl.current.title == 'Select Marchers'">
+                            <p></p>
+                            <p>You can
+                                <strong>select marchers by clicking and dragging</strong>. Selecting marchers a second time unselects
+                                them. You can also single click on a marcher to select or deselect them.</p>
+                            <p>To select a non-rectangular area,
+                                <strong>double-click</strong> on the field to start, then
+                                <strong>single-click</strong> as many times as necessary to draw the desired shape.
+                                <strong>Double-click to finish.</strong>
+                            </p>
+                        </div>
+                        <div ng-show="$ctrl.current.title == 'Add Steps'">
+                            <p></p>
+                            <p>Use the
+                                <strong>Add Steps</strong> menu to make marchers change direction and perform other actions. Only
+                                the selected marchers will be affected. Remember,
+                                <i>a marcher will keep performaing their current action until you tell them to do something
+                                    different.</i>
+                            </p>
+                            <p>You can remove steps by using the
+                                <strong>Delete</strong> button.</p>
+                        </div>
+                        <div ng-show="$ctrl.current.title == 'Draw Paths'">
+                            <p></p>
+                            <p>Use the
+                                <strong>Paths</strong> menu to draw a path for marchers to follow. Select a direction to turn, move the mouse in front of a leader, and click on the field where
+                                you'd like them to turn. Then place the next turn and so on. You can click a turn marker to select it, drag it with the mouse to move it, or press the delete
+                                key to remove it.</p>
+                            <p>Click the green check mark to save the path.</p>
+                        </div>
+                        <div ng-show="$ctrl.current.title == 'Add Music'">
+                            <p></p>
+                            <p>Watch this short video to see how to add music to your drill.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer button-row">
+                <div class="col-md-2">
+                    <button ng-click="$ctrl.previous()" class="btn btn-primary">Previous</button>
+                </div>
+                <div class="col-md-8 text-center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                <div class="col-md-2 text-right">
+                    <button ng-click="$ctrl.next()" class="btn btn-primary">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

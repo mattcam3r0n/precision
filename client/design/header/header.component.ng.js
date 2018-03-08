@@ -67,6 +67,11 @@ angular.module('drillApp')
         console.log(drillEditorService.drill);
       };
 
+      ctrl.showIntro = function() {
+        console.log('header showintro');
+        eventService.notify(Events.showIntroDialog);
+      };
+
       ctrl.focusDrillName = function() {
         angular.element('#txtDrillName').focus();
       };
