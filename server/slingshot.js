@@ -9,7 +9,7 @@ Slingshot.fileRestrictions('uploadToAmazonS3', {
         'audio/wav',
         'audio/m4a',
      ],
-    maxSize: 10 * 1024 * 1024,
+    maxSize: 20 * 1024 * 1024,
 });
 
 Slingshot.createDirective('uploadToAmazonS3', Slingshot.S3Storage, {
