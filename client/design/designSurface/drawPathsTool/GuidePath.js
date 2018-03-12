@@ -270,6 +270,7 @@ this.shiftKey = evt.e.shiftKey;
             }
         } else {
             this.destroyGuideline();
+            this.destroyMoveStepsLabel();
         }
     }
 
