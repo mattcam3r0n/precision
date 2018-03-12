@@ -1,3 +1,4 @@
+import PathUtils from './PathUtils';
 import StepType from '/client/lib/StepType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import { StepPoint } from '/client/lib/Point';
@@ -19,6 +20,10 @@ class PathTool {
 
         this.createSelectionBox();
         this.createGuides();
+
+        this.allFiles = true; // TEMP
+        this.onMouseMoveHandler = this.onMouseMove.bind(this);
+        this.field.canvas.on('mouse:move', this.onMouseMoveHandler);
     }
 
     createSelectionBox() {
@@ -87,7 +92,7 @@ class PathTool {
             let points = f.getLinePoints()
                 .map((p) => new StepPoint(f.leader.member.currentState.strideType, // eslint-disable-line max-len
                     p.x, p.y)
-                .toFieldPoint());
+                    .toFieldPoint());
 
             let fi = new FileIndicator(points,
                 f.leader.member.currentState.direction);
@@ -100,10 +105,72 @@ class PathTool {
                 y: f.leader.member.currentState.y,
             }, this.strideType);
 
+            // gp.onGuideLineCreated = this.onGuideLineCreated.bind(this);
+
             this.field.canvas.add(fi);
             this.guides.push(fi);
             this.guidePaths.push(gp);
         });
+    }
+
+    onGuideLineCreated(guidePath, point) {
+        if (this.allFiles) {
+            // console.log('PathTool onGuideLineCreated', point);
+            // console.log('guidepaths', this.guidePaths);
+            let i = 1;
+            this.guidePaths
+                .filter((gp) => gp != guidePath)
+                .forEach((gp) => {
+                    console.log(i, gp.lastPoint, point);
+                    gp.createGuideline(gp.lastPoint, point);
+                    i++;
+                });
+        }
+    }
+
+    onMouseMove(evt) {
+        const adjustedPoint = this.field.adjustMousePoint({
+            x: evt.e.layerX,
+            y: evt.e.layerY,
+        });
+        const activeGuidePath = this.findGuidePath(adjustedPoint);
+        console.log('pathTool mousemove', activeGuidePath);
+
+        // if not gp, clear guildelines and exit
+        if (!activeGuidePath) {
+            console.log('null gp');
+            this.destroyGuidePaths();
+            return;
+        }
+
+        if (this.allFiles) {
+            let i = 0;
+            const stepSize = FieldDimensions.getStepSize(this.strideType);
+            this.guidePaths
+                .forEach((gp) => {
+            
+                    const offsetPoint = {
+                        x: adjustedPoint.x + (i * 2 * stepSize.x),
+                        y: adjustedPoint.y + (i * 2 * stepSize.y),
+                    };
+            console.log('offsetPoint', offsetPoint);
+                    const snappedPoint = PathUtils.snapPoint(this.strideType,
+                        gp.lastPoint, offsetPoint);
+                    gp.createGuideline(gp.lastPoint, snappedPoint);
+                    i += 1;
+                });
+        } else {
+            const snappedPoint = PathUtils.snapPoint(this.strideType,
+                activeGuidePath.lastPoint, adjustedPoint);
+            activeGuidePath.createGuideline(activeGuidePath.lastPoint, snappedPoint);
+        }
+        // draw guideline
+        // if all mode, 
+        // for each gp
+        // calc point
+        // draw guideline
+
+        this.field.update();
     }
 
     createBlockGuides() {
@@ -231,6 +298,7 @@ class PathTool {
         this.destroyGuides();
         this.destroySelectionBox();
         this.destroyGuidePaths();
+        this.field.canvas.off('mouse:move', this.onMouseMoveHandler);
     }
 }
 

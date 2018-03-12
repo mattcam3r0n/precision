@@ -23,7 +23,7 @@ class GuidePath {
         this.startCount = file.leader.member.currentState.count;
 
         this.onMouseMoveHandler = this.onMouseMove.bind(this);
-        this.field.canvas.on('mouse:move', this.onMouseMoveHandler);
+        // this.field.canvas.on('mouse:move', this.onMouseMoveHandler);
     }
 
     setCurrentTurnDirection(dir) {
@@ -261,6 +261,10 @@ this.shiftKey = evt.e.shiftKey;
 //            snappedPoint.steps = this.calculateStepsFromPreviousPoint(snappedPoint);
             this.createGuideline(this.lastPoint, snappedPoint);
 
+            // if (this.onGuideLineCreated) {
+            //     this.onGuideLineCreated(this, snappedPoint);
+            // }
+
             if (this.currentDir == Direction.CM) {
                 if (this.isLeftTurn(snappedPoint)) {
                     this.field.canvas.defaultCursor = 'url(/icons/CM-left.svg) 8 8, auto';
@@ -345,7 +349,9 @@ this.shiftKey = evt.e.shiftKey;
         this.field.canvas.add(this.guideline);
         this.field.canvas.add(this.guidelineLabel);
         this.bringTurnMarkersToFront();
-        this.field.update();
+        // this.field.update();
+
+        console.log('guidepath create', from, to);
     }
 
     setGuidelineLabel(text) {
@@ -377,7 +383,7 @@ this.shiftKey = evt.e.shiftKey;
 
     destroyGuideline() {
         if (!this.guideline) return;
-
+console.log('destroyGuideline');
         this.field.canvas.remove(this.guidelineLabel);
         this.field.canvas.remove(this.guideline);
         this.guideline = null;
