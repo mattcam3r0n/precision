@@ -28,15 +28,21 @@
 
         <!-- count, step forward and backward -->
         <div class="btn-group btn-group-sm" role="group">
-            <button id="stepBackward" ng-click="$ctrl.onStepBackward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
-                title="Backward 1 Count">
-                <i class="fa fa-step-backward"></i>
-            </button>
-            <button id="currentCount" class="btn btn-default btn-md" data-toggle="tooltip" data-placement="bottom" title="Current count">{{$ctrl.drill.count}}</button>
-            <button id="stepForward" ng-click="$ctrl.onStepForward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
-                title="Forward 1 Count">
-                <i class="fa fa-step-forward"></i>
-            </button>
+            <div id="currentCountGroup" class="input-group input-group-sm">
+                <span class="input-group-btn">
+                    <button id="stepBackward" ng-click="$ctrl.onStepBackward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                        title="Backward 1 Count">
+                        <i class="fa fa-step-backward"></i>
+                    </button>
+                </span>
+                <input ng-enter="$ctrl.onCountChange()" ng-blur="$ctrl.onCountChange()" id="currentCount" type="text" class="form-control" aria-label="Current Count" ng-model="$ctrl.currentCount" data-toggle="tooltip" data-placement="bottom" title="Current Count"/>
+                <span class="input-group-btn">
+                    <button id="stepForward" ng-click="$ctrl.onStepForward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                        title="Forward 1 Count">
+                        <i class="fa fa-step-forward"></i>
+                    </button>
+                </span>
+            </div>
         </div>
 
         <!-- tempo -->
@@ -54,7 +60,7 @@
         <!-- metronome -->
         <div class="btn-group btn-group-sm" role="group">
             <input type='checkbox' class="" ng-model="$ctrl.isMetronomeEnabled" /> Metronome
-        </div>            
+        </div>
 
         <!-- position indicator -->
         <div class="btn-group btn-group-sm pull-right" role="group">

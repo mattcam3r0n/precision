@@ -21,6 +21,7 @@ angular.module('drillApp')
       ctrl.$onInit = function() {
         ctrl.isActivated = true;
         ctrl.subscriptions = eventService.createSubscriptionManager();
+        ctrl.currentCount = 0;
 
         // update position indicator
         ctrl.subscriptions
@@ -39,6 +40,11 @@ angular.module('drillApp')
             $scope.membersSelected = msg;
             $rootScope.$safeApply();
           });
+
+        ctrl.subscriptions
+          .subscribe(Events.drillStateChanged, (evt, args) => {
+            ctrl.currentCount = drillEditorService.currentCount;
+          });
       };
 
       ctrl.$onDestroy = function() {
@@ -52,6 +58,11 @@ angular.module('drillApp')
       };
 
       ctrl.deactivate = function() {
+      };
+
+      ctrl.onCountChange = function() {
+        console.log(ctrl.currentCount);
+        drillEditorService.goToCount(ctrl.currentCount);
       };
 
       ctrl.onPlay = function(playMusic) {

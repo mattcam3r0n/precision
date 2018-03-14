@@ -39,9 +39,18 @@
 } */
 
 
-#currentCount {
-    width: 34px;
-    margin-left: 0;
+#currentCount, #stepForward, #stepBackward {
+    text-align: center;
+    font-size: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    height: 23px;
+}
+
+#currentCountGroup {
+    width: 75px;
 }
 
 #tempoGroup {
