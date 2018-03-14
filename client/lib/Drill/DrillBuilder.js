@@ -391,6 +391,26 @@ class DrillBuilder {
         this.drill.isDirty = true;
     }
 
+    clearCount(count) {
+        let members = this.getSelectedMembers();
+
+        members.forEach((m) => {
+            ScriptBuilder.clearCount(m, count - 1);
+        });
+
+        this.drill.isDirty = true;
+    }
+
+    deleteCount(count) {
+        let members = this.getSelectedMembers();
+
+        members.forEach((m) => {
+            ScriptBuilder.deleteCount(m, count - 1);
+        });
+
+        this.drill.isDirty = true;
+    }
+
     createScriptNode(strideType, stepType, dir, dx, dy) {
         return StepFactory.createStep(strideType, stepType, dir, dx, dy);
     }

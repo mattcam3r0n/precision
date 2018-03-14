@@ -75,8 +75,16 @@ class ScriptBuilder {
     }
 
     static deleteActionAtCount(member, count) {
-        // TODO: ?? is this needed??
         member.script[count - 1] = null;
+    }
+
+    static clearCount(member, count) {
+        member.script[count - 1] = null;
+    }
+
+    static deleteCount(member, count) {
+        // delete count and shift following counts to the left
+        member.script.splice(count - 1, 1);
     }
 
     static deleteForward(member, count) {

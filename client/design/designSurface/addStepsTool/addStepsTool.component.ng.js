@@ -11,7 +11,7 @@ angular.module('drillApp')
     bindings: {
     },
     controller: function($scope, drillEditorService,
-        eventService, appStateService) {
+        eventService, appStateService, confirmationDialogService) {
       let ctrl = this;
 
       ctrl.$onInit = function() {
@@ -118,6 +118,26 @@ angular.module('drillApp')
 
       $scope.backspaceDelete = function() {
         drillEditorService.deleteBackspace();
+      };
+
+      $scope.deleteCount = function() {
+        drillEditorService.deleteCount();
+      };
+
+      $scope.clearCount = function() {
+        drillEditorService.clearCount();
+      };
+
+      $scope.deleteForward = function() {
+        confirmationDialogService.show({
+          heading: 'Delete Forward',
+          message: 'This will delete all counts for the selected marchers from the current count forward. Click Delete to proceed.',
+          confirmText: 'Delete',
+        }).then((result) => {
+          if (result.confirmed) {
+            drillEditorService.deleteForward();
+          }
+        });
       };
 
       function activate(memberSelection) {

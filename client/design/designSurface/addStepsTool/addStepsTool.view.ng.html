@@ -2,8 +2,8 @@
     <div id="addStepsToolbar" class="">
         <ul>
             <li>
-                <input ng-show="false" type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary" data-label-text="Stride"
-                    data-size="mini" data-label-width="62px" />
+                <input ng-show="false" type="checkbox" name="stride-type-switch" data-off-text="6/5" data-on-text="8/5" data-off-color="primary"
+                    data-label-text="Stride" data-size="mini" data-label-width="62px" />
             </li>
             <li class="direction-buttons">
                 <button ng-click="addStep('NW')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="">
@@ -63,10 +63,12 @@
                 </button>
             </li>
             <li>
-                <button ng-click="addDragSteps()" id="dragStepButton" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Drag Step Tool">
+                <button ng-click="addDragSteps()" id="dragStepButton" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                    title="Drag Step Tool">
                     <img src='/icons/drag-step.svg' />
                 </button>
-                <button ng-click="addPinwheel()" id="pinwheelButton" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Pinwheel Tool">
+                <button ng-click="addPinwheel()" id="pinwheelButton" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                    title="Pinwheel Tool">
                     <img src='/icons/pinwheel.svg' />
                 </button>
                 <button ng-click="addGate()" id="gateButton" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Gate Tool">
@@ -74,9 +76,17 @@
                 </button>
             </li>
             <li>
-                <button ng-click="backspaceDelete()" id="" ng-class="{ 'active': isCurrentDirection('SE') }" class="btn btn-default" data-toggle="tooltip"
-                    data-placement="bottom" title="Backup and delete">
+                <button ng-click="deleteCount()" id="" class="btn btn-default" data-toggle="tooltip"
+                    data-placement="bottom" title="Delete Count (backs up following actions by one count)">
                     <i class="fa fa-arrow-circle-left context-button" style="color: red"></i>
+                </button>
+                <button ng-click="clearCount()" id="" class="btn btn-default" data-toggle="tooltip"
+                    data-placement="bottom" title="Clear Count (does not impact following actions)">
+                    <i class="fa fa-times-circle context-button" style="color: red"></i>
+                </button>
+                <button ng-click="deleteForward()" id="" class="btn btn-default" data-toggle="tooltip"
+                    data-placement="bottom" title="Delete Forward">
+                    <i class="fa fa-arrow-circle-right context-button" style="color: red"></i>
                 </button>
             </li>
         </ul>

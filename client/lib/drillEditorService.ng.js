@@ -173,6 +173,22 @@ class DrillEditorService {
         this.save();
     }
 
+    deleteCount() {
+        const count = this.drill.count;
+        this.drillPlayer.stepBackward();
+        this.drillBuilder.deleteCount(count);
+        this.notifyDrillStateChanged();
+        this.save();
+    }
+
+    clearCount() {
+        const count = this.drill.count;
+        this.drillPlayer.stepBackward();
+        this.drillBuilder.clearCount(count);
+        this.notifyDrillStateChanged();
+        this.save();
+    }
+
     deleteBackspace(members) {
         members = members || this.drillBuilder.getSelectedMembers();
         const count = this.drill.count;
