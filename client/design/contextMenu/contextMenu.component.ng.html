@@ -1,0 +1,76 @@
+<div class="context-menu" ng-show="$ctrl.isActivated">
+    <div class="dropdown open">
+        <ul class="dropdown-menu">
+            <li>
+                <a href="#" ng-click="$ctrl.addMarchers()">Add Marchers</a>
+            </li>
+            <li>
+                <a href="#" ng-click="$ctrl.deleteMarchers()">Delete Marchers</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Marcher Colors</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a ng-click="$ctrl.setColor('flute')" tabindex="-1" href="#">
+                            <i class="fa fa-stop flute-color"></i> Flutes
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.setColor('clarinet')" href="#">
+                            <i class="fa fa-stop clarinet-color"></i> Clarinets
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.setColor('lowreed')" href="#">
+                            <i class="fa fa-stop low-reed-color"></i> Low Reeds
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.setColor('saxophone')" href="#">
+                            <i class="fa fa-stop saxophone-color"></i> Saxophones
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.setColor('trumpet')" href="#">
+                            <i class="fa fa-stop trumpet-color"></i> Trumpets
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.setColor('horn')" href="#">
+                            <i class="fa fa-stop horn-color"></i> Horns
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.setColor('trombone')" href="#">
+                            <i class="fa fa-stop trombone-color"></i> Trombones
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.setColor('tuba')"  href="#">
+                            <i class="fa fa-stop tuba-color"></i> Tubas
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.setColor('percussion')" href="#">
+                            <i class="fa fa-stop percussion-color"></i> Percussion
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+                <a href="#" ng-click="$ctrl.selectAll()">Select All</a>
+            </li>
+            <li>
+                <a href="#" ng-click="$ctrl.deselectAll()">Deselect All</a>
+            </li>
+            <li>
+                <a href="#" ng-click="$ctrl.hideUnselected()">Hide Unselected</a>
+            </li>
+            <li>
+                <a href="#" ng-click="$ctrl.showUnselected()">Show Unselected</a>
+            </li>
+        </ul>
+    </div>
+</div>

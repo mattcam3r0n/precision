@@ -320,7 +320,10 @@ class FieldController {
 
             let objectFound = findMarcherAtPoint(self.canvas, clickPoint);
 
-            console.log(objectFound);
+            console.log(objectFound, e);
+            self.eventService.notify(Events.showContextMenu, {
+                point: { left: e.clientX, top: e.clientY },
+            });
         });
     }
 

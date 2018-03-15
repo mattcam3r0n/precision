@@ -19,6 +19,10 @@ class Events {
         return 'showKeyboardShortcuts';
     }
 
+    static get showContextMenu() {
+        return 'showContextMenu';
+    }
+
     static get showNewDrillDialog() {
         return 'showNewDrillDialog';
     }
