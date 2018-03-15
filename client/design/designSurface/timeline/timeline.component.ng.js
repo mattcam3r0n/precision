@@ -10,7 +10,7 @@ angular.module('drillApp')
       drill: '<',
     },
     controller: function($scope, $timeout, appStateService,
-                          drillEditorService, eventService) {
+      drillEditorService, eventService) {
       let ctrl = this;
 
       ctrl.$onInit = function() {
@@ -21,11 +21,12 @@ angular.module('drillApp')
         ctrl.timeline.setOnGoToCountCallback(onGoToCount);
         ctrl.subscriptions.subscribe(Events.audioClipAdded, onAudioClipAdded);
         ctrl.subscriptions.subscribe(Events.drillStateChanged,
-                                      onDrillStateChanged);
+          onDrillStateChanged);
         ctrl.subscriptions.subscribe(Events.drillOpened,
-                                      onDrillOpened);
+          onDrillOpened);
         ctrl.subscriptions.subscribe(Events.musicChanged,
-                                      onMusicChanged);
+          onMusicChanged);
+        $('[data-toggle="tooltip"]').tooltip();
       };
 
       ctrl.$onDestroy = function() {

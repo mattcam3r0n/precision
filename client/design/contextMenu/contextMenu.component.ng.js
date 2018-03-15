@@ -32,7 +32,6 @@ angular.module('drillApp')
         });
 
         $document.click((evt)=>{
-          console.log(evt);
           deactivate();
         });
         // $('body').mousedown((evt)=> {

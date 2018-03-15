@@ -70,27 +70,33 @@ angular.module('drillApp')
         drillEditorService.play(() => {
           $rootScope.$safeApply();
         }, 0, playMusic, ctrl.isMetronomeEnabled);
+        blurActiveElement();
       };
 
       ctrl.onStop = function() {
         drillEditorService.stop();
         Audio.stop();
+        blurActiveElement();
       };
 
       ctrl.onGoToBeginning = function() {
         drillEditorService.goToBeginning();
+        blurActiveElement();
       };
 
       ctrl.onGoToEnd = function() {
         drillEditorService.goToEnd();
+        blurActiveElement();
       };
 
       ctrl.onStepBackward = function() {
         drillEditorService.stepBackward();
+        blurActiveElement();
       };
 
       ctrl.onStepForward = function() {
         drillEditorService.stepForward();
+        blurActiveElement();
       };
 
       // ctrl.metronomeClick = function() {
@@ -108,6 +114,7 @@ angular.module('drillApp')
 
       ctrl.goToBeginning = function() {
         ctrl.timeline.goToBeginning();
+        blurActiveElement();
       };
 
       ctrl.goToCurrentCount = function() {
@@ -116,15 +123,24 @@ angular.module('drillApp')
 
       ctrl.goToEnd = function() {
         ctrl.timeline.goToEnd();
+        blurActiveElement();
       };
 
       ctrl.pageForward = function() {
         ctrl.timeline.pageForward();
+        blurActiveElement();
       };
 
       ctrl.pageBackward = function() {
         ctrl.timeline.pageBackward();
+        blurActiveElement();
       };
+
+      function blurActiveElement() {
+        if (document.activeElement) {
+          document.activeElement.blur();
+        }
+      }
     },
   });
 
