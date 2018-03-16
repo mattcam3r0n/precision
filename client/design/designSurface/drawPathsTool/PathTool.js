@@ -1,16 +1,21 @@
+import PathUtils from './PathUtils';
 import StepType from '/client/lib/StepType';
 import FieldDimensions from '/client/lib/FieldDimensions';
-import { StepPoint } from '/client/lib/Point';
+import { FieldPoint, StepPoint } from '/client/lib/Point';
 import SelectionBox from './SelectionBox';
 import FileIndicator from './FileIndicator';
 import GuidePath from './GuidePath';
 import ScriptBuilder from '/client/lib/drill/ScriptBuilder';
 import Action from '/client/lib/drill/Action';
+import ExceptionHelper from '/client/lib/ExceptionHelper';
 
 class PathTool {
-    constructor(field, memberSelection, turnMode, strideType) {
+    constructor(field, memberSelection, turnMode, strideType,
+        allFiles, fileOffset) {
         this.turnMode = turnMode || 'block'; // file | block | rank
         this.strideType = strideType;
+        this.allFiles = allFiles || false;
+        this.fileOffset = fileOffset || 0;
         this.field = field;
         this.memberSelection = memberSelection;
         this.selectionBox = null;
@@ -19,6 +24,12 @@ class PathTool {
 
         this.createSelectionBox();
         this.createGuides();
+
+        this.onMouseMoveHandler = this.onMouseMove.bind(this);
+        this.field.canvas.on('mouse:move', this.onMouseMoveHandler);
+
+        this.onMouseUpHandler = this.onMouseUp.bind(this);
+        this.field.canvas.on('mouse:up', this.onMouseUpHandler);
     }
 
     createSelectionBox() {
@@ -57,6 +68,10 @@ class PathTool {
         this.guidePaths.forEach((gp) => gp.setCurrentTurnDirection(dir));
     }
 
+    setFileOffset(offset) {
+        this.fileOffset = offset;
+    }
+
     createGuides() {
         if (this.isEmptySelection()) {
             return;
@@ -87,7 +102,7 @@ class PathTool {
             let points = f.getLinePoints()
                 .map((p) => new StepPoint(f.leader.member.currentState.strideType, // eslint-disable-line max-len
                     p.x, p.y)
-                .toFieldPoint());
+                    .toFieldPoint());
 
             let fi = new FileIndicator(points,
                 f.leader.member.currentState.direction);
@@ -103,6 +118,89 @@ class PathTool {
             this.field.canvas.add(fi);
             this.guides.push(fi);
             this.guidePaths.push(gp);
+        });
+    }
+
+    onMouseMove(evt) {
+        const adjustedPoint = this.field.adjustMousePoint({
+            x: evt.e.layerX,
+            y: evt.e.layerY,
+        });
+        const activeGuidePath = this.findGuidePath(adjustedPoint);
+        console.log('pathTool mousemove', activeGuidePath);
+
+        // if not gp, clear guildelines and exit
+        if (!activeGuidePath) {
+            // console.log('null gp');
+            // this.destroyGuidePaths();
+            this.destroyGuideLines();
+            return;
+        }
+
+        if (this.allFiles) {
+            // let i = 0;
+            // const stepSize = FieldDimensions.getStepSize(this.strideType);
+            // this.guidePaths
+            //     .forEach((gp) => {
+            //         const offsetPoint = {
+            //             x: adjustedPoint.x + (i * this.fileOffset * stepSize.x),
+            //             y: adjustedPoint.y + (i * this.fileOffset * stepSize.y),
+            //         };
+            //         const snappedPoint = PathUtils.snapPoint(this.strideType,
+            //             gp.lastPoint, offsetPoint);
+            //         gp.createGuideline(gp.lastPoint, snappedPoint);
+            //         i += 1;
+            //     });
+            this.createAllFileGuidelines(adjustedPoint);
+        } else {
+            const snappedPoint = PathUtils.snapPoint(this.strideType,
+                activeGuidePath.lastPoint, adjustedPoint);
+            activeGuidePath.createGuideline(activeGuidePath.lastPoint,
+                snappedPoint);
+        }
+
+        this.field.update();
+    }
+
+    onMouseUp(evt) {
+        ExceptionHelper.handle(() => {
+          if (!evt.isClick) return;
+          if (evt.target !== null && !evt.target.isLogo) return; // clicked on an object
+          // have to adjust point for zoom
+          let adjustedPoint = this.field.adjustMousePoint({
+            x: evt.e.layerX,
+            y: evt.e.layerY,
+          });
+          if (this.allFiles) {
+            this.addAllFileTurnMarkers(this.currentDir, adjustedPoint);
+          } else {
+            let stepPoint = new FieldPoint(adjustedPoint); // .toStepPoint(ctrl.strideType);
+            // add turn at step point
+            this.addTurnMarker(this.currentDir, stepPoint);
+          }
+        }, 'PathTool.onMouseUp', {
+
+        });
+    }
+
+    calculateAllFileTurnPoints(adjustedPoint) {
+        const stepSize = FieldDimensions.getStepSize(this.strideType);
+        return this.guidePaths
+            .map((gp, i) => {
+                const offsetPoint = {
+                    x: adjustedPoint.x + (i * this.fileOffset * stepSize.x),
+                    y: adjustedPoint.y + (i * this.fileOffset * stepSize.y),
+                };
+                const snappedPoint = PathUtils.snapPoint(this.strideType,
+                    gp.lastPoint, offsetPoint);
+                return snappedPoint;
+            });
+    }
+
+    createAllFileGuidelines(adjustedPoint) {
+        const points = this.calculateAllFileTurnPoints(adjustedPoint);
+        this.guidePaths.forEach((gp, i) => {
+            gp.createGuideline(gp.lastPoint, points[i]);
         });
     }
 
@@ -147,23 +245,25 @@ class PathTool {
         this.guidePaths.forEach((gp) => gp.dispose());
     }
 
+    destroyGuideLines() {
+        if (!this.guidePaths) return;
+
+        this.guidePaths.forEach((gp) => gp.destroyGuideline());
+    }
+
     findGuidePath(stepPoint) {
         return this.guidePaths.find((p) => p.isInPath(stepPoint));
     }
 
     addTurnMarker(turnDirection, stepPoint) {
         let guidePath = this.findGuidePath(stepPoint);
-
+console.log('turnDir', turnDirection);
         // don't allow turn to be added if not on a guidepath
         if (!guidePath) return;
 
         turnDirection = turnDirection == undefined
             ? guidePath.lastPoint.direction
             : turnDirection;
-
-        // if (turnDirection == Direction.CM) {
-        //   return addCounterMarchMarker(guidePath, stepPoint);
-        // }
 
         // add turn to guidepath
         guidePath.add({
@@ -173,6 +273,12 @@ class PathTool {
             strideType: this.strideType,
             stepType: StepType.Full,
         });
+    }
+
+    addAllFileTurnMarkers(turnDirection, adjustedPoint) {
+        console.log('addAllFileTurnMarkers');
+        const points = this.calculateAllFileTurnPoints(adjustedPoint);
+        points.forEach((p) => this.addTurnMarker(turnDirection, p));
     }
 
     removeTurnMarker(marker) {
@@ -231,6 +337,8 @@ class PathTool {
         this.destroyGuides();
         this.destroySelectionBox();
         this.destroyGuidePaths();
+        this.field.canvas.off('mouse:move', this.onMouseMoveHandler);
+        this.field.canvas.off('mouse:up', this.onMouseUpHandler);
     }
 }
 

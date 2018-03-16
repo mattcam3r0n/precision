@@ -19,6 +19,8 @@ angular.module('drillApp')
         ctrl.subscriptions = eventService.createSubscriptionManager();
         ctrl.turnMode = 'block';
         ctrl.toolDiv = angular.element('.draw-paths-tool')[0];
+        ctrl.fileOffset = 0;
+        ctrl.allFiles = false;
 
         ctrl.subscriptions.subscribe(Events.drawPathsToolActivated, () => {
           activate(drillEditorService.getMemberSelection());
@@ -65,6 +67,24 @@ angular.module('drillApp')
         createPathTool();
       };
 
+      ctrl.setAllFiles = function() {
+        createPathTool();
+      };
+
+      ctrl.setFileOffset = function() {
+        ctrl.activePathTool.setFileOffset(ctrl.fileOffset);
+      };
+
+      ctrl.decrementFileOffset = function() {
+        ctrl.fileOffset--;
+        ctrl.activePathTool.setFileOffset(ctrl.fileOffset);
+      };
+
+      ctrl.incrementFileOffset = function() {
+        ctrl.fileOffset++;
+        ctrl.activePathTool.setFileOffset(ctrl.fileOffset);
+      };
+
       function activate(memberSelection) {
         ExceptionHelper.handle(() => {
           if (ctrl.isActivated) {
@@ -83,7 +103,7 @@ angular.module('drillApp')
 
           ctrl.field.disablePositionIndicator();
           setTurnDirection(Direction.E);
-          ctrl.field.canvas.on('mouse:up', onMouseUp);
+          // ctrl.field.canvas.on('mouse:up', onMouseUp);
           ctrl.subscriptions.subscribe(Events.deleteTurn, onBackspacePressed);
           ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
             if (!ctrl.isActivated) return;
@@ -116,9 +136,10 @@ angular.module('drillApp')
 
       function setTurnDirection(direction) {
         dir = Direction.getDirection(direction);
+        console.log('dir', dir, Direction[dir]);
         ctrl.turnDirection = dir;
         ctrl.field.canvas.defaultCursor = 'url(/icons/' + Direction.getDirectionName(dir) + '.svg) 8 8, auto';
-        ctrl.activePathTool.setCurrentTurnDirection(Direction[dir]);
+        ctrl.activePathTool.setCurrentTurnDirection(dir);
       }
 
       function reset() {
@@ -133,7 +154,8 @@ angular.module('drillApp')
           }
 
           ctrl.activePathTool = new PathTool(ctrl.field, ctrl.memberSelection,
-            ctrl.turnMode, ctrl.strideType);
+            ctrl.turnMode, ctrl.strideType,
+            ctrl.allFiles, ctrl.fileOffset);
 
           eventService.notify(Events.updateField);
         }, 'drawPathsTool.createPathTool', getContextInfo());

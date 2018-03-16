@@ -23,7 +23,7 @@ class GuidePath {
         this.startCount = file.leader.member.currentState.count;
 
         this.onMouseMoveHandler = this.onMouseMove.bind(this);
-        this.field.canvas.on('mouse:move', this.onMouseMoveHandler);
+        // this.field.canvas.on('mouse:move', this.onMouseMoveHandler);
     }
 
     setCurrentTurnDirection(dir) {
@@ -334,9 +334,9 @@ this.shiftKey = evt.e.shiftKey;
 
         this.guidelineLabel = new fabric.Text(formatSteps(steps), {
             left: to.x + 10,
-            top: to.y + 10,
-            fontSize: 20,
-            stroke: 'black',
+            top: to.y + 0,
+            fontSize: 16,
+            stroke: 'white',
 //            fontWeight: 'bold',
 //            lineHeight: 1,
             selectable: false,
@@ -346,7 +346,6 @@ this.shiftKey = evt.e.shiftKey;
         this.field.canvas.add(this.guideline);
         this.field.canvas.add(this.guidelineLabel);
         this.bringTurnMarkersToFront();
-        this.field.update();
     }
 
     setGuidelineLabel(text) {
@@ -378,7 +377,6 @@ this.shiftKey = evt.e.shiftKey;
 
     destroyGuideline() {
         if (!this.guideline) return;
-
         this.field.canvas.remove(this.guidelineLabel);
         this.field.canvas.remove(this.guideline);
         this.guideline = null;
