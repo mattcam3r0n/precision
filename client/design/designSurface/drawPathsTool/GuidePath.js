@@ -261,10 +261,6 @@ this.shiftKey = evt.e.shiftKey;
 //            snappedPoint.steps = this.calculateStepsFromPreviousPoint(snappedPoint);
             this.createGuideline(this.lastPoint, snappedPoint);
 
-            // if (this.onGuideLineCreated) {
-            //     this.onGuideLineCreated(this, snappedPoint);
-            // }
-
             if (this.currentDir == Direction.CM) {
                 if (this.isLeftTurn(snappedPoint)) {
                     this.field.canvas.defaultCursor = 'url(/icons/CM-left.svg) 8 8, auto';
@@ -337,9 +333,9 @@ this.shiftKey = evt.e.shiftKey;
 
         this.guidelineLabel = new fabric.Text(formatSteps(steps), {
             left: to.x + 10,
-            top: to.y + 10,
-            fontSize: 20,
-            stroke: 'black',
+            top: to.y + 0,
+            fontSize: 16,
+            stroke: 'white',
 //            fontWeight: 'bold',
 //            lineHeight: 1,
             selectable: false,
@@ -349,9 +345,6 @@ this.shiftKey = evt.e.shiftKey;
         this.field.canvas.add(this.guideline);
         this.field.canvas.add(this.guidelineLabel);
         this.bringTurnMarkersToFront();
-        // this.field.update();
-
-        console.log('guidepath create', from, to);
     }
 
     setGuidelineLabel(text) {
@@ -383,7 +376,6 @@ this.shiftKey = evt.e.shiftKey;
 
     destroyGuideline() {
         if (!this.guideline) return;
-console.log('destroyGuideline');
         this.field.canvas.remove(this.guidelineLabel);
         this.field.canvas.remove(this.guideline);
         this.guideline = null;
