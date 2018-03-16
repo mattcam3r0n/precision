@@ -127,12 +127,9 @@ class PathTool {
             y: evt.e.layerY,
         });
         const activeGuidePath = this.findGuidePath(adjustedPoint);
-        console.log('pathTool mousemove', activeGuidePath);
 
         // if not gp, clear guildelines and exit
         if (!activeGuidePath) {
-            // console.log('null gp');
-            // this.destroyGuidePaths();
             this.destroyGuideLines();
             return;
         }
@@ -257,7 +254,6 @@ class PathTool {
 
     addTurnMarker(turnDirection, stepPoint) {
         let guidePath = this.findGuidePath(stepPoint);
-console.log('turnDir', turnDirection);
         // don't allow turn to be added if not on a guidepath
         if (!guidePath) return;
 
@@ -276,7 +272,6 @@ console.log('turnDir', turnDirection);
     }
 
     addAllFileTurnMarkers(turnDirection, adjustedPoint) {
-        console.log('addAllFileTurnMarkers');
         const points = this.calculateAllFileTurnPoints(adjustedPoint);
         points.forEach((p) => this.addTurnMarker(turnDirection, p));
     }

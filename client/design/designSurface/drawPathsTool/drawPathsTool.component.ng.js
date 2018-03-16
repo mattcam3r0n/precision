@@ -102,7 +102,7 @@ angular.module('drillApp')
           createPathTool();
 
           ctrl.field.disablePositionIndicator();
-          setTurnDirection(Direction.E);
+          setTurnDirection(ctrl.turnDirection || Direction.E);
           // ctrl.field.canvas.on('mouse:up', onMouseUp);
           ctrl.subscriptions.subscribe(Events.deleteTurn, onBackspacePressed);
           ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
@@ -136,7 +136,6 @@ angular.module('drillApp')
 
       function setTurnDirection(direction) {
         dir = Direction.getDirection(direction);
-        console.log('dir', dir, Direction[dir]);
         ctrl.turnDirection = dir;
         ctrl.field.canvas.defaultCursor = 'url(/icons/' + Direction.getDirectionName(dir) + '.svg) 8 8, auto';
         ctrl.activePathTool.setCurrentTurnDirection(dir);
