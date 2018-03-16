@@ -126,18 +126,20 @@ angular.module('drillApp')
         blurActiveElement();
       };
 
-      ctrl.pageForward = function() {
-        ctrl.timeline.pageForward();
-        blurActiveElement();
-      };
+      // ctrl.pageForward = function() {
+      //   ctrl.timeline.pageForward();
+      //   blurActiveElement();
+      // };
 
-      ctrl.pageBackward = function() {
-        ctrl.timeline.pageBackward();
-        blurActiveElement();
-      };
+      // ctrl.pageBackward = function() {
+      //   console.log('pageBack');
+      //   ctrl.timeline.pageBackward();
+      //   blurActiveElement();
+      // };
 
       function blurActiveElement() {
         if (document.activeElement) {
+          console.log(document.activeElement);
           document.activeElement.blur();
         }
       }
