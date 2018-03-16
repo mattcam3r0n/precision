@@ -1,2 +1,35 @@
 <header></header>
-<div class="help container">This is the {{ viewName }} view</div>
+<div class="help">
+    <p>Press a key combination:</p>
+    <table>
+        <tr>
+            <td>Key</td>
+            <td>{{ keyPressInfo.key }}</td>
+        </tr>
+        <tr>
+            <td>Code</td>
+            <td>{{ keyPressInfo.code }}</td>
+        </tr>
+        <tr>
+            <td>Alt Key</td>
+            <td>{{ keyPressInfo.altKey }}</td>
+        </tr>
+        <tr>
+            <td>Ctrl Key</td>
+            <td>{{ keyPressInfo.ctrlKey }}</td>
+        </tr>
+        <tr>
+            <td>Meta Key</td>
+            <td>{{ keyPressInfo.metaKey }}</td>
+        </tr>
+        <tr>
+            <td>Shift Key</td>
+            <td>{{ keyPressInfo.shiftKey }}</td>
+        </tr>
+        <tr>
+            <td>Type</td>
+            <td>{{ keyPressInfo.type }}</td>
+        </tr>
+    </table>
+
+</div>
