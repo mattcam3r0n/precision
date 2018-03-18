@@ -95,6 +95,7 @@ angular.module('drillApp')
 
       function onGoToCount(count) {
         drillEditorService.goToCount(count);
+        $scope.$apply();
       }
 
       function onDrillStateChanged(evt, args) {
