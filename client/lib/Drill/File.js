@@ -1,4 +1,4 @@
-import MemberPositionCalculator from "./MemberPositionCalculator";
+import MemberPositionCalculator from './MemberPositionCalculator';
 
 
 class File {
@@ -9,16 +9,16 @@ class File {
     }
 
     initMembers(leader) {
-        var m = leader.followedBy;
-        while(m){
+        let m = leader.followedBy;
+        while (m) {
             this.fileMembers.push(m);
             m = m.followedBy;
         }
     }
 
     addStep(step) {
-        var lastStep = step;
-        this.fileMembers.forEach(m => {
+        let lastStep = step;
+        this.fileMembers.forEach((m) => {
             lastStep = m.addStep(lastStep);
         });
     }
@@ -31,22 +31,26 @@ class File {
         //     };
         // });
 
-        var points = [];
-        for(let i = this.fileMembers.length - 1; i > 0; i--) {
+        let points = [];
+        for (let i = this.fileMembers.length - 1; i > 0; i--) {
             let fm = this.fileMembers[i];
             let pos = fm.member.currentState;
             let leaderPos = fm.following.member.currentState;
             let retries = 0;
-            while(!MemberPositionCalculator.arePositionsSame(pos, leaderPos) && retries < 8) {
-                let p = { x: pos.x, y: pos.y };             
+            while (!MemberPositionCalculator.arePositionsSame(pos, leaderPos)
+                    && retries < 8) {
+                let p = { x: pos.x, y: pos.y };
                 points.unshift(p);
-                pos = MemberPositionCalculator.stepForward(fm.member, pos, 1);   
+                pos = MemberPositionCalculator.stepForward(fm.member, pos, 1);
                 retries++;
             }
         }
-        points.unshift({ x: this.leader.member.currentState.x, y: this.leader.member.currentState.y });
-        
-        return points; 
+        points.unshift({
+            x: this.leader.member.currentState.x,
+            y: this.leader.member.currentState.y,
+        });
+
+        return points;
     }
 
 }

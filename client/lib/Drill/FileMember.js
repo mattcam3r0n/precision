@@ -30,33 +30,35 @@ class FileMember {
     }
 
     getStepsToLeader() {
-        var me = this.member;
-        if (!this.following) 
+        let me = this.member;
+        if (!this.following) {
             return 0;
-        var leader = this.following.member;
-        var leaderPos = Object.assign({}, leader.currentState); // important! use copy of current state
-        var myPos = me.currentState;
-        var steps = 0;
-        while (!this.arePositionsEqual(myPos, leaderPos)){
-            myPos = MemberPositionCalculator.stepForward(me, myPos); 
+        }
+        let leader = this.following.member;
+        let leaderPos = Object.assign({}, leader.currentState); // important! use copy of current state
+        let myPos = me.currentState;
+        let steps = 0;
+        while (!this.arePositionsEqual(myPos, leaderPos)) {
+            myPos = MemberPositionCalculator.stepForward(me, myPos);
             steps++;
-            if (steps > 6)
+            if (steps > 6) {
                 return null;
-        }            
+            }
+        }
 
         return steps;
     }
 
     interpolateStepsToLeader() {
+        let queue = [];
+        let leader = this.following.member;
+        let deltaX = this.member.currentState.x - leader.currentState.x;
+        let deltaY = this.member.currentState.y - leader.currentState.y;
+        let steps = Math.abs(deltaX || deltaY);
 
-        var queue = []
-        var leader = this.following.member;
-        var deltaX = this.member.currentState.x - leader.currentState.x;
-        var deltaY = this.member.currentState.y - leader.currentState.y;
-        var steps = Math.abs(deltaX || deltaY);
-
-        for (var i = 0; i < steps; i++) {
-            let step = StepFactory.createStep(leader.currentState.strideType, StepType.Full, leader.currentState.direction);
+        for (let i = 0; i < steps; i++) {
+            let step = StepFactory.createStep(leader.currentState.strideType,
+                StepType.Full, leader.currentState.direction);
             queue.push(step);
         }
         return queue;
@@ -68,7 +70,7 @@ class FileMember {
             && p1.direction == p2.direction
         );
     }
-    
+
 }
 
 export default FileMember;

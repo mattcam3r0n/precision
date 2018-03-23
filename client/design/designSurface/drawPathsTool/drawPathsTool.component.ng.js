@@ -227,7 +227,6 @@ angular.module('drillApp')
           document.activeElement.blur();
         }
       }
-
     },
   });
 
