@@ -279,6 +279,7 @@ angular.module('drillApp')
         let labelOptions = {
           fontSize: 20,
           fontWeight: 'bold',
+          fill: 'white',
           lineHeight: 1,
           selectable: false,
           evented: false,
