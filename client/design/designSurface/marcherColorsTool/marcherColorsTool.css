@@ -6,8 +6,16 @@
    top: 100px;
 }
 
+.twirler-color {
+    color: lightblue;
+}
+
+.flag-color {
+    color: orchid;
+}
+
 .flute-color {
-    color: lightpink;
+    color: pink;
 }
 
 .clarinet-color {
@@ -19,7 +27,7 @@
 }
 
 .saxophone-color {
-    color: green;
+    color: lightgreen;
 }
 
 .trumpet-color {
@@ -32,6 +40,10 @@
 
 .trombone-color {
     color: red;
+}
+
+.baritone-color {
+    color: purple;
 }
 
 .tuba-color {
