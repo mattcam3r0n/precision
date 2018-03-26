@@ -145,11 +145,11 @@ class DrillBuilder {
         members.forEach((m) => {
             let currentDir = m.currentState.direction;
             let firstTurnDirection = isLeftTurn
-                ? Direction.leftTurnDirection(currentDir)
-                : Direction.rightTurnDirection(currentDir);
+                ? Direction.leftOf(currentDir)
+                : Direction.rightOf(currentDir);
             let secondTurnDirection = isLeftTurn
-                ? Direction.leftTurnDirection(firstTurnDirection)
-                : Direction.rightTurnDirection(firstTurnDirection);
+                ? Direction.leftOf(firstTurnDirection)
+                : Direction.rightOf(firstTurnDirection);
 
             let firstTurn = new Action({
                 strideType: m.currentState.strideType,
@@ -177,9 +177,9 @@ class DrillBuilder {
         let secondTurnCount = this.drill.count + 3 + (extraStep ? 1 : 0);
         members.forEach((m) => {
             let currentDir = m.currentState.direction;
-            let firstTurnDirection = Direction.leftTurnDirection(currentDir);
+            let firstTurnDirection = Direction.leftOf(currentDir);
             let secondTurnDirection = Direction
-                .leftTurnDirection(firstTurnDirection);
+                .leftOf(firstTurnDirection);
 
             let firstTurn = new Action({
                 strideType: m.currentState.strideType,
@@ -207,9 +207,9 @@ class DrillBuilder {
         let secondTurnCount = this.drill.count + 3 + (extraStep ? 1 : 0);
         members.forEach((m) => {
             let currentDir = m.currentState.direction;
-            let firstTurnDirection = Direction.rightTurnDirection(currentDir);
+            let firstTurnDirection = Direction.rightOf(currentDir);
             let secondTurnDirection = Direction
-                .rightTurnDirection(firstTurnDirection);
+                .rightOf(firstTurnDirection);
 
             let firstTurn = new Action({
                 strideType: m.currentState.strideType,
@@ -233,7 +233,7 @@ class DrillBuilder {
         members = members || this.getSelectedMembers();
         members.forEach((m) => {
             let currentDir = m.currentState.direction;
-            let firstStepDirection = Direction.leftTurnDirection(currentDir);
+            let firstStepDirection = Direction.leftOf(currentDir);
 
             let firstStep = new Action({
                 strideType: m.currentState.strideType,
@@ -265,7 +265,7 @@ class DrillBuilder {
         members = members || this.getSelectedMembers();
         members.forEach((m) => {
             let currentDir = m.currentState.direction;
-            let firstStepDirection = Direction.rightTurnDirection(currentDir);
+            let firstStepDirection = Direction.rightOf(currentDir);
 
             let firstStep = new Action({
                 strideType: m.currentState.strideType,

@@ -25,7 +25,6 @@ accounts-password@1.4.0
 dotansimha:accounts-ui-angular
 accounts-facebook@1.2.1
 accounts-google@1.2.0
-practicalmeteor:mocha
 http@1.2.12
 accounts-base@1.3.4
 angular-meteor-auth
@@ -38,3 +37,5 @@ email
 momentjs:moment
 alanning:roles
 meteorhacks:ssr
+meteortesting:mocha
+practicalmeteor:chai

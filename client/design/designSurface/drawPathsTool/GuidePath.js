@@ -116,11 +116,11 @@ class GuidePath {
 
         let currentDir = this.lastPoint.direction;
         let firstTurnDirection = isLeftTurn
-            ? Direction.leftTurnDirection(currentDir)
-            : Direction.rightTurnDirection(currentDir);
+            ? Direction.leftOf(currentDir)
+            : Direction.rightOf(currentDir);
         let secondTurnDirection = isLeftTurn
-            ? Direction.leftTurnDirection(firstTurnDirection)
-            : Direction.rightTurnDirection(firstTurnDirection);
+            ? Direction.leftOf(firstTurnDirection)
+            : Direction.rightOf(firstTurnDirection);
         let firstDelta = StepDelta.getDelta(this.strideType,
             StepType.Half, firstTurnDirection, 2);
 

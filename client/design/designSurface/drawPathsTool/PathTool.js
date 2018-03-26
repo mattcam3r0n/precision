@@ -1,5 +1,6 @@
 import PathUtils from './PathUtils';
 import StepType from '/client/lib/StepType';
+import StepDelta from '/client/lib/StepDelta';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import { FieldPoint, StepPoint } from '/client/lib/Point';
 import SelectionBox from './SelectionBox';
@@ -11,11 +12,12 @@ import ExceptionHelper from '/client/lib/ExceptionHelper';
 
 class PathTool {
     constructor(field, memberSelection, turnMode, strideType,
-        allFiles, fileOffset) {
+        allFiles, fileOffset, rankOffset) {
         this.turnMode = turnMode || 'block'; // file | block | rank
         this.strideType = strideType;
         this.allFiles = allFiles || false;
         this.fileOffset = fileOffset || 0;
+        this.rankOffset = rankOffset || 2;
         this.field = field;
         this.memberSelection = memberSelection;
         this.selectionBox = null;
@@ -135,19 +137,6 @@ class PathTool {
         }
 
         if (this.allFiles) {
-            // let i = 0;
-            // const stepSize = FieldDimensions.getStepSize(this.strideType);
-            // this.guidePaths
-            //     .forEach((gp) => {
-            //         const offsetPoint = {
-            //             x: adjustedPoint.x + (i * this.fileOffset * stepSize.x),
-            //             y: adjustedPoint.y + (i * this.fileOffset * stepSize.y),
-            //         };
-            //         const snappedPoint = PathUtils.snapPoint(this.strideType,
-            //             gp.lastPoint, offsetPoint);
-            //         gp.createGuideline(gp.lastPoint, snappedPoint);
-            //         i += 1;
-            //     });
             this.createAllFileGuidelines(adjustedPoint);
         } else {
             const snappedPoint = PathUtils.snapPoint(this.strideType,
@@ -192,6 +181,18 @@ class PathTool {
                     gp.lastPoint, offsetPoint);
                 return snappedPoint;
             });
+    }
+
+    offsetPoint(point, dir, steps) {
+        if (steps == 0) return point;
+        const delta = StepDelta.getDelta(this.strideType,
+            StepType.Full, dir, steps);
+    console.log(delta);
+        return {
+            x: point.x + delta.deltaX,
+            y: point.y + delta.deltaY,
+            direction: point.direction,
+        };
     }
 
     createAllFileGuidelines(adjustedPoint) {
@@ -314,14 +315,22 @@ class PathTool {
         this.guidePaths.forEach((gp) => {
             if (gp.points.length > 1) {
                 // for each file member
-                gp.file.fileMembers.forEach((fm) => {
+                gp.file.fileMembers.forEach((fm, i) => {
                     let action = new Action(gp.initialPoint);
                     ScriptBuilder.addActionAtPoint(fm.member, action,
                         gp.initialPoint);
                     // for each point in guide path
-                    gp.points.slice(1).forEach((p) => { // skip first point, since it is current position
-                        let action = new Action(p);
-                        ScriptBuilder.addActionAtPoint(fm.member, action, p);
+                    gp.points.slice(1).forEach((p, j) => { // skip first point, since it is current position
+                        let point = p;
+                        if (this.allFiles) {
+                            console.log(gp.points, i);
+                            point = this.offsetPoint(p, gp.points[j].direction,
+                                i * this.rankOffset);
+                            console.log('offsetPoint', point);
+                        }
+                        let action = new Action(point);
+                        ScriptBuilder.addActionAtPoint(fm.member, action,
+                            point);
                     });
                 });
             }

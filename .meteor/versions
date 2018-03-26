@@ -71,6 +71,8 @@ logging@1.1.19
 meteor@1.7.2
 meteor-base@1.1.0
 meteorhacks:ssr@2.2.0
+meteortesting:browser-tests@0.1.2
+meteortesting:mocha@0.5.0
 minifier-css@1.2.16
 minifier-js@2.1.4
 minimongo@1.3.3
@@ -91,10 +93,7 @@ oleh:bootstrap-switch@3.3.2
 ordered-dict@1.0.9
 pbastowski:angular-babel@1.3.7
 practicalmeteor:chai@2.1.0_1
-practicalmeteor:loglevel@1.2.0_2
-practicalmeteor:mocha@2.4.5_6
 practicalmeteor:mocha-core@1.0.1
-practicalmeteor:sinon@1.14.1_2
 promise@0.9.0
 random@1.0.10
 rate-limit@1.0.8
@@ -119,7 +118,6 @@ templating-tools@1.1.2
 themeteorchef:bert@2.1.3
 tmeasday:check-npm-versions@0.3.1
 tmeasday:publish-counts@0.8.0
-tmeasday:test-reporter-helpers@0.2.1
 tracker@1.1.3
 twbs:bootstrap@3.3.6
 ui@1.0.13

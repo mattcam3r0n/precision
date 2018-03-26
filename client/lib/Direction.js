@@ -88,12 +88,12 @@ class Direction {
         return this.getLineDirection(from, to) === dir;
     }
 
-    static leftTurnDirection(from) {
+    static leftOf(from) {
         let newDir = from - 90;
         return newDir < 0 ? 360 + newDir : newDir;
     }
 
-    static rightTurnDirection(from) {
+    static rightOf(from) {
         let newDir = (from + 90);
         return newDir >= 360 ? newDir - 360 : newDir;
     }
