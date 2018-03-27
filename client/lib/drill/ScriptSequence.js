@@ -15,6 +15,14 @@ export default class ScriptSequence {
         return this.sequence;
     }
 
+    get length() {
+        return this.sequence.length;
+    }
+
+    clone() {
+        return new ScriptSequence(this.sequence);
+    }
+
     /**
      * Add a sequence of steps.
      * @param {Array} sequence The sequence of actions to add.
@@ -28,8 +36,25 @@ export default class ScriptSequence {
         this.sequence.splice(count - 1, 0, ...sequence);
     }
 
-    addNull() {
-        this.sequence.push(null);
+    addNull(counts) {
+        counts = counts || 1;
+        for (let i = 0; i < counts; i++) {
+            this.sequence.push(null);
+        }
+    }
+
+    insertNull(counts, at) {
+        at = at || 0;
+        counts = counts || 0;
+        for (let i = 0; i < counts; i++) {
+            this.sequence.splice(at, 0, null);
+        }
+    }
+
+    deleteCount(counts, at) {
+        at = at || 0;
+        counts = counts || 0;
+        this.sequence.splice(at, counts);
     }
 
     /**

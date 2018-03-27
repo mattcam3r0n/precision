@@ -6,6 +6,7 @@ import { StepPoint } from '/client/lib/Point';
 import TurnMarker from '../field/TurnMarker';
 import CounterMarch from '../field/CounterMarch';
 import PathUtils from './PathUtils';
+import ScriptSequence from '/client/lib/drill/ScriptSequence';
 
 class GuidePath {
     constructor(field, file, initialPoint, strideType) {
@@ -90,6 +91,18 @@ class GuidePath {
         marker.set('left', fieldPoint.x);
         marker.set('top', fieldPoint.y);
         marker.setCoords();
+    }
+
+    getScriptSequence() {
+        const seq = new ScriptSequence();
+        this.points.forEach((p, i) => {
+            const countsToSkip = p.stepsFromPrevious - 1 || 0;
+            if (countsToSkip) {
+                seq.addNull(countsToSkip);
+            }
+            seq.addStep(p);
+        });
+        return seq;
     }
 
     add(point) {

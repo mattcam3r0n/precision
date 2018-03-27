@@ -74,6 +74,10 @@ class ScriptBuilder {
         return false;
     }
 
+    static insertSequence(member, sequence, count) {
+        member.script.splice(count - 1, sequence.length, ...sequence);
+    }
+
     static deleteActionAtCount(member, count) {
         member.script[count - 1] = null;
     }

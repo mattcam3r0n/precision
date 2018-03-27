@@ -17,7 +17,7 @@ class PathTool {
         this.strideType = strideType;
         this.allFiles = allFiles || false;
         this.fileOffset = fileOffset || 0;
-        this.rankOffset = rankOffset || 2;
+        this.rankOffset = rankOffset || 0;
         this.field = field;
         this.memberSelection = memberSelection;
         this.selectionBox = null;
@@ -72,6 +72,10 @@ class PathTool {
 
     setFileOffset(offset) {
         this.fileOffset = offset;
+    }
+
+    setRankOffset(offset) {
+        this.rankOffset = offset;
     }
 
     createGuides() {
@@ -187,7 +191,6 @@ class PathTool {
         if (steps == 0) return point;
         const delta = StepDelta.getDelta(this.strideType,
             StepType.Full, dir, steps);
-    console.log(delta);
         return {
             x: point.x + delta.deltaX,
             y: point.y + delta.deltaY,
@@ -312,28 +315,31 @@ class PathTool {
     }
 
     saveFileMode() {
+        // for each guidepath
+        //      const gpSeq = gp.getScriptSequence();
+        //      for each gp.fileMember
+        //          clone sequence
+        //          if allFiles && rankOffset
+        //              insert rank delay... rank * rankOffset
+        //          ftlOffset += getStepsToLeader;
+        //          insert FTL offset...
         this.guidePaths.forEach((gp) => {
-            if (gp.points.length > 1) {
-                // for each file member
-                gp.file.fileMembers.forEach((fm, i) => {
-                    let action = new Action(gp.initialPoint);
-                    ScriptBuilder.addActionAtPoint(fm.member, action,
-                        gp.initialPoint);
-                    // for each point in guide path
-                    gp.points.slice(1).forEach((p, j) => { // skip first point, since it is current position
-                        let point = p;
-                        if (this.allFiles) {
-                            console.log(gp.points, i);
-                            point = this.offsetPoint(p, gp.points[j].direction,
-                                i * this.rankOffset);
-                            console.log('offsetPoint', point);
-                        }
-                        let action = new Action(point);
-                        ScriptBuilder.addActionAtPoint(fm.member, action,
-                            point);
-                    });
-                });
-            }
+            const gpSeq = gp.getScriptSequence();
+            let ftlOffset = 0;
+            gp.file.fileMembers.forEach((fm, rank) => {
+                const seq = gpSeq.clone();
+                ftlOffset += fm.getStepsToLeader();
+                seq.insertNull(ftlOffset, 1);
+                if (this.allFiles && this.rankOffset) {
+                    if (this.rankOffset < 0) {
+                        seq.deleteCount(Math.abs(rank * this.rankOffset));
+                    } else {
+                        seq.insertNull(rank * this.rankOffset, 1);
+                    }
+                }
+                ScriptBuilder.insertSequence(fm.member, seq.getSequence(),
+                    gp.startCount + 1);
+            });
         });
     }
 

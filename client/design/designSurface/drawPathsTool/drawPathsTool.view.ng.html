@@ -59,13 +59,20 @@
                 <button ng-click="reset()" class="btn btn-default btn-sm">Reset</button>
             </li> -->
             <li ng-show="$ctrl.turnMode == 'file'">
-                <label><input type="checkbox" ng-model="$ctrl.allFiles" ng-change="$ctrl.setAllFiles()"/> All Files</label>
+                <label>
+                    <input type="checkbox" ng-model="$ctrl.allFiles" ng-change="$ctrl.setAllFiles()" /> All Files</label>
             </li>
             <li class="fileOffset" ng-show="$ctrl.turnMode == 'file'">
                 <div>File Offset</div>
                 <button ng-disabled="!$ctrl.allFiles" ng-click="$ctrl.decrementFileOffset()" class="btn btn-default">-</button>
-                <input  ng-disabled="!$ctrl.allFiles" type="number" ng-model="$ctrl.fileOffset" ng-change="$ctrl.setFileOffset()"/>
-                <button  ng-disabled="!$ctrl.allFiles" ng-click="$ctrl.incrementFileOffset()" class="btn btn-default">+</button>
+                <input ng-disabled="!$ctrl.allFiles" type="number" ng-model="$ctrl.fileOffset" ng-change="$ctrl.setFileOffset()" />
+                <button ng-disabled="!$ctrl.allFiles" ng-click="$ctrl.incrementFileOffset()" class="btn btn-default">+</button>
+            </li>
+            <li class="rankOffset" ng-show="$ctrl.turnMode == 'file'">
+                <div>Rank Offset</div>
+                <button ng-disabled="!$ctrl.allFiles" ng-click="$ctrl.decrementRankOffset()" class="btn btn-default">-</button>
+                <input ng-disabled="!$ctrl.allFiles" type="number" ng-model="$ctrl.rankOffset" ng-change="$ctrl.setRankOffset()" />
+                <button ng-disabled="!$ctrl.allFiles" ng-click="$ctrl.incrementRankOffset()" class="btn btn-default">+</button>
             </li>
             <li>
                 <button ng-click="save()" id="savePaths" class="btn btn-default save-button" data-toggle="tooltip" data-placement="right"

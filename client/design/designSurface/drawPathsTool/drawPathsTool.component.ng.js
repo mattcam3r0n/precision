@@ -20,6 +20,7 @@ angular.module('drillApp')
         ctrl.turnMode = 'block';
         ctrl.toolDiv = angular.element('.draw-paths-tool')[0];
         ctrl.fileOffset = 0;
+        ctrl.rankOffset = 0;
         ctrl.allFiles = false;
 
         ctrl.subscriptions.subscribe(Events.drawPathsToolActivated, () => {
@@ -75,7 +76,6 @@ angular.module('drillApp')
 
       ctrl.setFileOffset = function() {
         ctrl.activePathTool.setFileOffset(ctrl.fileOffset);
-        blurActiveElement();
       };
 
       ctrl.decrementFileOffset = function() {
@@ -86,6 +86,20 @@ angular.module('drillApp')
       ctrl.incrementFileOffset = function() {
         ctrl.fileOffset++;
         ctrl.activePathTool.setFileOffset(ctrl.fileOffset);
+      };
+
+      ctrl.setRankOffset = function() {
+        ctrl.activePathTool.setRankOffset(ctrl.rankOffset);
+      };
+
+      ctrl.decrementRankOffset = function() {
+        ctrl.rankOffset--;
+        ctrl.activePathTool.setRankOffset(ctrl.rankOffset);
+      };
+
+      ctrl.incrementRankOffset = function() {
+        ctrl.rankOffset++;
+        ctrl.activePathTool.setRankOffset(ctrl.rankOffset);
       };
 
       function activate(memberSelection) {
@@ -223,7 +237,6 @@ angular.module('drillApp')
 
       function blurActiveElement() {
         if (document.activeElement) {
-          console.log(document.activeElement);
           document.activeElement.blur();
         }
       }

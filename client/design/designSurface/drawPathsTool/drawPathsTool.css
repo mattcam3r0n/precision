@@ -49,6 +49,24 @@
     text-align: center;
 }
 
+.draw-paths-tool li.rankOffset div {
+    flex: 1 1 auto;
+    padding-top: 0px;
+    width: 100px;
+}
+
+.draw-paths-tool li.rankOffset button {
+    flex: 1 1 20%;
+    width: 15px;
+}
+
+.draw-paths-tool li.rankOffset input {
+    flex: 1 1 60%;
+    width: 20px;
+    color: black;
+    text-align: center;
+}
+
 .draw-paths-tool li div.placeholder {
     flex: 1 1 33%;
     border-radius: 0;
