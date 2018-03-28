@@ -73,6 +73,15 @@ class GuidePath {
             p2.x = p2.x + delta.deltaX;
             p2.y = p2.y + delta.deltaY;
 
+            // update steps from previous point
+            let prevPoint = this.findPrecedingPoint(p2);
+            const steps = StepDelta.getStepsBetweenPoints(
+                this.strideType || StrideType.SixToFive,
+                prevPoint.stepType || StepType.Full,
+                prevPoint.direction, p2, prevPoint);
+            p2.steps = steps;
+            p2.stepsFromPrevious = steps;
+
             let newFp = new StepPoint(p2.strideType, p2.x, p2.y).toFieldPoint();
             this.setMarkerPoint(p2.turnMarker, newFp);
         }
@@ -108,7 +117,7 @@ class GuidePath {
     add(point) {
         let snappedPoint = PathUtils.snapPoint(this.strideType,
             this.lastPoint, point);
-        if (snappedPoint.direction === Direction.CM) {
+        if (this.isCountermarch(snappedPoint.direction)) {
             this.addCountermarch(snappedPoint);
             return;
         }
@@ -119,21 +128,24 @@ class GuidePath {
         this.createGuidePathLine();
     }
 
+    isCountermarch(dir) {
+        return dir == Direction.LCM || dir == Direction.RCM;
+    }
+
     isLeftTurn(stepPoint) {
         return this.getEndCount(stepPoint) % 2 == 0 ? true : false;
     }
 
     addCountermarch(point) {
-        let stepPoint = new StepPoint(point.strideType, point.x, point.y);
-        let isLeftTurn = this.isLeftTurn(stepPoint);
+        if (point.direction == Direction.LCM) {
+            this.addLeftCountermarch(point);
+        } else {
+            this.addRightCountermarch(point);
+        }
+    }
 
-        let currentDir = this.lastPoint.direction;
-        let firstTurnDirection = isLeftTurn
-            ? Direction.leftOf(currentDir)
-            : Direction.rightOf(currentDir);
-        let secondTurnDirection = isLeftTurn
-            ? Direction.leftOf(firstTurnDirection)
-            : Direction.rightOf(firstTurnDirection);
+    addCountermarchPoints(stepPoint, currentDir,
+        isLeftTurn, firstTurnDirection, secondTurnDirection) {
         let firstDelta = StepDelta.getDelta(this.strideType,
             StepType.Half, firstTurnDirection, 2);
 
@@ -155,8 +167,6 @@ class GuidePath {
         point1.stepsFromPrevious = this.calculateStepsFromPreviousPoint(point1);
         this.points.push(point1);
 
-//        let secondDelta = StepDelta.getDelta(this.strideType, StepType.Full, secondTurnDirection, 1);
-
         let point2 = {
             x: stepPoint.x + firstDelta.deltaX,
             y: stepPoint.y + firstDelta.deltaY,
@@ -172,10 +182,28 @@ class GuidePath {
         tm.point2 = point2;
 
         tm.on('moving', (evt) => {
-            this.onMoveTurnMarker(evt, this.field, this, point, tm);
+            this.onMoveTurnMarker(evt, this.field, this, stepPoint, tm);
         });
 
         this.createGuidePathLine();
+    }
+
+    addLeftCountermarch(point) {
+        let stepPoint = new StepPoint(point.strideType, point.x, point.y);
+        let currentDir = this.lastPoint.direction;
+        let firstTurnDirection = Direction.leftOf(currentDir);
+        let secondTurnDirection = Direction.leftOf(firstTurnDirection);
+        this.addCountermarchPoints(stepPoint, currentDir,
+            true, firstTurnDirection, secondTurnDirection);
+    }
+
+    addRightCountermarch(point) {
+        let stepPoint = new StepPoint(point.strideType, point.x, point.y);
+        let currentDir = this.lastPoint.direction;
+        let firstTurnDirection = Direction.rightOf(currentDir);
+        let secondTurnDirection = Direction.rightOf(firstTurnDirection);
+        this.addCountermarchPoints(stepPoint, currentDir,
+            false, firstTurnDirection, secondTurnDirection);
     }
 
     calculateStepsFromPreviousPoint(point) {
@@ -259,9 +287,9 @@ class GuidePath {
         });
     }
 
-
+    // not used? deprecated? remove?
     onMouseMove(evt) {
-        if ( this.turnMarkerMoving) return;
+        if (this.turnMarkerMoving) return;
         let adjustedPoint = this.field.adjustMousePoint({
             x: evt.e.layerX,
             y: evt.e.layerY,
@@ -296,7 +324,6 @@ this.shiftKey = evt.e.shiftKey;
         let snappedPoint = PathUtils.snapPoint(this.strideType,
             precedingPoint, adjustedMousePoint);
         // let moveToStepPoint = new FieldPoint(adjustedMousePoint).toStepPoint(this.strideType);
-
         // this.setGuidelineLabel('foo');
         // this.createGuideline(precedingPoint, moveToStepPoint);
         this.createMoveStepsLabel(precedingPoint, snappedPoint);
@@ -373,7 +400,7 @@ this.shiftKey = evt.e.shiftKey;
             left: to.x + 10,
             top: to.y + 10,
             fontSize: 20,
-            stroke: 'black',
+            stroke: 'white',
 //            fontWeight: 'bold',
 //            lineHeight: 1,
             selectable: false,
@@ -386,14 +413,17 @@ this.shiftKey = evt.e.shiftKey;
     destroyMoveStepsLabel() {
         if (!this.moveStepsLabel) return;
         this.field.canvas.remove(this.moveStepsLabel);
+        this.moveStepsLabel = null;
     }
 
     destroyGuideline() {
+        this.destroyMoveStepsLabel();
         if (!this.guideline) return;
         this.field.canvas.remove(this.guidelineLabel);
         this.field.canvas.remove(this.guideline);
         this.guideline = null;
         this.guidelineLabel = null;
+
         this.field.update();
     }
 

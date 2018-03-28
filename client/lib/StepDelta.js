@@ -191,7 +191,9 @@ class StepDelta {
         const steps = Math.abs(stepSize.deltaX == 0
             ? distance / stepSize.deltaY
             : distance / stepSize.deltaX);
-        return stepType == StepType.Half ? steps * 2 : steps;
+// console.log('stepTYpe', stepType, 'steps', steps);
+        // return stepType == StepType.Half ? steps * 2 : steps;
+        return steps;
     }
 }
 

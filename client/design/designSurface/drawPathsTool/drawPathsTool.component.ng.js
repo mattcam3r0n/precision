@@ -1,7 +1,7 @@
 'use strict';
 
 import Events from '/client/lib/Events';
-import { FieldPoint } from '/client/lib/Point';
+// import { FieldPoint } from '/client/lib/Point';
 import Direction from '/client/lib/Direction';
 import PathTool from './PathTool';
 import ExceptionHelper from '/client/lib/ExceptionHelper';
@@ -139,7 +139,7 @@ angular.module('drillApp')
           ctrl.isActivated = false;
           ctrl.field.enablePositionIndicator();
           ctrl.field.canvas.selection = true;
-          ctrl.field.canvas.off('mouse:up', onMouseUp);
+          // ctrl.field.canvas.off('mouse:up', onMouseUp);
           ctrl.field.canvas.defaultCursor = 'default';
           destroyPathTool();
           eventService.notify(Events.updateField);
@@ -192,21 +192,6 @@ angular.module('drillApp')
 
         // removeTurnMarker(target);
         ctrl.activePathTool.removeTurnMarker(target);
-      }
-
-      function onMouseUp(evt) {
-        ExceptionHelper.handle(() => {
-          if (!evt.isClick) return;
-          if (evt.target !== null && !evt.target.isLogo) return; // clicked on an object
-          // have to adjust point for zoom
-          let adjustedPoint = ctrl.field.adjustMousePoint({
-            x: evt.e.layerX,
-            y: evt.e.layerY,
-          });
-          let stepPoint = new FieldPoint(adjustedPoint); // .toStepPoint(ctrl.strideType);
-          // add turn at step point
-          ctrl.activePathTool.addTurnMarker(ctrl.turnDirection, stepPoint);
-        }, 'drawPathsTool.onMouseUp', getContextInfo());
       }
 
       // function destroyGuidePaths() {

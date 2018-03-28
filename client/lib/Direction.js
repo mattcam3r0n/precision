@@ -1,5 +1,7 @@
 const directionNames = {
     '-1': 'CM',
+    '-2': 'LCM',
+    '-3': 'RCM',
     '0': 'N',
     '90': 'E',
     '180': 'S',
@@ -13,6 +15,14 @@ class Direction {
     // a special case for countermarch
     static get CM() {
         return -1;
+    }
+
+    static get LCM() {
+        return -2;
+    }
+
+    static get RCM() {
+        return -3;
     }
 
     static get N() {
