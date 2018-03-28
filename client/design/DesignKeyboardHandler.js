@@ -44,6 +44,14 @@ class DesignKeyboardHandler {
                 this.eventService.notify(Events.deleteTurn);
             },
 
+            'PageUp': (e) => {
+                this.drillEditorService.addStep({ direction: Direction.N });
+            },
+
+            'PageDown': (e) => {
+                this.drillEditorService.addStep({ direction: Direction.S });
+            },
+
             'ArrowUp': (e) => {
                 if (e.altKey) {
                     this.drillEditorService.addStep({ direction: Direction.N });
