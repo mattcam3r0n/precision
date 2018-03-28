@@ -329,12 +329,14 @@ class PathTool {
             gp.file.fileMembers.forEach((fm, rank) => {
                 const seq = gpSeq.clone();
                 ftlOffset += fm.getStepsToLeader();
-                seq.insertNull(ftlOffset, 1);
+                // inserting undefined will tell the member to continue
+                // doing whatever is currently in their script for those counts
+                seq.insertUndefined(ftlOffset, 1);
                 if (this.allFiles && this.rankOffset) {
                     if (this.rankOffset < 0) {
                         seq.deleteCount(Math.abs(rank * this.rankOffset));
                     } else {
-                        seq.insertNull(rank * this.rankOffset, 1);
+                        seq.insertUndefined(rank * this.rankOffset, 1);
                     }
                 }
                 ScriptBuilder.insertSequence(fm.member, seq.getSequence(),

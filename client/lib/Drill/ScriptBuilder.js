@@ -75,7 +75,15 @@ class ScriptBuilder {
     }
 
     static insertSequence(member, sequence, count) {
-        member.script.splice(count - 1, sequence.length, ...sequence);
+        // overwrite current script with sequence
+        // if undefined, leave original, otherwise replace
+        sequence.forEach((a, i) => {
+            let index = count - 1 + i;
+            if (a !== undefined) {
+                member.script[index] = a;
+            }
+        });
+        // member.script.splice(count - 1, sequence.length, ...sequence);
     }
 
     static deleteActionAtCount(member, count) {

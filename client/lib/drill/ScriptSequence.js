@@ -51,6 +51,21 @@ export default class ScriptSequence {
         }
     }
 
+    addUndefined(counts) {
+        counts = counts || 1;
+        for (let i = 0; i < counts; i++) {
+            this.sequence.push(undefined);
+        }
+    }
+
+    insertUndefined(counts, at) {
+        at = at || 0;
+        counts = counts || 0;
+        for (let i = 0; i < counts; i++) {
+            this.sequence.splice(at, 0, undefined);
+        }
+    }
+
     deleteCount(counts, at) {
         at = at || 0;
         counts = counts || 0;
