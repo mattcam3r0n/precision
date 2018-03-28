@@ -48,10 +48,10 @@
                 </button>
             </li>
             <li>
-                <button ng-click="setTurnDirection('LCM')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Left Countermarch">
+                <button ng-click="setTurnDirection('LCM')" id="" ng-class="{ 'active': isCurrentDirection('LCM') }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Left Countermarch">
                     <img class="left-countermarch" src="/icons/CM.svg" />
                 </button>
-                <button ng-click="setTurnDirection('RCM')" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Right Countermarch">
+                <button ng-click="setTurnDirection('RCM')" id="" ng-class="{ 'active': isCurrentDirection('RCM') }" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Right Countermarch">
                     <img class="right-countermarch" src="/icons/CM.svg" />
                 </button>
             </li>

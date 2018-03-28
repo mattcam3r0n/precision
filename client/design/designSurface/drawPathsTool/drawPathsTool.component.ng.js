@@ -172,7 +172,8 @@ angular.module('drillApp')
 
           ctrl.activePathTool = new PathTool(ctrl.field, ctrl.memberSelection,
             ctrl.turnMode, ctrl.strideType,
-            ctrl.allFiles, ctrl.fileOffset);
+            ctrl.allFiles, ctrl.fileOffset,
+            ctrl.rankOffset);
 
           eventService.notify(Events.updateField);
         }, 'drawPathsTool.createPathTool', getContextInfo());
