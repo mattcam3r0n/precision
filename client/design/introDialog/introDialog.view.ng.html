@@ -42,17 +42,39 @@
                                 <strong>Add Steps</strong> menu to make marchers change direction and perform other actions. Only
                                 the selected marchers will be affected. Remember,
                                 <i>a marcher will keep performaing their current action until you tell them to do something
-                                    different.</i>
+                                    different.
+                                </i>
                             </p>
                             <p>You can remove steps by using the
                                 <strong>Delete</strong> button.</p>
                         </div>
+                        <div ng-show="$ctrl.current.title == 'Clear Counts'">
+                            <p></p>
+                            <p>Use the
+                                <strong>Clear Counts</strong> button to remove an action at the current count.  The marcher will revert to the action
+                                at the previous count.  Actions at later counts will not be impacted.
+                            </p>
+                        </div>
+                        <div ng-show="$ctrl.current.title == 'Delete Counts'">
+                            <p></p>
+                            <p>Use the
+                                <strong>Delete Counts</strong> button to completely remove a count.  This will move all subsequent actions
+                                back a count.
+                            </p>
+                        </div>
+                        <div ng-show="$ctrl.current.title == 'Delete Forward'">
+                            <p></p>
+                            <p>Use the
+                                <strong>Delete Forward</strong> button to clear all actions from the current count until the end of the drill.
+                            </p>
+                        </div>
                         <div ng-show="$ctrl.current.title == 'Draw Paths'">
                             <p></p>
                             <p>Use the
-                                <strong>Paths</strong> menu to draw a path for marchers to follow. Select a direction to turn, move the mouse in front of a leader, and click on the field where
-                                you'd like them to turn. Then place the next turn and so on. You can click a turn marker to select it, drag it with the mouse to move it, or press the delete
-                                key to remove it.</p>
+                                <strong>Paths</strong> menu to draw a path for marchers to follow. Select a direction to turn, move
+                                the mouse in front of a leader, and click on the field where you'd like them to turn. Then
+                                place the next turn and so on. You can click a turn marker to select it, drag it with the
+                                mouse to move it, or press the delete key to remove it.</p>
                             <p>Click the green check mark to save the path.</p>
                         </div>
                         <div ng-show="$ctrl.current.title == 'Add Music'">

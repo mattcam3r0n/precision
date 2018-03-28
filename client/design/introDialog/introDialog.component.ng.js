@@ -33,6 +33,18 @@ angular.module('drillApp')
             img: '/intro/add-steps.gif',
           },
           {
+            title: 'Clear Counts',
+            video: '/intro/clear-count.webm',
+          },
+          {
+            title: 'Delete Counts',
+            video: '/intro/delete-count.webm',
+          },
+          {
+            title: 'Delete Forward',
+            video: '/intro/delete-forward.webm',
+          },
+          {
             title: 'Draw Paths',
             img: '/intro/paths-column.gif',
           },
