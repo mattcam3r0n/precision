@@ -5,7 +5,7 @@ angular.module('drillApp')
   $scope.viewName = 'Help';
   $window.addEventListener('keydown', (evt) => {
     evt.preventDefault();
-    console.log(evt);
+    // console.log(evt);
     $scope.keyPressInfo = evt;
     $scope.$apply();
   });
