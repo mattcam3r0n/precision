@@ -1,0 +1,44 @@
+<div draggable class="reverse-tool panel panel-default" ng-show="$ctrl.isActivated">
+    <div class="panel-heading text-center drag-handle">
+        <i class="fa fa-bars fa-sm drag-handle"></i> Reverse Steps
+    </div>
+    <div id="dragStepTool" class="">
+        <ul>
+            <li>
+                <span>Counts to Skip</span>
+                <div class="input-group counts">
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setCountsToSkip($ctrl.countsToSkip - 1)" class="btn btn-default" type="button">-</button>
+                    </span>
+                    <input ng-model="$ctrl.countsToSkip" ng-change="$ctrl.setCountsToSkip()" type="number" class="form-control" />
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setCountsToSkip($ctrl.countsToSkip + 1)" class="btn btn-default" type="button">+</button>
+                    </span>
+                </div>
+            </li>
+            <li>
+                <span>Counts to Reverse</span>
+                <div class="input-group counts">
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setCountsToReverse($ctrl.countsToReverse - 1)" class="btn btn-default" type="button">-</button>
+                    </span>
+                    <input ng-model="$ctrl.countsToReverse" ng-change="$ctrl.setCountsToReverse()" type="number" class="form-control" />
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setCountsToReverse($ctrl.countsToReverse + 1)" class="btn btn-default" type="button">+</button>
+                    </span>
+                </div>
+            </li>
+            <li>
+                <button ng-click="save()" id="saveDragStep" class="btn btn-default save-button" data-toggle="tooltip" data-placement="right"
+                    title="Save">
+                    <i class="fa fa-check context-button"></i>
+                </button>
+                <button ng-click="cancel()" id="cancelDragStep" class="btn btn-default cancel-button" data-toggle="tooltip" data-placement="right"
+                    title="Cancel">
+                    <i class="fa fa-times context-button"></i>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+</div>

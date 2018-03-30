@@ -76,16 +76,19 @@
                 </button>
             </li>
             <li>
-                <button ng-click="deleteCount()" id="" class="btn btn-default" data-toggle="tooltip"
-                    data-placement="bottom" title="Delete Count (backs up following actions by one count)">
+                <button ng-click="reverseSteps()" id="reverseStepsButton" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                    title="Reverse Steps Tool">
+                    R
+                </button>
+            </li>
+            <li>
+                <button ng-click="deleteCount()" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Delete Count (backs up following actions by one count)">
                     <i class="fa fa-arrow-circle-left context-button" style="color: red"></i>
                 </button>
-                <button ng-click="clearCount()" id="" class="btn btn-default" data-toggle="tooltip"
-                    data-placement="bottom" title="Clear Count (does not impact following actions)">
+                <button ng-click="clearCount()" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Clear Count (does not impact following actions)">
                     <i class="fa fa-times-circle context-button" style="color: red"></i>
                 </button>
-                <button ng-click="deleteForward()" id="" class="btn btn-default" data-toggle="tooltip"
-                    data-placement="bottom" title="Delete Forward">
+                <button ng-click="deleteForward()" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Delete Forward">
                     <i class="fa fa-arrow-circle-right context-button" style="color: red"></i>
                 </button>
             </li>

@@ -101,6 +101,12 @@ angular.module('drillApp')
         });
       };
 
+      $scope.reverseSteps = () => {
+        eventService.notify(Events.activateReverseTool, {
+        });
+        // drillEditorService.reverseSteps(null, 8, 0);
+      };
+
       $scope.addMarkTime = function() {
         drillEditorService.addStep({
           direction: null,

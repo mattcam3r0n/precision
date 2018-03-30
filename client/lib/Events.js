@@ -83,6 +83,10 @@ class Events {
         return 'activateDragStepTool';
     }
 
+    static get activateReverseTool() {
+        return 'activateReverseTool';
+    }
+
     static get activateMarcherColorsTool() {
         return 'activateMarcherColorsTool';
     }
@@ -175,6 +179,10 @@ class Events {
 
     static get dragStepToolDeactivated() {
         return 'dragStepToolDeactivated';
+    }
+
+    static get reverseToolDeactivated() {
+        return 'reverseToolDeactivated';
     }
 
     static get objectsSelected() {

@@ -3,7 +3,9 @@ import StepDelta from '/client/lib/StepDelta';
 import { FieldPoint } from '/client/lib/Point';
 import StrideType from '/client/lib/StrideType';
 import StepType from '/client/lib/StepType';
+import Action from '/client/lib/drill/Action';
 import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
+import ScriptSequence from '/client/lib/drill/ScriptSequence';
 
 /**
  *
@@ -115,6 +117,60 @@ class ScriptBuilder {
         }
 
         member.script[count] = null;
+    }
+
+    static getActionAtCount(member, count) {
+        let i = count - 1;
+        let action = member.script[i];
+        while (!action && i >= 0) {
+            i--;
+            action = member.script[i];
+        }
+        if (!action) {
+            return member.initialState;
+        }
+        return action;
+//        return member.script[count - 1];
+    }
+
+    static getReverseAction(action) {
+        if (!action) {
+            return action;
+        }
+
+        return new Action({
+            strideType: action.strideType,
+            stepType: action.stepType,
+            direction: Direction.rotate180(action.direction),
+            deltaX: action.deltaX * -1,
+            deltaY: action.deltaY * -1,
+        });
+    }
+
+    static addReverseAction(member, countToReverse, countToAdd) {
+        // gets the action at count
+        // const a = new Action(member.currentState);
+        const a = this.getActionAtCount(member, countToReverse);
+        // reverses it
+        const r = this.getReverseAction(a);
+        // adds the reversed action at count + 1 (remember, index of count is count - 1,
+        // so count + 1 is at index count)
+        member.script[countToAdd] = r;
+    }
+
+    // deprecate above?  do this but for 1 count, skip 0?
+    static addReverseCounts(member, count, counts, skip) {
+        // use MemberPosCalc to step thru counts backward
+        // at each count, get state
+        // reverse it
+        const newSeq = new ScriptSequence();
+        const totalCounts = counts + skip;
+        const startCount = count - skip;
+        for (let i = startCount; i >= startCount - counts; i--) {
+            const state = MemberPositionCalculator.getStateAtCount(member, i);
+            newSeq.addStep(this.getReverseAction(state));
+        }
+        this.insertSequence(member, newSeq.getSequence(), count + 1);
     }
 
     static fromShorthand(script) {

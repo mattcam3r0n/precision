@@ -109,8 +109,18 @@ class Direction {
     }
 
     static aboutFaceFrom(fromDir) {
+        return this.rotate180(fromDir);
+    }
+
+    static rotate180(fromDir) {
         let newDir = (fromDir + 180);
         return newDir >= 360 ? newDir - 360 : newDir;
+    }
+
+    static normalizeDirection(dir) {
+        if (dir >= 0 && dir < 360) return dir;
+
+        return dir - (Math.floor(dir / 360) * 360);
     }
 
     static getDirection(dir) {

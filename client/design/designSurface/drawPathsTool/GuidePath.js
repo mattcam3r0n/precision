@@ -111,7 +111,6 @@ class GuidePath {
             }
             seq.addStep(p);
         });
-console.log(seq);
         return seq;
     }
 

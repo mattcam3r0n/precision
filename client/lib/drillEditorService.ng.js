@@ -242,6 +242,41 @@ class DrillEditorService {
         this.save();
     }
 
+    reverseStep(countToReverse, countToAdd, members) {
+        countToReverse = countToReverse || this.drill.count;
+        countToAdd = countToAdd || this.drill.count;
+        members = members || this.drillBuilder.getSelectedMembers();
+        const counts = 1;
+        this.makeUndoable(
+            'Reverse Step', // TODO: generate a better label? flank, halt, etc?
+            members,
+            countToAdd,
+            counts,
+            () => {
+                this.doReverseStep(countToReverse, countToAdd, members);
+            }
+        );
+    }
+
+    doReverseStep(countToReverse, countToAdd, members) {
+        this.drillBuilder.reverseStep(members, countToReverse, countToAdd);
+        this.drillPlayer.stepForward();
+        this.notifyDrillStateChanged();
+        this.save();
+    }
+
+    reverseSteps(count, counts, skip, members) {
+        count = count || this.drill.count;
+        counts = counts || 1;
+        skip = skip || 0;
+        members = members || this.drillBuilder.getSelectedMembers();
+
+        this.drillBuilder.reverseSteps(members, count, counts, skip);
+        this.drillPlayer.stepForward();
+        this.notifyDrillStateChanged();
+        this.save();
+    }
+
     restoreSteps(memberSteps) {
         this.drillBuilder.restoreMemberSteps(memberSteps);
         this.save();

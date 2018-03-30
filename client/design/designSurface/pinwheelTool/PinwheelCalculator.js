@@ -174,7 +174,7 @@ class PinwheelCalculator {
                 y: pos.y,
                 deltaX: pos.x - lastStep.x,
                 deltaY: pos.y - lastStep.y,
-                direction: this.normalizeDirection(direction),
+                direction: Direction.normalizeDirection(direction),
             };
             steps.push(step);
             lastStep = step;
@@ -183,7 +183,7 @@ class PinwheelCalculator {
         steps.push({
             strideType: member.currentState.strideType,
             stepType: StepType.Full,
-            direction: this.normalizeDirection(lastStep.direction),
+            direction: Direction.normalizeDirection(lastStep.direction),
         });
 
         return steps;
@@ -215,7 +215,7 @@ class PinwheelCalculator {
             count: count,
             x: p.x,
             y: p.y,
-            direction: this.normalizeDirection(direction),
+            direction: Direction.normalizeDirection(direction),
         };
     }
 

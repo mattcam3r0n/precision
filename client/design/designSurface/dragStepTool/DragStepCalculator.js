@@ -1,3 +1,4 @@
+import Direction from '/client/lib/Direction';
 import StepType from '/client/lib/StepType';
 
 class DragStepCalculator {
@@ -30,7 +31,7 @@ class DragStepCalculator {
                 y: pos.y,
                 deltaX: pos.x - lastStep.x,
                 deltaY: pos.y - lastStep.y,
-                direction: this.normalizeDirection(pos.direction),
+                direction: Direction.normalizeDirection(pos.direction),
             };
             steps.push(step);
             lastStep = step;
@@ -39,7 +40,7 @@ class DragStepCalculator {
         steps.push({
             strideType: member.currentState.strideType,
             stepType: StepType.Full,
-            direction: this.normalizeDirection(lastStep.direction),
+            direction: Direction.normalizeDirection(lastStep.direction),
         });
         return steps;
     }
@@ -53,7 +54,7 @@ class DragStepCalculator {
             count: count,
             x: member.currentState.x,
             y: member.currentState.y,
-            direction: this.normalizeDirection(direction),
+            direction: Direction.normalizeDirection(direction),
         };
     }
 

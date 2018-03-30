@@ -1,0 +1,75 @@
+.reverse-tool {
+    position: absolute;
+   background-color: gainsboro;
+   width: 110px;
+   left: 150px;
+   top: 100px;
+}
+
+.reverse-tool div.panel-heading {
+    font-size: 12px;
+}
+
+.reverse-tool ul {
+    margin: 0;
+    width: 100%;
+    padding: 0px;
+}
+
+.reverse-tool li {
+    list-style-type: none;
+    margin-top: 0px;
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.reverse-tool li span {
+    flex: 1 1 100%;
+    color: black;
+    background-color: #e6e6e6;
+    text-align: center;
+    font-size: 10px;
+}
+
+#reverseStepsButton {
+    flex: 0 1 33%;
+    width: 60px;
+}
+
+.reverse-tool li button {
+    flex: 1 1 auto;
+    border-radius: 0;
+    padding: 5px;
+}
+
+.reverse-tool button.active {
+    background-color: #e6e6e6;
+}
+
+.reverse-tool input {
+    color: black;
+    text-align: center;
+    height: 32px;
+    padding-left: 16px;
+    padding-right: 8px;
+}
+
+.reverse-tool .counts button {
+    width: 20px;
+    height: 32px;
+}
+            
+.reverse-tool .turn-mode-button span {
+    font-size: 12px;
+}
+
+.reverse-tool .save-button i {
+    color: green;    
+}
+
+.reverse-tool .cancel-button i {
+    color: red;    
+}
+

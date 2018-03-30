@@ -120,6 +120,26 @@ class DrillBuilder {
         this.drill.isDirty = true;
     }
 
+    reverseStep(members, countToReverse, countToAdd) {
+        countToReverse = countToReverse || this.drill.count;
+        countToAdd = countToAdd || this.drill.count;
+        members.forEach((m) => {
+            ScriptBuilder.addReverseAction(m, countToReverse, countToAdd);
+        });
+        this.drill.isDirty = true;
+    }
+
+    reverseSteps(members, count, counts, skip) {
+        count = count || this.drill.count;
+        counts = counts || 1;
+        skip = skip || 0;
+
+        members.forEach((m) => {
+            ScriptBuilder.addReverseCounts(m, count, counts, skip);
+        });
+        this.drill.isDirty = true;
+    }
+
     addMemberStep(member, step, count) {
         count = count === undefined ? this.drill.count + 1 : count;
         let defaultValue = (a, b) => a === null || a === undefined ? b : a;

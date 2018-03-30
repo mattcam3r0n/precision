@@ -5,6 +5,7 @@ class DesignKeyboardHandler {
     constructor(drillEditorService, eventService) {
         this.drillEditorService = drillEditorService;
         this.eventService = eventService;
+        this.reverseCounter = 0;
     }
 
     get handlers() {
@@ -66,9 +67,26 @@ class DesignKeyboardHandler {
                 }
             },
 
+            'Shift': (e) => {
+                console.log('resetting revere counter');
+                this.reverseCounter = 0;
+                this.reverseOriginCount = this.drillEditorService.currentCount;
+            },
+
             'ArrowLeft': (e) => {
                 if (e.ctrlKey || e.metaKey) {
                     this.drillEditorService.goToBeginning();
+                    return;
+                }
+
+                if (e.shiftKey) {
+                    console.log('origin', this.reverseOriginCount, 'counter', this.reverseCounter);
+
+                    console.log(this.reverseOriginCount - this.reverseCounter, this.reverseOriginCount + this.reverseCounter);
+                    this.drillEditorService
+                        .reverseStep(this.reverseOriginCount - this.reverseCounter, // eslint-disable-line max-len
+                            this.reverseOriginCount + this.reverseCounter);
+                    this.reverseCounter++;
                     return;
                 }
 
