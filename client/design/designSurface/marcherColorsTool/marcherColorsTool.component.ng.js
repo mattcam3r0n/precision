@@ -16,13 +16,16 @@ angular.module('drillApp')
       let ctrl = this;
 
       const instrumentColors = {
+        twirler: 'lightblue',
+        flag: 'orchid',
         flute: 'pink',
         clarinet: 'gainsboro',
         lowreed: 'indigo',
-        saxophone: 'green',
+        saxophone: 'lightgreen',
         trumpet: 'blue',
         horn: 'gold',
         trombone: 'red',
+        baritone: 'purple',
         tuba: 'orange',
         percussion: 'gray',
       };
