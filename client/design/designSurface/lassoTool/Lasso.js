@@ -19,7 +19,6 @@
 class Lasso {
     constructor(field) {
         this.field = field;
-        this.origin = origin;
         this.points = [];
         this.isActive = false;
 

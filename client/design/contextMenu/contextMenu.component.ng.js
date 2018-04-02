@@ -20,7 +20,7 @@ angular.module('drillApp')
         saxophone: 'lightgreen',
         trumpet: 'blue',
         horn: 'gold',
-        trombone: 'red',
+        trombone: 'fuchsia',
         baritone: 'purple',
         tuba: 'orange',
         percussion: 'gray',
