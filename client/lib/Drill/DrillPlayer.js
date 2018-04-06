@@ -98,16 +98,13 @@ class DrillPlayer {
         let self = this;
         let nextStep = self.schedule.steps[self.drill.count - self.startCount];
         const timestamp = Audio.currentTime;
-console.log('animate', timestamp, self.startTimestamp, nextStep.time);
 
         if (self.startTimestamp == 0) {
             self.startTimestamp = timestamp;
-            console.log('self.startTimestamp', self.startTimestamp);
         }
 
         if (nextStep && (timestamp >= self.startTimestamp
             + nextStep.time)) {
-console.log('next step');
             self.lastTimestamp = timestamp;
 
             self.stepForward(true);
