@@ -53,18 +53,20 @@ class DesignKeyboardHandler {
                 this.drillEditorService.addStep({ direction: Direction.S });
             },
 
+            'Up': (e) => {
+                this.upArrow(e);
+            },
+
+            'Down': (e) => {
+                this.downArrow(e);
+            },
+
             'ArrowUp': (e) => {
-                if (e.altKey) {
-                    this.drillEditorService.addStep({ direction: Direction.N });
-                    return;
-                }
+                this.upArrow(e);
             },
 
             'ArrowDown': (e) => {
-                if (e.altKey) {
-                    this.drillEditorService.addStep({ direction: Direction.S });
-                    return;
-                }
+                this.downArrow(e);
             },
 
             'Shift': (e) => {
@@ -73,44 +75,20 @@ class DesignKeyboardHandler {
                 this.reverseOriginCount = this.drillEditorService.currentCount;
             },
 
+            'Left': (e) => {
+                this.leftArrow(e);
+            },
+
+            'Right': (e) => {
+                this.rightArrow(e);
+            },
+
             'ArrowLeft': (e) => {
-                if (e.ctrlKey || e.metaKey) {
-                    this.drillEditorService.goToBeginning();
-                    return;
-                }
-
-                if (e.shiftKey) {
-                    console.log('origin', this.reverseOriginCount, 'counter', this.reverseCounter);
-
-                    console.log(this.reverseOriginCount - this.reverseCounter, this.reverseOriginCount + this.reverseCounter);
-                    this.drillEditorService
-                        .reverseStep(this.reverseOriginCount - this.reverseCounter, // eslint-disable-line max-len
-                            this.reverseOriginCount + this.reverseCounter);
-                    this.reverseCounter++;
-                    return;
-                }
-
-                if (e.altKey) {
-                    this.drillEditorService.addStep({ direction: Direction.W });
-                    return;
-                }
-
-                this.drillEditorService.stepBackward();
+                this.leftArrow(e);
             },
 
             'ArrowRight': (e) => {
-                if (e.ctrlKey || e.metaKey) {
-                    this.drillEditorService.goToEnd();
-                    return;
-                }
-
-                if (e.altKey) {
-                    this.drillEditorService.addStep({ direction: Direction.E });
-                    // TODO: detect shift for 1/2 step?
-                    return;
-                }
-
-                this.drillEditorService.stepForward();
+                this.rightArrow(e);
             },
 
             '=': (e) => {
@@ -168,6 +146,61 @@ class DesignKeyboardHandler {
 
         // call key handler
         this.handlers[e.key](e);
+    }
+
+    rightArrow(e) {
+        console.log('rightArrow', e);
+        if (e.ctrlKey || e.metaKey) {
+            this.drillEditorService.goToEnd();
+            return;
+        }
+
+        if (e.altKey) {
+            this.drillEditorService.addStep({ direction: Direction.E });
+            // TODO: detect shift for 1/2 step?
+            return;
+        }
+
+        this.drillEditorService.stepForward();
+    }
+
+    leftArrow(e) {
+        if (e.ctrlKey || e.metaKey) {
+            this.drillEditorService.goToBeginning();
+            return;
+        }
+
+        if (e.shiftKey) {
+            console.log('origin', this.reverseOriginCount, 'counter', this.reverseCounter);
+
+            console.log(this.reverseOriginCount - this.reverseCounter, this.reverseOriginCount + this.reverseCounter);
+            this.drillEditorService
+                .reverseStep(this.reverseOriginCount - this.reverseCounter, // eslint-disable-line max-len
+                    this.reverseOriginCount + this.reverseCounter);
+            this.reverseCounter++;
+            return;
+        }
+
+        if (e.altKey) {
+            this.drillEditorService.addStep({ direction: Direction.W });
+            return;
+        }
+
+        this.drillEditorService.stepBackward();
+    }
+
+    upArrow(e) {
+        if (e.altKey) {
+            this.drillEditorService.addStep({ direction: Direction.N });
+            return;
+        }
+    }
+
+    downArrow(e) {
+        if (e.altKey) {
+            this.drillEditorService.addStep({ direction: Direction.S });
+            return;
+        }
     }
 }
 

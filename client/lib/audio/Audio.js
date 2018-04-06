@@ -24,7 +24,9 @@ class Audio {
     }
 
     static get currentTime() {
-        return this.context.currentTime;
+        // currentTime doesn't work as expected in Edge, so using performance.now()
+//        return this.context.currentTime;
+        return performance.now() / 1000;
     }
 
     static ensureAudioIsInitialized() {

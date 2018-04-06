@@ -139,7 +139,6 @@ angular.module('drillApp')
 
       function blurActiveElement() {
         if (document.activeElement) {
-          console.log(document.activeElement);
           document.activeElement.blur();
         }
       }
