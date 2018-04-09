@@ -65,6 +65,11 @@ angular.module('drillApp')
         drillEditorService.goToCount(ctrl.currentCount);
       };
 
+      ctrl.toggleMetronome = function() {
+        ctrl.isMetronomeEnabled = !ctrl.isMetronomeEnabled;
+        blurActiveElement();
+      };
+
       ctrl.onPlay = function(playMusic) {
         Audio.ensureAudioIsInitialized();
         drillEditorService.play(() => {

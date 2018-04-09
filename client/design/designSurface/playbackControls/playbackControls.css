@@ -38,6 +38,10 @@
     padding: 0;
 } */
 
+.playback-controls .metronome img {
+    height: 12px;
+    width: 12px;
+}
 
 #currentCount, #stepForward, #stepBackward {
     text-align: center;

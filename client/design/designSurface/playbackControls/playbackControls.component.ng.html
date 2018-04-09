@@ -59,7 +59,8 @@
         </div>
         <!-- metronome -->
         <div class="btn-group btn-group-sm" role="group">
-            <input type='checkbox' class="" ng-model="$ctrl.isMetronomeEnabled" /> Metronome
+            <button class="btn btn-default metronome" ng-class="{ 'active': $ctrl.isMetronomeEnabled }" ng-click="$ctrl.toggleMetronome()"><img src="/icons/metronome.svg"/></button>
+            <!-- <input type='checkbox' class="" ng-model="$ctrl.isMetronomeEnabled" /> Metronome -->
         </div>
 
         <!-- position indicator -->
