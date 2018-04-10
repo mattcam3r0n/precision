@@ -36,6 +36,9 @@ function updateDrill(drill) {
   // remove _id field before update
   delete drill._id;
 
+  // remove $$hashKey from bookmarks
+  sanitizeBookmarks(drill);
+
   drill.updatedDate = new Date();
   drill.name_sort = drill.name.toLowerCase();
   drill.userId = Meteor.userId();
@@ -45,6 +48,14 @@ function updateDrill(drill) {
   }, {
       $set: drill,
     });
+}
+
+function sanitizeBookmarks(drill) {
+  if (!drill.bookmarks) return;
+
+  drill.bookmarks.forEach((b) => {
+    delete b.$$hashKey;
+  });
 }
 
 function checkOwnership(drill) {

@@ -1,0 +1,50 @@
+<button type="button" class="btn btn-default bookmark dropdown-toggle bookmark-list" data-toggle="dropdown">
+    <img src="/icons/bookmark-2.svg" />
+</button>
+<ul class="dropdown-menu bookmark-list">
+    <li ng-repeat="bookmark in $ctrl.bookmarks()">
+        <a href="#" ng-click="$ctrl.goToBookmark(bookmark)">
+            {{ $ctrl.getBookmarkLabel(bookmark) }}
+            <i class="fa fa-times pull-right" ng-click="$ctrl.deleteBookmark(bookmark); $event.stopPropagation();"></i>
+        </a>
+    </li>
+</ul>
+<button class="btn btn-default bookmark" ng-click="$ctrl.addBookmark()" data-toggle="tooltip" data-placement="top" title="Add Bookmark">
+    <img src="/icons/bookmark-add-3.svg" />
+</button>
+
+<!-- Modal -->
+<div class="add-bookmark-dialog modal fade" id="addBookmarkDialog" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="addBookmarkLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="drillPropertiesLabel">Add Bookmark</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-2 form-group-sm">
+                        <label class="control-label">Count</label>
+                        <input type="number" ng-model="$ctrl.count" ng-required='true' class="form-control" />
+                    </div>
+                    <div class="col-md-10 form-group-sm">
+                        <label class="control-label">Name</label>
+                        <input type="text" ng-model="$ctrl.name" ng-required='true' class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer row">
+                <div class="col-md-3 text-left">
+                </div>
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-3 text-right">
+                    <button type="button" ng-disabled="!$ctrl.isValid()" ng-click="$ctrl.save()" class="btn btn-default" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

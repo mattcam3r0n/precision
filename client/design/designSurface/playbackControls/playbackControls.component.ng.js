@@ -70,6 +70,14 @@ angular.module('drillApp')
         blurActiveElement();
       };
 
+      ctrl.showBookmarkList = function() {
+        blurActiveElement();
+      };
+
+      ctrl.addBookmark = function() {
+        blurActiveElement();
+      };
+
       ctrl.onPlay = function(playMusic) {
         Audio.ensureAudioIsInitialized();
         drillEditorService.play(() => {

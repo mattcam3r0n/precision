@@ -25,7 +25,6 @@ class DesignKeyboardHandler {
             },
 
             'z': (e) => {
-                console.log(e);
                 if ((e.ctrlKey || e.metaKey) && !e.shiftKey) {
                     this.drillEditorService.undo();
                 }
@@ -70,7 +69,6 @@ class DesignKeyboardHandler {
             },
 
             'Shift': (e) => {
-                console.log('resetting revere counter');
                 this.reverseCounter = 0;
                 this.reverseOriginCount = this.drillEditorService.currentCount;
             },
@@ -149,7 +147,6 @@ class DesignKeyboardHandler {
     }
 
     rightArrow(e) {
-        console.log('rightArrow', e);
         if (e.ctrlKey || e.metaKey) {
             this.drillEditorService.goToEnd();
             return;
@@ -171,9 +168,6 @@ class DesignKeyboardHandler {
         }
 
         if (e.shiftKey) {
-            console.log('origin', this.reverseOriginCount, 'counter', this.reverseCounter);
-
-            console.log(this.reverseOriginCount - this.reverseCounter, this.reverseOriginCount + this.reverseCounter);
             this.drillEditorService
                 .reverseStep(this.reverseOriginCount - this.reverseCounter, // eslint-disable-line max-len
                     this.reverseOriginCount + this.reverseCounter);

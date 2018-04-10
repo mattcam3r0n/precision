@@ -137,6 +137,9 @@ angular.module('drillApp')
         return;
       }
 
+// TEMP
+// drill.bookmarks = [{ count: 0, name: 'The Beginning' }, { count: 12, name: 'Intro' }];
+
       setDrill(drill);
       drillEditorService.goToBeginning();
     }
@@ -158,7 +161,7 @@ angular.module('drillApp')
     // }
 
     function onKeydown(e) {
-      console.log(e.code, e);
+//      console.log(e.code, e);
       keyboardHandler.handle(e);
       $scope.$safeApply();
     }

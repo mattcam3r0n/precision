@@ -1,0 +1,18 @@
+
+.bookmark-list .bookmark img {
+    padding: 0;
+    height: 16px;
+    width: 16px;
+}
+
+.bookmark-list i.fa-times {
+    color: red;
+}
+
+.bookmark-list i.fa-times:hover {
+    font-size: 20px;
+}
+
+.bookmark-list.dropdown-menu {
+    width: 300px;
+}

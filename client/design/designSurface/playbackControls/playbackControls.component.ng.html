@@ -35,7 +35,9 @@
                         <i class="fa fa-step-backward"></i>
                     </button>
                 </span>
-                <input ng-enter="$ctrl.onCountChange()" ng-blur="$ctrl.onCountChange()" id="currentCount" type="text" class="form-control" aria-label="Current Count" ng-model="$ctrl.currentCount" data-toggle="tooltip" data-placement="bottom" title="Current Count"/>
+                <input ng-enter="$ctrl.onCountChange()" ng-blur="$ctrl.onCountChange()" id="currentCount" type="text" class="form-control"
+                    aria-label="Current Count" ng-model="$ctrl.currentCount" data-toggle="tooltip" data-placement="bottom" title="Current Count"
+                />
                 <span class="input-group-btn">
                     <button id="stepForward" ng-click="$ctrl.onStepForward()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
                         title="Forward 1 Count">
@@ -43,6 +45,21 @@
                     </button>
                 </span>
             </div>
+        </div>
+
+        <!-- bookmarks -->
+        <div class="btn-group btn-group-sm dropup" role="group">
+            <!-- <button type="button" class="btn btn-default bookmark dropdown-toggle" data-toggle="dropdown">
+                <img src="/icons/bookmark-2.svg" />
+            </button>
+            <ul class="dropdown-menu">
+                <li id="direction-picker-N" data-value="N">
+                    <a href="#" ng-click="setDirection(0)">
+                        <i class="fa fa-caret-up fa-lg"></i>
+                    </a>
+                </li>
+            </ul> -->
+            <bookmark-list drill="$ctrl.drill"></bookmark-list>
         </div>
 
         <!-- tempo -->
@@ -57,9 +74,12 @@
                 </span>
             </div>
         </div>
+
         <!-- metronome -->
         <div class="btn-group btn-group-sm" role="group">
-            <button class="btn btn-default metronome" ng-class="{ 'active': $ctrl.isMetronomeEnabled }" ng-click="$ctrl.toggleMetronome()"><img src="/icons/metronome.svg"/></button>
+            <button class="btn btn-default metronome" ng-class="{ 'active': $ctrl.isMetronomeEnabled }" ng-click="$ctrl.toggleMetronome()">
+                <img src="/icons/metronome.svg" />
+            </button>
             <!-- <input type='checkbox' class="" ng-model="$ctrl.isMetronomeEnabled" /> Metronome -->
         </div>
 

@@ -43,6 +43,12 @@
     width: 12px;
 }
 
+.playback-controls .bookmark img {
+    padding: 0;
+    height: 16px;
+    width: 16px;
+}
+
 #currentCount, #stepForward, #stepBackward {
     text-align: center;
     font-size: 10px;
