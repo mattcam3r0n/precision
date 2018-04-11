@@ -53,6 +53,7 @@ angular.module('drillApp')
       };
 
       ctrl.addBookmark = function() {
+        ctrl.count = drillEditorService.currentCount;
         $('#addBookmarkDialog').modal('show');
       };
 

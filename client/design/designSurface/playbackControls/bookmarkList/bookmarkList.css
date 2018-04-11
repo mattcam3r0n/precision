@@ -1,3 +1,6 @@
+div.add-bookmark-dialog .modal-lg {
+    width: 500px;
+}
 
 .bookmark-list .bookmark img {
     padding: 0;
