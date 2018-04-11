@@ -1,4 +1,4 @@
-<button type="button" id="bookmark-list" class="btn btn-default bookmark dropdown-toggle bookmark-list" data-toggle="dropdown">
+<button type="button" id="bookmark-list" ng-click="$ctrl.showBookmarkList()" class="btn btn-default bookmark dropdown-toggle bookmark-list" data-toggle="dropdown">
     <img src="/icons/bookmark-2.svg" />
 </button>
 <ul class="dropdown-menu bookmark-list">
@@ -9,7 +9,7 @@
         </a>
     </li>
 </ul>
-<button class="btn btn-default bookmark" ng-click="$ctrl.addBookmark()" data-toggle="tooltip" data-placement="top" title="Add Bookmark">
+<button class="btn btn-default bookmark" ng-click="$ctrl.addBookmark()" data-toggle="tooltip" data-placement="bottom" title="Add Bookmark">
     <img src="/icons/bookmark-add-3.svg" />
 </button>
 

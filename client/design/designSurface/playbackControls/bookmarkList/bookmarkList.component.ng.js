@@ -17,6 +17,7 @@ angular.module('drillApp')
 
         $('#bookmark-list').tooltip({
           title: 'Bookmarks',
+          placement: 'bottom',
         });
 
         // ctrl.subscriptions
@@ -35,7 +36,11 @@ angular.module('drillApp')
       ctrl.bookmarks = function() {
         if (appStateService.drill
           && appStateService.drill.bookmarks) {
-            return appStateService.drill.bookmarks;
+            return appStateService.drill.bookmarks.sort((a, b) => {
+              if (a.count < b.count) return -1;
+              if (a.count > b.count) return 1;
+              return 0;
+            });
           }
         // return [{ count: 0, name: 'The Beginning' }, { count: 12, name: 'Intro' }];
         // return [];
@@ -43,6 +48,11 @@ angular.module('drillApp')
 
       ctrl.getBookmarkLabel = function(bookmark) {
         return bookmark.count + ': ' + bookmark.name;
+      };
+
+      ctrl.showBookmarkList = function() {
+        // $('#bookmark-list').tooltip('hide');
+        blurActiveElement();
       };
 
       ctrl.goToBookmark = function(bookmark) {
@@ -78,11 +88,11 @@ angular.module('drillApp')
         });
       };
 
-      // function blurActiveElement() {
-      //   if (document.activeElement) {
-      //     document.activeElement.blur();
-      //   }
-      // }
+      function blurActiveElement() {
+        if (document.activeElement) {
+          document.activeElement.blur();
+        }
+      }
     },
   });
 
