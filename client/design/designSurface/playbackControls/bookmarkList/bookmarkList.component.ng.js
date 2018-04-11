@@ -58,6 +58,7 @@ angular.module('drillApp')
 
       ctrl.addBookmark = function() {
         ctrl.count = drillEditorService.currentCount;
+        ctrl.name = '';
         $('#addBookmarkDialog').modal('show');
       };
 
