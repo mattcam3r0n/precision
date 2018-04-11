@@ -15,6 +15,10 @@ angular.module('drillApp')
       ctrl.$onInit = function() {
         ctrl.subscriptions = eventService.createSubscriptionManager();
 
+        $('#bookmark-list').tooltip({
+          title: 'Bookmarks',
+        });
+
         // ctrl.subscriptions
         //   .subscribe(Events.drillOpened, (event, args) => {
         //     // $rootScope.$safeApply();
