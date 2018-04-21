@@ -135,3 +135,4 @@ Last release tag v0.2.6
 
 4-21-18
 * FIX: Path tool sometimes doesn't use selected direction
+* FIX: Weird file path indicator when drill is first opened and at beginning of drill.

@@ -32,6 +32,8 @@ class MemberPlayer {
         member.currentState.direction = member.initialState.direction;
         member.currentState.x = member.initialState.x;
         member.currentState.y = member.initialState.y;
+        member.currentState.deltaX = member.initialState.deltaX;
+        member.currentState.deltaY = member.initialState.deltaY;
     }
 }
 
