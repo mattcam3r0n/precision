@@ -130,4 +130,8 @@ v0.1 2-17-18
   * delete account
   * grant admin privileges
   * basic usage stats 
-* 
+
+Last release tag v0.2.6
+
+4-21-18
+* FIX: Path tool sometimes doesn't use selected direction

@@ -128,7 +128,7 @@ angular.module('drillApp')
             createPathTool();
           });
         },
-        'drawPathsTool.activate', getContextInfo());
+          'drawPathsTool.activate', getContextInfo());
       }
 
       function deactivate(notify = true) {
@@ -148,7 +148,7 @@ angular.module('drillApp')
             eventService.notify(Events.drawPathsToolDeactivated);
           }
         },
-        'drawPathsTool.deactivate', getContextInfo());
+          'drawPathsTool.deactivate', getContextInfo());
       }
 
       function setTurnDirection(direction) {
@@ -174,7 +174,7 @@ angular.module('drillApp')
             ctrl.turnMode, ctrl.strideType,
             ctrl.allFiles, ctrl.fileOffset,
             ctrl.rankOffset);
-
+          ctrl.activePathTool.setCurrentTurnDirection(ctrl.turnDirection);
           eventService.notify(Events.updateField);
         }, 'drawPathsTool.createPathTool', getContextInfo());
       }
