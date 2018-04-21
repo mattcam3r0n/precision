@@ -6,104 +6,109 @@ import Direction from '/client/lib/Direction';
 import PathTool from './PathTool';
 import ExceptionHelper from '/client/lib/ExceptionHelper';
 
-angular.module('drillApp')
-  .component('drawPathsTool', {
-    templateUrl: 'client/design/designSurface/drawPathsTool/drawPathsTool.view.ng.html',
-    bindings: {
-    },
-    controller: function($scope, $window, appStateService,
-      drillEditorService, eventService) {
-      let ctrl = this;
+angular.module('drillApp').component('drawPathsTool', {
+  templateUrl:
+    'client/design/designSurface/drawPathsTool/drawPathsTool.view.ng.html',
+  bindings: {},
+  controller: function(
+    $scope,
+    $window,
+    appStateService,
+    drillEditorService,
+    eventService
+  ) {
+    let ctrl = this;
 
-      ctrl.$onInit = function() {
-        ctrl.subscriptions = eventService.createSubscriptionManager();
-        ctrl.turnMode = 'block';
-        ctrl.toolDiv = angular.element('.draw-paths-tool')[0];
-        ctrl.fileOffset = 0;
-        ctrl.rankOffset = 0;
-        ctrl.allFiles = false;
+    ctrl.$onInit = function() {
+      ctrl.subscriptions = eventService.createSubscriptionManager();
+      ctrl.turnMode = 'block';
+      ctrl.toolDiv = angular.element('.draw-paths-tool')[0];
+      ctrl.fileOffset = 0;
+      ctrl.rankOffset = 0;
+      ctrl.allFiles = false;
 
-        ctrl.subscriptions.subscribe(Events.drawPathsToolActivated, () => {
-          activate(drillEditorService.getMemberSelection());
-        });
+      ctrl.subscriptions.subscribe(Events.drawPathsToolActivated, () => {
+        activate(drillEditorService.getMemberSelection());
+      });
 
-        ctrl.subscriptions.subscribe(Events.strideTypeChanged, (evt, args) => {
-          if (!ctrl.isActivated) return;
-          activate(drillEditorService.getMemberSelection());
-        });
-      };
+      ctrl.subscriptions.subscribe(Events.strideTypeChanged, (evt, args) => {
+        if (!ctrl.isActivated) return;
+        activate(drillEditorService.getMemberSelection());
+      });
+    };
 
-      ctrl.$onDestroy = function() {
-        ctrl.field = null;
-        ctrl.subscriptions.unsubscribeAll();
-      };
+    ctrl.$onDestroy = function() {
+      ctrl.field = null;
+      ctrl.subscriptions.unsubscribeAll();
+    };
 
-      $scope.save = function() {
-        save();
-        deactivate();
-      };
+    $scope.save = function() {
+      save();
+      deactivate();
+    };
 
-      $scope.cancel = deactivate;
+    $scope.cancel = deactivate;
 
-      $scope.reset = function() {
-        reset();
-      };
+    $scope.reset = function() {
+      reset();
+    };
 
-      $scope.isCurrentDirection = function(dir) {
-        return ctrl.turnDirection == Direction[dir];
-      };
+    $scope.isCurrentDirection = function(dir) {
+      return ctrl.turnDirection == Direction[dir];
+    };
 
-      $scope.setTurnDirection = setTurnDirection;
+    $scope.setTurnDirection = setTurnDirection;
 
-      $scope.isBlockMode = function() {
-        return ctrl.turnMode == 'block';
-      };
+    $scope.isBlockMode = function() {
+      return ctrl.turnMode == 'block';
+    };
 
-      $scope.isFileMode = function() {
-        return ctrl.turnMode == 'file';
-      };
+    $scope.isFileMode = function() {
+      return ctrl.turnMode == 'file';
+    };
 
-      $scope.setTurnMode = function(mode) {
-        ctrl.turnMode = mode;
-        createPathTool();
-        blurActiveElement();
-      };
+    $scope.setTurnMode = function(mode) {
+      ctrl.turnMode = mode;
+      createPathTool();
+      blurActiveElement();
+    };
 
-      ctrl.setAllFiles = function() {
-        createPathTool();
-        blurActiveElement();
-      };
+    ctrl.setAllFiles = function() {
+      createPathTool();
+      blurActiveElement();
+    };
 
-      ctrl.setFileOffset = function() {
-        ctrl.activePathTool.setFileOffset(ctrl.fileOffset);
-      };
+    ctrl.setFileOffset = function() {
+      ctrl.activePathTool.setFileOffset(ctrl.fileOffset);
+    };
 
-      ctrl.decrementFileOffset = function() {
-        ctrl.fileOffset--;
-        ctrl.activePathTool.setFileOffset(ctrl.fileOffset);
-      };
+    ctrl.decrementFileOffset = function() {
+      ctrl.fileOffset--;
+      ctrl.activePathTool.setFileOffset(ctrl.fileOffset);
+    };
 
-      ctrl.incrementFileOffset = function() {
-        ctrl.fileOffset++;
-        ctrl.activePathTool.setFileOffset(ctrl.fileOffset);
-      };
+    ctrl.incrementFileOffset = function() {
+      ctrl.fileOffset++;
+      ctrl.activePathTool.setFileOffset(ctrl.fileOffset);
+    };
 
-      ctrl.setRankOffset = function() {
-        ctrl.activePathTool.setRankOffset(ctrl.rankOffset);
-      };
+    ctrl.setRankOffset = function() {
+      ctrl.activePathTool.setRankOffset(ctrl.rankOffset);
+    };
 
-      ctrl.decrementRankOffset = function() {
-        ctrl.rankOffset--;
-        ctrl.activePathTool.setRankOffset(ctrl.rankOffset);
-      };
+    ctrl.decrementRankOffset = function() {
+      ctrl.rankOffset--;
+      ctrl.activePathTool.setRankOffset(ctrl.rankOffset);
+    };
 
-      ctrl.incrementRankOffset = function() {
-        ctrl.rankOffset++;
-        ctrl.activePathTool.setRankOffset(ctrl.rankOffset);
-      };
+    ctrl.incrementRankOffset = function() {
+      ctrl.rankOffset++;
+      ctrl.activePathTool.setRankOffset(ctrl.rankOffset);
+    };
 
-      function activate(memberSelection) {
-        ExceptionHelper.handle(() => {
+    function activate(memberSelection) {
+      ExceptionHelper.handle(
+        () => {
           if (ctrl.isActivated) {
             deactivate(false);
           }
@@ -128,11 +133,14 @@ angular.module('drillApp')
             createPathTool();
           });
         },
-          'drawPathsTool.activate', getContextInfo());
-      }
+        'drawPathsTool.activate',
+        getContextInfo()
+      );
+    }
 
-      function deactivate(notify = true) {
-        ExceptionHelper.handle(() => {
+    function deactivate(notify = true) {
+      ExceptionHelper.handle(
+        () => {
           ctrl.subscriptions.unsubscribe(Events.deleteTurn);
           ctrl.subscriptions.unsubscribe(Events.membersSelected);
 
@@ -148,85 +156,99 @@ angular.module('drillApp')
             eventService.notify(Events.drawPathsToolDeactivated);
           }
         },
-          'drawPathsTool.deactivate', getContextInfo());
-      }
+        'drawPathsTool.deactivate',
+        getContextInfo()
+      );
+    }
 
-      function setTurnDirection(direction) {
-        dir = Direction.getDirection(direction);
-        ctrl.turnDirection = dir;
-        ctrl.field.canvas.defaultCursor = 'url(/icons/' + Direction.getDirectionName(dir) + '.svg) 8 8, auto';
-        ctrl.activePathTool.setCurrentTurnDirection(dir);
-        blurActiveElement();
-      }
+    function setTurnDirection(direction) {
+      dir = Direction.getDirection(direction);
+      ctrl.turnDirection = dir;
+      ctrl.field.canvas.defaultCursor =
+        'url(/icons/' + Direction.getDirectionName(dir) + '.svg) 8 8, auto';
+      ctrl.activePathTool.setCurrentTurnDirection(dir);
+      blurActiveElement();
+    }
 
-      function reset() {
-        deactivate();
-        activate(ctrl.memberSelection);
-      }
+    function reset() {
+      deactivate();
+      activate(ctrl.memberSelection);
+    }
 
-      function createPathTool() {
-        ExceptionHelper.handle(() => {
+    function createPathTool() {
+      ExceptionHelper.handle(
+        () => {
           if (ctrl.activePathTool) {
             destroyPathTool();
           }
 
-          ctrl.activePathTool = new PathTool(ctrl.field, ctrl.memberSelection,
-            ctrl.turnMode, ctrl.strideType,
-            ctrl.allFiles, ctrl.fileOffset,
-            ctrl.rankOffset);
+          ctrl.activePathTool = new PathTool(
+            ctrl.field,
+            ctrl.memberSelection,
+            ctrl.turnMode,
+            ctrl.strideType,
+            ctrl.allFiles,
+            ctrl.fileOffset,
+            ctrl.rankOffset
+          );
           ctrl.activePathTool.setCurrentTurnDirection(ctrl.turnDirection);
           eventService.notify(Events.updateField);
-        }, 'drawPathsTool.createPathTool', getContextInfo());
-      }
+        },
+        'drawPathsTool.createPathTool',
+        getContextInfo()
+      );
+    }
 
-      function destroyPathTool() {
-        if (!ctrl.activePathTool) return;
+    function destroyPathTool() {
+      if (!ctrl.activePathTool) return;
 
-        ctrl.activePathTool.dispose();
-      }
+      ctrl.activePathTool.dispose();
+    }
 
-      function onBackspacePressed(evt) {
-        // how to get corresponding turn?
-        if (!ctrl.field.canvas.getActiveObject()) return;
+    function onBackspacePressed(evt) {
+      // how to get corresponding turn?
+      if (!ctrl.field.canvas.getActiveObject()) return;
 
-        let target = ctrl.field.canvas.getActiveObject();
+      let target = ctrl.field.canvas.getActiveObject();
 
-        // removeTurnMarker(target);
-        ctrl.activePathTool.removeTurnMarker(target);
-      }
+      // removeTurnMarker(target);
+      ctrl.activePathTool.removeTurnMarker(target);
+    }
 
-      // function destroyGuidePaths() {
-      //   if (!ctrl.guidePaths) return;
+    // function destroyGuidePaths() {
+    //   if (!ctrl.guidePaths) return;
 
-      //   ctrl.guidePaths.forEach((gp) => gp.dispose());
-      // }
+    //   ctrl.guidePaths.forEach((gp) => gp.dispose());
+    // }
 
-      function save() {
-        if (!ctrl.activePathTool) return;
+    function save() {
+      if (!ctrl.activePathTool) return;
 
-        ExceptionHelper.handle(() => {
+      ExceptionHelper.handle(
+        () => {
           ctrl.activePathTool.save();
           drillEditorService.save(true);
-        }, 'drawPathsTool.save', getContextInfo());
+        },
+        'drawPathsTool.save',
+        getContextInfo()
+      );
+    }
+
+    function getContextInfo() {
+      return {
+        drillId: appStateService.getDrillId(),
+        drillName: appStateService.getDrillName(),
+        drillCount: appStateService.getDrillCount(),
+        strideType: ctrl.strideType,
+        turnMode: ctrl.turnMode,
+        turnDirection: ctrl.turnDirection,
+      };
+    }
+
+    function blurActiveElement() {
+      if (document.activeElement) {
+        document.activeElement.blur();
       }
-
-      function getContextInfo() {
-        return {
-          drillId: appStateService.getDrillId(),
-          drillName: appStateService.getDrillName(),
-          drillCount: appStateService.getDrillCount(),
-          strideType: ctrl.strideType,
-          turnMode: ctrl.turnMode,
-          turnDirection: ctrl.turnDirection,
-        };
-      }
-
-      function blurActiveElement() {
-        if (document.activeElement) {
-          document.activeElement.blur();
-        }
-      }
-    },
-  });
-
-
+    }
+  },
+});
