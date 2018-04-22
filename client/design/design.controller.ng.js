@@ -75,6 +75,10 @@ angular.module('drillApp')
         $('#openDrillDialog').modal('show');
       });
 
+      ctrl.subscriptions.subscribe(Events.drillOpened, (evt, args) => {
+        onDrillOpened(args.drill);
+      });
+
       ctrl.subscriptions
         .subscribe(Events.showDrillPropertiesDialog, (evt, args) => {
         });
@@ -140,6 +144,15 @@ angular.module('drillApp')
 // TEMP
 // drill.bookmarks = [{ count: 0, name: 'The Beginning' }, { count: 12, name: 'Intro' }];
 
+      setDrill(drill);
+      drillEditorService.goToBeginning();
+    }
+
+    function onDrillOpened(drill) {
+      if (!drill) {
+        newDrill();
+        return;
+      }
       setDrill(drill);
       drillEditorService.goToBeginning();
     }

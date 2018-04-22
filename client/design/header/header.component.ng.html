@@ -16,6 +16,16 @@
         <li>
           <a href="#" ng-click="$ctrl.onOpenDrill()">Open...</a>
         </li>
+        <li class="dropdown-submenu">
+          <a href="#">Open Recent</a>
+          <ul class="dropdown-menu">
+            <li ng-repeat="recentDrill in recentDrills">
+              <a ng-click="$ctrl.openDrill(recentDrill._id)" tabindex="-1" href="#">
+                {{recentDrill.name}}
+              </a>
+            </li>
+          </ul>
+        </li>
         <li role="separator" class="divider"></li>
         <li>
           <a href="#" ng-click="$ctrl.onSave()">Save</a>
@@ -58,8 +68,7 @@
           <a href="#" ng-click="$ctrl.showIntro()">Introduction</a>
         </li>
         <li class="">
-          <a target="_blank" rel="noopener noreferrer"
-           href="https://www.youtube.com/playlist?list=PL0CY-BjxvSFSIuYsRlb1bvAURzeHEwkuB">How To Videos</a>
+          <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/playlist?list=PL0CY-BjxvSFSIuYsRlb1bvAURzeHEwkuB">How To Videos</a>
         </li>
         <li class="disabled">
           <a href="/help">FAQ</a>

@@ -10,6 +10,7 @@ angular.module('drillApp')
     },
     controller: function($scope,
               $location,
+              $rootScope,
               eventService,
               appStateService,
               drillEditorService,
@@ -28,6 +29,17 @@ angular.module('drillApp')
             onDrillPropertiesChanged);
 
         ctrl.subscriptions.subscribe(Events.drillSavedAs, onDrillSavedAs);
+
+        // $scope.subscribe('recentDrills', function() {
+        //   return [{
+        //   }, $scope.getReactively('drillId')];
+        // });
+
+        // $scope.helpers({
+        //   recentDrills: function() {
+        //     return Meteor.call('getRecentDrills');
+        //   },
+        // });
       };
 
       ctrl.$onChanges = function(changes) {
@@ -44,6 +56,16 @@ angular.module('drillApp')
 
       ctrl.onOpenDrill = function() {
         eventService.notify(Events.showOpenDrillDialog);
+      };
+
+      ctrl.openDrill = function(id) {
+        eventService.notify(Events.showSpinner);
+        appStateService.openDrill(id).then((drill) => {
+          eventService.notify(Events.drillOpened, {
+            drill: drill,
+          });
+          eventService.notify(Events.hideSpinner);
+        });
       };
 
       ctrl.onSave = function() {
@@ -68,7 +90,6 @@ angular.module('drillApp')
       };
 
       ctrl.showIntro = function() {
-        console.log('header showintro');
         eventService.notify(Events.showIntroDialog);
       };
 
@@ -95,7 +116,6 @@ angular.module('drillApp')
       };
 
       ctrl.showKeyboardShortcuts = function() {
-        console.log('showKeyboardShortcuts');
         eventService.notify(Events.showKeyboardShortcuts);
       };
 
@@ -136,9 +156,14 @@ angular.module('drillApp')
 
       function onDrillOpened(evt, args) {
         $scope.drillName = appStateService.drill.name;
+        Meteor.callPromise('getRecentDrills').then((recentDrills) => {
+          $scope.recentDrills = recentDrills;
+          $rootScope.$safeApply();
+        });
       }
 
       function onDrillSavedAs(evt, args) {
+        $scope.drillId = appStateService.drill._id;
         $scope.drillName = appStateService.drill.name;
       }
 

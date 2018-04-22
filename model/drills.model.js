@@ -9,6 +9,5 @@ Drills.allow({
   },
   remove: function(userId, drill) {
     return userId && drill.userId == userId;
-  }
+  },
 });
-
