@@ -33,13 +33,14 @@
                             <div class="drill-item-header">
                                 <div class="drill-name">
                                     <a ng-click="open(drill)" data-toggle="modal" data-target="#openDrillDialog">
-                                        <h3 class="drill-title">{{drill.name}}</h3>
+                                        <h3 class="drill-title">{{drill.name}}</h3> 
                                     </a>
                                 </div>
                                 <div class="drill-delete">
                                     <a ng-show="canDelete(drill)" ng-click="delete(drill)">
                                         <i class="fa fa-trash fa-lg delete-button"></i>
                                     </a>
+                                    <i>{{ isCurrentDrill(drill) ? '(currently open)' : '' }}</i>
                                 </div>
                             </div>
                             <div class="drill-desc">
