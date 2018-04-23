@@ -97,6 +97,10 @@ class Events {
 
     // Events - notification that something has happened
 
+    static get fieldRenderComplete() {
+        return 'fieldRenderComplete';
+    }
+
     static get confirmationDialogClosed() {
         return 'confirmationDialogClosed';
     }

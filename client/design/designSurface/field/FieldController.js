@@ -378,7 +378,6 @@ class FieldController {
         const self = this;
         // console.log(evt);
         if (evt.isClick && evt.e.shiftKey) {
-            console.log('shift clicked');
             self.startLasso(evt);
         }
 

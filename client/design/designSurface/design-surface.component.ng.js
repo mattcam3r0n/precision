@@ -21,6 +21,7 @@ angular.module('drillApp')
           appStateService.field = ctrl.field;
           // it will be hidden by design controller after load is complete
           // eventService.notify(Events.hideSpinner);
+          eventService.notify(Events.fieldRenderComplete);
         });
 
         angular.element($window).on('resize', onResize);

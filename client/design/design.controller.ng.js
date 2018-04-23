@@ -43,8 +43,7 @@ angular.module('drillApp')
       // console.log($scope.isLoggingIn);
 
       $scope.$watch('currentUser', function(newValue, oldValue) {
-        // console.log($scope);
-        // console.log($scope.isLoggingIn);
+        // console.log('design: currentUser changed (new, old)', newValue, oldValue);
 
         // $scope.$awaitUser().then(() => {
         //   console.log('awaitUser', $scope.currentUser);
@@ -52,7 +51,7 @@ angular.module('drillApp')
 
         if ($scope.currentUser === undefined) return; // user not available yet
 
-        if (newValue && oldValue && newValue._id === oldValue._id) return; // phantom change
+        // if (newValue && oldValue && newValue._id === oldValue._id) return; // phantom change
 
         appStateService.userChanged();
 
@@ -185,7 +184,6 @@ angular.module('drillApp')
 
     // used by openDrillDialog when a drill is chosen
     $scope.onOpen = function(drill) {
-      console.log('onOpen');
       openDrill(drill);
     };
   });
