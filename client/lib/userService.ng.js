@@ -90,6 +90,14 @@ class UserService {
     this.ensureRecentDrillsAreUnique();
   }
 
+  getNextNewDrillSuffix() {
+    if (!this.userProfile.newDrillSuffix) {
+      this.userProfile.newDrillSuffix = 0;
+    }
+    this.userProfile.newDrillSuffix++;
+    return this.userProfile.newDrillSuffix;
+  }
+
   ensureRecentDrillsAreUnique() {
     this.userProfile.recentDrills = [
       ...new Set(this.userProfile.recentDrills),

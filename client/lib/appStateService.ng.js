@@ -169,6 +169,7 @@ class appStateService {
 
     let builder = new DrillBuilder();
     this.drill = builder.createDrill();
+    this.drill.name = this.drill.name + ' ' + this.userService.getNextNewDrillSuffix();
     this.drill.drillFormatVersion = _currentDrillFormatVersion;
     this.eventService.notify(Events.drillOpened, {
       isNew: true,
