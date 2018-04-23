@@ -136,3 +136,7 @@ Last release tag v0.2.6
 4-21-18
 * FIX: Path tool sometimes doesn't use selected direction
 * FIX: Weird file path indicator when drill is first opened and at beginning of drill.
+* NEW: add sequential number to New Drill name.  E.g., New Drill 1, New Drill 2, etc.
+* NEW: Open Recent on file menu shows list of up to 10 recently opened drills
+* NEW: Open dialog indicates currently open drill and hides delete button
+
