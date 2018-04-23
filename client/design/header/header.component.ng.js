@@ -61,9 +61,6 @@ angular.module('drillApp')
       ctrl.openDrill = function(id) {
         eventService.notify(Events.showSpinner);
         appStateService.openDrill(id).then((drill) => {
-          eventService.notify(Events.drillOpened, {
-            drill: drill,
-          });
           eventService.notify(Events.hideSpinner);
         });
       };

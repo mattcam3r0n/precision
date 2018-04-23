@@ -185,6 +185,7 @@ angular.module('drillApp')
 
     // used by openDrillDialog when a drill is chosen
     $scope.onOpen = function(drill) {
+      console.log('onOpen');
       openDrill(drill);
     };
   });

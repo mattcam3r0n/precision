@@ -147,11 +147,11 @@ class appStateService {
         drillId: drill._id,
       });
       this.drill = drill;
+      this.updateUserProfile(); // set last drill id
       this.eventService.notify(Events.drillOpened, {
         isNew: false,
         drill: drill,
       });
-      this.updateUserProfile(); // set last drill id
       return drill;
     });
   }
