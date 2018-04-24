@@ -62,15 +62,26 @@ angular.module('drillApp').component('openDrillDialog', {
     };
 
     $scope.delete = function(drill) {
+      const msg =
+        'Are you sure you want delete "' +
+        drill.name +
+        '"?' +
+        ($scope.isCurrentDrill(drill)
+          ? ' This drill is currently open.  If you choose to delete it, a new drill will be opened.'
+          : '');
       confirmationDialogService
         .show({
           heading: 'Delete Drill',
-          message: 'Are you sure you want delete "' + drill.name + '"?',
+          message: msg,
           confirmText: 'Delete',
         })
         .then((result) => {
           if (result.confirmed) {
             appStateService.deleteDrill(drill._id);
+            // if ($scope.isCurrentDrill(drill)) {
+            //   appStateService.newDrill();
+            // }
+            eventService.notify(Events.drillDeleted);
           }
         });
     };

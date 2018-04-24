@@ -37,10 +37,10 @@
                                     </a>
                                 </div>
                                 <div class="drill-delete">
+                                    <i>{{ isCurrentDrill(drill) ? '(currently open)' : '' }}</i>
                                     <a ng-show="canDelete(drill)" ng-click="delete(drill)">
                                         <i class="fa fa-trash fa-lg delete-button"></i>
                                     </a>
-                                    <i>{{ isCurrentDrill(drill) ? '(currently open)' : '' }}</i>
                                 </div>
                             </div>
                             <div class="drill-desc">

@@ -121,6 +121,10 @@ class Events {
         return 'drillOpened';
     }
 
+    static get drillDeleted() {
+        return 'drillDeleted';
+    }
+
     static get drillSavedAs() {
         return 'drillSavedAs';
     }

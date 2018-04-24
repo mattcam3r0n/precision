@@ -19,9 +19,13 @@ Meteor.methods({
         .forEach((d) => {
           drillMap[d._id] = d;
         });
-      return recentDrillIds.map((id) => {
-        return { _id: id, name: drillMap[id].name };
-      });
+      return recentDrillIds
+        .filter((id) => {
+          return drillMap[id];
+        })
+        .map((id) => {
+          return { _id: id, name: drillMap[id].name };
+        });
     } catch (ex) {
       throwError('get-recent-drills', ex.message, ex);
     }

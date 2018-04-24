@@ -3,169 +3,179 @@
 import Events from '/client/lib/Events';
 import UndoManager from '/client/lib/UndoManager';
 
-angular.module('drillApp')
-  .component('designHeader', {
-    templateUrl: 'client/design/header/header.component.ng.html',
-    bindings: {
-    },
-    controller: function($scope,
-              $location,
-              $rootScope,
-              eventService,
-              appStateService,
-              drillEditorService,
-              userService
-            ) {
-      let ctrl = this;
+angular.module('drillApp').component('designHeader', {
+  templateUrl: 'client/design/header/header.component.ng.html',
+  bindings: {},
+  controller: function(
+    $scope,
+    $location,
+    $rootScope,
+    eventService,
+    appStateService,
+    drillEditorService,
+    userService
+  ) {
+    let ctrl = this;
 
-      ctrl.$onInit = function() {
-        // $('[data-toggle="tooltip"]').tooltip();
-        ctrl.subscriptions = eventService.createSubscriptionManager();
+    ctrl.$onInit = function() {
+      // $('[data-toggle="tooltip"]').tooltip();
+      ctrl.subscriptions = eventService.createSubscriptionManager();
 
-        ctrl.subscriptions.subscribe(Events.drillOpened,
-              onDrillOpened);
+      ctrl.subscriptions.subscribe(Events.drillOpened, onDrillOpened);
 
-        ctrl.subscriptions.subscribe(Events.drillPropertiesChanged,
-            onDrillPropertiesChanged);
+      ctrl.subscriptions.subscribe(Events.drillDeleted, onDrillDeleted);
 
-        ctrl.subscriptions.subscribe(Events.drillSavedAs, onDrillSavedAs);
+      ctrl.subscriptions.subscribe(
+        Events.drillPropertiesChanged,
+        onDrillPropertiesChanged
+      );
 
-        // $scope.subscribe('recentDrills', function() {
-        //   return [{
-        //   }, $scope.getReactively('drillId')];
-        // });
+      ctrl.subscriptions.subscribe(Events.drillSavedAs, onDrillSavedAs);
 
-        // $scope.helpers({
-        //   recentDrills: function() {
-        //     return Meteor.call('getRecentDrills');
-        //   },
-        // });
-      };
+      // $scope.subscribe('recentDrills', function() {
+      //   return [{
+      //   }, $scope.getReactively('drillId')];
+      // });
 
-      ctrl.$onChanges = function(changes) {
-        $scope.drillName = drillEditorService.drill.name;
-      };
+      // $scope.helpers({
+      //   recentDrills: function() {
+      //     return Meteor.call('getRecentDrills');
+      //   },
+      // });
+    };
 
-      ctrl.$onDestroy = function() {
-        ctrl.subscriptions.unsubscribeAll();
-      };
+    ctrl.$onChanges = function(changes) {
+      $scope.drillName = drillEditorService.drill.name;
+    };
 
-      ctrl.onNewDrill = function() {
-        eventService.notify(Events.newDrill);
-      };
+    ctrl.$onDestroy = function() {
+      ctrl.subscriptions.unsubscribeAll();
+    };
 
-      ctrl.onOpenDrill = function() {
-        eventService.notify(Events.showOpenDrillDialog);
-      };
+    ctrl.onNewDrill = function() {
+      eventService.notify(Events.newDrill);
+    };
 
-      ctrl.openDrill = function(id) {
-        eventService.notify(Events.showSpinner);
-        appStateService.openDrill(id).then((drill) => {
-          eventService.notify(Events.hideSpinner);
-        });
-      };
+    ctrl.onOpenDrill = function() {
+      eventService.notify(Events.showOpenDrillDialog);
+    };
 
-      ctrl.onSave = function() {
-        // save immediately
-        appStateService.saveDrill();
-      };
+    ctrl.openDrill = function(id) {
+      eventService.notify(Events.showSpinner);
+      appStateService.openDrill(id).then((drill) => {
+        eventService.notify(Events.hideSpinner);
+      });
+    };
 
-      ctrl.onSaveAs = function() {
-        eventService.notify(Events.showSaveAsDialog);
-      };
+    ctrl.onSave = function() {
+      // save immediately
+      appStateService.saveDrill();
+    };
 
-      ctrl.onShare = function() {
-        eventService.notify(Events.showShareDialog);
-      };
+    ctrl.onSaveAs = function() {
+      eventService.notify(Events.showSaveAsDialog);
+    };
 
-      ctrl.onDrillProperties = function() {
-        eventService.notify(Events.showDrillPropertiesDialog);
-      };
+    ctrl.onShare = function() {
+      eventService.notify(Events.showShareDialog);
+    };
 
-      ctrl.onDebug = function() {
-        console.log(drillEditorService.drill);
-      };
+    ctrl.onDrillProperties = function() {
+      eventService.notify(Events.showDrillPropertiesDialog);
+    };
 
-      ctrl.showIntro = function() {
-        eventService.notify(Events.showIntroDialog);
-      };
+    ctrl.onDebug = function() {
+      console.log(drillEditorService.drill);
+    };
 
-      ctrl.focusDrillName = function() {
-        angular.element('#txtDrillName').focus();
-      };
+    ctrl.showIntro = function() {
+      eventService.notify(Events.showIntroDialog);
+    };
 
-      ctrl.drillName = function() {
-        if (!drillEditorService.drill) return;
+    ctrl.focusDrillName = function() {
+      angular.element('#txtDrillName').focus();
+    };
 
-        return drillEditorService.drill.name;
-      };
+    ctrl.drillName = function() {
+      if (!drillEditorService.drill) return;
 
-      ctrl.userName = function() {
-        return userService.getUserEmail();
-      };
+      return drillEditorService.drill.name;
+    };
 
-      ctrl.isAdmin = function() {
-        return userService.isAdmin();
-      };
+    ctrl.userName = function() {
+      return userService.getUserEmail();
+    };
 
-      ctrl.goToAdmin = function() {
-        $location.path('/admin');
-      };
+    ctrl.isAdmin = function() {
+      return userService.isAdmin();
+    };
 
-      ctrl.showKeyboardShortcuts = function() {
-        eventService.notify(Events.showKeyboardShortcuts);
-      };
+    ctrl.goToAdmin = function() {
+      $location.path('/admin');
+    };
 
-      ctrl.logOut = function() {
-        userService.logOut();
-      };
+    ctrl.showKeyboardShortcuts = function() {
+      eventService.notify(Events.showKeyboardShortcuts);
+    };
 
-      ctrl.undo = function() {
-        UndoManager.undo();
-      };
+    ctrl.logOut = function() {
+      userService.logOut();
+    };
 
-      ctrl.undoLabel = function() {
-        if (!UndoManager.hasUndo()) return 'Undo';
-        return 'Undo ' + UndoManager.getUndoLabel();
-      };
+    ctrl.undo = function() {
+      UndoManager.undo();
+    };
 
-      ctrl.hasUndo = function() {
-        return UndoManager.hasUndo();
-      };
+    ctrl.undoLabel = function() {
+      if (!UndoManager.hasUndo()) return 'Undo';
+      return 'Undo ' + UndoManager.getUndoLabel();
+    };
 
-      ctrl.redo = function() {
-        UndoManager.redo();
-      };
+    ctrl.hasUndo = function() {
+      return UndoManager.hasUndo();
+    };
 
-      ctrl.redoLabel = function() {
-        if (!UndoManager.hasRedo()) return 'Redo';
-        return 'Redo ' + UndoManager.getRedoLabel();
-      };
+    ctrl.redo = function() {
+      UndoManager.redo();
+    };
 
-      ctrl.hasRedo = function() {
-        return UndoManager.hasRedo();
-      };
+    ctrl.redoLabel = function() {
+      if (!UndoManager.hasRedo()) return 'Redo';
+      return 'Redo ' + UndoManager.getRedoLabel();
+    };
 
-      $scope.onNameChange = function() {
-        appStateService.drill.name = $scope.drillName;
-        drillEditorService.save(true);
-      };
+    ctrl.hasRedo = function() {
+      return UndoManager.hasRedo();
+    };
 
-      function onDrillOpened(evt, args) {
-        $scope.drillName = appStateService.drill.name;
-        Meteor.callPromise('getRecentDrills').then((recentDrills) => {
-          $scope.recentDrills = recentDrills;
-          $rootScope.$safeApply();
-        });
-      }
+    $scope.onNameChange = function() {
+      appStateService.drill.name = $scope.drillName;
+      drillEditorService.save(true);
+    };
 
-      function onDrillSavedAs(evt, args) {
-        $scope.drillId = appStateService.drill._id;
-        $scope.drillName = appStateService.drill.name;
-      }
+    function getRecentDrills() {
+      Meteor.callPromise('getRecentDrills').then((recentDrills) => {
+        $scope.recentDrills = recentDrills;
+        $rootScope.$safeApply();
+      });
+    }
 
-      function onDrillPropertiesChanged(evt, args) {
-        $scope.drillName = appStateService.drill.name;
-      }
-    },
-  });
+    function onDrillOpened(evt, args) {
+      $scope.drillName = appStateService.drill.name;
+      getRecentDrills();
+    }
+
+    function onDrillDeleted(evt, args) {
+      getRecentDrills();
+    }
+
+    function onDrillSavedAs(evt, args) {
+      $scope.drillId = appStateService.drill._id;
+      $scope.drillName = appStateService.drill.name;
+    }
+
+    function onDrillPropertiesChanged(evt, args) {
+      $scope.drillName = appStateService.drill.name;
+    }
+  },
+});
