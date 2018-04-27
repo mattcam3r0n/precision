@@ -142,3 +142,5 @@ Last release tag v0.2.6
 * NEW: Open dialog indicates currently open drill
 * NEW: Can delete currently open drill.  New drill will be opened.
 
+Released v0.2.7 
+* but without delete current drill
