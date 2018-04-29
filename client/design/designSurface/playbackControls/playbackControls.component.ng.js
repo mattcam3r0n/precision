@@ -10,7 +10,7 @@ angular.module('drillApp')
       drill: '<',
     },
     controller: function($scope, $rootScope, $timeout, appStateService,
-                        drillEditorService, eventService) {
+                        drillEditorService, eventService, printService) {
       let ctrl = this;
 
       $scope.tempo = 120;
@@ -137,6 +137,10 @@ angular.module('drillApp')
       ctrl.goToEnd = function() {
         ctrl.timeline.goToEnd();
         blurActiveElement();
+      };
+
+      ctrl.addPrintMark = function() {
+        printService.pdfTest();
       };
 
       // ctrl.pageForward = function() {

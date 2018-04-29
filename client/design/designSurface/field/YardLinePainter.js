@@ -1,36 +1,36 @@
 import FieldDimensions from '/client/lib/FieldDimensions';
 
 class YardLinePainter {
-    static paint(canvas) {
-        addSideLines(canvas);
-        addYardLines(canvas);
-        addYardLineNumbers(canvas);
-        addHashMarks(canvas);
+    static paint(canvas, options = {}) {
+        addSideLines(canvas, options);
+        addYardLines(canvas, options);
+        addYardLineNumbers(canvas, options);
+        addHashMarks(canvas, options);
     }
 }
 
 let _opacity = .7;
 let _yardlineMarkers = ['G    ', '1 0', '2 0', '3 0', '4 0', '5 0', '4 0', '3 0', '2 0', '1 0', '    G'];
 
-function addSideLines(canvas) {
+function addSideLines(canvas, options) {
     let sidelineRect = FieldDimensions.sidelineRect;
     let rect = new fabric.Rect({
         left: sidelineRect.left,
         top: sidelineRect.top,
         width: sidelineRect.width,
         height: sidelineRect.height,
-        fill: 'rgba(0,0,0,0)',
+        fill: options.fill || 'rgba(0,0,0,0)',
         selectable: false,
-        stroke: 'white',
-        strokeWidth: 3,
+        stroke: options.stroke || 'white',
+        strokeWidth: options.strokeWidth || 3,
         evented: false,
-        opacity: _opacity,
+        opacity: options.opacity || _opacity,
     });
     canvas.add(rect);
     rect.sendToBack();
 }
 
-function addYardLines(canvas) {
+function addYardLines(canvas, options) {
     for (let i = 0; i < 21; i++) {
         let x = FieldDimensions.goallineX + (i * FieldDimensions.fiveYardsX);
         let coords = [x, FieldDimensions.farSidelineY, x,
@@ -38,26 +38,26 @@ function addYardLines(canvas) {
             + FieldDimensions.height
             - (2 * FieldDimensions.fiveYardsY)];
         let line = new fabric.Line(coords, {
-                fill: 'white',
-                stroke: 'white',
+                fill: options.fill || 'white',
+                stroke: options.stroke || 'white',
                 strokeWidth: 2,
                 selectable: false,
                 evented: false,
-                opacity: _opacity,
+                opacity: options.opacity || _opacity,
             });
         canvas.add(line);
         line.sendToBack();
       }
 }
 
-function addHashMarks(canvas) {
+function addHashMarks(canvas, options) {
     let lineOptions = {
-        fill: 'white',
-        stroke: 'white',
-        strokeWidth: 2,
+        fill: options.fill || 'white',
+        stroke: options.stroke || 'white',
+        strokeWidth: options.strokeWidth || 2,
         selectable: false,
         evented: false,
-        opacity: _opacity,
+        opacity: options.strokeWidth || _opacity,
     };
     for (let i = 0; i < 21; i++) {
         let x = FieldDimensions.goallineX + (i * FieldDimensions.fiveYardsX);
@@ -74,17 +74,17 @@ function addHashMarks(canvas) {
       }
 }
 
-function addYardLineNumbers(canvas) {
+function addYardLineNumbers(canvas, options) {
     let textOptions = {
-        fontSize: 24,
+        fontSize: options.fontSize || 24,
         lineHeight: 1,
         originX: 'center',
         originY: 'center',
         fontFamily: 'Helvetica',
         fontWeight: 'bold',
-        stroke: 'white',
-        fill: 'white',
-        opacity: _opacity,
+        stroke: options.stroke || 'white',
+        fill: options.fill || 'white',
+        opacity: options.opacity || _opacity,
         statefullCache: true,
         selectable: false,
         evented: false,

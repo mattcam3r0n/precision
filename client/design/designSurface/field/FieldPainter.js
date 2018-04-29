@@ -3,8 +3,9 @@ import YardLinePainter from './YardLinePainter';
 import GridPainter from './GridPainter';
 
 class FieldPainter {
-  constructor(canvas) {
+  constructor(canvas, options) {
     this.canvas = canvas;
+    this.options = options || {};
     this.gridPainter = new GridPainter(canvas);
     this.strideType = 0;
     this._isGridVisible = false;
@@ -16,7 +17,7 @@ class FieldPainter {
   }
 
   paint() {
-    YardLinePainter.paint(this.canvas);
+    YardLinePainter.paint(this.canvas, this.options);
     this.isGridVisible ? this.showGrid(this.strideType) : this.hideGrid();
     this.isLogoVisible ? this.showFieldLogo() : this.hideFieldLogo();
     this.canvas.renderAll();
