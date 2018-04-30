@@ -6,7 +6,7 @@ let Marcher = fabric.util.createClass(fabric.Triangle, {
   // cosider center of object the origin. eg, rotate around center.
   originX: 'center',
   originY: 'center',
-  fill: 'red',
+  // fill: 'red',
   stroke: 'black',
   hasControls: false,
   lockMovementX: true,
@@ -14,6 +14,10 @@ let Marcher = fabric.util.createClass(fabric.Triangle, {
   hoverCursor: 'pointer',
 
   initialize: function(options) {
+    options = options || {};
+
+    options.fill = options.fill || 'red';
+
     this.callSuper('initialize', options);
 
     /* eslint-disable no-invalid-this */

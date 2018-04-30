@@ -3,7 +3,8 @@ import FieldDimensions from '/client/lib/FieldDimensions';
 import Marcher from './Marcher';
 
 class MarcherFactory {
-    static createMarcher(initialState) {
+    static createMarcher(initialState, options) {
+        options = options || {};
         let strideType = initialState.strideType || StrideType.SixToFive;
         let fieldPoint = FieldDimensions.toFieldPoint({ x: initialState.x,
             y: initialState.y }, strideType);
@@ -14,7 +15,7 @@ class MarcherFactory {
             left: fieldPoint.x,
             top: fieldPoint.y,
             angle: initialState.direction, // angle of object. correspond to direction.
-            fill: initialState.color || 'red',
+            fill: options.fill || initialState.color || 'red',
         });
 
         return marcher;
