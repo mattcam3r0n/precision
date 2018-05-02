@@ -1,0 +1,69 @@
+<!-- Modal -->
+<div class="print-charts-dialog modal fade" id="printChartsDialog" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="printChartsDialoglabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="printChartsDialogLabel">Print Charts</h4>
+            </div>
+            <div class="modal-body" style="min-height: 450px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs">
+                            <li role="presentation" class="" ng-class="{ active: $ctrl.isTabActive('currentCount') }">
+                                <a href="#" ng-click="$ctrl.setActiveTab('currentCount')">
+                                    <h4>Current Count</h4>
+                                </a>
+                            </li>
+                            <li role="presentation" class="" ng-class="{ active: $ctrl.isTabActive('bookmarks') }">
+                                <a href="#" ng-click="$ctrl.setActiveTab('bookmarks')">
+                                    <h4>Bookmarks</h4>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab" ng-show="$ctrl.isTabActive('currentCount')">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>The chart will show the band formation at the current count ({{$ctrl.getCurrentCount()}}).</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label">Notes</label>
+                                    <textarea rows="4" ng-model="$ctrl.notes" class="form-control"></textarea>
+                                    <p>Enter notes to be shown on the chart.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label">Number of counts to forecast:</label>
+                                    <input style="width: 100px;" type="number" ng-model="$ctrl.forecastCounts" class="form-control" />
+                                    <p>The chart can also show the future positions of the band. Enter the number of counts
+                                        to project forward, or 0 to show the current position only.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab" ng-show="$ctrl.isTabActive('bookmarks')">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    bookmarks
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer button-row">
+                <div class="col-md-8 text-left">
+                    <span class="label label-primary" ng-repeat="user in $ctrl.selectedUsers">{{user.profile.firstName}}</span>
+                </div>
+                <div class="col-md-4">
+                    <button ng-click="$ctrl.print()" type="button" class="btn btn-primary" data-dismiss="modal">Print</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

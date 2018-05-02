@@ -80,6 +80,10 @@ angular.module('drillApp').component('designHeader', {
       eventService.notify(Events.showShareDialog);
     };
 
+    ctrl.onPrintCharts = function() {
+      eventService.notify(Events.showPrintChartsDialog);
+    };
+
     ctrl.onDrillProperties = function() {
       eventService.notify(Events.showDrillPropertiesDialog);
     };

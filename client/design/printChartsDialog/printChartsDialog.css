@@ -1,0 +1,31 @@
+.print-charts-dialog .modal-lg {
+    width: 600px;
+}
+
+.print-charts-dialog .modal-body {
+    max-height: 400px;
+}
+
+.print-charts-dialog .button-row {
+    padding: 10px;
+}
+
+.print-charts-dialog .button-row div {
+    height: 50px;
+}
+
+/* tabs */
+.print-charts-dialog .tab {
+    padding: 10px;
+    border-left: solid 1px silver;
+    border-right: solid 1px silver;
+    border-bottom: solid 1px silver;
+}
+
+.print-charts-dialog .nav-tabs {
+    margin-top: 10px;
+}
+
+.print-charts-dialog button.active {
+    background-color: lightblue;
+}

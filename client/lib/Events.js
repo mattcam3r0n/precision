@@ -14,6 +14,10 @@ class Events {
     static get showShareDialog() {
         return 'showShareDialog';
     }
+    
+    static get showPrintChartsDialog() {
+        return 'showPrintChartsDialog';
+    }
 
     static get showKeyboardShortcuts() {
         return 'showKeyboardShortcuts';

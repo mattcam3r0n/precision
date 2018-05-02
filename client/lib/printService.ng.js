@@ -32,6 +32,26 @@ class printService {
     window.open(doc.output('bloburl'), '_blank');
   }
 
+  printChart(count, notes, forecastCounts) {
+    const doc = new JsPDF('landscape', 'mm', 'a4');
+    const canvasEl = document.createElement('canvas');
+    const canvas = new fabric.Canvas(canvasEl, {
+      // backgroundColor: '#40703B', // huntergreen //'green',
+      height: FieldDimensions.height,
+      width: FieldDimensions.width,
+      uniScaleTransform: true,
+      renderOnAddRemove: false, // performance optimization
+    });
+
+    this.addTitle(doc);
+    this.addCounts(doc, forecastCounts);
+    this.addNotes(doc, notes);
+    this.drawField(doc, canvas, forecastCounts);
+
+    // doc.autoPrint();
+    window.open(doc.output('bloburl'), '_blank');
+  }
+
   addTitle(doc) {
     doc.setFontSize(22);
     doc.text(10, 20, this.appStateService.drill.name);
@@ -51,9 +71,7 @@ class printService {
     doc.text(leftOffset, 20, label);
   }
 
-  addNotes(doc) {
-    const notes =
-      'Mirrored waterfall begins on the 40. Separate into two blocks and countermarch on the far 20. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.';
+  addNotes(doc, notes) {
     doc.setFontSize(12);
     const splitText = doc.splitTextToSize(
       notes,

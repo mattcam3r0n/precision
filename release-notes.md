@@ -150,4 +150,4 @@ Released v0.2.7
 * NEW: show bookmarks on timeline
 * NEW: double-click bookmark to edit
 * NEW: added notes and counts to forecast to bookmarks, to facilitate chart printing
-* 
+* FIX: errors in share dialog
