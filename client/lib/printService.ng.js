@@ -33,7 +33,7 @@ class printService {
   }
 
   printChart(count, notes, forecastCounts) {
-    const doc = new JsPDF('landscape', 'mm', 'a4');
+    const doc = new JsPDF('landscape', 'mm', 'letter');
     const canvasEl = document.createElement('canvas');
     const canvas = new fabric.Canvas(canvasEl, {
       // backgroundColor: '#40703B', // huntergreen //'green',
