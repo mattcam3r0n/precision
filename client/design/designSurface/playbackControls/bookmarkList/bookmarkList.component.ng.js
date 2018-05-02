@@ -80,6 +80,8 @@ angular.module('drillApp').component('bookmarkList', {
       ctrl.isEditMode = false;
       ctrl.count = drillEditorService.currentCount;
       ctrl.name = '';
+      ctrl.notes = '';
+      ctrl.forecastCounts = null;
       showBookmarkDialog();
     };
 
@@ -100,6 +102,8 @@ angular.module('drillApp').component('bookmarkList', {
       appStateService.drill.bookmarks.push({
         count: ctrl.count,
         name: ctrl.name,
+        notes: ctrl.notes,
+        forecastCounts: ctrl.forecastCounts,
       });
       drillEditorService.save(true);
       eventService.notify(Events.bookmarkChanged);
@@ -108,6 +112,8 @@ angular.module('drillApp').component('bookmarkList', {
     function saveEdit() {
       ctrl.bookmark.count = ctrl.count;
       ctrl.bookmark.name = ctrl.name;
+      ctrl.bookmark.notes = ctrl.notes;
+      ctrl.bookmark.forecastCounts = ctrl.forecastCounts;
       drillEditorService.save(true);
       eventService.notify(Events.bookmarkChanged);
     }
@@ -116,6 +122,8 @@ angular.module('drillApp').component('bookmarkList', {
       ctrl.isEditMode = true;
       ctrl.count = args.bookmark.count;
       ctrl.name = args.bookmark.name;
+      ctrl.notes = args.bookmark.notes;
+      ctrl.forecastCounts = args.bookmark.forecastCounts;
       ctrl.bookmark = args.bookmark;
       console.log(args, ctrl);
       showBookmarkDialog();

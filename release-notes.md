@@ -144,3 +144,10 @@ Last release tag v0.2.6
 
 Released v0.2.7 
 * but without delete current drill
+
+5-1-18
+* FIX: widened count box on bookmark dialog
+* NEW: show bookmarks on timeline
+* NEW: double-click bookmark to edit
+* NEW: added notes and counts to forecast to bookmarks, to facilitate chart printing
+* 

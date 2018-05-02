@@ -25,13 +25,25 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-2 form-group-sm">
+                    <div class="col-md-3 form-group-sm">
                         <label class="control-label">Count</label>
                         <input type="number" ng-model="$ctrl.count" ng-required='true' class="form-control" />
                     </div>
-                    <div class="col-md-10 form-group-sm">
+                    <div class="col-md-9 form-group-sm">
                         <label class="control-label">Name</label>
                         <input type="text" ng-model="$ctrl.name" ng-required='true' class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group-sm">
+                        <label class="control-label">Notes</label>
+                        <textarea rows="4" ng-model="$ctrl.notes" ng-required="false" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group-sm">
+                        <label class="control-label">When printing, forecast this many counts:&nbsp;</label>
+                        <input type="number" style="width: 100px" ng-model="$ctrl.forecastCounts" ng-required='false' class="form-control" />
                     </div>
                 </div>
             </div>
