@@ -1,18 +1,10 @@
-.playback-controls {
-    /* position: absolute;
-    z-index: 2;
-    top: 100px;
-    left: -95px;
-    height: 140px;
-    width: 100%; */
-}
 
 #playbackToolbar {
     height: 27px;
     margin-top: 3px;
     margin-bottom: 0;
     margin-left: 0;
-    marging-right: 0;
+    margin-right: 0;
     padding: 2px;
     background-color:gainsboro;
 }

@@ -26,6 +26,8 @@ angular.module('drillApp')
           onDrillOpened);
         ctrl.subscriptions.subscribe(Events.musicChanged,
           onMusicChanged);
+        ctrl.subscriptions.subscribe(Events.bookmarkChanged,
+          onBookmarkChanged);
         $('[data-toggle="tooltip"]').tooltip();
       };
 
@@ -36,7 +38,11 @@ angular.module('drillApp')
       ctrl.$onChanges = function(changes) {
         // if the drill changed, update field
         if (!ctrl.drill) return;
-        ctrl.timeline.setMusicItems(ctrl.drill.music);
+//        ctrl.timeline.setMusicItems(ctrl.drill.music);
+        ctrl.timeline.setItems({
+          music: ctrl.drill.music,
+          bookmarks: ctrl.drill.bookmarks,
+        });
         ctrl.timeline.setCurrentCount(0);
       };
 
@@ -82,14 +88,40 @@ angular.module('drillApp')
         eventService.notify(Events.chooseMusicDialogActivated);
       };
 
+      function setItems() {
+        ctrl.timeline.setItems({
+          music: ctrl.drill.music,
+          bookmarks: ctrl.drill.bookmarks,
+        });
+      }
+
       function onAudioClipAdded(evt, args) {
-        ctrl.timeline.setMusicItems(ctrl.drill.music);
+        // ctrl.timeline.setMusicItems(ctrl.drill.music);
+        setItems();
         drillEditorService.save(true);
       }
 
       function onRemove(item) {
+        if (item.group == 'music') {
+          return removeMusic(item);
+        }
+
+        if (item.group == 'bookmarks') {
+          return removeBookmark(item);
+        }
+      }
+
+      function removeMusic(item) {
         let i = ctrl.drill.music.indexOf(item.music);
         ctrl.drill.music.splice(i, 1);
+        drillEditorService.save(true);
+        return true; // continue removal. return false to cancel.
+      }
+
+      function removeBookmark(item) {
+        let i = ctrl.drill.bookmarks.indexOf(item.bookmark);
+        ctrl.drill.bookmarks.splice(i, 1);
+        drillEditorService.save(true);
         return true; // continue removal. return false to cancel.
       }
 
@@ -115,6 +147,10 @@ angular.module('drillApp')
 
       function onDrillOpened(evt, args) {
         zoomTimeline();
+      }
+
+      function onBookmarkChanged(evt, args) {
+        setItems();
       }
 
       function onMusicChanged(args) {

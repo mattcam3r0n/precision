@@ -1,6 +1,6 @@
 'use strict';
 
-// import Events from '/client/lib/Events';
+import Events from '/client/lib/Events';
 
 angular.module('drillApp')
   .component('bookmarkList', {
@@ -64,6 +64,7 @@ angular.module('drillApp')
         console.log('delete bookmark ' + bookmark.name);
         const i = appStateService.drill.bookmarks.indexOf(bookmark);
         appStateService.drill.bookmarks.splice(i, 1);
+        eventService.notify(Events.bookmarkChanged);
       };
 
       ctrl.addBookmark = function() {
@@ -86,6 +87,8 @@ angular.module('drillApp')
           count: ctrl.count,
           name: ctrl.name,
         });
+        drillEditorService.save(true);
+        eventService.notify(Events.bookmarkChanged);
       };
 
       function blurActiveElement() {

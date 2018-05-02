@@ -7,7 +7,7 @@ import MemberPositionCalculator from './drill/MemberPositionCalculator';
 
 class printService {
   constructor(appStateService) {
-      this.appStateService = appStateService;
+    this.appStateService = appStateService;
   }
 
   pdfTest() {
@@ -16,11 +16,11 @@ class printService {
 
     const canvasEl = document.createElement('canvas');
     const canvas = new fabric.Canvas(canvasEl, {
-        // backgroundColor: '#40703B', // huntergreen //'green',
-        height: FieldDimensions.height,
-        width: FieldDimensions.width,
-        uniScaleTransform: true,
-        renderOnAddRemove: false, // performance optimization
+      // backgroundColor: '#40703B', // huntergreen //'green',
+      height: FieldDimensions.height,
+      width: FieldDimensions.width,
+      uniScaleTransform: true,
+      renderOnAddRemove: false, // performance optimization
     });
 
     this.addTitle(doc);
@@ -42,7 +42,9 @@ class printService {
     // const left = doc.internal.pageSize.width * .75;
     const label = 'Counts ' + count + ' - ' + (count + counts);
     doc.setFontSize(16);
-    const leftOffset = (doc.internal.pageSize.width) - (doc.getStringUnitWidth(label) * doc.internal.getFontSize() / 2);
+    const leftOffset =
+      doc.internal.pageSize.width -
+      doc.getStringUnitWidth(label) * doc.internal.getFontSize() / 2;
     console.log('page width', doc.internal.pageSize.width);
     console.log('string unit width', doc.getStringUnitWidth(label));
     console.log('font size', doc.internal.getFontSize());
@@ -50,16 +52,20 @@ class printService {
   }
 
   addNotes(doc) {
-    const notes = 'Mirrored waterfall begins on the 40. Separate into two blocks and countermarch on the far 20. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.';
+    const notes =
+      'Mirrored waterfall begins on the 40. Separate into two blocks and countermarch on the far 20. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.';
     doc.setFontSize(12);
-    const splitText = doc.splitTextToSize(notes, doc.internal.pageSize.width - 20);
+    const splitText = doc.splitTextToSize(
+      notes,
+      doc.internal.pageSize.width - 20
+    );
     doc.text(10, 30, splitText);
   }
 
   drawField(doc, canvas, counts) {
     const painter = new FieldPainter(canvas, {
-        // fill: 'black',
-        stroke: 'gray',
+      // fill: 'black',
+      stroke: 'gray',
     });
     painter.paint();
 
@@ -75,39 +81,44 @@ class printService {
 
   drawMarchers(canvas) {
     this.appStateService.drill.members.forEach((m) => {
-        canvas.add(MarcherFactory.createMarcher(m.currentState, {
-            fill: 'gray',
-        }));
+      canvas.add(
+        MarcherFactory.createMarcher(m.currentState, {
+          fill: 'gray',
+        })
+      );
     });
   }
 
   drawFootrints(canvas, counts) {
     // for each member
-        // for N counts
-            // calc position
-            // add point to pointset
+    // for N counts
+    // calc position
+    // add point to pointset
     const pointSet = new PointSet();
     this.appStateService.drill.members.forEach((m) => {
-        let pos = m.currentState;
-        for (let count = 0; count < counts; count++) {
-            pos = MemberPositionCalculator.stepForward(m, pos, 1);
-            pointSet.add({ x: pos.x, y: pos.y });
-        }
+      let pos = m.currentState;
+      for (let count = 0; count < counts; count++) {
+        pos = MemberPositionCalculator.stepForward(m, pos, 1);
+        pointSet.add({ x: pos.x, y: pos.y });
+      }
     });
     pointSet.points.forEach((p) => {
-        canvas.add(new fabric.Circle({
-            originX: 'center',
-            originY: 'center',
-            left: p.x,
-            top: p.y,
-            radius: 2,
-            fill: 'black',
-            stroke: 'black',
-            opacity: .3,
-        }));
+      canvas.add(
+        new fabric.Circle({
+          originX: 'center',
+          originY: 'center',
+          left: p.x,
+          top: p.y,
+          radius: 2,
+          fill: 'black',
+          stroke: 'black',
+          opacity: 0.3,
+        })
+      );
     });
   }
-
 }
 
-angular.module('drillApp').service('printService', ['appStateService', printService]);
+angular
+  .module('drillApp')
+  .service('printService', ['appStateService', printService]);

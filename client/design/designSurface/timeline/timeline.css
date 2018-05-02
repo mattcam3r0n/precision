@@ -1,13 +1,5 @@
 .timeline {
-    /* position: absolute;
-    z-index: 2;
-    top: 505px;
-    left: -95px;
-    height: 140px;
-    width: 100%; */
-
     width:100%;
-
     font-size: 8pt;
     padding: 0;
 }
@@ -20,10 +12,6 @@
     cursor: pointer;
 }
 
-.timeline div.panel-heading {
-    margin-left: 5px;
-}
-
 .timeline button {
     text-align: left;
     font-size: 10px;
@@ -34,16 +22,42 @@
     background-color: white;
 }
 
+.timeline .vis-item {
+    color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.timeline .vis-item.music {
+    /* background-color: #284B63; 1E3749 3B5B71 */
+    background-color: #284B63;
+}
+
+.timeline .vis-item.bookmark {
+    /* background-color: #40703B;  */
+    background-color:gold;
+    color: black;
+}
+
+.timeline .vis-item.vis-dot.bookmark {
+    border-color: gold;
+    color: white;
+}
+
 .timeline .vis-item .vis-item-content {
-    padding: 0;
+    padding: 1px;
+}
+
+.timeline .vis-item .vis-delete {
+    top: -6px;
 }
 
 #timeline-page-left {
-    height: 70px;
+    height: 85px;
 }
 
 #timeline-page-right {
-    height: 70px;
+    height: 85px;
 }
 
 .timeline-container {
