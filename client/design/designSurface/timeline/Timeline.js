@@ -279,6 +279,9 @@ class Timeline {
     const item = this.items.get(props.item);
     if (item.group == 'bookmarks') {
       console.log('dbl click bk mk', props.item);
+      this.eventService.notify(Events.showBookmarkDialog, {
+        bookmark: item.bookmark,
+      });
     }
   }
 

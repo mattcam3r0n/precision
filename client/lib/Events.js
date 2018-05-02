@@ -39,6 +39,10 @@ class Events {
         return 'showSaveAsDialog';
     }
 
+    static get showBookmarkDialog() {
+        return 'showBookmarkDialog';
+    }
+
     static get sizeToFit() {
         return 'sizeToFit';
     }
