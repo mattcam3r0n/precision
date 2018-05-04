@@ -2,130 +2,141 @@
 
 import Events from '/client/lib/Events';
 
-angular.module('drillApp')
-  .component('contextMenu', {
-    templateUrl: 'client/design/contextMenu/contextMenu.component.ng.html',
-    bindings: {
-    },
-    controller: function($scope, $rootScope, $document,
-      confirmationDialogService, drillEditorService, eventService) {
-      let ctrl = this;
+angular.module('drillApp').component('contextMenu', {
+  templateUrl: 'client/design/contextMenu/contextMenu.component.ng.html',
+  bindings: {},
+  controller: function(
+    $scope,
+    $rootScope,
+    $document,
+    confirmationDialogService,
+    drillEditorService,
+    eventService
+  ) {
+    let ctrl = this;
 
-      const instrumentColors = {
-        twirler: 'lightblue',
-        flag: 'orchid',
-        flute: 'pink',
-        clarinet: 'gainsboro',
-        lowreed: 'indigo',
-        saxophone: 'lightgreen',
-        trumpet: 'blue',
-        horn: 'gold',
-        trombone: 'fuchsia',
-        baritone: 'purple',
-        tuba: 'orange',
-        percussion: 'gray',
-      };
+    const instrumentColors = {
+      twirler: 'lightblue',
+      flag: 'orchid',
+      flute: 'pink',
+      clarinet: 'gainsboro',
+      lowreed: 'indigo',
+      saxophone: 'lightgreen',
+      trumpet: 'blue',
+      horn: 'gold',
+      trombone: 'fuchsia',
+      baritone: 'purple',
+      tuba: 'orange',
+      percussion: 'gray',
+    };
 
-      ctrl.$onInit = function() {
-        ctrl.isActivated = false;
-        ctrl.subscriptions = eventService.createSubscriptionManager();
+    ctrl.$onInit = function() {
+      ctrl.isActivated = false;
+      ctrl.subscriptions = eventService.createSubscriptionManager();
 
-        ctrl.subscriptions.subscribe(Events.showContextMenu, (evt, args) => {
-            activate(args);
-        });
+      ctrl.subscriptions.subscribe(Events.showContextMenu, (evt, args) => {
+        activate(args);
+      });
 
-        $document.click((evt)=>{
-          deactivate();
-        });
-        // $('body').mousedown((evt)=> {
-        //   console.log(evt);
-        //   if (evt.target.nodeName != 'A') {
-        //     deactivate();
-        //   }
-        // });
-      };
+      $document.click((evt) => {
+        deactivate();
+      });
+      // $('body').mousedown((evt)=> {
+      //   console.log(evt);
+      //   if (evt.target.nodeName != 'A') {
+      //     deactivate();
+      //   }
+      // });
+    };
 
-      ctrl.$onDestroy = function() {
-      };
+    ctrl.$onDestroy = function() {};
 
-      $scope.activate = activate;
+    $scope.activate = activate;
 
-      $scope.deactivate = function() {
-      };
+    $scope.deactivate = function() {};
 
-      $scope.cancel = deactivate;
+    $scope.cancel = deactivate;
 
-      ctrl.deleteForward = function() {
-        drillEditorService.deleteForward();
-      };
+    ctrl.deleteForward = function() {
+      drillEditorService.deleteForward();
+    };
 
-      ctrl.addMarchers = function() {
-        // always go to beginning when adding new marchers
-        drillEditorService.goToBeginning();
-        eventService.notify(Events.addMembersToolActivated);
-      };
+    ctrl.addMarchers = function() {
+      // always go to beginning when adding new marchers
+      drillEditorService.goToBeginning();
+      eventService.notify(Events.addMembersToolActivated);
+    };
 
-      ctrl.deleteMarchers = function() {
-        const selection = drillEditorService.getMemberSelection();
-        if (selection.members.length === 0) return;
+    ctrl.deleteMarchers = function() {
+      const selection = drillEditorService.getMemberSelection();
+      if (selection.members.length === 0) return;
 
-        confirmationDialogService.show({
+      confirmationDialogService
+        .show({
           heading: 'Delete Marchers',
           message: 'Delete ' + selection.members.length + ' marchers?',
           confirmText: 'Delete',
-        }).then((result) => {
+        })
+        .then((result) => {
           if (result.confirmed) {
             drillEditorService.deleteSelectedMembers();
           }
         });
-      };
+    };
 
-      ctrl.setColor = function(instrument) {
-        console.log('setColor');
-        const memberSelection = drillEditorService.getMemberSelection();
-        memberSelection.members.forEach((member) => {
-          member.color = instrumentColors[instrument];
-        });
-        eventService.notify(Events.membersChanged);
-        drillEditorService.deselectAll();
-        drillEditorService.save(true);
-      };
+    ctrl.setColor = function(instrument) {
+      const memberSelection = drillEditorService.getMemberSelection();
+      memberSelection.members.forEach((member) => {
+        member.color = instrumentColors[instrument];
+      });
+      eventService.notify(Events.membersChanged);
+      drillEditorService.deselectAll();
+      drillEditorService.save(true);
+    };
 
+    ctrl.selectAll = function() {
+      drillEditorService.selectAll();
+    };
 
-      ctrl.selectAll = function() {
-        console.log('select all');
-        drillEditorService.selectAll();
-      };
+    ctrl.selectXandO = function() {
+      drillEditorService.selectXandO();
+    };
 
-      ctrl.deselectAll = function() {
-        drillEditorService.deselectAll();
-      };
+    ctrl.selectAlternatingFiles = function() {
+      drillEditorService.selectAlternatingFiles();
+    };
 
-      ctrl.hideUnselected = function() {
-        drillEditorService.hideUnselected();
-      };
+    ctrl.selectAlternatingRanks = function() {
+      drillEditorService.selectAlternatingRanks();
+    };
 
-      ctrl.showUnselected = function() {
-        drillEditorService.showAll();
-      };
+    ctrl.deselectAll = function() {
+      drillEditorService.deselectAll();
+    };
 
-      function activate(args) {
-        if (ctrl.isActivated) {
-          deactivate();
-        }
+    ctrl.hideUnselected = function() {
+      drillEditorService.hideUnselected();
+    };
 
-        ctrl.isActivated = true;
-        console.log(args);
-        $('div.context-menu').css({ top: args.point.top, left: args.point.left });
-        $('div.context-menu div.dropdown').addClass('open');
-        $rootScope.$safeApply();
+    ctrl.showUnselected = function() {
+      drillEditorService.showAll();
+    };
+
+    function activate(args) {
+      if (ctrl.isActivated) {
+        deactivate();
       }
 
-      function deactivate() {
-        ctrl.isActivated = false;
-        $('div.context-menu div.dropdown').removeClass('open');
-      }
-    },
-  });
+      ctrl.isActivated = true;
+      console.log(args);
+      $('div.context-menu').css({ top: args.point.top, left: args.point.left });
+      $('div.context-menu div.dropdown').addClass('open');
+      $rootScope.$safeApply();
+    }
 
-
+    function deactivate() {
+      ctrl.isActivated = false;
+      $('div.context-menu div.dropdown').removeClass('open');
+    }
+  },
+});

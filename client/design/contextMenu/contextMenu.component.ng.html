@@ -7,6 +7,26 @@
             <li>
                 <a href="#" ng-click="$ctrl.deselectAll()">Deselect All</a>
             </li>
+            <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Selection</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a ng-click="$ctrl.selectXandO()" tabindex="-1" href="#">
+                            Xs and Os
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.selectAlternatingFiles()" tabindex="-1" href="#">
+                            Alternating Files
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.selectAlternatingRanks()" tabindex="-1" href="#">
+                            Alternating Ranks
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a href="#" ng-click="$ctrl.hideUnselected()">Hide Unselected</a>
             </li>

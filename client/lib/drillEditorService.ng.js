@@ -4,6 +4,9 @@ import Events from './Events';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
 import DrillPlayer from '/client/lib/drill/DrillPlayer';
 import UndoManager from '/client/lib/UndoManager';
+import PositionMap from './drill/PositionMap';
+import Block from './drill/Block';
+import Direction from '/client/lib/Direction';
 
 class DrillEditorService {
   constructor(
@@ -108,6 +111,60 @@ class DrillEditorService {
     this.drillBuilder.selectAll();
     this.notifyMembersSelected();
     // this.notifyDrillStateChanged();
+  }
+
+  selectXandO() {
+    const selected = this.drillBuilder.getMemberSelection();
+    const positionMap = new PositionMap(selected.members);
+    positionMap.distinctXs.forEach((x, i) => {
+      positionMap.distinctYs.forEach((y, j) => {
+        const m = positionMap.getMemberAtPosition(x, y);
+        if (m) {
+          if (i % 2 == 0) {
+            m.isSelected = j % 2 == 0 ? true : false;
+          } else {
+            m.isSelected = j % 2 == 0 ? false : true;
+          }
+        }
+      });
+    });
+    this.notifyMembersSelected();
+  }
+
+  selectAlternatingFiles() {
+    const selected = this.drillBuilder.getMemberSelection();
+    const block = new Block(selected.members);
+    block.positionMap.distinctXs.forEach((x, i) => {
+      block.positionMap.distinctYs.forEach((y, j) => {
+        const m = block.positionMap.getMemberAtPosition(x, y);
+        if (m) {
+          if ([Direction.N, Direction.S].includes(block.getBlockDirection())) {
+            m.isSelected = i % 2 == 0 ? true : false;
+          } else {
+            m.isSelected = j % 2 == 0 ? true : false;
+          }
+        }
+      });
+    });
+    this.notifyMembersSelected();
+  }
+
+  selectAlternatingRanks() {
+    const selected = this.drillBuilder.getMemberSelection();
+    const block = new Block(selected.members);
+    block.positionMap.distinctXs.forEach((x, i) => {
+      block.positionMap.distinctYs.forEach((y, j) => {
+        const m = block.positionMap.getMemberAtPosition(x, y);
+        if (m) {
+          if ([Direction.N, Direction.S].includes(block.getBlockDirection())) {
+            m.isSelected = j % 2 == 0 ? true : false;
+          } else {
+            m.isSelected = i % 2 == 0 ? true : false;
+          }
+        }
+      });
+    });
+    this.notifyMembersSelected();
   }
 
   deselectAll() {

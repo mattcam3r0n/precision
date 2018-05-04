@@ -156,5 +156,6 @@ Released v0.2.7
 5-4-18 Released v0.2.8, chart printing
 
 5-4-18
-* Small cosmetic changes to print chart dialog
-* Delete Forward keyboard shortcut, context menu
+* NEW: Small cosmetic changes to print chart dialog
+* NEW: Delete Forward keyboard shortcut, context menu
+* NEW: On context menu, a new Selection sub-menu with options for modifying the current selection, including Xs and Os, and alternating ranks and files

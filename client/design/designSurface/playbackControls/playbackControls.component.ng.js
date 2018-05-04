@@ -37,6 +37,7 @@ angular.module('drillApp')
                 && args.memberSelection.members.length > 0) {
               msg = args.memberSelection.members.length + ' selected marchers.';
             }
+
             $scope.membersSelected = msg;
             $rootScope.$safeApply();
           });
