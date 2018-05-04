@@ -32,21 +32,24 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="control-label">Title</label>
-                                    <input type="text" ng-model="$ctrl.name" class="form-control"/>
+                                    <input type="text" ng-model="$ctrl.name" class="form-control" placeholder="Enter a title for the chart."/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="control-label">Notes</label>
-                                    <textarea rows="4" ng-model="$ctrl.notes" class="form-control"></textarea>
-                                    <p>Enter notes to be shown on the chart.</p>
+                                    <textarea rows="4" ng-model="$ctrl.notes" class="form-control" placeholder="Enter notes to be shown on the chart."></textarea>
+                                    <!-- <p>Enter notes to be shown on the chart.</p> -->
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <label class="control-label">Number of counts to forecast:</label>
-                                    <input style="width: 100px;" type="number" ng-model="$ctrl.forecastCounts" class="form-control" />
-                                    <p>Enter the number of counts to project forward, or 0 to show the current position only.</p>
+                                <div class="col-md-3">
+                                    <label class="control-label">Forecast counts:</label>
+                                    <input type="number" ng-model="$ctrl.forecastCounts" class="form-control" />
+                                    <!-- <p>Enter the number of counts to project forward, or 0 to show the current position only.</p> -->
+                                </div>
+                                <div class="col-md-9" style="margin-top: 20px;">
+                                    Enter the number of counts to project forward, or 0 to show the current position only.
                                 </div>
                             </div>
                         </div>
