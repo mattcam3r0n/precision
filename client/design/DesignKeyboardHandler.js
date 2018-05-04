@@ -40,6 +40,11 @@ class DesignKeyboardHandler {
                     return;
                 }
 
+                if (e.ctrlKey || e.metaKey) {
+                    this.drillEditorService.deleteForward();
+                    return;
+                }
+
                 // re-broadcast delete key event
                 this.eventService.notify(Events.deleteTurn);
             },

@@ -55,6 +55,10 @@ angular.module('drillApp')
 
       $scope.cancel = deactivate;
 
+      ctrl.deleteForward = function() {
+        drillEditorService.deleteForward();
+      };
+
       ctrl.addMarchers = function() {
         // always go to beginning when adding new marchers
         drillEditorService.goToBeginning();

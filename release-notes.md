@@ -155,3 +155,6 @@ Released v0.2.7
 
 5-4-18 Released v0.2.8, chart printing
 
+5-4-18
+* Small cosmetic changes to print chart dialog
+* Delete Forward keyboard shortcut, context menu
