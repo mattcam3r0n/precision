@@ -153,3 +153,5 @@ Released v0.2.7
 * FIX: errors in share dialog
 * NEW: print charts
 
+5-4-18 Released v0.2.8, chart printing
+
