@@ -227,8 +227,12 @@ angular.module('drillApp')
           return 1;
         }
 
-        let lastClip = ctrl.drill.music[ctrl.drill.music.length - 1];
-        return lastClip.endCount + 1;
+        // formerly, added after last clip
+        // let lastClip = ctrl.drill.music[ctrl.drill.music.length - 1];
+        // return lastClip.endCount + 1;
+
+        // now, add at current count
+        return ctrl.drill.count;
       }
 
       function onSpacePressed(e) {
