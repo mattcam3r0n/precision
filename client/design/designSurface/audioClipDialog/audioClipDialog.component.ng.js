@@ -65,7 +65,10 @@ angular.module('drillApp')
           return;
         }
         if (ctrl.selection) {
-          ctrl.selection.play();
+          // NOTE: use regular playPause? but selected start point may not
+          // be aligned with beat. can we start at nearest beat?
+          // ctrl.wavesurfer.playPause();
+         ctrl.selection.play();
         } else {
           ctrl.wavesurfer.playPause();
         }
