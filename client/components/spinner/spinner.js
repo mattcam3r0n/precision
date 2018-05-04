@@ -20,26 +20,26 @@ const opts = {
   top: '51%', // Top position relative to parent
   left: '50%', // Left position relative to parent
   shadow: 'none', // Box-shadow for the lines
-  position: 'absolute' // Element positioning
+  position: 'absolute', // Element positioning
 };
 
 class spinner {
-    constructor(target) {
-        this.target = target;
-        this.spinner = new Spinner(opts);
-    }
+  constructor(target) {
+    this.target = target;
+    this.spinner = new Spinner(opts);
+  }
 
-    spin() {
-        this.spinner.spin(this.target);        
-    }
+  spin() {
+    this.spinner.spin(this.target);
+  }
 
-    start() {
-        this.spinner.spin(this.target);
-    }
+  start() {
+    this.spinner.spin(this.target);
+  }
 
-    stop() {
-        this.spinner.stop();
-    }
+  stop() {
+    this.spinner.stop();
+  }
 }
 
 export default spinner;

@@ -2,7 +2,7 @@
 
 import DesignKeyboardHandler from './DesignKeyboardHandler';
 import Audio from '/client/lib/audio/Audio';
-import Spinner from '/client/components/spinner/spinner';
+// import Spinner from '/client/components/spinner/spinner';
 import Events from '/client/lib/Events';
 
 import Logger from '/client/lib/Logger';
@@ -14,6 +14,7 @@ angular.module('drillApp')
                                       $timeout,
                                       appStateService,
                                       drillEditorService,
+                                      spinnerService,
                                       eventService) {
     // eslint-disable-next-line
     let ctrl = this;
@@ -24,7 +25,8 @@ angular.module('drillApp')
     init();
 
     function init() {
-      ctrl.spinner = new Spinner($('div.design')[0]);
+      // ctrl.spinner = new Spinner($('div.design')[0]);
+      spinnerService.init('div.design');
       ctrl.subscriptions = eventService.createSubscriptionManager();
 
       $scope.tempo = 120;
@@ -88,11 +90,11 @@ angular.module('drillApp')
         });
 
       ctrl.subscriptions.subscribe(Events.showSpinner, (event, args) => {
-        ctrl.spinner.start();
+        spinnerService.start();
       });
 
       ctrl.subscriptions.subscribe(Events.hideSpinner, (event, args) => {
-        ctrl.spinner.stop();
+        spinnerService.stop();
       });
 
       // show intro dialog

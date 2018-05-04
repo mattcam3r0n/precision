@@ -31,6 +31,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
+                                    <label class="control-label">Title</label>
+                                    <input type="text" ng-model="$ctrl.name" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <label class="control-label">Notes</label>
                                     <textarea rows="4" ng-model="$ctrl.notes" class="form-control"></textarea>
                                     <p>Enter notes to be shown on the chart.</p>
@@ -40,15 +46,36 @@
                                 <div class="col-md-12">
                                     <label class="control-label">Number of counts to forecast:</label>
                                     <input style="width: 100px;" type="number" ng-model="$ctrl.forecastCounts" class="form-control" />
-                                    <p>Enter the number of counts
-                                        to project forward, or 0 to show the current position only.</p>
+                                    <p>Enter the number of counts to project forward, or 0 to show the current position only.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="tab" ng-show="$ctrl.isTabActive('bookmarks')">
                             <div class="row">
                                 <div class="col-md-12">
-                                    bookmarks
+                                    <p>
+                                        Choose which bookmarked counts will be printed.
+                                    </p>
+                                    <div>
+                                        <a href="#" ng-click="$ctrl.selectAll()">Select All</a>
+                                        <a href="#" ng-click="$ctrl.deselectAll()">Deselect All</a>
+                                    </div>
+                                    <ul class="bookmark-list">
+                                        <li>
+                                            <div class="check-box"></div>
+                                            <div class="bookmark-count">Count</div>
+                                            <div class="bookmark-name">Bookmark</div>
+                                        </li>
+                                        <li ng-click="$ctrl.toggleSelected(bookmark)" ng-repeat="bookmark in $ctrl.bookmarks()">
+                                            <div class="check-box">
+                                                <i class="fa fa-check" ng-show="$ctrl.isSelected(bookmark)"></i>
+                                            </div>
+                                            <div class="bookmark-count">{{bookmark.count}}</div>
+                                            <div class="bookmark-name">
+                                                <strong>{{bookmark.name}}</strong>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>

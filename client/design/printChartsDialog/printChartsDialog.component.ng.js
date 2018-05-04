@@ -11,6 +11,7 @@ angular.module('drillApp').component('printChartsDialog', {
     $timeout,
     appStateService,
     eventService,
+    spinnerService,
     confirmationDialogService,
     printService
   ) {
@@ -18,6 +19,7 @@ angular.module('drillApp').component('printChartsDialog', {
 
     ctrl.$onInit = function() {
       ctrl.activeTab = 'currentCount';
+      ctrl.selectedBookmarks = [];
       ctrl.subscriptions = eventService.createSubscriptionManager();
       ctrl.subscriptions.subscribe(
         Events.showPrintChartsDialog,
@@ -30,6 +32,11 @@ angular.module('drillApp').component('printChartsDialog', {
     };
 
     ctrl.activate = function() {
+      ctrl.selectedBookmarks = ctrl.bookmarks().slice();
+      ctrl.name = '';
+      ctrl.notes = '';
+      ctrl.count = null;
+      ctrl.forecastCounts = 0;
       $('#printChartsDialog').modal('show');
     };
 
@@ -38,12 +45,47 @@ angular.module('drillApp').component('printChartsDialog', {
     };
 
     ctrl.print = function() {
-      // TODO: add spinner
-      if (ctrl.activeTab == 'bookmarks') {
-        printBookmarks();
-      } else {
-        printCurrentCount();
+      try {
+        spinnerService.start();
+        $timeout(() => {
+          if (ctrl.activeTab == 'bookmarks') {
+            printBookmarks();
+          } else {
+            printCurrentCount();
+          }
+          spinnerService.stop();
+        });
+      } catch (error) {
+        throw error;
+        spinnerService.stop();
+      } finally {
       }
+    };
+
+    ctrl.bookmarks = function() {
+      if (!appStateService.drill || !appStateService.drill.bookmarks) return [];
+      return appStateService.drill.bookmarks;
+    };
+
+    ctrl.isSelected = function(bookmark) {
+      return ctrl.selectedBookmarks.includes(bookmark);
+    };
+
+    ctrl.toggleSelected = function(bookmark) {
+      if (ctrl.selectedBookmarks.includes(bookmark)) {
+        const i = ctrl.selectedBookmarks.indexOf(bookmark);
+        ctrl.selectedBookmarks.splice(i, 1);
+      } else {
+        ctrl.selectedBookmarks.push(bookmark);
+      }
+    };
+
+    ctrl.selectAll = function() {
+      ctrl.selectedBookmarks = ctrl.bookmarks().slice();
+    };
+
+    ctrl.deselectAll = function() {
+      ctrl.selectedBookmarks = [];
     };
 
     ctrl.isTabActive = function(tab) {
@@ -54,14 +96,19 @@ angular.module('drillApp').component('printChartsDialog', {
       ctrl.activeTab = tab;
     };
 
-    function printBookmarks() {}
+    function printBookmarks() {
+      printService.printBookmarks(ctrl.selectedBookmarks);
+      $('#printChartsDialog').modal('hide');
+    }
 
     function printCurrentCount() {
-      printService.printChart(
-        appStateService.getDrillCount(),
-        ctrl.notes,
-        ctrl.forecastCounts
-      );
+      const bookmark = {
+        name: ctrl.name,
+        notes: ctrl.notes,
+        count: appStateService.getDrillCount(),
+        forecastCounts: ctrl.forecastCounts,
+      };
+      printService.printCurrentCount(bookmark);
       $('#printChartsDialog').modal('hide');
     }
   },

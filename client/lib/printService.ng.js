@@ -4,74 +4,85 @@ import FieldDimensions from '/client/lib/FieldDimensions';
 import MarcherFactory from '../design/designSurface/field/MarcherFactory';
 import PointSet from '/client/lib/PointSet';
 import MemberPositionCalculator from './drill/MemberPositionCalculator';
+import DrillPlayer from '/client/lib/drill/DrillPlayer';
 
 class printService {
   constructor(appStateService) {
     this.appStateService = appStateService;
   }
 
-  pdfTest() {
-    const counts = 72;
-    const doc = new JsPDF('landscape', 'mm', 'a4');
-
-    const canvasEl = document.createElement('canvas');
-    const canvas = new fabric.Canvas(canvasEl, {
-      // backgroundColor: '#40703B', // huntergreen //'green',
-      height: FieldDimensions.height,
-      width: FieldDimensions.width,
-      uniScaleTransform: true,
-      renderOnAddRemove: false, // performance optimization
-    });
-
-    this.addTitle(doc);
-    this.addCounts(doc, counts);
-    this.addNotes(doc);
-    this.drawField(doc, canvas, counts);
-
-    // doc.autoPrint();
-    window.open(doc.output('bloburl'), '_blank');
-  }
-
-  printChart(count, notes, forecastCounts) {
+  printBookmarks(bookmarks) {
     const doc = new JsPDF('landscape', 'mm', 'letter');
-    const canvasEl = document.createElement('canvas');
-    const canvas = new fabric.Canvas(canvasEl, {
-      // backgroundColor: '#40703B', // huntergreen //'green',
-      height: FieldDimensions.height,
-      width: FieldDimensions.width,
-      uniScaleTransform: true,
-      renderOnAddRemove: false, // performance optimization
+    const canvas = createCanvas();
+
+    const drillPlayer = new DrillPlayer(this.appStateService.drill);
+
+    // remember which count the drill is currently at
+    const saveCount = this.appStateService.getDrillCount();
+
+    bookmarks.forEach((b, i) => {
+      drillPlayer.goToCount(b.count);
+      this.printChart(doc, canvas, b);
+      if (i < bookmarks.length - 1) {
+        doc.addPage();
+      }
     });
 
-    this.addTitle(doc);
-    this.addCounts(doc, forecastCounts);
-    this.addNotes(doc, notes);
-    this.drawField(doc, canvas, forecastCounts);
+    // restore drill to saved count
+    drillPlayer.goToCount(saveCount);
 
     // doc.autoPrint();
     window.open(doc.output('bloburl'), '_blank');
   }
 
-  addTitle(doc) {
+  printCurrentCount(bookmark) {
+    const doc = new JsPDF('landscape', 'mm', 'letter');
+    const canvas = createCanvas();
+    this.printChart(doc, canvas, bookmark);
+    // doc.autoPrint();
+    window.open(doc.output('bloburl'), '_blank');
+  }
+
+  printChart(doc, canvas, bookmark) {
+    // go to count?
+    this.addDrillName(doc, this.appStateService.drill.name);
+    this.addTitle(doc, bookmark.name);
+    this.addCounts(doc, bookmark.forecastCounts);
+    this.addNotes(doc, bookmark.notes);
+    this.drawField(doc, canvas, bookmark.forecastCounts);
+  }
+
+  addDrillName(doc, name) {
     doc.setFontSize(22);
-    doc.text(10, 20, this.appStateService.drill.name);
+    doc.text(10, 20, name);
+  }
+
+  addTitle(doc, title) {
+    title = title || '';
+    doc.setFontSize(22);
+    const leftOffset =
+      (doc.internal.pageSize.width -
+        doc.getStringUnitWidth(title) *
+          doc.internal.getFontSize() /
+          doc.internal.scaleFactor) /
+      2;
+    doc.text(leftOffset, 20, title);
   }
 
   addCounts(doc, counts) {
     const count = this.appStateService.drill.count;
+    counts = counts || 0;
     // const left = doc.internal.pageSize.width * .75;
     const label = 'Counts ' + count + ' - ' + (count + counts);
     doc.setFontSize(16);
     const leftOffset =
       doc.internal.pageSize.width -
       doc.getStringUnitWidth(label) * doc.internal.getFontSize() / 2;
-    console.log('page width', doc.internal.pageSize.width);
-    console.log('string unit width', doc.getStringUnitWidth(label));
-    console.log('font size', doc.internal.getFontSize());
     doc.text(leftOffset, 20, label);
   }
 
   addNotes(doc, notes) {
+    notes = notes || '';
     doc.setFontSize(12);
     const splitText = doc.splitTextToSize(
       notes,
@@ -81,11 +92,17 @@ class printService {
   }
 
   drawField(doc, canvas, counts) {
+    console.time('drawField');
+    console.time('clear canvas');
+    canvas.clear();
+    console.timeEnd('clear canvas');
     const painter = new FieldPainter(canvas, {
       // fill: 'black',
       stroke: 'gray',
     });
+    console.time('field paint');
     painter.paint();
+    console.timeEnd('field paint');
 
     const width = doc.internal.pageSize.width;
     const height = width / 2; // doc.internal.pageSize.height;
@@ -93,11 +110,24 @@ class printService {
     this.drawFootrints(canvas, counts);
     this.drawMarchers(canvas);
 
-    const imgData = canvas.toDataURL('image/jpeg', 1.0);
-    doc.addImage(imgData, 'JPEG', 0, 50, width, height);
+    console.time('toDataUrl');
+    //    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+    const imgData = canvas.toDataURL({
+      // format: 'jpeg',
+      // quality: .8,
+      format: 'png',
+      multiplier: 0.5,
+    });
+    // const imgData = getResizedImage(doc, canvas);
+    console.timeEnd('toDataUrl');
+    console.time('addImage');
+    doc.addImage(imgData, 'PNG', 0, 50, width, height);
+    console.timeEnd('addImage');
+    console.timeEnd('drawField');
   }
 
   drawMarchers(canvas) {
+    console.time('drawMarchers');
     this.appStateService.drill.members.forEach((m) => {
       canvas.add(
         MarcherFactory.createMarcher(m.currentState, {
@@ -105,9 +135,11 @@ class printService {
         })
       );
     });
+    console.timeEnd('drawMarchers');
   }
 
   drawFootrints(canvas, counts) {
+    console.time('drawFootprints');
     // for each member
     // for N counts
     // calc position
@@ -134,8 +166,36 @@ class printService {
         })
       );
     });
+    console.timeEnd('drawFootprints');
   }
 }
+
+function createCanvas() {
+  console.time('createCanvas');
+  const canvasEl = document.createElement('canvas');
+  const canvas = new fabric.StaticCanvas(canvasEl, {
+    // backgroundColor: '#40703B', // huntergreen //'green',
+    height: FieldDimensions.height,
+    width: FieldDimensions.width,
+    uniScaleTransform: true,
+    renderOnAddRemove: false, // performance optimization
+  });
+  console.timeEnd('createCanvas');
+  console.log('canvas', canvas);
+  return canvas;
+}
+
+// function getResizedImage(doc, originalCanvas) {
+//   const width = doc.internal.pageSize.width;
+//   const height = width / 2; // doc.internal.pageSize.height;
+//   const resizedCanvas = document.createElement('canvas');
+//   resizedCanvas.height = height;
+//   resizedCanvas.width = width;
+
+//   const resizedContext = resizedCanvas.getContext('2d');
+//   resizedContext.drawImage(originalCanvas.lowerCanvasEl, 0, 0, width, height);
+//   return resizedCanvas.toDataURL('image/jpeg', 1.0);
+// }
 
 angular
   .module('drillApp')

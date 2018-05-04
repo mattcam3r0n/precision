@@ -70,7 +70,6 @@ angular.module('drillApp').component('bookmarkList', {
 
     ctrl.deleteBookmark = function(bookmark) {
       if (!appStateService.drill.bookmarks) return;
-      console.log('delete bookmark ' + bookmark.name);
       const i = appStateService.drill.bookmarks.indexOf(bookmark);
       appStateService.drill.bookmarks.splice(i, 1);
       eventService.notify(Events.bookmarkChanged);
@@ -125,7 +124,6 @@ angular.module('drillApp').component('bookmarkList', {
       ctrl.notes = args.bookmark.notes;
       ctrl.forecastCounts = args.bookmark.forecastCounts;
       ctrl.bookmark = args.bookmark;
-      console.log(args, ctrl);
       showBookmarkDialog();
     }
 
