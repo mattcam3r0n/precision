@@ -80,7 +80,8 @@ angular.module('drillApp')
       };
 
       ctrl.onPlay = function(playMusic) {
-        Audio.ensureAudioIsInitialized();
+        // Audio.ensureAudioIsInitialized();
+        Audio.init();
         drillEditorService.play(() => {
           $rootScope.$safeApply();
         }, 0, playMusic, ctrl.isMetronomeEnabled);

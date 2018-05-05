@@ -156,6 +156,12 @@ Released v0.2.7
 5-4-18 Released v0.2.8, chart printing
 
 5-4-18
+* FIX: music will be added at current count
 * NEW: Small cosmetic changes to print chart dialog
 * NEW: Delete Forward keyboard shortcut, context menu
-* NEW: On context menu, a new Selection sub-menu with options for modifying the current selection, including Xs and Os, and alternating ranks and files
+* NEW: On context menu, a new Selection sub-menu with options to modify the current selection, including Xs and Os, and alternating ranks and files.
+
+5-4-18 Release v0.2.9, Xs and Os, etc
+
+5-5-18
+* FIX: New audio restrictions in Chrome broke playback.

@@ -1,5 +1,6 @@
 'use strict';
 
+import Audio from '/client/lib/audio/Audio';
 import Events from '/client/lib/Events';
 import UndoManager from '/client/lib/UndoManager';
 
@@ -134,6 +135,7 @@ angular.module('drillApp').component('sidebar', {
     };
 
     $scope.addMusic = function() {
+      Audio.init();
       eventService.notify(Events.chooseMusicDialogActivated);
     };
 

@@ -1,7 +1,6 @@
 'use strict';
 
 import DesignKeyboardHandler from './DesignKeyboardHandler';
-import Audio from '/client/lib/audio/Audio';
 // import Spinner from '/client/components/spinner/spinner';
 import Events from '/client/lib/Events';
 
@@ -32,7 +31,7 @@ angular.module('drillApp')
       $scope.tempo = 120;
       $window.addEventListener('keydown', onKeydown);
 
-      Audio.init();
+      // Audio.init();
 
       if ($scope.currentUser) {
         openLastDrillOrNew().then(openDrill);

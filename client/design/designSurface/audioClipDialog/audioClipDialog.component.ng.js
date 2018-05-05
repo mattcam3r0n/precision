@@ -57,7 +57,7 @@ angular.module('drillApp')
       };
 
       ctrl.play = function(playMetronome) {
-        Audio.ensureAudioIsInitialized();
+        Audio.init();
         playMetronome = playMetronome === undefined ? true : playMetronome;
         if (ctrl.wavesurfer.isPlaying()) {
           ctrl.wavesurfer.pause();
