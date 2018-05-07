@@ -296,6 +296,28 @@ class DrillEditorService {
     this.save();
   }
 
+  insertStep(step, members) {
+    members = members || this.drillBuilder.getSelectedMembers();
+    const count = this.drill.count + 1;
+    const counts = 1;
+    this.makeUndoable(
+      'Insert Step', // TODO: generate a better label? flank, halt, etc?
+      members,
+      count,
+      counts,
+      () => {
+        this.doInsertStep(step, members);
+      }
+    );
+  }
+
+  doInsertStep(step, members) {
+    this.drillBuilder.insertStep(members, step);
+    this.drillPlayer.stepForward();
+    this.notifyDrillStateChanged();
+    this.save();
+  }
+
   addStep(step, members) {
     members = members || this.drillBuilder.getSelectedMembers();
     const count = this.drill.count + 1;

@@ -30,7 +30,14 @@ import ScriptSequence from '/client/lib/drill/ScriptSequence';
 
 class ScriptBuilder {
 
+    static insertActionAtCount(member, action, count) {
+        // insert the action (push existing to the right)
+        member.script.splice(count - 1, 0, action);
+        return true;
+    }
+
     static addActionAtCount(member, action, count) {
+        // overwrites action at count
         // TODO: ensure action has deltas?
 
         // don't need to add if member is already in that state
@@ -164,7 +171,7 @@ class ScriptBuilder {
         // at each count, get state
         // reverse it
         const newSeq = new ScriptSequence();
-        const totalCounts = counts + skip;
+        // const totalCounts = counts + skip;
         const startCount = count - skip;
         for (let i = startCount; i >= startCount - counts; i--) {
             const state = MemberPositionCalculator.getStateAtCount(member, i);

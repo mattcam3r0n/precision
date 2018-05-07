@@ -101,6 +101,27 @@ class DrillBuilder {
         });
     }
 
+    insertStep(members, step) {
+        // if step is null, use current state
+        let defaultValue = (a, b) => a === null || a === undefined ? b : a;
+        members.forEach((m) => {
+            step = step || {};
+            let action = new Action({
+                strideType: defaultValue(step.strideType,
+                                m.currentState.strideType),
+                stepType: defaultValue(step.stepType,
+                                m.currentState.stepType),
+                direction: defaultValue(step.direction,
+                                m.currentState.direction),
+                deltaX: step.deltaX,
+                deltaY: step.deltaY,
+            });
+            ScriptBuilder.insertActionAtCount(m, action, this.drill.count + 1);
+        });
+
+        this.drill.isDirty = true;
+    }
+
     addStep(members, step) {
         let defaultValue = (a, b) => a === null || a === undefined ? b : a;
         members.forEach((m) => {

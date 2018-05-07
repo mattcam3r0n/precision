@@ -111,6 +111,10 @@ angular.module('drillApp').component('addStepsTool', {
       // drillEditorService.reverseSteps(null, 8, 0);
     };
 
+    $scope.insertStep = () => {
+      drillEditorService.insertStep();
+    };
+
     $scope.addMarkTime = function() {
       drillEditorService.addStep({
         direction: null,
