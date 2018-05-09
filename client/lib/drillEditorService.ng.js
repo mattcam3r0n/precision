@@ -619,6 +619,12 @@ class DrillEditorService {
     }, 10000);
   }
 
+  splitTrack(splitCount, track) {
+    this.drillBuilder.splitTrack(splitCount, track);
+    // this.save();
+    this.eventService.notify(Events.audioClipAdded);
+  }
+
   // Events
 
   notifyDrillStateChanged() {
@@ -631,6 +637,10 @@ class DrillEditorService {
   notifyStrideTypeChanged() {
     let strideType = this.strideType;
     this.eventService.notify(Events.strideTypeChanged, { strideType });
+  }
+
+  notifyMusicChanged() {
+    this.eventService.notify(Events.musicChanged);
   }
 
   notifyMembersSelected() {

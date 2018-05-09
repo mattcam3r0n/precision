@@ -86,6 +86,8 @@ class Timeline {
 
     this.timeline.on('doubleClick', this.onDoubleClick.bind(this));
 
+    this.timeline.on('contextmenu', this.onContextMenu.bind(this));
+
     this.currentCountBar = this.timeline.addCustomTime(
       new Date(0),
       'currentCountBar'
@@ -251,6 +253,20 @@ class Timeline {
         callback(null); // cancel removal
       }
     }
+  }
+
+  onContextMenu(props) {
+    console.log('Right click!', props);
+    props.event.preventDefault();
+    const item = props.item ? this.items.get(props.item) : null;
+    this.eventService.notify(Events.showTimelineContextMenu, {
+      point: {
+        left: props.event.pageX,
+        top: props.event.pageY - 100,
+      },
+      item: item,
+      count: props.time.getMilliseconds(),
+    });
   }
 
   onDoubleClick(props) {

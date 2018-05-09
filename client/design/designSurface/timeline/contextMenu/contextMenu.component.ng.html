@@ -1,0 +1,19 @@
+<div class="timeline-context-menu" ng-show="$ctrl.isActivated">
+    <div class="dropdown open">
+        <ul class="dropdown-menu">
+            <li>
+                <a href="#" ng-show="$ctrl.showTrackOptions()" ng-click="$ctrl.splitTrack()">Split Track at Count {{$ctrl.count}}</a>
+            </li>
+            <li>
+                <a href="#" ng-show="$ctrl.showTrackOptions()" ng-click="$ctrl.deleteTrack()">Delete Track</a>
+            </li>
+            <li role="separator" ng-show="$ctrl.showTrackOptions()" class="divider"></li>
+            <li>
+                <a href="#" ng-click="$ctrl.startHighlighting()">Start Highlighting</a>
+            </li>
+            <li>
+                <a href="#" ng-click="$ctrl.endHighlighting()">End Highlighting</a>
+            </li>
+        </ul>
+    </div>
+</div>

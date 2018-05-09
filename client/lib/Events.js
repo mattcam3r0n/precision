@@ -27,6 +27,10 @@ class Events {
         return 'showContextMenu';
     }
 
+    static get showTimelineContextMenu() {
+        return 'showTimelineContextMenu';
+    }
+
     static get showNewDrillDialog() {
         return 'showNewDrillDialog';
     }

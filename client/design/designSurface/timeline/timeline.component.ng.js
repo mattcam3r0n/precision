@@ -154,6 +154,7 @@ angular.module('drillApp')
       }
 
       function onMusicChanged(args) {
+        console.log('timeline onMusicChanged', args, ctrl.drill.music);
         drillEditorService.save(true);
       }
 
