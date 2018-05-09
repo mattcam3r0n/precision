@@ -165,3 +165,12 @@ Released v0.2.7
 
 5-5-18
 * FIX: New audio restrictions in Chrome broke playback.
+
+Release v0.3.0 to fix chrome audio problem
+
+5-9-18
+* NEW: Insert steps button on Steps menu
+* NEW: Right-click menu on timeline
+* NEW: Zoom timeline in/out from right-click menu
+* NEW: Split track.  Right click on track (and at appropriate count), choose 'Split Track at Count X'. The split point is calculated based on tempo, so if tempo is not precise, the music may split in an awkward place.
+* NEW: Option to print marchers in color on Charts.

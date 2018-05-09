@@ -11,7 +11,8 @@ class printService {
     this.appStateService = appStateService;
   }
 
-  printBookmarks(bookmarks) {
+  printBookmarks(bookmarks, options) {
+    options = options || {};
     const doc = new JsPDF('landscape', 'mm', 'letter');
     const canvas = createCanvas();
 
@@ -22,7 +23,7 @@ class printService {
 
     bookmarks.forEach((b, i) => {
       drillPlayer.goToCount(b.count);
-      this.printChart(doc, canvas, b);
+      this.printChart(doc, canvas, b, options);
       if (i < bookmarks.length - 1) {
         doc.addPage();
       }
@@ -35,21 +36,22 @@ class printService {
     window.open(doc.output('bloburl'), '_blank');
   }
 
-  printCurrentCount(bookmark) {
+  printCurrentCount(bookmark, options) {
+    options = options || {};
     const doc = new JsPDF('landscape', 'mm', 'letter');
     const canvas = createCanvas();
-    this.printChart(doc, canvas, bookmark);
+    this.printChart(doc, canvas, bookmark, options);
     // doc.autoPrint();
     window.open(doc.output('bloburl'), '_blank');
   }
 
-  printChart(doc, canvas, bookmark) {
+  printChart(doc, canvas, bookmark, options) {
     // go to count?
     this.addDrillName(doc, this.appStateService.drill.name);
     this.addTitle(doc, bookmark.name);
     this.addCounts(doc, bookmark.forecastCounts);
     this.addNotes(doc, bookmark.notes);
-    this.drawField(doc, canvas, bookmark.forecastCounts);
+    this.drawField(doc, canvas, bookmark.forecastCounts, options);
   }
 
   addDrillName(doc, name) {
@@ -91,7 +93,7 @@ class printService {
     doc.text(10, 30, splitText);
   }
 
-  drawField(doc, canvas, counts) {
+  drawField(doc, canvas, counts, options) {
     console.time('drawField');
     console.time('clear canvas');
     canvas.clear();
@@ -108,7 +110,7 @@ class printService {
     const height = width / 2; // doc.internal.pageSize.height;
 
     this.drawFootrints(canvas, counts);
-    this.drawMarchers(canvas);
+    this.drawMarchers(canvas, options);
 
     console.time('toDataUrl');
     //    const imgData = canvas.toDataURL('image/jpeg', 1.0);
@@ -126,12 +128,12 @@ class printService {
     console.timeEnd('drawField');
   }
 
-  drawMarchers(canvas) {
+  drawMarchers(canvas, options) {
     console.time('drawMarchers');
     this.appStateService.drill.members.forEach((m) => {
       canvas.add(
         MarcherFactory.createMarcher(m.currentState, {
-          fill: 'gray',
+          fill: options.printInColor ? m.color : 'gray',
         })
       );
     });

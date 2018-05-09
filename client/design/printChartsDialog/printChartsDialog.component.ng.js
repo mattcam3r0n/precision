@@ -97,7 +97,9 @@ angular.module('drillApp').component('printChartsDialog', {
     };
 
     function printBookmarks() {
-      printService.printBookmarks(ctrl.selectedBookmarks);
+      printService.printBookmarks(ctrl.selectedBookmarks, {
+        printInColor: ctrl.printInColor,
+      });
       $('#printChartsDialog').modal('hide');
     }
 
@@ -108,7 +110,9 @@ angular.module('drillApp').component('printChartsDialog', {
         count: appStateService.getDrillCount(),
         forecastCounts: ctrl.forecastCounts,
       };
-      printService.printCurrentCount(bookmark);
+      printService.printCurrentCount(bookmark, {
+        printInColor: ctrl.printInColor,
+      });
       $('#printChartsDialog').modal('hide');
     }
   },

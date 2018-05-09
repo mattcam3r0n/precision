@@ -87,7 +87,7 @@
             </div>
             <div class="modal-footer button-row">
                 <div class="col-md-8 text-left">
-                    <span class="label label-primary" ng-repeat="user in $ctrl.selectedUsers">{{user.profile.firstName}}</span>
+                    <input type="checkbox" ng-model="$ctrl.printInColor"/> Print marchers in color.
                 </div>
                 <div class="col-md-4">
                     <button ng-click="$ctrl.print()" type="button" class="btn btn-primary" data-dismiss="modal">Print</button>
