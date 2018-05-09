@@ -174,3 +174,6 @@ Release v0.3.0 to fix chrome audio problem
 * NEW: Zoom timeline in/out from right-click menu
 * NEW: Split track.  Right click on track (and at appropriate count), choose 'Split Track at Count X'. The split point is calculated based on tempo, so if tempo is not precise, the music may split in an awkward place.
 * NEW: Option to print marchers in color on Charts.
+
+Release v0.3.1 - split track, print marchers in color
+
