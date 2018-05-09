@@ -509,10 +509,8 @@ class DrillBuilder {
 
     const i = this.drill.music.indexOf(track);
     const beats = track.beats.slice();
-    const counts = track.beats.length;
-    const duration = track.duration;
     const startOffset = track.startOffset;
-    const title = track.title;
+
     // clone track
     const newTrack = Object.assign({}, track);
     newTrack.timelineId = track.timelineId + '-' + shortid.generate();

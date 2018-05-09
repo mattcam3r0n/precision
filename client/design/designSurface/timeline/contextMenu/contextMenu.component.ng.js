@@ -6,6 +6,9 @@ angular.module('drillApp').component('timelineContextMenu', {
   templateUrl:
     'client/design/designSurface/timeline/contextMenu/contextMenu.component.ng.html',
   bindings: {},
+  require: {
+    parent: '^^timeline',
+  },
   controller: function(
     $scope,
     $rootScope,
@@ -58,6 +61,14 @@ angular.module('drillApp').component('timelineContextMenu', {
 
     ctrl.deleteTrack = function() {
 
+    };
+
+    ctrl.zoomIn = function() {
+      ctrl.parent.zoomIn();
+    };
+
+    ctrl.zoomOut = function() {
+      ctrl.parent.zoomOut();
     };
 
     function activate(args) {
