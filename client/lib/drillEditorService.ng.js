@@ -625,6 +625,17 @@ class DrillEditorService {
     this.eventService.notify(Events.audioClipAdded);
   }
 
+  addTempo() {
+    // this.drill.music.push({
+    //   type: 'tempo',
+    //   startCount: 9,
+    //   endCount: 12,
+    //   tempo: 112,
+    // });
+    // this.eventService.notify(Events.audioClipAdded);
+    this.eventService.notify(Events.showTempoDialog);
+  }
+
   // Events
 
   notifyDrillStateChanged() {

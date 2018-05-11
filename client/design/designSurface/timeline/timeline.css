@@ -28,6 +28,12 @@
     padding-right: 5px;
 }
 
+.timeline .vis-item.tempo {
+    /* background-color: #284B63; 1E3749 3B5B71 */
+    background-color: paleturquoise;
+    color: black;
+}
+
 .timeline .vis-item.music {
     /* background-color: #284B63; 1E3749 3B5B71 */
     background-color: #284B63;
@@ -61,7 +67,7 @@
 }
 
 .timeline-container {
-    width: calc(100% - 40px);
+    width: calc(100% - 45px);
 }
 
 div.inline { float:left; }

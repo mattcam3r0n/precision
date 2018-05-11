@@ -53,7 +53,8 @@ class DrillScheduler {
         if (!drill.music) {
             return [];
         }
-        return [...new Set(drill.music.map((m) => m.url))];
+        const music = drill.music.filter((m) => m.url);
+        return [...new Set(music.map((m) => m.url))];
     }
 
     getMusicAtCount(drill, count) {

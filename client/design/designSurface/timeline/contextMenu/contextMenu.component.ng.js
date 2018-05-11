@@ -63,6 +63,10 @@ angular.module('drillApp').component('timelineContextMenu', {
 
     };
 
+    ctrl.addTempo = function() {
+      drillEditorService.addTempo();
+    };
+
     ctrl.zoomIn = function() {
       ctrl.parent.zoomIn();
     };

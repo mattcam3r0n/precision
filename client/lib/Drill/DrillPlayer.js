@@ -117,6 +117,7 @@ class DrillPlayer {
             if (self.playMusic
                 && nextStep
                 && nextStep.music
+                && nextStep.music.type != 'tempo'
                 && nextStep.music.startCount == self.drill.count) {
                 self.currentMusic = nextStep.music.url;
                 Audio.play(self.currentMusic,

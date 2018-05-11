@@ -207,14 +207,25 @@ class Timeline {
   }
 
   createMusicItem(music) {
+    if (music.type == 'tempo') return this.createTempoItem(music);
     return {
       id: music.timelineId,
       group: 'music',
       className: 'music',
       start: new Date(music.startCount),
       end: new Date(music.endCount + 1),
-      // content: music.title || music.fileName, // change to desc
       music: music,
+    };
+  }
+
+  createTempoItem(item) {
+    return {
+      id: item.timelineId,
+      group: 'music',
+      className: 'tempo',
+      start: new Date(item.startCount),
+      end: new Date(item.endCount + 1),
+      music: item, // tempo items are special music items
     };
   }
 
@@ -297,6 +308,12 @@ class Timeline {
       this.eventService.notify(Events.showBookmarkDialog, {
         bookmark: item.bookmark,
       });
+      return;
+    }
+    if (item.group == 'music' && item.music && item.music.type == 'tempo') {
+      this.eventService.notify(Events.showTempoDialog, {
+        tempoItem: item.music,
+      });
     }
   }
 
@@ -306,9 +323,21 @@ class Timeline {
   }
 
   musicItemTemplate(item, element, data) {
-    const caption = item.music ? item.music.title || item.music.fileName : '';
+    if (item.music && item.music.type == 'tempo') {
+      return this.tempoItemTemplate(item, element, data);
+    }
+    let caption = item.music ? item.music.title || item.music.fileName : '';
+    caption += ' (' + item.music.tempo + ' BPM)';
     const html = `
             <i class="fa fa-music"></i>  <span>${caption}</span>
+        `;
+    return html;
+  }
+
+  tempoItemTemplate(item, element, data) {
+    const caption = item.music.tempo + ' BPM';
+    const html = `
+            <i class="far fa-clock-o"></i>  <span>${caption}</span>
         `;
     return html;
   }

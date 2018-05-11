@@ -1,250 +1,253 @@
 class Events {
-    // TODO: make a clearer distinction between commands and events
+  // TODO: make a clearer distinction between commands and events
 
-    // Commands - message to do something
+  // Commands - message to do something
 
-    static get newDrill() {
-        return 'newDrill';
-    }
+  static get newDrill() {
+    return 'newDrill';
+  }
 
-    static get showOpenDrillDialog() {
-        return 'showOpenDrillDialog';
-    }
+  static get showOpenDrillDialog() {
+    return 'showOpenDrillDialog';
+  }
 
-    static get showShareDialog() {
-        return 'showShareDialog';
-    }
-    
-    static get showPrintChartsDialog() {
-        return 'showPrintChartsDialog';
-    }
+  static get showShareDialog() {
+    return 'showShareDialog';
+  }
 
-    static get showKeyboardShortcuts() {
-        return 'showKeyboardShortcuts';
-    }
+  static get showPrintChartsDialog() {
+    return 'showPrintChartsDialog';
+  }
 
-    static get showContextMenu() {
-        return 'showContextMenu';
-    }
+  static get showKeyboardShortcuts() {
+    return 'showKeyboardShortcuts';
+  }
 
-    static get showTimelineContextMenu() {
-        return 'showTimelineContextMenu';
-    }
+  static get showContextMenu() {
+    return 'showContextMenu';
+  }
 
-    static get showNewDrillDialog() {
-        return 'showNewDrillDialog';
-    }
+  static get showTimelineContextMenu() {
+    return 'showTimelineContextMenu';
+  }
 
-    static get showDrillPropertiesDialog() {
-        return 'showDrillPropertiesDialog';
-    }
+  static get showTempoDialog() {
+    return 'showTempoDialog';
+  }
 
-    static get showIntroDialog() {
-        return 'showIntroDialog';
-    }
+  static get showNewDrillDialog() {
+    return 'showNewDrillDialog';
+  }
 
-    static get showSaveAsDialog() {
-        return 'showSaveAsDialog';
-    }
+  static get showDrillPropertiesDialog() {
+    return 'showDrillPropertiesDialog';
+  }
 
-    static get showBookmarkDialog() {
-        return 'showBookmarkDialog';
-    }
+  static get showIntroDialog() {
+    return 'showIntroDialog';
+  }
 
-    static get sizeToFit() {
-        return 'sizeToFit';
-    }
+  static get showSaveAsDialog() {
+    return 'showSaveAsDialog';
+  }
 
-    static get zoomIn() {
-        return 'zoomIn';
-    }
+  static get showBookmarkDialog() {
+    return 'showBookmarkDialog';
+  }
 
-    static get zoomOut() {
-        return 'zoomOut';
-    }
+  static get sizeToFit() {
+    return 'sizeToFit';
+  }
 
-    static get showSpinner() {
-        return 'showSpinner';
-    }
+  static get zoomIn() {
+    return 'zoomIn';
+  }
 
-    static get hideSpinner() {
-        return 'hideSpinner';
-    }
+  static get zoomOut() {
+    return 'zoomOut';
+  }
 
-    static get showLogo() {
-        return 'showLogo';
-    }
+  static get showSpinner() {
+    return 'showSpinner';
+  }
 
-    static get hideLogo() {
-        return 'hideLogo';
-    }
+  static get hideSpinner() {
+    return 'hideSpinner';
+  }
 
-    static get showGrid() {
-        return 'showGrid';
-    }
+  static get showLogo() {
+    return 'showLogo';
+  }
 
-    static get hideGrid() {
-        return 'hideGrid';
-    }
+  static get hideLogo() {
+    return 'hideLogo';
+  }
 
-    static get activatePinwheelTool() {
-        return 'activatePinwheelTool';
-    }
+  static get showGrid() {
+    return 'showGrid';
+  }
 
-    static get activateDragStepTool() {
-        return 'activateDragStepTool';
-    }
+  static get hideGrid() {
+    return 'hideGrid';
+  }
 
-    static get activateReverseTool() {
-        return 'activateReverseTool';
-    }
+  static get activatePinwheelTool() {
+    return 'activatePinwheelTool';
+  }
 
-    static get activateMarcherColorsTool() {
-        return 'activateMarcherColorsTool';
-    }
+  static get activateDragStepTool() {
+    return 'activateDragStepTool';
+  }
 
-    static get showConfirmationDialog() {
-        return 'showConfirmationDialog';
-    }
+  static get activateReverseTool() {
+    return 'activateReverseTool';
+  }
 
-    // Events - notification that something has happened
+  static get activateMarcherColorsTool() {
+    return 'activateMarcherColorsTool';
+  }
 
-    static get bookmarkChanged() {
-        return 'bookmarkChanged';
-    }
+  static get showConfirmationDialog() {
+    return 'showConfirmationDialog';
+  }
 
-    static get fieldRenderComplete() {
-        return 'fieldRenderComplete';
-    }
+  // Events - notification that something has happened
 
-    static get confirmationDialogClosed() {
-        return 'confirmationDialogClosed';
-    }
+  static get bookmarkChanged() {
+    return 'bookmarkChanged';
+  }
 
-    static get userSelected() {
-        return 'userSelected';
-    }
+  static get fieldRenderComplete() {
+    return 'fieldRenderComplete';
+  }
 
-    static get strideTypeChanged() {
-        return 'strideTypeChanged';
-    }
+  static get confirmationDialogClosed() {
+    return 'confirmationDialogClosed';
+  }
 
-    static get musicChanged() {
-        return 'musicChanged';
-    }
+  static get userSelected() {
+    return 'userSelected';
+  }
 
-    static get drillOpened() {
-        return 'drillOpened';
-    }
+  static get strideTypeChanged() {
+    return 'strideTypeChanged';
+  }
 
-    static get drillDeleted() {
-        return 'drillDeleted';
-    }
+  static get musicChanged() {
+    return 'musicChanged';
+  }
 
-    static get drillSavedAs() {
-        return 'drillSavedAs';
-    }
+  static get drillOpened() {
+    return 'drillOpened';
+  }
 
-    static get membersAdded() {
-        return 'membersAdded';
-    }
+  static get drillDeleted() {
+    return 'drillDeleted';
+  }
 
-    static get membersChanged() {
-        return 'membersChanged';
-    }
+  static get drillSavedAs() {
+    return 'drillSavedAs';
+  }
 
-    static get membersSelected() {
-        return 'membersSelected';
-    }
+  static get membersAdded() {
+    return 'membersAdded';
+  }
 
-    static get showPaths() {
-        return 'showPaths';
-    }
+  static get membersChanged() {
+    return 'membersChanged';
+  }
 
-    static get drillPropertiesChanged() {
-        return 'drillPropertiesChanged';
-    }
+  static get membersSelected() {
+    return 'membersSelected';
+  }
 
-    static get drillStateChanged() {
-        return 'drillStateChanged';
-    }
+  static get showPaths() {
+    return 'showPaths';
+  }
 
-    static get addStepsToolActivated() {
-        return 'addStepsToolActivated';
-    }
+  static get drillPropertiesChanged() {
+    return 'drillPropertiesChanged';
+  }
 
-    static get drawPathsToolActivated() {
-        return 'drawPathsToolActivated';
-    }
+  static get drillStateChanged() {
+    return 'drillStateChanged';
+  }
 
-    static get drawPathsToolDeactivated() {
-        return 'drawPathsToolDeactivated';
-    }
+  static get addStepsToolActivated() {
+    return 'addStepsToolActivated';
+  }
 
-    static get addMembersToolActivated() {
-        return 'addMembersToolActivated';
-    }
+  static get drawPathsToolActivated() {
+    return 'drawPathsToolActivated';
+  }
 
-    static get pinwheelToolActivated() {
-        return 'pinwheelToolActivated';
-    }
+  static get drawPathsToolDeactivated() {
+    return 'drawPathsToolDeactivated';
+  }
 
-    static get pinwheelToolDeactivated() {
-        return 'pinwheelToolDeactivated';
-    }
+  static get addMembersToolActivated() {
+    return 'addMembersToolActivated';
+  }
 
-    static get marcherColorsToolDeactivated() {
-        return 'marcherColorsToolDeactivated';
-    }
+  static get pinwheelToolActivated() {
+    return 'pinwheelToolActivated';
+  }
 
-    static get dragStepToolActivated() {
-        return 'dragStepToolActivated';
-    }
+  static get pinwheelToolDeactivated() {
+    return 'pinwheelToolDeactivated';
+  }
 
-    static get dragStepToolDeactivated() {
-        return 'dragStepToolDeactivated';
-    }
+  static get marcherColorsToolDeactivated() {
+    return 'marcherColorsToolDeactivated';
+  }
 
-    static get reverseToolDeactivated() {
-        return 'reverseToolDeactivated';
-    }
+  static get dragStepToolActivated() {
+    return 'dragStepToolActivated';
+  }
 
-    static get objectsSelected() {
-        return 'objectsSelected';
-    }
+  static get dragStepToolDeactivated() {
+    return 'dragStepToolDeactivated';
+  }
 
-    static get positionIndicator() {
-        return 'positionIndicator';
-    }
+  static get reverseToolDeactivated() {
+    return 'reverseToolDeactivated';
+  }
 
-    static get resize() {
-        return 'resize';
-    }
+  static get objectsSelected() {
+    return 'objectsSelected';
+  }
 
+  static get positionIndicator() {
+    return 'positionIndicator';
+  }
 
-    static get deleteTurn() {
-        return 'deleteTurn';
-    }
+  static get resize() {
+    return 'resize';
+  }
 
-    static get updateField() {
-        return 'updateField';
-    }
+  static get deleteTurn() {
+    return 'deleteTurn';
+  }
 
-    static get chooseMusicDialogActivated() {
-        return 'chooseMusicDialogActivated';
-    }
+  static get updateField() {
+    return 'updateField';
+  }
 
-    static get uploadMusicDialogActivated() {
-        return 'uploadMusicDialogActivated';
-    }
+  static get chooseMusicDialogActivated() {
+    return 'chooseMusicDialogActivated';
+  }
 
-    static get audioClipDialogActivated() {
-        return 'audioClipDialogActivated';
-    }
+  static get uploadMusicDialogActivated() {
+    return 'uploadMusicDialogActivated';
+  }
 
-    static get audioClipAdded() {
-        return 'audioClipAdded';
-    }
+  static get audioClipDialogActivated() {
+    return 'audioClipDialogActivated';
+  }
+
+  static get audioClipAdded() {
+    return 'audioClipAdded';
+  }
 }
 
 export default Events;
