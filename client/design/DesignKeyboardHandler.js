@@ -18,6 +18,10 @@ class DesignKeyboardHandler {
             },
 
             'd': (e) => {
+                // shortcut to log drill object
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+                    console.log('drill', this.drillEditorService.drill);
+                }
                 if (e.ctrlKey || e.metaKey) {
                     this.drillEditorService.deselectAll();
                     return;
