@@ -50,18 +50,18 @@ angular.module('drillApp').component('timelineContextMenu', {
     $scope.cancel = deactivate;
 
     ctrl.showTrackOptions = function() {
-      return ctrl.item ? true : false;
+      return ctrl.item && ctrl.item.music && ctrl.item.music.type != 'tempo'
+        ? true
+        : false;
     };
 
     ctrl.splitTrack = function() {
-      if (! ctrl.item || !ctrl.item.music) return;
+      if (!ctrl.item || !ctrl.item.music) return;
       console.log(ctrl.item);
       drillEditorService.splitTrack(ctrl.count, ctrl.item.music);
     };
 
-    ctrl.deleteTrack = function() {
-
-    };
+    ctrl.deleteTrack = function() {};
 
     ctrl.addTempo = function() {
       drillEditorService.addTempo();
@@ -84,7 +84,10 @@ angular.module('drillApp').component('timelineContextMenu', {
       ctrl.item = args.item;
       ctrl.count = args.count;
       console.log(args);
-      $('div.timeline-context-menu').css({ top: args.point.top, left: args.point.left });
+      $('div.timeline-context-menu').css({
+        top: args.point.top,
+        left: args.point.left,
+      });
       $('div.timeline-context-menu div.dropdown').addClass('open');
       $rootScope.$safeApply();
     }
