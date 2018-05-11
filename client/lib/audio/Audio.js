@@ -6,7 +6,7 @@ const metronomeUrl = '/audio/metronome.mp3';
 class Audio {
     static init() {
         try {
-            if (this.context) return;
+            if (this.context) return Promise.resolve();
             // Fix up for prefixing
             window.AudioContext = window.AudioContext
                 || window.webkitAudioContext;
@@ -15,6 +15,7 @@ class Audio {
             this.metronomeBuffer = new AudioBufferLoader(this.context);
             this.source = null;
             this.isConfirmedByUser = false;
+            return this.metronomeBuffer.load(metronomeUrl); // promise, after loaded
         } catch (e) {
             let msg = 'Web Audio API is not supported in this browser';
             Logger.error(msg, {

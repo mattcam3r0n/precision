@@ -135,8 +135,9 @@ angular.module('drillApp').component('sidebar', {
     };
 
     $scope.addMusic = function() {
-      Audio.init();
-      eventService.notify(Events.chooseMusicDialogActivated);
+      Audio.init().then(()=>{
+        eventService.notify(Events.chooseMusicDialogActivated);
+      });
     };
 
     $scope.sizeToFit = function() {

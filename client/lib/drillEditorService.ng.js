@@ -43,6 +43,7 @@ class DrillEditorService {
   }
 
   setTempo(tempo) {
+    this.drill.tempo = Number(tempo) || 120;
     if (this.drillPlayer) {
       this.drillPlayer.setTempo(tempo);
     }
@@ -55,6 +56,7 @@ class DrillEditorService {
   // Playback
 
   play(cb, playLength, playMusic, playMetronome) {
+    console.log('metro', playMetronome);
     this.drillPlayer.play(
       () => {
         this.notifyDrillStateChanged();
