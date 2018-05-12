@@ -77,7 +77,11 @@ class DrillScheduler {
             timeInterval = 60 / tempo;
             if (music && music.beats && music.beats[count - music.startCount]) {
                 timeInterval = music.beats[count - music.startCount]
-                                        .timeInterval;
+                .timeInterval;
+            }
+            // if its the first count of the music, set the interval to 0. the lastTimeInterval will be used
+            if (music && count - music.startCount == 0) {
+                timeInterval = 0;
             }
             // if timeInterval is 0 (at start of new music), use lastTimeInterval to add
             // appropriate space between stop of last clip and start of new
