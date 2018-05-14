@@ -309,6 +309,10 @@ class DrillEditorService {
       counts,
       () => {
         this.doInsertStep(step, members);
+      },
+      () => {
+        this.goToCount(count);
+        this.deleteCount();
       }
     );
   }
