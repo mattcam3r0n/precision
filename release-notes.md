@@ -182,3 +182,5 @@ Release v0.3.1 - split track, print marchers in color
 * NEW: Change tempo for sections of a drill. The tempo box above the timeline is default tempo, for when no music or tempo is specified.  In places where there is no music, you can add a tempo to region on the timeline.  Music tempo still takes precedence.
 
 Release v0.3.2 - fix undo insert bug, specify tempo on timeline
+
+* FIX: Unhide keyboard shortcut not working

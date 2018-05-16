@@ -122,6 +122,13 @@ class DesignKeyboardHandler {
                 }
             },
 
+            'H': (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+                    this.drillEditorService.showAll();
+                    return;
+                }
+            },
+
             'h': (e) => {
                 if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
                     this.drillEditorService.showAll();
