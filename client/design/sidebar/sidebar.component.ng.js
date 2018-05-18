@@ -152,6 +152,14 @@ angular.module('drillApp').component('sidebar', {
       eventService.notify(Events.zoomOut);
     };
 
+    $scope.countermarch = function() {
+
+    };
+
+    $scope.illinois = function() {
+      drillEditorService.illinois();
+    };
+
     function initGridSwitch() {
       $('[name=\'grid-switch\']').bootstrapSwitch('state', false);
       $('input[name=\'grid-switch\']').on(

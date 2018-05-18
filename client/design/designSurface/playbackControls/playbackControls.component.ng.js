@@ -23,7 +23,6 @@ angular.module('drillApp').component('playbackControls', {
     $scope.tempo = 120;
     $scope.$watch('tempo', function() {
       drillEditorService.setTempo($scope.tempo);
-      console.log('tempo', $scope.tempo);
     });
 
     ctrl.$onInit = function() {

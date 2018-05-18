@@ -75,10 +75,21 @@ export default class ScriptSequence {
     /**
      * Add a step.
      * @param {Object} step The step (action) to add.
+     * @param {Number} at The index at which to add.
      */
-    addStep(step) {
+    addStep(step, at) {
         const action = new Action(step);
-        this.sequence.push(action);
+        if (at == null) {
+            this.sequence.push(action);
+        } else {
+            this.sequence[at] = action;
+        }
+    }
+
+    addStepAtCount(step, count) {
+        count = count || 0;
+        const action = new Action(step);
+        this.sequence[count - 1] = action;
     }
 
     addLeftCountermarch(currentState) {

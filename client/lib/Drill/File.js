@@ -16,6 +16,10 @@ class File {
         }
     }
 
+    get length() {
+        return this.fileMembers.length;
+    }
+
     addStep(step) {
         let lastStep = step;
         this.fileMembers.forEach((m) => {

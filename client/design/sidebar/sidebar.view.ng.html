@@ -69,6 +69,26 @@
             </div>
         </li>
         <li class="panel">
+            <a href="#maneuvers" ng-click="maneuvers()" data-toggle="collapse" data-parent="#sideMenu">
+                <img class="countermarch" style="fill: white;" src="/icons/countermarch-white.svg" /> Maneuvers
+                <!-- <i class="fa fa-edit"></i> Maneuvers -->
+            </a>
+            <div id="maneuvers" class="collapse">
+                <ul class="side-sub-menu">
+                    <li>
+                        <a ng-click="countermarch()">
+                            <i class="fa fa-expand-arrows-alt"></i> Countermarch
+                            </a>
+                    </li>
+                    <li>
+                        <a ng-click="illinois()">
+                            <i class="fa fa-expand-arrows-alt"></i> Illinois
+                            </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="panel">
             <a href="#addMusic" data-toggle="collapse" data-parent="#sideMenu">
                 <i class="fa fa-music"></i> Music</a>
             <div id="addMusic" class="collapse">

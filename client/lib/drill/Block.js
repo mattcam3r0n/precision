@@ -1,9 +1,20 @@
 import PositionMap from './PositionMap';
+import Direction from '/client/lib/Direction';
+import FileSelector from './FileSelector';
 
 export default class Block {
   constructor(members) {
     this.members = members;
     this.positionMap = new PositionMap(members);
+    this.fileSelector = new FileSelector(members, this.positionMap);
+  }
+
+  getFiles() {
+    if (!this.files) {
+      this.files = this.fileSelector.findFiles();
+      sortFilesLeftToRight(this.files, this.getBlockDirection());
+    }
+    return this.files;
   }
 
   getBlockDirection() {
@@ -24,11 +35,55 @@ export default class Block {
     return Number(dir);
   }
 
-  getRankSpacing() {} // calculate spacing between ranks
+  // getRankSpacing() {} // calculate spacing between ranks
 
-  getFileSpacing() {} // calc spacing between files
+  // getFileSpacing() {} // calc spacing between files
 
-  getRanks() {} // return array of arrays, each array being a rank (relative to block direction)
+  // getRanks() {} // return array of arrays, each array being a rank (relative to block direction)
 
-  getFiles() {} // return array of arrays, each array being a file (relative to block direction)
+  // getFiles() {} // return array of arrays, each array being a file (relative to block direction)
 }
+
+function sortFilesLeftToRight(files, direction) {
+  const sortFunc = directionSortFuncs[direction];
+  files.sort(sortFunc);
+}
+
+const directionSortFuncs = {
+  [Direction.E]: (a, b) => {
+    if (a.leader.y < b.leader.y) {
+      return -1;
+    }
+    if (a.leader.y > b.leader.y) {
+      return 1;
+    }
+    return 0;
+  },
+  [Direction.W]: (a, b) => {
+    if (a.leader.y > b.leader.y) {
+      return -1;
+    }
+    if (a.leader.y < b.leader.y) {
+      return 1;
+    }
+    return 0;
+  },
+  [Direction.N]: (a, b) => {
+    if (a.leader.x < b.leader.x) {
+      return -1;
+    }
+    if (a.leader.x > b.leader.x) {
+      return 1;
+    }
+    return 0;
+  },
+  [Direction.S]: (a, b) => {
+    if (a.leader.x > b.leader.x) {
+      return -1;
+    }
+    if (a.leader.x < b.leader.x) {
+      return 1;
+    }
+    return 0;
+  },
+};

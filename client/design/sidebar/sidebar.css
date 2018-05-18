@@ -59,6 +59,14 @@
     background-color: #1E3749;
 } */
 
+.side-menu img.countermarch {
+    width: 24px;
+    height: 20px;
+    margin-left: 8px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
 .side-sub-menu {
     list-style-type: none;
@@ -94,3 +102,4 @@
     margin-right: 5px;
     font-size: 12px;
 }
+

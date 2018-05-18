@@ -7,6 +7,7 @@ import UndoManager from '/client/lib/UndoManager';
 import PositionMap from './drill/PositionMap';
 import Block from './drill/Block';
 import Direction from '/client/lib/Direction';
+import Illinois from './drill/maneuvers/Illinois';
 
 class DrillEditorService {
   constructor(
@@ -43,6 +44,7 @@ class DrillEditorService {
   }
 
   setTempo(tempo) {
+    if (!this.drill) return;
     this.drill.tempo = Number(tempo) || 120;
     if (this.drillPlayer) {
       this.drillPlayer.setTempo(tempo);
@@ -640,6 +642,19 @@ class DrillEditorService {
     // });
     // this.eventService.notify(Events.audioClipAdded);
     this.eventService.notify(Events.showTempoDialog);
+  }
+
+  illinois() {
+    const members = this.drillBuilder.getSelectedMembers();
+    const illinois = new Illinois(members);
+    const memberScripts = illinois.generate();
+    console.log(memberScripts);
+
+    this.drillBuilder.addSequences(
+      members,
+      memberScripts,
+      this.drill.count + 1
+    );
   }
 
   // Events

@@ -170,6 +170,19 @@ class DrillBuilder {
     this.drill.isDirty = true;
   }
 
+  addSequences(members, sequences, count) {
+    members.forEach((member) => {
+      const sequence = sequences[member.id];
+      this.addSequence(member, sequence, count);
+    });
+  }
+
+  addSequence(member, sequence, count) {
+    if (sequence) {
+      ScriptBuilder.insertSequence(member, sequence.getSequence(), count);
+    }
+  }
+
   addCountermarch() {
     let members = this.getSelectedMembers();
     let isLeftTurn = this.drill.count % 2 == 0 ? true : false;

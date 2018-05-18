@@ -18,6 +18,30 @@ class FileMember {
         this.stepsToLeader = this.getStepsToLeader();
     }
 
+    get id() {
+        return this.member.id;
+    }
+
+    get strideType() {
+        return this.member.currentState.strideType;
+    }
+
+    get stepType() {
+        return this.member.currentState.stepType;
+    }
+
+    get direction() {
+        return this.member.currentState.direction;
+    }
+
+    get x() {
+        return this.member.currentState.x;
+    }
+
+    get y() {
+        return this.member.currentState.y;
+    }
+
     addStep(step) {
         // TODO: still needed? use scriptbuilder?
 
