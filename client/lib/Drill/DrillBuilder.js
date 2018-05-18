@@ -7,6 +7,7 @@ import MemberSelection from './MemberSelection';
 import ScriptBuilder from './ScriptBuilder';
 import Action from './Action';
 import shortid from 'shortid';
+import MemberSequences from '/client/lib/drill/MemberSequences';
 
 class AddMode {
   static get Block() {
@@ -171,8 +172,10 @@ class DrillBuilder {
   }
 
   addSequences(members, sequences, count) {
+    const seqs =
+      sequences instanceof MemberSequences ? sequences.sequences : sequences;
     members.forEach((member) => {
-      const sequence = sequences[member.id];
+      const sequence = seqs[member.id];
       this.addSequence(member, sequence, count);
     });
   }
@@ -532,7 +535,8 @@ class DrillBuilder {
     track.endCount = splitCount - 1;
     track.counts = splitCount - track.startCount;
     track.beats = beats.slice(0, splitCount - track.startCount);
-    track.duration = beats.slice(1, splitCount - track.startCount + 1) // skip first beat
+    track.duration = beats
+      .slice(1, splitCount - track.startCount + 1) // skip first beat
       .reduce((acc, b) => {
         return acc + b.timeInterval;
       }, 0);
@@ -541,13 +545,11 @@ class DrillBuilder {
     newTrack.counts = newTrack.endCount - newTrack.startCount + 1;
     newTrack.beats = beats.slice(splitCount - track.startCount);
     // sum the timeIntervals of the beats
-    newTrack.duration = newTrack.beats
-      .reduce((acc, b) => {
-        return acc + b.timeInterval;
-      }, 0);
+    newTrack.duration = newTrack.beats.reduce((acc, b) => {
+      return acc + b.timeInterval;
+    }, 0);
     // change startoffset
-    newTrack.startOffset =
-      startOffset + track.duration;
+    newTrack.startOffset = startOffset + track.duration;
     // insert new track immediately after i (splice i+1, 0)
     this.drill.music.splice(i + 1, 0, newTrack);
 

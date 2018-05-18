@@ -1,3 +1,4 @@
+import MemberSequences from '../MemberSequences';
 import ScriptSequence from '../ScriptSequence';
 import Direction from '/client/lib/Direction';
 import StepType from '/client/lib/StepType';
@@ -21,7 +22,7 @@ export default class Illinois {
     const leftSide = this.generateLeftSide();
     const rightSide = this.generateRightSide();
 
-    return Object.assign(leftSide, rightSide);
+    return new MemberSequences(Object.assign(leftSide, rightSide));
   }
 
   generateLeftSide() {

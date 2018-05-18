@@ -1,3 +1,4 @@
+import MemberSequences from '../MemberSequences';
 import ScriptSequence from '../ScriptSequence';
 import Block from '../Block';
 
@@ -38,6 +39,6 @@ export default class Countermarch {
       });
     });
 
-    return scripts;
+    return new MemberSequences(scripts);
   }
 }

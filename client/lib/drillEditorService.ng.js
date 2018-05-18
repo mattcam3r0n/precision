@@ -647,39 +647,53 @@ class DrillEditorService {
   }
 
   countermarch() {
-    // TODO: make undoable
     const members = this.drillBuilder.getSelectedMembers();
     const countermarch = new Countermarch(members);
-    const memberScripts = countermarch.generate({
+    const memberSeqs = countermarch.generate({
       turnDirection: 'left',
       fileDelay: 0,
       rankDelay: 2,
     });
+    const count = this.drill.count + 1;
 
-    this.drillBuilder.addSequences(
+    this.makeUndoable(
+      'Countermarch Maneuver',
       members,
-      memberScripts,
-      this.drill.count + 1
+      count,
+      memberSeqs.maxLength,
+      () => {
+        this.drillBuilder.addSequences(
+          members,
+          memberSeqs,
+          this.drill.count + 1
+        );
+        this.notifyDrillStateChanged();
+        this.save();
+      }
     );
-
-    this.notifyDrillStateChanged();
-    this.save();
   }
 
   illinois() {
-    // TODO: make undoable
     const members = this.drillBuilder.getSelectedMembers();
     const illinois = new Illinois(members);
-    const memberScripts = illinois.generate();
+    const memberSeqs = illinois.generate();
+    const count = this.drill.count + 1;
 
-    this.drillBuilder.addSequences(
+    this.makeUndoable(
+      'Illinois Maneuver',
       members,
-      memberScripts,
-      this.drill.count + 1
+      count,
+      memberSeqs.maxLength,
+      () => {
+        this.drillBuilder.addSequences(
+          members,
+          memberSeqs,
+          this.drill.count + 1
+        );
+        this.notifyDrillStateChanged();
+        this.save();
+      }
     );
-
-    this.notifyDrillStateChanged();
-    this.save();
   }
 
   // Events
