@@ -7,7 +7,9 @@ import UndoManager from '/client/lib/UndoManager';
 import PositionMap from './drill/PositionMap';
 import Block from './drill/Block';
 import Direction from '/client/lib/Direction';
+
 import Illinois from './drill/maneuvers/Illinois';
+import Countermarch from './drill/maneuvers/Countermarch';
 
 class DrillEditorService {
   constructor(
@@ -644,17 +646,40 @@ class DrillEditorService {
     this.eventService.notify(Events.showTempoDialog);
   }
 
-  illinois() {
+  countermarch() {
+    // TODO: make undoable
     const members = this.drillBuilder.getSelectedMembers();
-    const illinois = new Illinois(members);
-    const memberScripts = illinois.generate();
-    console.log(memberScripts);
+    const countermarch = new Countermarch(members);
+    const memberScripts = countermarch.generate({
+      turnDirection: 'left',
+      fileDelay: 0,
+      rankDelay: 2,
+    });
 
     this.drillBuilder.addSequences(
       members,
       memberScripts,
       this.drill.count + 1
     );
+
+    this.notifyDrillStateChanged();
+    this.save();
+  }
+
+  illinois() {
+    // TODO: make undoable
+    const members = this.drillBuilder.getSelectedMembers();
+    const illinois = new Illinois(members);
+    const memberScripts = illinois.generate();
+
+    this.drillBuilder.addSequences(
+      members,
+      memberScripts,
+      this.drill.count + 1
+    );
+
+    this.notifyDrillStateChanged();
+    this.save();
   }
 
   // Events

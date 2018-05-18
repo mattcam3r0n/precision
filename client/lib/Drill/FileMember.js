@@ -42,6 +42,10 @@ class FileMember {
         return this.member.currentState.y;
     }
 
+    get currentState() {
+        return this.member.currentState;
+    }
+
     addStep(step) {
         // TODO: still needed? use scriptbuilder?
 

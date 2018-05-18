@@ -153,7 +153,7 @@ angular.module('drillApp').component('sidebar', {
     };
 
     $scope.countermarch = function() {
-
+      drillEditorService.countermarch();
     };
 
     $scope.illinois = function() {

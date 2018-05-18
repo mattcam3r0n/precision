@@ -1,5 +1,6 @@
 import Direction from '/client/lib/Direction';
 import Action from '/client/lib/drill/Action';
+import StepType from '/client/lib/StepType';
 
 export default class ScriptSequence {
     constructor(sequence) {
@@ -36,10 +37,16 @@ export default class ScriptSequence {
         this.sequence.splice(count - 1, 0, ...sequence);
     }
 
-    addNull(counts) {
+    addNull(counts, at) {
         counts = counts || 1;
-        for (let i = 0; i < counts; i++) {
-            this.sequence.push(null);
+        if (at == null) {
+            for (let i = 0; i < counts; i++) {
+                this.sequence.push(null);
+            }
+        } else {
+            for (let i = 0; i < counts; i++) {
+                this.sequence[at + i] = null;
+            }
         }
     }
 
@@ -86,13 +93,15 @@ export default class ScriptSequence {
         }
     }
 
-    addStepAtCount(step, count) {
-        count = count || 0;
-        const action = new Action(step);
-        this.sequence[count - 1] = action;
+    addCountermarch(leftOrRight, currentState, at) {
+        if (leftOrRight == 'left') {
+            this.addLeftCountermarch(currentState, at);
+        } else {
+            this.addRightCountermarch(currentState, at);
+        }
     }
 
-    addLeftCountermarch(currentState) {
+    addLeftCountermarch(currentState, at) {
         let firstTurnDirection = Direction.leftOf(currentState.direction);
         let secondTurnDirection = Direction
             .leftOf(firstTurnDirection);
@@ -109,12 +118,12 @@ export default class ScriptSequence {
             direction: secondTurnDirection,
         });
 
-        this.addStep(firstTurn);
-        this.addNull();
-        this.addStep(secondTurn);
+        this.addStep(firstTurn, at);
+        this.addNull(1, at + 1);
+        this.addStep(secondTurn, at + 2);
     }
 
-    addRightCountermarch(currentDir) {
+    addRightCountermarch(currentState, at) {
         let firstTurnDirection = Direction.rightOf(currentState.direction);
         let secondTurnDirection = Direction
             .rightOf(firstTurnDirection);
@@ -131,9 +140,9 @@ export default class ScriptSequence {
             direction: secondTurnDirection,
         });
 
-        this.addStep(firstTurn);
-        this.addNull();
-        this.addStep(secondTurn);
+        this.addStep(firstTurn, at);
+        this.addNull(1, at + 1);
+        this.addStep(secondTurn, at + 2);
     }
 
     addRightFace(count) {
