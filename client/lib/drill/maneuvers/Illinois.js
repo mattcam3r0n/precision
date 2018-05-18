@@ -8,7 +8,10 @@ export default class Illinois {
     // detect files
     this.block = new Block(members);
     this.files = this.block.getFiles();
-    console.log(this.files);
+    this.files = this.block.sortFilesLeftToRight(
+      this.files,
+      this.files[0].leader.direction
+    );
     // sort files by leader, based on leader dir
     this.rankCount = this.files[0].length; // TODO: use max file length?
   }

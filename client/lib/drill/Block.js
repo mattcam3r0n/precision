@@ -12,9 +12,15 @@ export default class Block {
   getFiles() {
     if (!this.files) {
       this.files = this.fileSelector.findFiles();
-      sortFilesLeftToRight(this.files, this.getBlockDirection());
     }
     return this.files;
+  }
+
+  sortFilesLeftToRight(files, direction) {
+    sorted = files.slice();
+    const sortFunc = directionSortFuncs[direction];
+    sorted.sort(sortFunc);
+    return sorted;
   }
 
   getBlockDirection() {
@@ -28,6 +34,7 @@ export default class Block {
       }
       modes[dir] = modes[dir] + 1;
     });
+
     // find the greatest number, assume that direction
     const dir = Object.keys(modes).reduce((max, k) => {
       return modes[k] > max ? k : max;
@@ -42,11 +49,6 @@ export default class Block {
   // getRanks() {} // return array of arrays, each array being a rank (relative to block direction)
 
   // getFiles() {} // return array of arrays, each array being a file (relative to block direction)
-}
-
-function sortFilesLeftToRight(files, direction) {
-  const sortFunc = directionSortFuncs[direction];
-  files.sort(sortFunc);
 }
 
 const directionSortFuncs = {
