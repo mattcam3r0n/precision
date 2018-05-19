@@ -16,22 +16,26 @@ export default class Countermarch {
 
   generate(options) {
     options = options || {
-      turnDirection: 'left',
+      countermarchDirection: 'left',
       fileDelay: 0,
+      fileDelayDirection: 'left-to-right',
       rankDelay: 0,
     };
     // return an object keyed by member id, with script as value
     const scripts = {};
 
+    // fileModifier inverts the file delay, if right-to-left
+    const fileModifier =
+      options.fileDelayDirection == 'left-to-right' ? 0 : this.files.length - 1;
     this.files.forEach((file, f) => {
       file.fileMembers.forEach((member, r) => {
         const script = new ScriptSequence();
         const count =
           member.stepsToLeader * r +
-          options.fileDelay * f +
+          options.fileDelay * Math.abs(fileModifier - f) +
           options.rankDelay * r;
         script.addCountermarch(
-          options.turnDirection,
+          options.countermarchDirection,
           member.currentState,
           count
         );

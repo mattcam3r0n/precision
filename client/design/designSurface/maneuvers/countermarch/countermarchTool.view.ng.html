@@ -1,0 +1,66 @@
+<div draggable class="countermarch-tool panel panel-default" ng-show="$ctrl.isActivated">
+    <div class="panel-heading text-center drag-handle">
+        <i class="fa fa-bars fa-sm drag-handle"></i> Countermarch
+    </div>
+    <div id="dragStepTool" class="">
+        <ul>
+            <li class="description">
+                <p>Add a follow-the-leader countermarch at the current count.</p>
+            </li>
+            <li>
+                <span>Turn Direction</span>
+                <div class="countermarch-direction">
+                    <button ng-click="$ctrl.setCountermarchDirection('left')" ng-class="{ 'active': $ctrl.countermarchDirection == 'left' }" class="btn btn-default">
+                        <img class="left-countermarch" src="/icons/CM.svg" />
+                    </button>
+                    <button ng-click="$ctrl.setCountermarchDirection('right')" ng-class="{ 'active': $ctrl.countermarchDirection == 'right' }" class="btn btn-default">
+                        <img class="right-countermarch" src="/icons/CM.svg" />
+                    </button>
+                </div>
+            </li>
+            <li>
+                <span>Delay Files</span>
+                <div class="input-group counts">
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setFileDelay($ctrl.fileDelay - 1)" class="btn btn-default" type="button">-</button>
+                    </span>
+                    <input ng-model="$ctrl.fileDelay" ng-change="$ctrl.setFileDelay()" type="number" class="form-control" />
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setFileDelay($ctrl.fileDelay + 1)" class="btn btn-default" type="button">+</button>
+                    </span>
+                </div>
+                <div class="file-delay-direction">
+                    <button ng-click="$ctrl.setFileDelayDirection('left-to-right')" ng-class="{ 'active': $ctrl.fileDelayDirection == 'left-to-right' }" class="btn btn-default" title="Left-to-right" data-toggle="tooltip" data-placement="bottom">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </button>
+                    <button ng-click="$ctrl.setFileDelayDirection('right-to-left')" ng-class="{ 'active': $ctrl.fileDelayDirection == 'right-to-left' }" class="btn btn-default" title="Right-to-left" data-toggle="tooltip" data-placement="bottom">
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                    </button>
+                </div>
+            </li>
+            <li>
+                <span>Delay Ranks</span>
+                <div class="input-group counts">
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setRankDelay($ctrl.rankDelay - 1)" class="btn btn-default" type="button">-</button>
+                    </span>
+                    <input ng-model="$ctrl.rankDelay" ng-change="$ctrl.setRankDelay()" type="number" class="form-control" />
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setRankDelay($ctrl.rankDelay + 1)" class="btn btn-default" type="button">+</button>
+                    </span>
+                </div>
+            </li>
+            <li>
+                <button ng-click="save()" id="saveDragStep" class="btn btn-default save-button" data-toggle="tooltip" data-placement="right"
+                    title="Save">
+                    <i class="fa fa-check context-button"></i>
+                </button>
+                <button ng-click="cancel()" id="cancelDragStep" class="btn btn-default cancel-button" data-toggle="tooltip" data-placement="right"
+                    title="Cancel">
+                    <i class="fa fa-times context-button"></i>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+</div>

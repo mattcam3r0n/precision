@@ -76,12 +76,12 @@ angular.module('drillApp')
 
       ctrl.pageForward = function() {
         ctrl.timeline.pageForward();
-        blurActiveElement();
+        drillEditorService.blurActiveElement();
       };
 
       ctrl.pageBackward = function() {
         ctrl.timeline.pageBackward();
-        blurActiveElement();
+        drillEditorService.blurActiveElement();
       };
 
       ctrl.chooseMusic = function() {
@@ -160,12 +160,6 @@ angular.module('drillApp')
 
       function zoomTimeline() {
         ctrl.timeline.setWindow(0, 20);
-      }
-
-      function blurActiveElement() {
-        if (document.activeElement) {
-          document.activeElement.blur();
-        }
       }
     },
   });

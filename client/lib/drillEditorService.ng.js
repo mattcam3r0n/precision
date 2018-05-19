@@ -646,14 +646,10 @@ class DrillEditorService {
     this.eventService.notify(Events.showTempoDialog);
   }
 
-  countermarch() {
+  countermarch(options) {
     const members = this.drillBuilder.getSelectedMembers();
     const countermarch = new Countermarch(members);
-    const memberSeqs = countermarch.generate({
-      turnDirection: 'left',
-      fileDelay: 0,
-      rankDelay: 2,
-    });
+    const memberSeqs = countermarch.generate(options);
     const count = this.drill.count + 1;
 
     this.makeUndoable(
@@ -694,6 +690,12 @@ class DrillEditorService {
         this.save();
       }
     );
+  }
+
+  blurActiveElement() {
+    if (document.activeElement) {
+      document.activeElement.blur();
+    }
   }
 
   // Events

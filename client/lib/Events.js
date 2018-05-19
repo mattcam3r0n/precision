@@ -103,6 +103,14 @@ class Events {
     return 'activateReverseTool';
   }
 
+  static get activateCountermarchTool() {
+    return 'activateCountermarchTool';
+  }
+
+  static get activateIllinoisTool() {
+    return 'activateIllinoisTool';
+  }
+
   static get activateMarcherColorsTool() {
     return 'activateMarcherColorsTool';
   }
@@ -211,6 +219,14 @@ class Events {
 
   static get reverseToolDeactivated() {
     return 'reverseToolDeactivated';
+  }
+
+  static get countermarchToolDeactivated() {
+    return 'countermarchToolDeactivated';
+  }
+
+  static get illinoisToolDeactivated() {
+    return 'illinoisToolDeactivated';
   }
 
   static get objectsSelected() {

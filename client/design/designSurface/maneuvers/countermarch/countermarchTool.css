@@ -1,0 +1,100 @@
+.countermarch-tool {
+    position: absolute;
+   background-color: gainsboro;
+   width: 110px;
+   left: 150px;
+   top: 100px;
+}
+
+.countermarch-tool div.panel-heading {
+    font-size: 12px;
+}
+
+.countermarch-tool ul {
+    margin: 0;
+    width: 100%;
+    padding: 0px;
+}
+
+.countermarch-tool li {
+    list-style-type: none;
+    margin-top: 0px;
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.countermarch-tool li.description {
+    font-size: 10px;
+    background-color: #fff;
+    padding: 5px;
+}
+
+.countermarch-tool li span {
+    flex: 1 1 100%;
+    color: black;
+    background-color: #e6e6e6;
+    text-align: center;
+    font-size: 10px;
+}
+
+.countermarch-tool div.countermarch-direction {
+    display: flex;
+    width: 100%;
+}
+
+.countermarch-tool div.countermarch-direction button {
+    flex: 1 1 50%;
+}
+
+.countermarch-tool div.file-delay-direction {
+    display: flex;
+    width: 100%;
+}
+
+.countermarch-tool div.file-delay-direction button {
+    flex: 1 1 50%;
+    width: 50%;
+}
+
+#countermarchStepsButton {
+    flex: 0 1 33%;
+    width: 60px;
+}
+
+.countermarch-tool li button {
+    flex: 1 1 auto;
+    border-radius: 0;
+    padding: 5px;
+}
+
+.countermarch-tool button.active {
+    background-color: #e6e6e6;
+}
+
+.countermarch-tool input {
+    color: black;
+    text-align: center;
+    height: 32px;
+    padding-left: 16px;
+    padding-right: 8px;
+}
+
+.countermarch-tool .counts button {
+    width: 20px;
+    height: 32px;
+}
+            
+.countermarch-tool .turn-mode-button span {
+    font-size: 12px;
+}
+
+.countermarch-tool .save-button i {
+    color: green;    
+}
+
+.countermarch-tool .cancel-button i {
+    color: red;    
+}
+

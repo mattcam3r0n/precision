@@ -70,12 +70,12 @@ angular.module('drillApp').component('drawPathsTool', {
     $scope.setTurnMode = function(mode) {
       ctrl.turnMode = mode;
       createPathTool();
-      blurActiveElement();
+      drillEditorService.blurActiveElement();
     };
 
     ctrl.setAllFiles = function() {
       createPathTool();
-      blurActiveElement();
+      drillEditorService.blurActiveElement();
     };
 
     ctrl.setFileOffset = function() {
@@ -167,7 +167,7 @@ angular.module('drillApp').component('drawPathsTool', {
       ctrl.field.canvas.defaultCursor =
         'url(/icons/' + Direction.getDirectionName(dir) + '.svg) 8 8, auto';
       ctrl.activePathTool.setCurrentTurnDirection(dir);
-      blurActiveElement();
+      drillEditorService.blurActiveElement();
     }
 
     function reset() {
@@ -243,12 +243,6 @@ angular.module('drillApp').component('drawPathsTool', {
         turnMode: ctrl.turnMode,
         turnDirection: ctrl.turnDirection,
       };
-    }
-
-    function blurActiveElement() {
-      if (document.activeElement) {
-        document.activeElement.blur();
-      }
     }
   },
 });

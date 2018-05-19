@@ -61,7 +61,7 @@ angular.module('drillApp').component('bookmarkList', {
 
     ctrl.showBookmarkList = function() {
       // $('#bookmark-list').tooltip('hide');
-      blurActiveElement();
+      drillEditorService.blurActiveElement();
     };
 
     ctrl.goToBookmark = function(bookmark) {
@@ -130,12 +130,6 @@ angular.module('drillApp').component('bookmarkList', {
     function showBookmarkDialog() {
       $('#addBookmarkDialog').modal('show');
       $rootScope.$safeApply();
-    }
-
-    function blurActiveElement() {
-      if (document.activeElement) {
-        document.activeElement.blur();
-      }
     }
   },
 });

@@ -153,11 +153,13 @@ angular.module('drillApp').component('sidebar', {
     };
 
     $scope.countermarch = function() {
-      drillEditorService.countermarch();
+      eventService.notify(Events.activateCountermarchTool);
+      // drillEditorService.countermarch();
     };
 
     $scope.illinois = function() {
-      drillEditorService.illinois();
+      eventService.notify(Events.activateIllinoisTool);
+      // drillEditorService.illinois();
     };
 
     function initGridSwitch() {

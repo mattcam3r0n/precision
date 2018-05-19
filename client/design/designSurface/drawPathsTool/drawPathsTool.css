@@ -75,7 +75,7 @@
     padding: 0;    
 }
 
-.draw-paths-tool img.left-countermarch {
+/* .draw-paths-tool img.left-countermarch {
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
     -ms-transform: rotate(-90deg);
@@ -89,7 +89,7 @@
     -ms-transform: rotate(-90deg);
     -o-transform: rotate(-90deg);
     transform: rotate(-90deg) scaleY(-1);
-}
+} */
 
 .draw-paths-tool .save-button i {
     color: green;    
