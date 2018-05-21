@@ -181,6 +181,7 @@ class DrillBuilder {
       const sequence = seqs[member.id];
       this.addSequence(member, sequence, count);
     });
+    this.drill.isDirty = true;
   }
 
   addSequence(member, sequence, count) {

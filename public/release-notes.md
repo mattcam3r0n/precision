@@ -10,6 +10,6 @@
   * Non-block selections may yield unexpected results.
   * You can use **Undo** and **Redo** to remove or re-add a maneuver.
 
-**FIX**: Sped up **chart printing** by about 50%.  It still takes about 1.5 seconds per chart. More improvements are in the works.
+**FIX**: Sped up **chart printing** by about 50%.  It still takes about 1.5 seconds per chart to prouce the PDF. More improvements are in the works.
 
 **FIX**: **Unhide Marchers** keyboard shortcut on Windows and Chromebooks (Ctrl+Shift+H) was not working.  Cmd+Shift+H can be used on Macs.
