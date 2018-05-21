@@ -1,12 +1,12 @@
 'use strict';
 
 import Events from '/client/lib/Events';
-import Countermarch from '../../../../lib/drill/maneuvers/Countermarch';
+import Illinois from '../../../../lib/drill/maneuvers/Illinois';
 
-angular.module('drillApp').component('countermarchTool', {
+angular.module('drillApp').component('illinoisTool', {
   // eslint-disable-next-line max-len
   templateUrl:
-    'client/design/designSurface/maneuvers/countermarch/countermarchTool.view.ng.html',
+    'client/design/designSurface/maneuvers/illinois/illinoisTool.view.ng.html',
   bindings: {},
   controller: function(
     $scope,
@@ -19,21 +19,14 @@ angular.module('drillApp').component('countermarchTool', {
     let ctrl = this;
 
     ctrl.$onInit = function() {
-      $('[data-toggle="tooltip"]').tooltip();
-
       ctrl.subscriptions = eventService.createSubscriptionManager();
 
       ctrl.subscriptions.subscribe(
-        Events.activateCountermarchTool,
+        Events.activateIllinoisTool,
         (evt, args) => {
           activate(drillEditorService.getMemberSelection());
         }
       );
-
-      ctrl.countermarchDirection = 'left';
-      ctrl.fileDelayDirection = 'left-to-right';
-      ctrl.fileDelay = 0;
-      ctrl.rankDelay = 0;
     };
 
     ctrl.$onDestroy = function() {
@@ -46,24 +39,6 @@ angular.module('drillApp').component('countermarchTool', {
       deactivate();
     };
 
-    ctrl.setCountermarchDirection = function(dir) {
-      ctrl.countermarchDirection = dir;
-      drillEditorService.blurActiveElement();
-    };
-
-    ctrl.setFileDelay = function(counts) {
-      ctrl.fileDelay = counts;
-    };
-
-    ctrl.setFileDelayDirection = function(dir) {
-      ctrl.fileDelayDirection = dir;
-      drillEditorService.blurActiveElement();
-    };
-
-    ctrl.setRankDelay = function(counts) {
-      ctrl.rankDelay = counts;
-    };
-
     $scope.cancel = deactivate;
 
     function activate(memberSelection) {
@@ -71,7 +46,7 @@ angular.module('drillApp').component('countermarchTool', {
         deactivate();
       }
 
-      appStateService.setActiveTool('countermarchTool', () => {
+      appStateService.setActiveTool('illinoisTool', () => {
         deactivate(false);
       });
 
@@ -93,9 +68,7 @@ angular.module('drillApp').component('countermarchTool', {
         return;
       }
       const members = ctrl.memberSelection.members;
-      const memberSequences = new Countermarch(members).generate(
-        getCountermarchOptions()
-      );
+      const memberSequences = new Illinois(members).generate();
       drillEditorService.previewFootprints(members, memberSequences, 24);
     }
 
@@ -106,26 +79,12 @@ angular.module('drillApp').component('countermarchTool', {
       eventService.notify(Events.clearFootprints);
       eventService.notify(Events.updateField);
       if (notify) {
-        eventService.notify(Events.countermarchToolDeactivated);
+        eventService.notify(Events.illinoisToolDeactivated);
       }
     }
 
-    function getCountermarchOptions() {
-      return {
-        countermarchDirection: ctrl.countermarchDirection,
-        fileDelayDirection: ctrl.fileDelayDirection,
-        fileDelay: ctrl.fileDelay,
-        rankDelay: ctrl.rankDelay,
-      };
-    }
-
     function save() {
-      drillEditorService.countermarch({
-        countermarchDirection: ctrl.countermarchDirection,
-        fileDelay: ctrl.fileDelay,
-        fileDelayDirection: ctrl.fileDelayDirection,
-        rankDelay: ctrl.rankDelay,
-      });
+      drillEditorService.illinois();
 
       deactivate();
     }

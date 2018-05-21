@@ -162,6 +162,13 @@ angular.module('drillApp').component('sidebar', {
       // drillEditorService.illinois();
     };
 
+    $scope.texasTurn = function() {
+      eventService.notify(Events.activateTexasTurnTool);
+      // drillEditorService.texasTurn({
+      //   turnDirection: 'left',
+      // });
+    };
+
     function initGridSwitch() {
       $('[name=\'grid-switch\']').bootstrapSwitch('state', false);
       $('input[name=\'grid-switch\']').on(

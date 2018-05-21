@@ -7,6 +7,7 @@ export default class Block {
     this.members = members;
     this.positionMap = new PositionMap(members);
     this.fileSelector = new FileSelector(members, this.positionMap);
+    this.files = this.fileSelector.findFiles();
   }
 
   getFiles() {

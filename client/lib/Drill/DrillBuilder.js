@@ -507,7 +507,6 @@ class DrillBuilder {
   }
 
   getFootprintPoints(members, counts) {
-    console.time('getFootprintPoints');
     members = members || this.getSelectedMembers();
     counts = counts || 24;
 
@@ -523,8 +522,6 @@ class DrillBuilder {
         }
       }
     });
-    console.timeEnd('getFootprintPoints');
-
     return pointSet;
   }
 

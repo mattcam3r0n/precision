@@ -1,12 +1,12 @@
 'use strict';
 
 import Events from '/client/lib/Events';
-import Countermarch from '../../../../lib/drill/maneuvers/Countermarch';
+import TexasTurn from '../../../../lib/drill/maneuvers/TexasTurn';
 
-angular.module('drillApp').component('countermarchTool', {
+angular.module('drillApp').component('texasTurnTool', {
   // eslint-disable-next-line max-len
   templateUrl:
-    'client/design/designSurface/maneuvers/countermarch/countermarchTool.view.ng.html',
+    'client/design/designSurface/maneuvers/texasTurn/texasTurnTool.view.ng.html',
   bindings: {},
   controller: function(
     $scope,
@@ -19,21 +19,16 @@ angular.module('drillApp').component('countermarchTool', {
     let ctrl = this;
 
     ctrl.$onInit = function() {
-      $('[data-toggle="tooltip"]').tooltip();
-
       ctrl.subscriptions = eventService.createSubscriptionManager();
 
       ctrl.subscriptions.subscribe(
-        Events.activateCountermarchTool,
+        Events.activateTexasTurnTool,
         (evt, args) => {
           activate(drillEditorService.getMemberSelection());
         }
       );
 
-      ctrl.countermarchDirection = 'left';
-      ctrl.fileDelayDirection = 'left-to-right';
-      ctrl.fileDelay = 0;
-      ctrl.rankDelay = 0;
+      ctrl.turnDirection = 'right';
     };
 
     ctrl.$onDestroy = function() {
@@ -41,27 +36,15 @@ angular.module('drillApp').component('countermarchTool', {
       ctrl.subscriptions.unsubscribeAll();
     };
 
+    ctrl.setTurnDirection = function(dir) {
+      ctrl.turnDirection = dir;
+      console.log(ctrl.turnDirection);
+      activate(drillEditorService.getMemberSelection());
+    };
+
     $scope.save = function() {
       save();
       deactivate();
-    };
-
-    ctrl.setCountermarchDirection = function(dir) {
-      ctrl.countermarchDirection = dir;
-      drillEditorService.blurActiveElement();
-    };
-
-    ctrl.setFileDelay = function(counts) {
-      ctrl.fileDelay = counts;
-    };
-
-    ctrl.setFileDelayDirection = function(dir) {
-      ctrl.fileDelayDirection = dir;
-      drillEditorService.blurActiveElement();
-    };
-
-    ctrl.setRankDelay = function(counts) {
-      ctrl.rankDelay = counts;
     };
 
     $scope.cancel = deactivate;
@@ -71,7 +54,7 @@ angular.module('drillApp').component('countermarchTool', {
         deactivate();
       }
 
-      appStateService.setActiveTool('countermarchTool', () => {
+      appStateService.setActiveTool('texasTurnTool', () => {
         deactivate(false);
       });
 
@@ -81,8 +64,8 @@ angular.module('drillApp').component('countermarchTool', {
       ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
         if (!ctrl.isActivated) return;
         ctrl.memberSelection = drillEditorService.getMemberSelection();
-        activate(ctrl.memberSelection);
         eventService.notify(Events.drillStateChanged);
+        activate(ctrl.memberSelection);
       });
       previewFootprints();
     }
@@ -93,9 +76,9 @@ angular.module('drillApp').component('countermarchTool', {
         return;
       }
       const members = ctrl.memberSelection.members;
-      const memberSequences = new Countermarch(members).generate(
-        getCountermarchOptions()
-      );
+      const memberSequences = new TexasTurn(members).generate({
+        turnDirection: ctrl.turnDirection,
+      });
       drillEditorService.previewFootprints(members, memberSequences, 24);
     }
 
@@ -106,25 +89,13 @@ angular.module('drillApp').component('countermarchTool', {
       eventService.notify(Events.clearFootprints);
       eventService.notify(Events.updateField);
       if (notify) {
-        eventService.notify(Events.countermarchToolDeactivated);
+        eventService.notify(Events.texasTurnToolDeactivated);
       }
     }
 
-    function getCountermarchOptions() {
-      return {
-        countermarchDirection: ctrl.countermarchDirection,
-        fileDelayDirection: ctrl.fileDelayDirection,
-        fileDelay: ctrl.fileDelay,
-        rankDelay: ctrl.rankDelay,
-      };
-    }
-
     function save() {
-      drillEditorService.countermarch({
-        countermarchDirection: ctrl.countermarchDirection,
-        fileDelay: ctrl.fileDelay,
-        fileDelayDirection: ctrl.fileDelayDirection,
-        rankDelay: ctrl.rankDelay,
+      drillEditorService.texasTurn({
+        turnDirection: ctrl.turnDirection,
       });
 
       deactivate();

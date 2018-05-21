@@ -110,6 +110,10 @@ class Events {
   static get activateIllinoisTool() {
     return 'activateIllinoisTool';
   }
+  
+  static get activateTexasTurnTool() {
+    return 'activateTexasTurnTool';
+  }
 
   static get activateMarcherColorsTool() {
     return 'activateMarcherColorsTool';
@@ -231,6 +235,9 @@ class Events {
 
   static get illinoisToolDeactivated() {
     return 'illinoisToolDeactivated';
+  }
+  static get texasTurnToolDeactivated() {
+    return 'texasTurnToolDeactivated';
   }
 
   static get objectsSelected() {

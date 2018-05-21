@@ -10,6 +10,7 @@ import Direction from '/client/lib/Direction';
 
 import Illinois from './drill/maneuvers/Illinois';
 import Countermarch from './drill/maneuvers/Countermarch';
+import TexasTurn from './drill/maneuvers/TexasTurn';
 
 class DrillEditorService {
   constructor(
@@ -260,19 +261,14 @@ class DrillEditorService {
       memberSequences,
       this.drill.count + 1
     );
-
-    console.log(previewMembers);
-
     this.showFootprints(previewMembers, counts);
   }
 
   // preview footprints for a set of members
   showFootprints(members, counts) {
-    console.time('showFootprints');
     members = members || this.drillBuilder.getSelectedMembers();
     const pointSet = this.drillBuilder.getFootprintPoints(members, counts);
     this.eventService.notify(Events.showFootprints, { pointSet: pointSet });
-    console.timeEnd('showFootprints');
     this.notifyDrillStateChanged();
   }
 
@@ -730,6 +726,30 @@ class DrillEditorService {
         this.save();
       }
     );
+  }
+
+  texasTurn(options) {
+    const members = this.drillBuilder.getSelectedMembers();
+    const texasTurn = new TexasTurn(members);
+    const memberSeqs = texasTurn.generate(options);
+    const count = this.drill.count + 1;
+
+    this.makeUndoable(
+      'Texas Turn Maneuver',
+      members,
+      count,
+      memberSeqs.maxLength,
+      () => {
+        this.drillBuilder.addSequences(
+          members,
+          memberSeqs,
+          this.drill.count + 1
+        );
+        this.notifyDrillStateChanged();
+        this.save();
+      }
+    );
+    texasTurn.generate();
   }
 
   blurActiveElement() {

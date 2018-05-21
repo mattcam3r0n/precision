@@ -12,6 +12,11 @@ class MemberSelection {
         this.fileSelector = new FileSelector(members, this.positionMap);
     }
 
+    get length() {
+        if (!this.members) return 0;
+        return this.members.length;
+    }
+
     getFiles() {
         return this.fileSelector.findFiles();
     }

@@ -1,0 +1,82 @@
+.texas-turn-tool {
+    position: absolute;
+   background-color: gainsboro;
+   width: 110px;
+   left: 150px;
+   top: 100px;
+   z-index: 100;
+}
+
+.texas-turn-tool div.panel-heading {
+    font-size: 12px;
+}
+
+.texas-turn-tool ul {
+    margin: 0;
+    width: 100%;
+    padding: 0px;
+}
+
+.texas-turn-tool li {
+    list-style-type: none;
+    margin-top: 0px;
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.texas-turn-tool li.description {
+    font-size: 10px;
+    background-color: #fff;
+    padding: 5px;
+}
+
+.texas-turn-tool li span {
+    flex: 1 1 100%;
+    color: black;
+    background-color: #e6e6e6;
+    text-align: center;
+    font-size: 10px;
+}
+
+.texas-turn-tool li div.turn-direction {
+    display: flex;
+    width: 100%;
+}
+
+.texas-turn-tool li button {
+    flex: 1 1 auto;
+    border-radius: 0;
+    padding: 5px;
+}
+
+.texas-turn-tool button.active {
+    background-color: #e6e6e6;
+}
+
+.texas-turn-tool input {
+    color: black;
+    text-align: center;
+    height: 32px;
+    padding-left: 16px;
+    padding-right: 8px;
+}
+
+.texas-turn-tool .counts button {
+    width: 20px;
+    height: 32px;
+}
+            
+.texas-turn-tool .turn-mode-button span {
+    font-size: 12px;
+}
+
+.texas-turn-tool .save-button i {
+    color: green;    
+}
+
+.texas-turn-tool .cancel-button i {
+    color: red;    
+}
+
