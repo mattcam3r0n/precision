@@ -184,3 +184,6 @@ Release v0.3.1 - split track, print marchers in color
 Release v0.3.2 - fix undo insert bug, specify tempo on timeline
 
 * FIX: Unhide keyboard shortcut not working
+* NEW: Maneuvers menu
+* NEW: Countermarch, Illinois, Texas Turn maneuvers, with "footprints" preview
+* FIX: Sped up chart printing by about 50%.  Still takes about 1.5s per chart.
