@@ -239,15 +239,6 @@ class DrillEditorService {
     // create new member objects with the current state and the sequences to preview
     // as the script
     const previewMembers = members.map((m) => {
-      // const script = [...m.script];
-      // console.log('member seqs', memberSequences);
-      // console.log('member script', m.script);
-      // console.log('before splice', script[0]);
-      // const seq = memberSequences.getSequence(m.id);
-      // const at = m.currentState.count - 1 < 0 ? 0 : m.currentState.count;
-      // script[at] = null;
-      // script.splice(at, seq.length, ...seq);
-      // console.log('after splice', script);
       return {
         id: m.id,
         initialState: m.initialState, // treat current state as initial

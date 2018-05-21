@@ -2,9 +2,8 @@ import JsPDF from 'jspdf';
 import FieldPainter from '/client/design/designSurface/field/FieldPainter';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import MarcherFactory from '../design/designSurface/field/MarcherFactory';
-import PointSet from '/client/lib/PointSet';
-import MemberPositionCalculator from './drill/MemberPositionCalculator';
 import DrillPlayer from '/client/lib/drill/DrillPlayer';
+import DrillBuilder from '/client/lib/drill/DrillBuilder';
 
 class printService {
   constructor(appStateService) {
@@ -146,14 +145,22 @@ class printService {
     // for N counts
     // calc position
     // add point to pointset
-    const pointSet = new PointSet();
-    this.appStateService.drill.members.forEach((m) => {
-      let pos = m.currentState;
-      for (let count = 0; count < counts; count++) {
-        pos = MemberPositionCalculator.stepForward(m, pos, 1);
-        pointSet.add({ x: pos.x, y: pos.y });
-      }
-    });
+
+    const drillBuilder = new DrillBuilder(this.appStateService.drill);
+    const pointSet = drillBuilder.getFootprintPoints(
+      this.appStateService.drill.members,
+      counts
+    );
+
+    // const pointSet = new PointSet();
+    // this.appStateService.drill.members.forEach((m) => {
+    //   let pos = m.currentState;
+    //   for (let count = 0; count < counts; count++) {
+    //     pos = MemberPositionCalculator.stepForward(m, pos, 1);
+    //     pointSet.add({ x: pos.x, y: pos.y });
+    //   }
+    // });
+
     pointSet.points.forEach((p) => {
       canvas.add(
         new fabric.Circle({
@@ -186,18 +193,6 @@ function createCanvas() {
   console.log('canvas', canvas);
   return canvas;
 }
-
-// function getResizedImage(doc, originalCanvas) {
-//   const width = doc.internal.pageSize.width;
-//   const height = width / 2; // doc.internal.pageSize.height;
-//   const resizedCanvas = document.createElement('canvas');
-//   resizedCanvas.height = height;
-//   resizedCanvas.width = width;
-
-//   const resizedContext = resizedCanvas.getContext('2d');
-//   resizedContext.drawImage(originalCanvas.lowerCanvasEl, 0, 0, width, height);
-//   return resizedCanvas.toDataURL('image/jpeg', 1.0);
-// }
 
 angular
   .module('drillApp')
