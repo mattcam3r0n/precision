@@ -12,9 +12,6 @@ class FootprintPainter {
   }
 
   paint(pointSet, options) {
-    console.log('FootprintPainter.paint', pointSet, options);
-    console.log(pointSet.points.length);
-    console.time('FootprintPainter.paint');
     pointSet.points.forEach((p) => {
       options = Object.assign({ left: p.x, top: p.y }, options);
       const fp = new Footprint(options);
@@ -26,8 +23,6 @@ class FootprintPainter {
       // fp.moveTo(2); // SLOW!
       // this.canvas.bringToFront(fp); // SLOW
     });
-    console.timeEnd('FootprintPainter.paint');
-    // console.log('footprints', this.canvas.getObjects().filter((o) => o.type == 'Footprint'));
   }
 }
 
