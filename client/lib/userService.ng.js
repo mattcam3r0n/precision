@@ -115,7 +115,6 @@ class UserService {
   updateUserProfile(profile) {
     if (!Meteor.user()) return;
     profile = profile || this.userProfile;
-    console.log('updateUserProfile', profile);
     Meteor.call('updateUserProfile', profile);
   }
 

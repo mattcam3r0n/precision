@@ -154,19 +154,18 @@ angular.module('drillApp').component('sidebar', {
 
     $scope.countermarch = function() {
       eventService.notify(Events.activateCountermarchTool);
-      // drillEditorService.countermarch();
     };
 
     $scope.illinois = function() {
       eventService.notify(Events.activateIllinoisTool);
-      // drillEditorService.illinois();
     };
 
     $scope.texasTurn = function() {
       eventService.notify(Events.activateTexasTurnTool);
-      // drillEditorService.texasTurn({
-      //   turnDirection: 'left',
-      // });
+    };
+
+    $scope.column = function() {
+      eventService.notify(Events.activateColumnTool);
     };
 
     function initGridSwitch() {

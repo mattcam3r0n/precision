@@ -11,6 +11,7 @@ import Direction from '/client/lib/Direction';
 import Illinois from './drill/maneuvers/Illinois';
 import Countermarch from './drill/maneuvers/Countermarch';
 import TexasTurn from './drill/maneuvers/TexasTurn';
+import Column from './drill/maneuvers/Column';
 
 class DrillEditorService {
   constructor(
@@ -741,6 +742,30 @@ class DrillEditorService {
       }
     );
     texasTurn.generate();
+  }
+
+  column(options) {
+    const members = this.drillBuilder.getSelectedMembers();
+    const column = new Column(members);
+    const memberSeqs = column.generate(options);
+    const count = this.drill.count + 1;
+
+    this.makeUndoable(
+      'Column Maneuver',
+      members,
+      count,
+      memberSeqs.maxLength,
+      () => {
+        this.drillBuilder.addSequences(
+          members,
+          memberSeqs,
+          this.drill.count + 1
+        );
+        this.notifyDrillStateChanged();
+        this.save();
+      }
+    );
+    column.generate();
   }
 
   blurActiveElement() {

@@ -14,8 +14,6 @@ export default class TexasTurn {
       this.files[0].leader.direction
     );
     this.reversedFiles = this.files.map((f) => f.getReversedFile());
-    // sort files by leader, based on leader dir
-    this.rankCount = this.files[0].length; // TODO: use max file length?
   }
 
   generate(options) {

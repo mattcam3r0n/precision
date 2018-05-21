@@ -112,7 +112,6 @@ angular
 
         // const profile = Meteor.user() && Meteor.user().profile;
         Meteor.callPromise('getVersion').then((version) => {
-          console.log('appState', appStateService.releaseNotesVersion);
           if (
             // profile &&
             // (!profile.releaseNotesVersion ||

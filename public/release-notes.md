@@ -2,7 +2,7 @@
 
 **NEW**: A **Release Notes** dialog describing the latest changes will be shown *the first time a user logs in after a new update is released*.  Release notes can also be accessed from the *Help* menu.
 
-**NEW**: There is a new **Maneuvers** menu on the sidebar that can be used to add common maneuvers.  Currently, *Countermarch*, *Illinois*, and *Texas Turn* are available, with more on the way.
+**NEW**: There is a new **Maneuvers** menu on the sidebar that can be used to add common maneuvers.  Currently, *Countermarch*, *Illinois*, *Column*, and *Texas Turn* are available, with more on the way.
 
   * Projected paths (*footprints*) are shown for the marchers prior to saving the maneuver, to help visualize where turns will occur.
   * Some maneuvers have options that can be changed.  For example, you can specify the direction of a Texas Turn, or delay files and ranks in a Countermarch.
