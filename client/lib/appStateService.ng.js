@@ -41,6 +41,14 @@ class appStateService {
     this.userService.dontShowIntro = val;
   }
 
+  get releaseNotesVersion() {
+    return this.userService.releaseNotesVersion;
+  }
+
+  set releaseNotesVersion(val) {
+    this.userService.releaseNotesVersion = val;
+  }
+
   get isGridVisible() {
     return this.userService.isGridVisible;
   }

@@ -1,7 +1,10 @@
 node_modules/
 deploy.sh
+release.sh
+test.sh
 run-remote.sh
 run-local.sh
+public/version.json
 public/audio/
 public/intro/
 settings.json

@@ -47,6 +47,10 @@ class Events {
     return 'showIntroDialog';
   }
 
+  static get showReleaseNotesDialog() {
+    return 'showReleaseNotesDialog';
+  }
+
   static get showSaveAsDialog() {
     return 'showSaveAsDialog';
   }

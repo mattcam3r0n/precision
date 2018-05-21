@@ -1,0 +1,18 @@
+.release-notes-dialog .modal-lg {
+    width: 600px;
+}
+
+.release-notes-dialog .modal-body {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.release-notes-dialog .button-row {
+    padding: 10px;
+}
+
+.release-notes-dialog .button-row div {
+    height: 50px;
+}
+
+

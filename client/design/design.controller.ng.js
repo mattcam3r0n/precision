@@ -6,15 +6,18 @@ import Events from '/client/lib/Events';
 
 import Logger from '/client/lib/Logger';
 
-angular.module('drillApp')
-  .controller('DesignCtrl', function($scope,
-                                      $window,
-                                      $location,
-                                      $timeout,
-                                      appStateService,
-                                      drillEditorService,
-                                      spinnerService,
-                                      eventService) {
+angular
+  .module('drillApp')
+  .controller('DesignCtrl', function(
+    $scope,
+    $window,
+    $location,
+    $timeout,
+    appStateService,
+    drillEditorService,
+    spinnerService,
+    eventService
+  ) {
     // eslint-disable-next-line
     let ctrl = this;
     $scope.viewName = 'Design';
@@ -56,8 +59,11 @@ angular.module('drillApp')
 
         appStateService.userChanged();
 
-        if ($scope.currentUser === null) { // signed out
-          Logger.info('User ' + (oldValue ? oldValue._id : '') + ' logged out.');
+        if ($scope.currentUser === null) {
+          // signed out
+          Logger.info(
+            'User ' + (oldValue ? oldValue._id : '') + ' logged out.'
+          );
           $location.path('/login');
           return;
         }
@@ -79,14 +85,14 @@ angular.module('drillApp')
         onDrillOpened(args.drill);
       });
 
-      ctrl.subscriptions
-        .subscribe(Events.showDrillPropertiesDialog, (evt, args) => {
-        });
+      ctrl.subscriptions.subscribe(
+        Events.showDrillPropertiesDialog,
+        (evt, args) => {}
+      );
 
-      ctrl.subscriptions
-        .subscribe(Events.objectsSelected, (evt, args) => {
-          drillEditorService.selectMembers(args.members);
-        });
+      ctrl.subscriptions.subscribe(Events.objectsSelected, (evt, args) => {
+        drillEditorService.selectMembers(args.members);
+      });
 
       ctrl.subscriptions.subscribe(Events.showSpinner, (event, args) => {
         spinnerService.start();
@@ -103,6 +109,22 @@ angular.module('drillApp')
           appStateService.dontShowIntro = true;
           appStateService.updateUserProfile();
         }
+
+        // const profile = Meteor.user() && Meteor.user().profile;
+        Meteor.callPromise('getVersion').then((version) => {
+          console.log('appState', appStateService.releaseNotesVersion);
+          if (
+            // profile &&
+            // (!profile.releaseNotesVersion ||
+            //   profile.releaseNotesVersion != version)
+            appStateService.releaseNotesVersion != version
+          ) {
+            console.log('show release notes', version);
+            eventService.notify(Events.showReleaseNotesDialog);
+            appStateService.releaseNotesVersion = version;
+            appStateService.updateUserProfile();
+          }
+        });
       }, 1500);
     }
 
@@ -112,20 +134,17 @@ angular.module('drillApp')
     });
 
     function openLastDrillOrNew() {
-      return appStateService.getLastDrillId()
-          .then((drillId) => {
-              if (!drillId) {
-                eventService.notify(Events.hideSpinner);
-                return appStateService.newDrill();
-              }
+      return appStateService.getLastDrillId().then((drillId) => {
+        if (!drillId) {
+          eventService.notify(Events.hideSpinner);
+          return appStateService.newDrill();
+        }
 
-              return appStateService
-                      .openDrill(drillId)
-                      .then((drill) => {
-                        eventService.notify(Events.hideSpinner);
-                        return drill;
-                      });
-          });
+        return appStateService.openDrill(drillId).then((drill) => {
+          eventService.notify(Events.hideSpinner);
+          return drill;
+        });
+      });
     }
 
     function newDrill() {
@@ -141,8 +160,8 @@ angular.module('drillApp')
         return;
       }
 
-// TEMP
-// drill.bookmarks = [{ count: 0, name: 'The Beginning' }, { count: 12, name: 'Intro' }];
+      // TEMP
+      // drill.bookmarks = [{ count: 0, name: 'The Beginning' }, { count: 12, name: 'Intro' }];
 
       setDrill(drill);
       drillEditorService.goToBeginning();
@@ -163,7 +182,10 @@ angular.module('drillApp')
       drillEditorService.setDrill(drill);
       drillEditorService.setTempo($scope.tempo);
       // eslint-disable-next-line max-len
-      keyboardHandler = new DesignKeyboardHandler(drillEditorService, eventService);
+      keyboardHandler = new DesignKeyboardHandler(
+        drillEditorService,
+        eventService
+      );
       $scope.$safeApply(); // necessary for field painting?
     }
 

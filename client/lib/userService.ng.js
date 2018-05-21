@@ -42,6 +42,14 @@ class UserService {
     this.userProfile.dontShowIntro = value;
   }
 
+  get releaseNotesVersion() {
+    return this.userProfile.releaseNotesVersion;
+  }
+
+  set releaseNotesVersion(value) {
+    this.userProfile.releaseNotesVersion = value;
+  }
+
   get isGridVisible() {
     if (this.userProfile.isGridVisible === undefined) {
       this.userProfile.isGridVisible = false;
@@ -107,6 +115,7 @@ class UserService {
   updateUserProfile(profile) {
     if (!Meteor.user()) return;
     profile = profile || this.userProfile;
+    console.log('updateUserProfile', profile);
     Meteor.call('updateUserProfile', profile);
   }
 
