@@ -8,6 +8,9 @@ import ScriptBuilder from './ScriptBuilder';
 import Action from './Action';
 import shortid from 'shortid';
 import MemberSequences from '/client/lib/drill/MemberSequences';
+import MemberPositionCalculator from './MemberPositionCalculator';
+import PointSet from '/client/lib/PointSet';
+import PositionMap from './PositionMap';
 
 class AddMode {
   static get Block() {
@@ -501,6 +504,28 @@ class DrillBuilder {
     this.drill.members.forEach((m) => {
       m.isVisible = true;
     });
+  }
+
+  getFootprintPoints(members, counts) {
+    console.time('getFootprintPoints');
+    members = members || this.getSelectedMembers();
+    counts = counts || 24;
+
+    const positionMap = new PositionMap(members);
+    const pointSet = new PointSet();
+    members.forEach((m) => {
+      let pos = m.currentState;
+      for (let count = 0; count < counts; count++) {
+        pos = MemberPositionCalculator.stepForward(m, pos, 1);
+        // skip the point if there is a member there.
+        if (!positionMap.getMemberAtPosition(pos.x, pos.y)) {
+          pointSet.add({ x: pos.x, y: pos.y });
+        }
+      }
+    });
+    console.timeEnd('getFootprintPoints');
+
+    return pointSet;
   }
 
   getMemberSelection() {

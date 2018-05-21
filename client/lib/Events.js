@@ -169,8 +169,12 @@ class Events {
     return 'membersSelected';
   }
 
-  static get showPaths() {
-    return 'showPaths';
+  static get showFootprints() {
+    return 'showFootprints';
+  }
+
+  static get clearFootprints() {
+    return 'clearFootprints';
   }
 
   static get drillPropertiesChanged() {

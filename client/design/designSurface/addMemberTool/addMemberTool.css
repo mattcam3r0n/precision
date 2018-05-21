@@ -1,6 +1,7 @@
 .add-member-tool {
     -visibility: hidden;
     position: absolute;
+    z-index: 100;
 }
 
 .add-member-tool ul.dropdown-menu {

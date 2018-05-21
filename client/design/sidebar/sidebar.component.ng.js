@@ -122,8 +122,8 @@ angular.module('drillApp').component('sidebar', {
       drillEditorService.deleteForward();
     };
 
-    $scope.showPaths = function() {
-      drillEditorService.showPaths();
+    $scope.showFootprints = function() {
+      drillEditorService.showFootprints();
     };
 
     $scope.hideUnselected = function() {

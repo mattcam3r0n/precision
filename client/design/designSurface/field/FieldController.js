@@ -2,6 +2,7 @@ import StrideType from '/client/lib/StrideType';
 import FieldDimensions from '/client/lib/FieldDimensions';
 import FieldResizer from './FieldResizer';
 import FieldPainter from './FieldPainter';
+import FootprintPainter from './FootprintPainter';
 import MarcherFactory from './MarcherFactory';
 import PositionCalculator from '/client/lib/PositionCalculator';
 // import Marcher from './Marcher';
@@ -19,11 +20,10 @@ class FieldController {
         this.drill = drill;
         this.canvas = this.createCanvas();
         this.fieldPainter = new FieldPainter(this.canvas);
+        this.footprintPainter = new FootprintPainter(this.canvas);
         this.eventService = eventService;
         this.subscriptions = eventService.createSubscriptionManager();
         this.marchers = {};
-        this.paths = [];
-        this.arePathsVisible = false;
         this.lasso = new Lasso(this);
 
         // this.initCustomCorners();
@@ -59,6 +59,7 @@ class FieldController {
             height: FieldDimensions.height,
             width: FieldDimensions.width,
             uniScaleTransform: true,
+            stateful: false,
             renderOnAddRemove: false, // performance optimization
         });
     }
@@ -71,29 +72,12 @@ class FieldController {
         this.canvas.renderAll();
     }
 
-    showPaths(counts) {
-        if (this.arePathsVisible) {
-            this.hidePaths();
-            return;
-        }
-        this.arePathsVisible = true;
-
-        _.each(this.marchers, (m) => {
-            let p = this.createMemberPath(m.member);
-            if (p) {
-                this.paths.push(p);
-                this.canvas.add(p);
-            }
-        });
+    showFootprints(pointSet) {
+        this.footprintPainter.paint(pointSet);
     }
 
-    hidePaths() {
-        if (!this.paths) return;
-        this.arePathsVisible = false;
-        this.paths.forEach((p) => {
-            this.canvas.remove(p);
-        });
-        this.paths = [];
+    clearFootprints() {
+        this.footprintPainter.clear();
     }
 
     createMemberPath(member) {

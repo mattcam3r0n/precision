@@ -36,7 +36,7 @@ export default class Countermarch {
           options.rankDelay * r;
         script.addCountermarch(
           options.countermarchDirection,
-          member.currentState,
+          file.leader.currentState,
           count
         );
         scripts[member.id] = script;

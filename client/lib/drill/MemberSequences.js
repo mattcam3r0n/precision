@@ -8,6 +8,11 @@ export default class MemberSequences {
 
   }
 
+  getSequence(memberId) {
+    if (!this.sequences[memberId]) return [];
+    return this.sequences[memberId].getSequence();
+  }
+
   get maxLength() {
     // get max length of sequences
     return Object.values(this.sequences).reduce((max, seq) => {

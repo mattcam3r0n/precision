@@ -4,6 +4,7 @@
    width: 110px;
    left: 150px;
    top: 100px;
+   z-index: 100;
 }
 
 .countermarch-tool div.panel-heading {

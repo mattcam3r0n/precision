@@ -39,8 +39,12 @@ angular.module('drillApp')
           ctrl.field.membersChanged();
         });
 
-        ctrl.subscriptions.subscribe(Events.showPaths, (evt, args) => {
-          ctrl.field.showPaths();
+        ctrl.subscriptions.subscribe(Events.showFootprints, (evt, args) => {
+          ctrl.field.showFootprints(args.pointSet);
+        });
+
+        ctrl.subscriptions.subscribe(Events.clearFootprints, (evt, args) => {
+          ctrl.field.clearFootprints();
         });
 
         ctrl.subscriptions.subscribe(Events.strideTypeChanged, (evt, args) => {
