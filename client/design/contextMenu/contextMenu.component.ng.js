@@ -128,7 +128,6 @@ angular.module('drillApp').component('contextMenu', {
       }
 
       ctrl.isActivated = true;
-      console.log(args);
       $('div.context-menu').css({ top: args.point.top, left: args.point.left });
       $('div.context-menu div.dropdown').addClass('open');
       $rootScope.$safeApply();

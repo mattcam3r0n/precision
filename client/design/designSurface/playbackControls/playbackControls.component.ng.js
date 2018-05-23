@@ -62,7 +62,6 @@ angular.module('drillApp').component('playbackControls', {
     ctrl.deactivate = function() {};
 
     ctrl.onCountChange = function() {
-      console.log(ctrl.currentCount);
       drillEditorService.goToCount(ctrl.currentCount);
     };
 

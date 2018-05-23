@@ -12,7 +12,6 @@ class WalkThru {
             }
 
             var steps = result.data;
-            console.log(steps);
 
             var intro = introJs();
             intro.setOptions(steps);

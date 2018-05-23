@@ -190,7 +190,6 @@ function createCanvas() {
     renderOnAddRemove: false, // performance optimization
   });
   console.timeEnd('createCanvas');
-  console.log('canvas', canvas);
   return canvas;
 }
 

@@ -7,7 +7,6 @@ angular.module('drillApp')
     $scope.viewName = 'sign-up';
 
     $scope.signUp = () => {
-      console.log('signUp');
       userService
         .createAccount({
           email: $scope.email,

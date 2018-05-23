@@ -37,7 +37,6 @@ angular.module('drillApp')
 
       ctrl.onSelected = function(user, selected) {
         ctrl.selectedUsers = selected;
-        console.log(ctrl.selectedUsers);
       };
 
       ctrl.share = function() {
@@ -47,7 +46,6 @@ angular.module('drillApp')
 
       function getSharedUsers() {
         return Meteor.callPromise('getSharedUsers', appStateService.drill._id).then((users) => {
-          console.log('sharedUsers', users);
           return users;
         });
       }

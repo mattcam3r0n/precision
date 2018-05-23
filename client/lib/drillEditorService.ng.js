@@ -62,7 +62,6 @@ class DrillEditorService {
   // Playback
 
   play(cb, playLength, playMusic, playMetronome) {
-    console.log('metro', playMetronome);
     this.drillPlayer.play(
       () => {
         this.notifyDrillStateChanged();

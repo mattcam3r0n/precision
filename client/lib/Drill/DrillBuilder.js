@@ -575,9 +575,6 @@ class DrillBuilder {
     newTrack.startOffset = startOffset + track.duration;
     // insert new track immediately after i (splice i+1, 0)
     this.drill.music.splice(i + 1, 0, newTrack);
-
-    console.log('newTrack', newTrack, i);
-    console.log('oldTrack', track);
   }
 }
 

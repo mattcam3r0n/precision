@@ -35,7 +35,6 @@ angular.module('drillApp')
 
         ctrl.subscriptions.subscribe(Events.strideTypeChanged, (evt, args) => {
           if (!ctrl.isActivated) return;
-          console.log('strideTypeChanged');
           activate();
         });
       };

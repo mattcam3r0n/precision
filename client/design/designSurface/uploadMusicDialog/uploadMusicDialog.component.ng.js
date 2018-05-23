@@ -33,12 +33,10 @@ angular.module('drillApp')
       $scope.fileChosen = function(event) {
         let files = event.target.files;
         ctrl.file = files[0];
-        console.log(ctrl.file);
         $rootScope.$safeApply();
       };
 
       ctrl.upload = function() {
-        console.log(ctrl.file);
         let spinner = new Spinner($('#uploadMusicDialog')[0]);
         spinner.start();
 

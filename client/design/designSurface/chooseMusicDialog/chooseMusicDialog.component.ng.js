@@ -78,7 +78,6 @@ angular.module('drillApp')
       };
 
       $scope.pageChanged = function(newPage) {
-        console.log('chooseMusic pageChanged', $scope.page, newPage);
         $scope.page = newPage;
       };
 

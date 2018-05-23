@@ -18,7 +18,6 @@ export default class MemberPosition {
   }
 
   isBehind(m2) {
-    console.log(this.member.currentState, m2.currentState);
     return Direction.isBehind(
       this.member.currentState,
       m2.currentState,

@@ -79,7 +79,6 @@ angular.module('drillApp')
 
       function onObjectsSelected(evt, args) {
         if (!ctrl.isActivated) return;
-        console.log(args);
         ctrl.pivotMember = args.members[0];
         drillEditorService.selectMembers([ctrl.pivotMember]);
         // ctrl.pivotMember.isSelected = true;

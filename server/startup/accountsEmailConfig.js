@@ -25,7 +25,6 @@ Meteor.startup(function() {
 
             return SSR.render('passwordResetEmail', emailData);
         } catch (ex) {
-            console.log('resetPassword.html()', ex);
             throwError('password-reset-email-failed', 'Error sending password reset email.', ex);
         }
     };

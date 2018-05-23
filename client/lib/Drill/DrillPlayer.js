@@ -33,9 +33,6 @@ class DrillPlayer {
         }
         self.schedule = new DrillScheduler().createSchedule(self.drill);
 
-        // TODO: remove
-        console.log('schedule', self.schedule);
-
         self.startCount = self.drill.count;
         self.startTimestamp = 0; // get current audio timestamp?
         self.lastTimestamp = 0;
@@ -128,7 +125,6 @@ class DrillPlayer {
             nextStep = self.schedule.steps[self.drill.count - self.startCount];
 
             if (!nextStep || self.isPastStopCount()) {
-                    console.log('Reached end of drill.');
                 self.stop();
                 return;
             }

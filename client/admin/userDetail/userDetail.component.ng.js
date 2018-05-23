@@ -27,7 +27,6 @@ angular.module('drillApp')
       };
 
       ctrl.$onChanges = function() {
-        console.log(ctrl.user);
       };
 
       ctrl.getEmail = function() {

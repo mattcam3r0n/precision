@@ -38,7 +38,6 @@ angular.module('drillApp').component('texasTurnTool', {
 
     ctrl.setTurnDirection = function(dir) {
       ctrl.turnDirection = dir;
-      console.log(ctrl.turnDirection);
       activate(drillEditorService.getMemberSelection());
     };
 

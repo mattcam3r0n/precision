@@ -15,7 +15,6 @@ angular.module('drillApp')
         ctrl.subscriptions = eventService.createSubscriptionManager();
 
         ctrl.subscriptions.subscribe(Events.showKeyboardShortcuts, () => {
-            console.log('show keyboard shortcuts');
             activate();
         });
       };

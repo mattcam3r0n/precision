@@ -118,7 +118,6 @@ angular
             //   profile.releaseNotesVersion != version)
             appStateService.releaseNotesVersion != version
           ) {
-            console.log('show release notes', version);
             eventService.notify(Events.showReleaseNotesDialog);
             appStateService.releaseNotesVersion = version;
             appStateService.updateUserProfile();

@@ -107,7 +107,6 @@ class Direction {
             deltaX: p1.x - p2.x,
             deltaY: p1.y - p2.y,
         };
-        console.log(delta);
         if (dir == Direction.N && delta.deltaY > 0) {
             return true;
         }

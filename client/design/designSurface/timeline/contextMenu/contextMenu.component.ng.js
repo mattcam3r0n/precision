@@ -57,7 +57,6 @@ angular.module('drillApp').component('timelineContextMenu', {
 
     ctrl.splitTrack = function() {
       if (!ctrl.item || !ctrl.item.music) return;
-      console.log(ctrl.item);
       drillEditorService.splitTrack(ctrl.count, ctrl.item.music);
     };
 
@@ -83,7 +82,6 @@ angular.module('drillApp').component('timelineContextMenu', {
       ctrl.isActivated = true;
       ctrl.item = args.item;
       ctrl.count = args.count;
-      console.log(args);
       $('div.timeline-context-menu').css({
         top: args.point.top,
         left: args.point.left,

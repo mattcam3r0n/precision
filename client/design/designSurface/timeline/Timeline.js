@@ -267,7 +267,6 @@ class Timeline {
   }
 
   onContextMenu(props) {
-    console.log('Right click!', props);
     props.event.preventDefault();
     const item = props.item ? this.items.get(props.item) : null;
     this.eventService.notify(Events.showTimelineContextMenu, {
@@ -292,7 +291,6 @@ class Timeline {
 
   onDoubleClickBackground(props) {
     const self = this;
-    console.log(props);
     if (!props.time) return;
     let count = props.time.getMilliseconds();
     self.moveTo(count);

@@ -97,11 +97,9 @@ angular.module('drillApp').component('columnTool', {
     }
 
     function getDefaultDirection() {
-      console.log(ctrl.block);
       const leftLeaderPos = new MemberPosition(
         ctrl.block.leftFileLeader.member
       );
-      console.log('lefPos', leftLeaderPos);
       return leftLeaderPos.isBehind(ctrl.block.rightFileLeader.member)
         ? 'left'
         : 'right';
