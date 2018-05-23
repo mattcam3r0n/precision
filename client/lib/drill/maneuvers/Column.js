@@ -30,10 +30,10 @@ export default class Column {
       file.fileMembers.forEach((member, r) => {
         // get appropriate file index, depending on left-to-right or right-to-left
         const fIndex =
-          options.turnDirection == 'left'
+          ((options.turnDirection == 'left' && !options.reverse) || (options.turnDirection == 'right' && options.reverse))
             ? f
             : this.files.length - 1 - f;
-        const turnCount = fIndex * fileSpacing + r * member.stepsToLeader;
+            const turnCount = fIndex * fileSpacing + r * member.stepsToLeader;
         const turnDirection =
           options.turnDirection == 'left'
             ? Direction.leftOf(file.leader.direction)

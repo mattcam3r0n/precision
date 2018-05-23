@@ -98,6 +98,31 @@ class Direction {
         return this.getLineDirection(from, to) === dir;
     }
 
+    // is p1 behind p2, with respect to dir
+    // not necessarily following directly, but behind on
+    // appropriate axis for the direction
+    static isBehind(p1, p2, dir) {
+        // get x/y delta
+        const delta = {
+            deltaX: p1.x - p2.x,
+            deltaY: p1.y - p2.y,
+        };
+        console.log(delta);
+        if (dir == Direction.N && delta.deltaY > 0) {
+            return true;
+        }
+        if (dir == Direction.S && delta.deltaY < 0) {
+            return true;
+        }
+        if (dir == Direction.E && delta.deltaX < 0) {
+            return true;
+        }
+        if (dir == Direction.W && delta.deltaX > 0) {
+            return true;
+        }
+        return false;
+    }
+
     static leftOf(from) {
         let newDir = from - 90;
         return newDir < 0 ? 360 + newDir : newDir;

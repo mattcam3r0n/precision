@@ -2,6 +2,8 @@
 
 import Events from '/client/lib/Events';
 import Column from '../../../../lib/drill/maneuvers/Column';
+import Block from '../../../../lib/drill/Block';
+import MemberPosition from '../../../../lib/drill/MemberPosition';
 
 angular.module('drillApp').component('columnTool', {
   // eslint-disable-next-line max-len
@@ -21,12 +23,9 @@ angular.module('drillApp').component('columnTool', {
     ctrl.$onInit = function() {
       ctrl.subscriptions = eventService.createSubscriptionManager();
 
-      ctrl.subscriptions.subscribe(
-        Events.activateColumnTool,
-        (evt, args) => {
-          activate(drillEditorService.getMemberSelection());
-        }
-      );
+      ctrl.subscriptions.subscribe(Events.activateColumnTool, (evt, args) => {
+        activate(drillEditorService.getMemberSelection());
+      });
 
       ctrl.turnDirection = 'right';
       ctrl.fileDelay = 2;
@@ -39,11 +38,17 @@ angular.module('drillApp').component('columnTool', {
 
     ctrl.setTurnDirection = function(dir) {
       ctrl.turnDirection = dir;
-      activate(drillEditorService.getMemberSelection());
+      activate(drillEditorService.getMemberSelection(), dir);
     };
 
     ctrl.setFileDelay = function(delay) {
-      ctrl.fileDelay = delay;
+      if (delay != null) {
+        ctrl.fileDelay = delay;
+      }
+      activate(drillEditorService.getMemberSelection());
+    };
+
+    ctrl.setReverseFlag = function() {
       activate(drillEditorService.getMemberSelection());
     };
 
@@ -54,7 +59,7 @@ angular.module('drillApp').component('columnTool', {
 
     $scope.cancel = deactivate;
 
-    function activate(memberSelection) {
+    function activate(memberSelection, turnDirection) {
       if (ctrl.isActivated) {
         deactivate();
       }
@@ -65,13 +70,19 @@ angular.module('drillApp').component('columnTool', {
 
       ctrl.isActivated = true;
       ctrl.memberSelection = memberSelection;
-      ctrl.strideType = drillEditorService.strideType;
+      ctrl.block = new Block(ctrl.memberSelection.members);
       ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
         if (!ctrl.isActivated) return;
         ctrl.memberSelection = drillEditorService.getMemberSelection();
+        ctrl.block = new Block(ctrl.memberSelection.members);
         eventService.notify(Events.drillStateChanged);
         activate(ctrl.memberSelection);
       });
+      if (turnDirection == null) {
+        ctrl.turnDirection = getDefaultDirection();
+      }
+      ctrl.fileDelay = 2;
+      ctrl.reverse = getReverseValue();
       previewFootprints();
     }
 
@@ -83,6 +94,21 @@ angular.module('drillApp').component('columnTool', {
       const members = ctrl.memberSelection.members;
       const memberSequences = new Column(members).generate(getOptions());
       drillEditorService.previewFootprints(members, memberSequences, 24);
+    }
+
+    function getDefaultDirection() {
+      console.log(ctrl.block);
+      const leftLeaderPos = new MemberPosition(
+        ctrl.block.leftFileLeader.member
+      );
+      console.log('lefPos', leftLeaderPos);
+      return leftLeaderPos.isBehind(ctrl.block.rightFileLeader.member)
+        ? 'left'
+        : 'right';
+    }
+
+    function getReverseValue() {
+      return !ctrl.block.areFileLeadersStraight();
     }
 
     function deactivate(notify = true) {
@@ -106,6 +132,7 @@ angular.module('drillApp').component('columnTool', {
       return {
         turnDirection: ctrl.turnDirection || 'right',
         fileDelay: ctrl.fileDelay || 2,
+        reverse: ctrl.reverse,
       };
     }
   },

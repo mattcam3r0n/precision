@@ -7,7 +7,24 @@ export default class Block {
     this.members = members;
     this.positionMap = new PositionMap(members);
     this.fileSelector = new FileSelector(members, this.positionMap);
-    this.files = this.fileSelector.findFiles();
+    const files = this.fileSelector.findFiles();
+    this.files = this.sortFilesLeftToRight(files, files[0].leader.direction);
+  }
+
+  get leftFile() {
+    return this.files[0];
+  }
+
+  get rightFile() {
+    return this.files[this.files.length - 1];
+  }
+
+  get leftFileLeader() {
+    return this.leftFile.leader;
+  }
+
+  get rightFileLeader() {
+    return this.rightFile.leader;
   }
 
   getFiles() {
@@ -15,6 +32,22 @@ export default class Block {
       this.files = this.fileSelector.findFiles();
     }
     return this.files;
+  }
+
+  // determine whether the file leaders are in a straight rank
+  areFileLeadersStraight() {
+    const firstLeader = this.files[0].leader;
+    const firstLeaderPos = {
+      x: firstLeader.x,
+      y: firstLeader.y,
+    };
+    // all leaders must be on same x/y plane, else false
+    return this.files.reduce((areStraight, file) => {
+      return (
+        areStraight &&
+        (firstLeaderPos.x == file.leader.x || firstLeaderPos.y == file.leader.y)
+      );
+    }, true);
   }
 
   sortFilesLeftToRight(files, direction) {

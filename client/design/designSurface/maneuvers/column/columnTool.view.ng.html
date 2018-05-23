@@ -5,13 +5,13 @@
     <div id="dragStepTool" class="">
         <ul>
             <li class="description">
-                <p>Add a Column maneuver at the current count. Turns the block left or right.</p>
+                <p>Add a Column maneuver at the current count. Turns the block left or right, transforming into a parallelogram.</p>
             </li>
             <li>
                 <span>Turn Direction</span>
                 <div class="turn-direction">
                     <button ng-click="$ctrl.setTurnDirection('left')" ng-class="{ 'active': $ctrl.turnDirection == 'left' }" class="btn btn-default"
-                        title="Left Turn" data-toggle="tooltip" data-placement="right">
+                        title="Left Turn" data-toggle="tooltip" data-placement="left">
                         <i class="fas fa-long-arrow-alt-left"></i>
                     </button>
                     <button ng-click="$ctrl.setTurnDirection('right')" ng-class="{ 'active': $ctrl.turnDirection == 'right' }" class="btn btn-default"
@@ -30,6 +30,12 @@
                     <span class="input-group-btn">
                         <button ng-click="$ctrl.setFileDelay($ctrl.fileDelay + 1)" class="btn btn-default" type="button">+</button>
                     </span>
+                </div>
+                <div class="reverse">
+                    <div class="reverse-checkbox">
+                        <input type="checkbox" ng-change="$ctrl.setReverseFlag()" ng-model="$ctrl.reverse" />
+                    </div>
+                    <div class="reverse-label">Undo Column</div>
                 </div>
             </li>
             <li>

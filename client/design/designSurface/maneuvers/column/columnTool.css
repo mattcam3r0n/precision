@@ -32,6 +32,33 @@
     padding: 5px;
 }
 
+.column-tool div.reverse {
+    display: flex;
+    background-color: #fff;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    vertical-align: middle;
+    height: 30px;
+}
+
+.column-tool div.reverse div.reverse-checkbox {
+    margin: 0px;
+    padding: 0px;
+}
+
+.column-tool div.reverse div.reverse-checkbox input[type='checkbox'] {
+    margin-top: 0px;
+    margin-left: 10px;
+}
+
+.column-tool div.reverse div.reverse-label {
+    margin-top: 8px;
+    margin-left: 5px;
+    padding: 0px;
+    font-size: 12px;
+}
+
 .column-tool li span {
     flex: 1 1 100%;
     color: black;
