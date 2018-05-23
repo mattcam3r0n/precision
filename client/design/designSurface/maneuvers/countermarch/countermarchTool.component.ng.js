@@ -49,19 +49,23 @@ angular.module('drillApp').component('countermarchTool', {
     ctrl.setCountermarchDirection = function(dir) {
       ctrl.countermarchDirection = dir;
       drillEditorService.blurActiveElement();
+      activate(drillEditorService.getMemberSelection());
     };
 
     ctrl.setFileDelay = function(counts) {
       ctrl.fileDelay = counts;
+      activate(drillEditorService.getMemberSelection());
     };
 
     ctrl.setFileDelayDirection = function(dir) {
       ctrl.fileDelayDirection = dir;
       drillEditorService.blurActiveElement();
+      activate(drillEditorService.getMemberSelection());
     };
 
     ctrl.setRankDelay = function(counts) {
       ctrl.rankDelay = counts;
+      activate(drillEditorService.getMemberSelection());
     };
 
     $scope.cancel = deactivate;
