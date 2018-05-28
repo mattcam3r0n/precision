@@ -5,6 +5,8 @@
    left: 150px;
    top: 100px;
    z-index: 100;
+   border: solid 1px lightgray;
+   border-radius: 0;
 }
 
 .tool-window div.panel-heading {
