@@ -130,17 +130,18 @@ console.log(ctrl.isActivated);
     }
 
     function save() {
-      drillEditorService.countermarch({
-        countermarchDirection: ctrl.countermarchDirection,
-        fileDelay: ctrl.fileDelay,
-        fileDelayDirection: ctrl.fileDelayDirection,
-        rankDelay: ctrl.rankDelay,
-      });
+      // drillEditorService.countermarch({
+      //   countermarchDirection: ctrl.countermarchDirection,
+      //   fileDelay: ctrl.fileDelay,
+      //   fileDelayDirection: ctrl.fileDelayDirection,
+      //   rankDelay: ctrl.rankDelay,
+      // });
     }
 
     function cancel() {
       console.log('to-the-rear cacnel');
       console.log('fileDelay', ctrl.fileDelay);
+      console.log('fileDelayDir', ctrl.fileDelayDirection);
     }
   },
 });

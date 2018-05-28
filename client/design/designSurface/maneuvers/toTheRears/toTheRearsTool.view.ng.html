@@ -1,16 +1,22 @@
 <tool-window window-title="'To-The-Rears'" is-activated="$ctrl.isActivated" on-save="$ctrl.save()" on-cancel="$ctrl.cancel()">
   <ul>
     <li class="description">
-      Test
+      To-the-rears
     </li>
-    <li class="section-header"><span>Delay Files</span></li>
+    <li class="section-header">
+      <span>Delay Files</span>
+    </li>
     <li>
       <spinner-box ng-model="$ctrl.fileDelay"></spinner-box>
     </li>
-    <li class="section-header"><span>Delay Ranks</span></li>
     <li>
-        <button>test</button>
-        <button>test</button>      
+        <file-delay-direction-buttons ng-model="$ctrl.fileDelayDirection"></file-delay-direction-buttons>
+    </li>
+    <li class="section-header">
+      <span>Delay Ranks</span>
+    </li>
+    <li>
+      <spinner-box ng-model="$ctrl.rankDelay"></spinner-box>
     </li>
   </ul>
 </tool-window>

@@ -1,0 +1,14 @@
+.file-delay-direction-buttons {
+}
+
+.file-delay-direction-buttons {
+    display: flex;
+    flex: 1 1 auto;
+    width: 108px;
+}
+
+
+.tool-window li .file-delay-direction-buttons button {
+    flex: 1;
+}
+

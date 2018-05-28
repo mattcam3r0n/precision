@@ -2,8 +2,7 @@
 
 angular.module('drillApp').component('toolWindow', {
   // eslint-disable-next-line max-len
-  templateUrl:
-    'client/components/toolWindow/toolWindow.view.ng.html',
+  templateUrl: 'client/components/toolWindow/toolWindow.view.ng.html',
   transclude: true,
   bindings: {
     isActivated: '<',
@@ -11,51 +10,22 @@ angular.module('drillApp').component('toolWindow', {
     onSave: '&',
     onCancel: '&',
   },
-  controller: function(
-    $scope,
-    $window,
-    appStateService,
-    drillEditorService,
-    alertService,
-    eventService
-  ) {
+  controller: function($scope, $window) {
     let ctrl = this;
 
     ctrl.$onInit = function() {
-      ctrl.subscriptions = eventService.createSubscriptionManager();
+      $('[data-toggle="tooltip"]').tooltip();
     };
 
-    ctrl.$onDestroy = function() {
-      ctrl.subscriptions.unsubscribeAll();
-    };
+    ctrl.$onDestroy = function() {};
 
     $scope.save = function() {
       save();
-      deactivate();
     };
 
     $scope.cancel = function() {
       cancel();
-      deactivate();
     };
-
-    function activate(memberSelection, turnDirection) {
-      if (ctrl.isActivated) {
-        deactivate();
-      }
-
-      appStateService.setActiveTool('columnTool', () => {
-        deactivate(false);
-      });
-
-      // ctrl.isActivated = true;
-    }
-
-    function deactivate(notify = true) {
-      // ctrl.isActivated = false;
-      if (notify) {
-      }
-    }
 
     function save() {
       if (ctrl.onSave) {
@@ -64,7 +34,7 @@ angular.module('drillApp').component('toolWindow', {
     }
 
     function cancel() {
-      if (ctrl.onCancel){
+      if (ctrl.onCancel) {
         ctrl.onCancel();
       }
     }
