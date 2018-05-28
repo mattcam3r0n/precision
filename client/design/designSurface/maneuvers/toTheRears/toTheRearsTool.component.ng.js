@@ -142,6 +142,7 @@ console.log(ctrl.isActivated);
       console.log('to-the-rear cacnel');
       console.log('fileDelay', ctrl.fileDelay);
       console.log('fileDelayDir', ctrl.fileDelayDirection);
+      console.log('rankDelay', ctrl.rankDelay);
     }
   },
 });
