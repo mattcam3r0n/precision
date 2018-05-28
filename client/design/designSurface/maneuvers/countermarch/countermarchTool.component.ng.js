@@ -14,7 +14,8 @@ angular.module('drillApp').component('countermarchTool', {
     appStateService,
     drillEditorService,
     alertService,
-    eventService
+    eventService,
+    utilService
   ) {
     let ctrl = this;
 
@@ -48,7 +49,7 @@ angular.module('drillApp').component('countermarchTool', {
 
     ctrl.setCountermarchDirection = function(dir) {
       ctrl.countermarchDirection = dir;
-      drillEditorService.blurActiveElement();
+      utilService.blurActiveElement();
       activate(drillEditorService.getMemberSelection());
     };
 
@@ -59,7 +60,7 @@ angular.module('drillApp').component('countermarchTool', {
 
     ctrl.setFileDelayDirection = function(dir) {
       ctrl.fileDelayDirection = dir;
-      drillEditorService.blurActiveElement();
+      utilService.blurActiveElement();
       activate(drillEditorService.getMemberSelection());
     };
 

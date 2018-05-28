@@ -14,7 +14,8 @@ angular.module('drillApp').component('bookmarkList', {
     $timeout,
     appStateService,
     drillEditorService,
-    eventService
+    eventService,
+    utilService
   ) {
     let ctrl = this;
 
@@ -61,7 +62,7 @@ angular.module('drillApp').component('bookmarkList', {
 
     ctrl.showBookmarkList = function() {
       // $('#bookmark-list').tooltip('hide');
-      drillEditorService.blurActiveElement();
+      utilService.blurActiveElement();
     };
 
     ctrl.goToBookmark = function(bookmark) {

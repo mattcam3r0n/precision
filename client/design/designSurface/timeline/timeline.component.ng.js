@@ -10,7 +10,7 @@ angular.module('drillApp')
       drill: '<',
     },
     controller: function($scope, $timeout, appStateService,
-      drillEditorService, eventService) {
+      drillEditorService, eventService, utilService) {
       let ctrl = this;
 
       ctrl.$onInit = function() {
@@ -76,12 +76,12 @@ angular.module('drillApp')
 
       ctrl.pageForward = function() {
         ctrl.timeline.pageForward();
-        drillEditorService.blurActiveElement();
+        utilService.blurActiveElement();
       };
 
       ctrl.pageBackward = function() {
         ctrl.timeline.pageBackward();
-        drillEditorService.blurActiveElement();
+        utilService.blurActiveElement();
       };
 
       ctrl.chooseMusic = function() {
