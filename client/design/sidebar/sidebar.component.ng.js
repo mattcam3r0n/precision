@@ -156,6 +156,10 @@ angular.module('drillApp').component('sidebar', {
       eventService.notify(Events.activateCountermarchTool);
     };
 
+    $scope.toTheRears = function() {
+      eventService.notify(Events.activateToTheRearsTool);
+    };
+
     $scope.illinois = function() {
       eventService.notify(Events.activateIllinoisTool);
     };

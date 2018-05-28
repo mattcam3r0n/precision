@@ -111,6 +111,10 @@ class Events {
     return 'activateCountermarchTool';
   }
 
+  static get activateToTheRearsTool() {
+    return 'activateToTheRearsTool';
+  }
+
   static get activateIllinoisTool() {
     return 'activateIllinoisTool';
   }
@@ -239,6 +243,10 @@ class Events {
 
   static get countermarchToolDeactivated() {
     return 'countermarchToolDeactivated';
+  }
+
+  static get toTheRearsToolDeactivated() {
+    return 'toTheRearsToolDeactivated';
   }
 
   static get illinoisToolDeactivated() {
