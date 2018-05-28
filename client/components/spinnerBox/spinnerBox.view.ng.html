@@ -1,0 +1,5 @@
+<div class="spinner-box">
+    <button ng-click="$ctrl.setValue($ctrl.value - 1)" class="btn btn-default" type="button">-</button>
+    <input ng-model="$ctrl.value" ng-change="$ctrl.setValue($ctrl.value)" type="number" class="form-control" />
+    <button ng-click="$ctrl.setValue($ctrl.value + 1)" class="btn btn-default" type="button">+</button>
+</div>

@@ -1,0 +1,12 @@
+div.spinner-box {
+    display: flex;
+}
+
+div.spinner-box button {
+    flex: 1 1 10%;
+    width: 30px;
+}
+
+div.spinner-box input {
+    flex: 1 1 90%;
+}

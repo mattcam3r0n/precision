@@ -42,6 +42,7 @@ angular.module('drillApp').component('toTheRearsTool', {
     };
 
     ctrl.save = function() {
+      console.log('fileDelay', ctrl.fileDelay);
       save();
       deactivate();
     };
@@ -139,6 +140,7 @@ console.log(ctrl.isActivated);
 
     function cancel() {
       console.log('to-the-rear cacnel');
+      console.log('fileDelay', ctrl.fileDelay);
     }
   },
 });
