@@ -6,7 +6,7 @@ angular.module('drillApp').component('fileDelayDirectionButtons', {
   bindings: {
     ngModel: '=',
   },
-  controller: function($scope) {
+  controller: function($scope, utilService) {
     let ctrl = this;
 
     ctrl.$onInit = function() {
@@ -21,6 +21,7 @@ angular.module('drillApp').component('fileDelayDirectionButtons', {
       if (value == null) return;
       ctrl.fileDelayDirection = value;
       ctrl.ngModel = value;
+      utilService.blurActiveElement();
     };
   },
 });

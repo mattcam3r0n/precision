@@ -3,7 +3,6 @@
 import Events from '/client/lib/Events';
 
 angular.module('drillApp').component('toTheRearsTool', {
-  // eslint-disable-next-line max-len
   templateUrl:
     'client/design/designSurface/maneuvers/toTheRears/toTheRearsTool.view.ng.html',
   bindings: {},
@@ -80,12 +79,11 @@ angular.module('drillApp').component('toTheRearsTool', {
         deactivate();
       }
 
-      appStateService.setActiveTool('countermarchTool', () => {
+      appStateService.setActiveTool('toTheRearsTool', () => {
         deactivate(false);
       });
 
       ctrl.isActivated = true;
-console.log(ctrl.isActivated);
       ctrl.memberSelection = memberSelection;
       ctrl.strideType = drillEditorService.strideType;
       ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
@@ -143,6 +141,7 @@ console.log(ctrl.isActivated);
       console.log('fileDelay', ctrl.fileDelay);
       console.log('fileDelayDir', ctrl.fileDelayDirection);
       console.log('rankDelay', ctrl.rankDelay);
+      console.log('rankDelayDir', ctrl.rankDelayDirection);
     }
   },
 });

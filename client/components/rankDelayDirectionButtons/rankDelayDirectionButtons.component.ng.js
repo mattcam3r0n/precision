@@ -6,7 +6,7 @@ angular.module('drillApp').component('rankDelayDirectionButtons', {
   bindings: {
     ngModel: '=',
   },
-  controller: function($scope) {
+  controller: function($scope, utilService) {
     let ctrl = this;
 
     ctrl.$onInit = function() {
@@ -21,6 +21,7 @@ angular.module('drillApp').component('rankDelayDirectionButtons', {
       if (value == null) return;
       ctrl.rankDelayDirection = value;
       ctrl.ngModel = value;
+      utilService.blurActiveElement();
     };
   },
 });
