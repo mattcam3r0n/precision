@@ -11,7 +11,7 @@ angular.module('drillApp').component('rankDelayDirectionButtons', {
 
     ctrl.$onInit = function() {
       $('[data-toggle="tooltip"]').tooltip();
-      ctrl.rankDelayDirection = 'front-to-back';
+      ctrl.ngModel = 'front-to-back';
     };
 
     ctrl.$onDestroy = function() {
@@ -19,7 +19,6 @@ angular.module('drillApp').component('rankDelayDirectionButtons', {
 
     ctrl.setRankDelayDirection = function(value) {
       if (value == null) return;
-      ctrl.rankDelayDirection = value;
       ctrl.ngModel = value;
       utilService.blurActiveElement();
     };

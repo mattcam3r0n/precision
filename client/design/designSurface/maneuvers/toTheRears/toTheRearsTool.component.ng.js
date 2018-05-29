@@ -1,6 +1,7 @@
 'use strict';
 
 import Events from '/client/lib/Events';
+import ToTheRears from '/client/lib/drill/maneuvers/ToTheRears';
 
 angular.module('drillApp').component('toTheRearsTool', {
   templateUrl:
@@ -8,6 +9,7 @@ angular.module('drillApp').component('toTheRearsTool', {
   bindings: {},
   controller: function(
     $scope,
+    $rootScope,
     $window,
     appStateService,
     drillEditorService,
@@ -29,20 +31,22 @@ angular.module('drillApp').component('toTheRearsTool', {
           activate(drillEditorService.getMemberSelection());
         }
       );
+    };
 
-      ctrl.countermarchDirection = 'left';
-      ctrl.fileDelayDirection = 'left-to-right';
-      ctrl.fileDelay = 0;
-      ctrl.rankDelay = 0;
+    ctrl.$onChanges = function() {
+      console.log('$onChanges');
     };
 
     ctrl.$onDestroy = function() {
-      ctrl.field = null;
       ctrl.subscriptions.unsubscribeAll();
     };
 
+    ctrl.log = function() {
+      $rootScope.$safeApply();
+      console.log(getToTheRearOptions());
+    };
+
     ctrl.save = function() {
-      console.log('fileDelay', ctrl.fileDelay);
       save();
       deactivate();
     };
@@ -52,28 +56,21 @@ angular.module('drillApp').component('toTheRearsTool', {
       deactivate();
     };
 
-    ctrl.setCountermarchDirection = function(dir) {
-      ctrl.countermarchDirection = dir;
-      utilService.blurActiveElement();
-      activate(drillEditorService.getMemberSelection());
-    };
+    $scope.$watch('$ctrl.fileDelay', (newVal, oldVal) => {
+      previewFootprints();
+    });
 
-    ctrl.setFileDelay = function(counts) {
-      ctrl.fileDelay = counts;
-      activate(drillEditorService.getMemberSelection());
-    };
+    $scope.$watch('$ctrl.fileDelayDirection', (newVal, oldVal) => {
+      previewFootprints();
+    });
 
-    ctrl.setFileDelayDirection = function(dir) {
-      ctrl.fileDelayDirection = dir;
-      utilService.blurActiveElement();
-      activate(drillEditorService.getMemberSelection());
-    };
+    $scope.$watch('$ctrl.rankDelay', (newVal, oldVal) => {
+      previewFootprints();
+    });
 
-    ctrl.setRankDelay = function(counts) {
-      ctrl.rankDelay = counts;
-      activate(drillEditorService.getMemberSelection());
-    };
-
+    $scope.$watch('$ctrl.rankDelayDirection', (newVal, oldVal) => {
+      previewFootprints();
+    });
 
     function activate(memberSelection) {
       if (ctrl.isActivated) {
@@ -85,6 +82,10 @@ angular.module('drillApp').component('toTheRearsTool', {
       });
 
       ctrl.isActivated = true;
+      ctrl.fileDelay = 2;
+      ctrl.fileDelayDirection = 'left-to-right';
+      ctrl.rankDelay = 0;
+      ctrl.rankDelayDirection = 'back-to-front';
       ctrl.memberSelection = memberSelection;
       ctrl.strideType = drillEditorService.strideType;
       ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
@@ -97,14 +98,16 @@ angular.module('drillApp').component('toTheRearsTool', {
     }
 
     function previewFootprints() {
+      $rootScope.$safeApply();
       if (!ctrl.memberSelection || ctrl.memberSelection.length == 0) {
         alertService.info('You must select a block to work with.');
         return;
       }
       const members = ctrl.memberSelection.members;
-      const memberSequences = new Countermarch(members).generate(
-        getCountermarchOptions()
+      const memberSequences = new ToTheRears(members).generate(
+        getToTheRearOptions()
       );
+      drillEditorService.clearFootprints();
       drillEditorService.previewFootprints(members, memberSequences, 24);
     }
 
@@ -119,30 +122,19 @@ angular.module('drillApp').component('toTheRearsTool', {
       }
     }
 
-    function getCountermarchOptions() {
+    function getToTheRearOptions() {
       return {
-        countermarchDirection: ctrl.countermarchDirection,
-        fileDelayDirection: ctrl.fileDelayDirection,
         fileDelay: ctrl.fileDelay,
+        fileDelayDirection: ctrl.fileDelayDirection,
         rankDelay: ctrl.rankDelay,
+        rankDelayDirection: ctrl.rankDelayDirection,
       };
     }
 
     function save() {
-      // drillEditorService.countermarch({
-      //   countermarchDirection: ctrl.countermarchDirection,
-      //   fileDelay: ctrl.fileDelay,
-      //   fileDelayDirection: ctrl.fileDelayDirection,
-      //   rankDelay: ctrl.rankDelay,
-      // });
+      drillEditorService.toTheRears(getToTheRearOptions());
     }
 
-    function cancel() {
-      console.log('to-the-rear cacnel');
-      console.log('fileDelay', ctrl.fileDelay);
-      console.log('fileDelayDir', ctrl.fileDelayDirection);
-      console.log('rankDelay', ctrl.rankDelay);
-      console.log('rankDelayDir', ctrl.rankDelayDirection);
-    }
+    function cancel() {}
   },
 });

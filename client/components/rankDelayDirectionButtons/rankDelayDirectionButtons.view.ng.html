@@ -1,9 +1,9 @@
 <div class="rank-delay-direction-buttons">
-    <button ng-click="$ctrl.setRankDelayDirection('front-to-back')" ng-class="{ 'active': $ctrl.rankDelayDirection == 'front-to-back' }"
+    <button ng-click="$ctrl.setRankDelayDirection('front-to-back')" ng-class="{ 'active': $ctrl.ngModel == 'front-to-back' }"
         class="btn btn-default" title="Front-to-back" data-toggle="tooltip" data-placement="bottom">
         <i class="fas fa-long-arrow-alt-down"></i>
     </button>
-    <button ng-click="$ctrl.setRankDelayDirection('back-to-front')" ng-class="{ 'active': $ctrl.rankDelayDirection == 'back-to-front' }"
+    <button ng-click="$ctrl.setRankDelayDirection('back-to-front')" ng-class="{ 'active': $ctrl.ngModel == 'back-to-front' }"
         class="btn btn-default" title="Back-to-front" data-toggle="tooltip" data-placement="bottom">
         <i class="fas fa-long-arrow-alt-up"></i>
     </button>

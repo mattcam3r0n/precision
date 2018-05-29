@@ -10,6 +10,7 @@ import Direction from '/client/lib/Direction';
 
 import Illinois from './drill/maneuvers/Illinois';
 import Countermarch from './drill/maneuvers/Countermarch';
+import ToTheRears from './drill/maneuvers/ToTheRears';
 import TexasTurn from './drill/maneuvers/TexasTurn';
 import Column from './drill/maneuvers/Column';
 
@@ -260,6 +261,11 @@ class DrillEditorService {
     members = members || this.drillBuilder.getSelectedMembers();
     const pointSet = this.drillBuilder.getFootprintPoints(members, counts);
     this.eventService.notify(Events.showFootprints, { pointSet: pointSet });
+    this.notifyDrillStateChanged();
+  }
+  
+  clearFootprints() {
+    this.eventService.notify(Events.clearFootprints);
     this.notifyDrillStateChanged();
   }
 
@@ -681,6 +687,29 @@ class DrillEditorService {
 
     this.makeUndoable(
       'Countermarch Maneuver',
+      members,
+      count,
+      memberSeqs.maxLength,
+      () => {
+        this.drillBuilder.addSequences(
+          members,
+          memberSeqs,
+          this.drill.count + 1
+        );
+        this.notifyDrillStateChanged();
+        this.save();
+      }
+    );
+  }
+
+  toTheRears(options) {
+    const members = this.drillBuilder.getSelectedMembers();
+    const toTheRears = new ToTheRears(members);
+    const memberSeqs = toTheRears.generate(options);
+    const count = this.drill.count + 1;
+
+    this.makeUndoable(
+      'To-The-Rears Maneuver',
       members,
       count,
       memberSeqs.maxLength,

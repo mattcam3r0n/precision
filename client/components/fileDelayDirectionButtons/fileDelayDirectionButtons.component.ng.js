@@ -11,7 +11,7 @@ angular.module('drillApp').component('fileDelayDirectionButtons', {
 
     ctrl.$onInit = function() {
       $('[data-toggle="tooltip"]').tooltip();
-      ctrl.fileDelayDirection = 'left-to-right';
+      ctrl.ngModel = 'left-to-right';
     };
 
     ctrl.$onDestroy = function() {
@@ -19,7 +19,6 @@ angular.module('drillApp').component('fileDelayDirectionButtons', {
 
     ctrl.setFileDelayDirection = function(value) {
       if (value == null) return;
-      ctrl.fileDelayDirection = value;
       ctrl.ngModel = value;
       utilService.blurActiveElement();
     };

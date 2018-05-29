@@ -5,21 +5,29 @@ angular.module('drillApp').component('spinnerBox', {
   transclude: true,
   bindings: {
     ngModel: '=',
+    ngChange: '&',
   },
-  controller: function($scope) {
+  controller: function($scope, $rootScope) {
     let ctrl = this;
 
     ctrl.$onInit = function() {
-      ctrl.value = 0;
+      ctrl.ngModel = 0;
+    };
+
+    ctrl.$onChanges = function() {
+      console.log('spinbox onChanges');
     };
 
     ctrl.$onDestroy = function() {
     };
 
     ctrl.setValue = function(value) {
-      if (value == null) return;
-      ctrl.value = value;
+      // ctrl.value = value;
       ctrl.ngModel = value;
+      $rootScope.$safeApply();
+      if (ctrl.ngChange) {
+        ctrl.ngChange({ fileDelay: value });
+      }
     };
   },
 });
