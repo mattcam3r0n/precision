@@ -41,7 +41,6 @@ angular.module('drillApp').component('toTheRearsTool', {
     };
 
     ctrl.log = function() {
-      // $rootScope.$safeApply();
       console.log(getToTheRearOptions());
     };
 
@@ -97,7 +96,6 @@ angular.module('drillApp').component('toTheRearsTool', {
     }
 
     function previewFootprints() {
-      // $rootScope.$safeApply();
       if (!ctrl.memberSelection || ctrl.memberSelection.length == 0) {
         alertService.info('You must select a block to work with.');
         return;
