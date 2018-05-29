@@ -14,8 +14,7 @@ angular.module('drillApp').component('toTheRearsTool', {
     appStateService,
     drillEditorService,
     alertService,
-    eventService,
-    utilService
+    eventService
   ) {
     let ctrl = this;
 
@@ -42,7 +41,7 @@ angular.module('drillApp').component('toTheRearsTool', {
     };
 
     ctrl.log = function() {
-      $rootScope.$safeApply();
+      // $rootScope.$safeApply();
       console.log(getToTheRearOptions());
     };
 
@@ -98,7 +97,7 @@ angular.module('drillApp').component('toTheRearsTool', {
     }
 
     function previewFootprints() {
-      $rootScope.$safeApply();
+      // $rootScope.$safeApply();
       if (!ctrl.memberSelection || ctrl.memberSelection.length == 0) {
         alertService.info('You must select a block to work with.');
         return;
