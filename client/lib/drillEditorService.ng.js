@@ -11,6 +11,7 @@ import Direction from '/client/lib/Direction';
 import Illinois from './drill/maneuvers/Illinois';
 import Countermarch from './drill/maneuvers/Countermarch';
 import ToTheRears from './drill/maneuvers/ToTheRears';
+import StepTwo from './drill/maneuvers/StepTwo';
 import TexasTurn from './drill/maneuvers/TexasTurn';
 import Column from './drill/maneuvers/Column';
 
@@ -711,6 +712,29 @@ class DrillEditorService {
 
     this.makeUndoable(
       'To-The-Rears Maneuver',
+      members,
+      count,
+      memberSeqs.maxLength,
+      () => {
+        this.drillBuilder.addSequences(
+          members,
+          memberSeqs,
+          this.drill.count + 1
+        );
+        this.notifyDrillStateChanged();
+        this.save();
+      }
+    );
+  }
+
+  stepTwo(options) {
+    const members = this.drillBuilder.getSelectedMembers();
+    const stepTwo = new StepTwo(members);
+    const memberSeqs = stepTwo.generate(options);
+    const count = this.drill.count + 1;
+
+    this.makeUndoable(
+      'Step-Two Maneuver',
       members,
       count,
       memberSeqs.maxLength,

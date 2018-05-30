@@ -9,13 +9,8 @@ angular.module('drillApp').component('toTheRearsTool', {
   bindings: {},
   controller: function(
     $scope,
-    $rootScope,
-    $window,
     $controller,
-    appStateService,
-    drillEditorService,
-    alertService,
-    eventService
+    drillEditorService
   ) {
     let ctrl = this;
 

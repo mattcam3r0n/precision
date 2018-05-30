@@ -1,7 +1,7 @@
 'use strict';
 
 import Events from '/client/lib/Events';
-import ToTheRears from '/client/lib/drill/maneuvers/ToTheRears';
+import StepTwo from '/client/lib/drill/maneuvers/StepTwo';
 
 angular.module('drillApp').component('stepTwoTool', {
   templateUrl:
@@ -9,13 +9,9 @@ angular.module('drillApp').component('stepTwoTool', {
   bindings: {},
   controller: function(
     $scope,
-    $rootScope,
-    $window,
     $controller,
-    appStateService,
     drillEditorService,
-    alertService,
-    eventService
+    utilService
   ) {
     let ctrl = this;
 
@@ -31,10 +27,17 @@ angular.module('drillApp').component('stepTwoTool', {
       ctrl.onSave(onSave);
       ctrl.onCancel(onCancel);
 
+      $scope.$watch('$ctrl.initialState', onOptionChanged);
       $scope.$watch('$ctrl.fileDelay', onOptionChanged);
       $scope.$watch('$ctrl.fileDelayDirection', onOptionChanged);
       $scope.$watch('$ctrl.rankDelay', onOptionChanged);
       $scope.$watch('$ctrl.rankDelayDirection', onOptionChanged);
+    };
+
+    ctrl.setInitialState = (state) => {
+      ctrl.initialState = state;
+      console.log('setInitialState', state, ctrl.initialState);
+      utilService.blurActiveElement();
     };
 
     function onSelectionChanged(args) {
@@ -43,17 +46,18 @@ angular.module('drillApp').component('stepTwoTool', {
 
     function onActivated() {
       ctrl.setActiveTool('stepTwoTool');
+      ctrl.initialState = 'halt';
       ctrl.fileDelay = 2;
       ctrl.fileDelayDirection = 'left-to-right';
       ctrl.rankDelay = 0;
-      ctrl.rankDelayDirection = 'back-to-front';
+      ctrl.rankDelayDirection = 'front-to-back';
       previewFootprints();
     }
 
     function onDeactivated() {}
 
     function onSave() {
-      drillEditorService.toTheRears(getToTheRearOptions());
+      drillEditorService.stepTwo(getOptions());
     }
 
     function onCancel() {}
@@ -67,15 +71,16 @@ angular.module('drillApp').component('stepTwoTool', {
         return;
       }
       const members = ctrl.currentSelection().members;
-      const memberSequences = new ToTheRears(members).generate(
-        getToTheRearOptions()
+      const memberSequences = new StepTwo(members).generate(
+        getOptions()
       );
       drillEditorService.clearFootprints();
       drillEditorService.previewFootprints(members, memberSequences, 24);
     }
 
-    function getToTheRearOptions() {
+    function getOptions() {
       return {
+        initialState: ctrl.initialState,
         fileDelay: ctrl.fileDelay,
         fileDelayDirection: ctrl.fileDelayDirection,
         rankDelay: ctrl.rankDelay,
