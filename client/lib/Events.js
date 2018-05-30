@@ -115,6 +115,10 @@ class Events {
     return 'activateToTheRearsTool';
   }
 
+  static get activateStepTwoTool() {
+    return 'activateStepTwoTool';
+  }
+
   static get activateIllinoisTool() {
     return 'activateIllinoisTool';
   }
@@ -247,6 +251,10 @@ class Events {
 
   static get toTheRearsToolDeactivated() {
     return 'toTheRearsToolDeactivated';
+  }
+
+  static get stepTwoToolDeactivated() {
+    return 'stepTwoToolDeactivated';
   }
 
   static get illinoisToolDeactivated() {

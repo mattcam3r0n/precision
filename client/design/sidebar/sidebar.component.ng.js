@@ -160,6 +160,10 @@ angular.module('drillApp').component('sidebar', {
       eventService.notify(Events.activateToTheRearsTool);
     };
 
+    $scope.stepTwo = function() {
+      eventService.notify(Events.activateStepTwoTool);
+    };
+
     $scope.illinois = function() {
       eventService.notify(Events.activateIllinoisTool);
     };

@@ -182,6 +182,7 @@ class DrillEditorService {
   }
 
   getMemberSelection() {
+    if (!this.drillBuilder) return null;
     return this.drillBuilder.getMemberSelection();
   }
 
@@ -263,7 +264,7 @@ class DrillEditorService {
     this.eventService.notify(Events.showFootprints, { pointSet: pointSet });
     this.notifyDrillStateChanged();
   }
-  
+
   clearFootprints() {
     this.eventService.notify(Events.clearFootprints);
     this.notifyDrillStateChanged();

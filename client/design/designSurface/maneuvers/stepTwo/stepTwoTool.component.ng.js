@@ -3,9 +3,9 @@
 import Events from '/client/lib/Events';
 import ToTheRears from '/client/lib/drill/maneuvers/ToTheRears';
 
-angular.module('drillApp').component('toTheRearsTool', {
+angular.module('drillApp').component('stepTwoTool', {
   templateUrl:
-    'client/design/designSurface/maneuvers/toTheRears/toTheRearsTool.view.ng.html',
+    'client/design/designSurface/maneuvers/stepTwo/stepTwoTool.view.ng.html',
   bindings: {},
   controller: function(
     $scope,
@@ -22,8 +22,8 @@ angular.module('drillApp').component('toTheRearsTool', {
     angular.extend(ctrl, $controller('toolBaseController', { $scope: $scope }));
 
     ctrl.$onInit = function() {
-      ctrl.registerActivateEvent(Events.activateToTheRearsTool);
-      ctrl.registerDeactivateEvent(Events.toTheRearsToolDeactivated);
+      ctrl.registerActivateEvent(Events.activateStepTwoTool);
+      ctrl.registerDeactivateEvent(Events.stepTwoToolDeactivated);
 
       ctrl.onSelectionChanged(onSelectionChanged);
       ctrl.onActivated(onActivated);
@@ -42,7 +42,7 @@ angular.module('drillApp').component('toTheRearsTool', {
     }
 
     function onActivated() {
-      ctrl.setActiveTool('toTheRearsTool');
+      ctrl.setActiveTool('stepTwoTool');
       ctrl.fileDelay = 2;
       ctrl.fileDelayDirection = 'left-to-right';
       ctrl.rankDelay = 0;
