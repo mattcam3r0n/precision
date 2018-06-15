@@ -50,14 +50,6 @@ function updateDrill(drill) {
     });
 }
 
-function sanitizeBookmarks(drill) {
-  if (!drill.bookmarks) return;
-
-  drill.bookmarks.forEach((b) => {
-    delete b.$$hashKey;
-  });
-}
-
 function checkOwnership(drill) {
   if (drill.userId && drill.userId !== Meteor.userId()) {
     throwError('not-your-drill', 'Cannot update another user\'s drill', {

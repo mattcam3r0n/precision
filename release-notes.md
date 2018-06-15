@@ -189,3 +189,9 @@ Release v0.3.2 - fix undo insert bug, specify tempo on timeline
 * FIX: Sped up chart printing by about 50%.  Still takes about 1.5s per chart.
 
 Release v0.3.3
+
+* FIX: Save As bug related to Bookmarks
+* NEW: To-The-Rears tool
+
+Release v0.3.4
+

@@ -2,10 +2,11 @@
 
 Meteor.methods({
   insertDrill: function(drill) {
+    sanitizeBookmarks(drill);
     drill.createdDate = new Date();
     drill.updatedDate = new Date();
-    drill.userId = Meteor.userId(),
-    drill.owner = Meteor.user().emails[0].address,
+    drill.userId = Meteor.userId();
+    drill.owner = Meteor.user().emails[0].address;
     drill.name_sort = drill.name.toLowerCase();
     return Drills.insert(drill);
   },

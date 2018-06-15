@@ -36,3 +36,15 @@ function inside(point, vs) {
   * cons - adds more work to playback (slower)
 * what would this do to obliques?  would it work the same?
 
+TODO
+* file selection when in halt/marktime state
+* diamond step two tool?
+* waterfall tool
+* block column tool
+* fast break tool
+* assign band members
+  * load csv?
+  * hover to see member info?
+* select file/rank/diagonal
+    * hover or right click member, then select f/r/d
+* 
