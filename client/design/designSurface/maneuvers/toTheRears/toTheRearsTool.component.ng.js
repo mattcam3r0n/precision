@@ -26,6 +26,11 @@ angular.module('drillApp').component('toTheRearsTool', {
       ctrl.onSave(onSave);
       ctrl.onCancel(onCancel);
 
+      ctrl.fileDelay = 2;
+      ctrl.rankDelay = 0;
+      ctrl.fileDelayDirection = 'left-to-right';
+      ctrl.rankDelayDirection = 'back-to-front';
+
       $scope.$watch('$ctrl.fileDelay', onOptionChanged);
       $scope.$watch('$ctrl.fileDelayDirection', onOptionChanged);
       $scope.$watch('$ctrl.rankDelay', onOptionChanged);
@@ -38,10 +43,6 @@ angular.module('drillApp').component('toTheRearsTool', {
 
     function onActivated() {
       ctrl.setActiveTool('toTheRearsTool');
-      ctrl.fileDelay = 2;
-      ctrl.fileDelayDirection = 'left-to-right';
-      ctrl.rankDelay = 0;
-      ctrl.rankDelayDirection = 'back-to-front';
       previewFootprints();
     }
 

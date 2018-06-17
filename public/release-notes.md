@@ -1,3 +1,11 @@
+#### Version 0.3.5
+
+**FIX**: Starting playback in the middle of a split audio track started on wrong beat.
+
+**FIX**: To-the-rears window now remembers previous settings.
+
+-------
+
 #### Version 0.3.4
 
 **FIX**: Fixed a bug that prevented Save As from working when Bookmarks existed in the drill.

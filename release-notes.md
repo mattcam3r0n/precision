@@ -195,3 +195,5 @@ Release v0.3.3
 
 Release v0.3.4
 
+* FIX: Playback in the middle of a split audio track started on wrong beat.
+* FIX: To-the-rears window now remembers previous settings.
