@@ -567,6 +567,12 @@ class DrillBuilder {
     newTrack.startCount = splitCount;
     newTrack.counts = newTrack.endCount - newTrack.startCount + 1;
     newTrack.beats = beats.slice(splitCount - track.startCount);
+    // adjust the timeOffset
+    let newTimeOffset = 0;
+    newTrack.beats.forEach((b, i, a) => {
+      b.timeOffset = newTimeOffset;
+      newTimeOffset += b.timeInterval;
+    });
     // sum the timeIntervals of the beats
     newTrack.duration = newTrack.beats.reduce((acc, b) => {
       return acc + b.timeInterval;
