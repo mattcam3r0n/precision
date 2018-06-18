@@ -9,6 +9,7 @@ angular.module('drillApp').component('openDrillDialog', {
   },
   controller: function(
     $scope,
+    $rootScope,
     appStateService,
     eventService,
     confirmationDialogService
@@ -20,6 +21,7 @@ angular.module('drillApp').component('openDrillDialog', {
       searchMyDrills: true,
       searchSharedDrills: false,
     };
+    $scope.searchText = '';
     $scope.page = 1;
     $scope.perPage = 5;
     $scope.sort = {}; // { name_sort: 1 };
@@ -53,6 +55,12 @@ angular.module('drillApp').component('openDrillDialog', {
         );
       },
     });
+
+    $scope.setSearchText = _.debounce(() => {
+      console.log('debounced setSearchText', $scope.searchText);
+      $scope.searchOptions.searchText = $scope.searchText;
+      $rootScope.$safeApply();
+    }, 500, false);
 
     $scope.open = function(selectedDrill) {
       eventService.notify(Events.showSpinner);

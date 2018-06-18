@@ -11,9 +11,9 @@
             <div class="modal-body" style="min-height: 450px">
 
                 <div class="input-group">
-                    <input type="search" ng-model="searchOptions.searchText" class="form-control" placeholder="Search">
+                    <input type="search" ng-change="setSearchText()" ng-model="searchText" class="form-control" placeholder="Search">
                     <span class="input-group-btn">
-                        <button ng-click="searchOptions.searchText = ''" class="btn btn-default" type="button">
+                        <button ng-click="searchText = ''" class="btn btn-default" type="button">
                             <i class="fa fa-times-circle"></i>
                         </button>
                     </span>
