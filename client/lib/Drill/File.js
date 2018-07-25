@@ -2,18 +2,48 @@ import MemberPositionCalculator from './MemberPositionCalculator';
 import FileMember from './FileMember';
 
 class File {
-  constructor(leadMember) {
+  constructor(leadMemberOrArray, overrideDirection) {
+    if (Array.isArray(leadMemberOrArray)) {
+      this.initFromArray(leadMemberOrArray, overrideDirection);
+    } else {
+      this.initFromLeadMember(leadMemberOrArray, overrideDirection);
+    }
+    this.leader.overrideDirection = overrideDirection;
+  }
+
+  initFromLeadMember(leadMember, overrideDirection) {
     this.leader = leadMember;
+    this.leader.overrideDirection =
+      overrideDirection != null ? overrideDirection : null;
     this.fileMembers = [leadMember];
-    this.initMembers(leadMember);
+    this.initMembers(leadMember, overrideDirection);
   }
 
   initMembers(leader) {
     let m = leader.followedBy;
     while (m) {
+      m.overrideDirection =
+        overrideDirection != null ? overrideDirection : null;
       this.fileMembers.push(m);
       m = m.followedBy;
     }
+  }
+
+  initFromArray(members, overrideDirection) {
+    let prev = null;
+    const file = members.map((m, i) => {
+      const fm = new FileMember(m);
+      fm.following = prev;
+      fm.overrideDirection =
+        overrideDirection != null ? overrideDirection : null;
+      if (prev) {
+        prev.followedBy = fm;
+      }
+      prev = fm;
+      return fm;
+    });
+    this.leader = file[0];
+    this.fileMembers = file;
   }
 
   getReversedFile() {

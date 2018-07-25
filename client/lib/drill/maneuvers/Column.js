@@ -13,6 +13,7 @@ export default class Column {
       this.files,
       this.files[0].leader.direction
     );
+    console.log('files after sort', this.files);
     // this.rankCount = this.files[0].length; // TODO: use max file length?
   }
 
@@ -30,15 +31,24 @@ export default class Column {
       file.fileMembers.forEach((member, r) => {
         // get appropriate file index, depending on left-to-right or right-to-left
         const fIndex =
-          ((options.turnDirection == 'left' && !options.reverse) || (options.turnDirection == 'right' && options.reverse))
+          (options.turnDirection == 'left' && !options.reverse) ||
+          (options.turnDirection == 'right' && options.reverse)
             ? f
             : this.files.length - 1 - f;
-            const turnCount = fIndex * fileSpacing + r * member.stepsToLeader;
+        const turnCount = fIndex * fileSpacing + r * member.stepsToLeader;
         const turnDirection =
           options.turnDirection == 'left'
             ? Direction.leftOf(file.leader.direction)
             : Direction.rightOf(file.leader.direction);
         const script = new ScriptSequence();
+        // if the band is in a static state, add a first step in direction of file leader
+        if (StepType.isStatic(member.stepType)) {
+          script.addStep({
+            strideType: file.leader.strideType,
+            stepType: StepType.Full,
+            direction: file.leader.direction,
+          });
+        }
         // second turn in turnDirection. for leader,
         script.addStep(
           {
@@ -51,6 +61,7 @@ export default class Column {
         scripts[member.id] = script;
       });
     });
+    console.log(scripts);
     return new MemberSequences(scripts);
   }
 }

@@ -57,6 +57,7 @@ export default class Block {
     return sorted;
   }
 
+  // TODO: use getAverageDirection in fileSelector?
   getBlockDirection() {
     // get mode of direction
     const modes = {};

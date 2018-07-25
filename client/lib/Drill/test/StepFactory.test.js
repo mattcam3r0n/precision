@@ -1,4 +1,5 @@
-import { expect } from 'meteor/practicalmeteor:chai';
+// import { expect } from 'meteor/practicalmeteor:chai';
+import { expect } from 'chai';
 
 import StepFactory from '/client/lib/drill/StepFactory';
 import Direction from '/client/lib/Direction';

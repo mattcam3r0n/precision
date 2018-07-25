@@ -111,12 +111,12 @@ class PathTool {
                     .toFieldPoint());
 
             let fi = new FileIndicator(points,
-                f.leader.member.currentState.direction);
+                f.leader.direction);
 
             let gp = new GuidePath(this.field, f, {
                 strideType: f.leader.member.currentState.strideType,
                 stepType: f.leader.member.currentState.stepType,
-                direction: f.leader.member.currentState.direction,
+                direction: f.leader.direction,
                 x: f.leader.member.currentState.x,
                 y: f.leader.member.currentState.y,
             }, this.strideType);
@@ -226,7 +226,7 @@ class PathTool {
         let gp = new GuidePath(this.field, file, {
             strideType: file.leader.member.currentState.strideType,
             stepType: file.leader.member.currentState.stepType,
-            direction: file.leader.member.currentState.direction,
+            direction: file.direction,
             x: file.leader.member.currentState.x,
             y: file.leader.member.currentState.y,
         }, this.strideType);

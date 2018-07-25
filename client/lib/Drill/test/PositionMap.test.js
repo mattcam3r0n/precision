@@ -1,4 +1,5 @@
-import { expect } from 'meteor/practicalmeteor:chai';
+// import { expect } from 'meteor/practicalmeteor:chai';
+import { expect } from 'chai';
 
 import PositionMap from '/client/lib/drill/PositionMap';
 import Direction from '/client/lib/Direction';

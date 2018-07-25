@@ -104,9 +104,9 @@ class PositionMap {
   }
 
   buidXMap() {
-    let map = {};
+    const map = {};
     this.members.forEach((m) => {
-      let { x, y } = { x: m.currentState.x, y: m.currentState.y };
+      const { x, y } = { x: m.currentState.x, y: m.currentState.y };
 
       if (!map[x]) {
         map[x] = {};
@@ -118,9 +118,9 @@ class PositionMap {
   }
 
   buildYMap() {
-    let map = {};
+    const map = {};
     this.members.forEach((m) => {
-      let { x, y } = { x: m.currentState.x, y: m.currentState.y };
+      const { x, y } = { x: m.currentState.x, y: m.currentState.y };
 
       if (!map[y]) {
         map[y] = {};

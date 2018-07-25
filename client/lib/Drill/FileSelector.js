@@ -6,12 +6,13 @@ import Direction from '/client/lib/Direction';
 import MemberPositionCalculator from '/client/lib/drill/MemberPositionCalculator';
 import PositionMap from './PositionMap';
 
-let followingDirs = {
-  [Direction.N]: [Direction.N, Direction.E, Direction.W],
-  [Direction.E]: [Direction.E, Direction.S, Direction.N],
-  [Direction.S]: [Direction.S, Direction.E, Direction.W],
-  [Direction.W]: [Direction.W, Direction.S, Direction.N],
-};
+// Unnecessary?
+// let followingDirs = {
+//   [Direction.N]: [Direction.N, Direction.E, Direction.W],
+//   [Direction.E]: [Direction.E, Direction.S, Direction.N],
+//   [Direction.S]: [Direction.S, Direction.E, Direction.W],
+//   [Direction.W]: [Direction.W, Direction.S, Direction.N],
+// };
 
 let followedByDirs = {
   [Direction.N]: [Direction.S, Direction.E, Direction.W],
@@ -23,48 +24,138 @@ let followedByDirs = {
 class FileSelector {
   constructor(members, positionMap) {
     this.members = members;
-    this.leaders = [];
     this.positionMap = positionMap || new PositionMap(members);
   }
 
   findFiles() {
+    // try to find files by path
+    const files = this.findFilesByPath();
+    // if no files returned
+    // try to find files by position
+    if (files && files.length > 0) {
+      return files;
+    }
+    return this.findFilesByPosition();
+  }
+
+  /**
+   * Find files by examining the path that each member takes.  I.e, do they
+   * follow in the footsteps of another member?
+   *
+   * @return {Array} files
+   */
+  findFilesByPath() {
     let fileMembers = {};
 
-    // clear leaders
-    this.leaders = [];
-
-    // build FileMember for each member, and a map of them
+    const fileLeaders = [];
+    // build a FileMember for each member, and keep a map of them
     this.members.forEach((m) => {
       let fm = new FileMember(m);
       fileMembers[m.id] = fm;
     });
-    // wire up folowers
+    // for each member, find and wireup following/followedBy props
     this.members.forEach((m) => {
       let fm = fileMembers[m.id];
       let following = this.getFollowing(m);
-      fm.following = following ? fileMembers[following.id] : null;
-      if (fm.following) {
+      if (following) {
+        fm.following = fileMembers[following.id];
         fm.following.followedBy = fm;
-      }
-
-      // if leader, add to leader collection
-      if (!fm.following) {
-        this.leaders.push(fm);
+      } else {
+        fileLeaders.push(fm);
       }
     });
 
-    // build files
-    let files = [];
-    this.leaders.forEach((l) => {
-      let file = new File(l);
-      files.push(file);
+    return fileLeaders.map((l) => new File(l));
+  }
+
+  /**
+   * Find files by their position in the block. This is a naive algorithm that
+   * will not detect files that are in the middle of turns, etc.
+   * @param  {Direction} dir
+   * @return {Array} files
+   */
+  findFilesByPosition(dir) {
+    dir = dir == null ? this.getAverageDirection() : dir;
+    /*
+    get files depending on dir
+      resort Xs and Ys depending on dir
+      N = X asc,  Y asc
+      E = X desc, Y asc
+      S = X desc, Y desc
+      W = X asc,  Y desc
+    */
+    const useFforX = (d) => d === Direction.N || d === Direction.S;
+    const filesArray = this.getFileValues(dir).map((f) => {
+      return this.getRankValues(dir)
+        .map((r) => {
+          // const x = f;
+          // const y = r;
+          const x = useFforX(dir) ? f : r;
+          const y = useFforX(dir) ? r : f;
+          console.log('f,r', f, r);
+          //          console.log('getAt', x, y);
+          return this.positionMap.getMemberAtPosition(x, y);
+        })
+        .filter((m) => m !== null);
+    });
+    // map double array of files into files structure
+    return filesArray.map((f) => {
+      return new File(f, dir);
+    });
+  }
+
+  getFileValues(dir) {
+    if (dir === Direction.N) {
+      return this.positionMap.distinctXs;
+    }
+    if (dir === Direction.S) {
+      return this.positionMap.distinctXs.reverse();
+    }
+    if (dir === Direction.E) {
+      return this.positionMap.distinctYs;
+    }
+    if (dir === Direction.W) {
+      return this.positionMap.distinctYs.reverse();
+    }
+    return this.positionMap.distinctXs;
+  }
+
+  getRankValues(dir) {
+    if (dir === Direction.N) {
+      return this.positionMap.distinctYs;
+    }
+    if (dir === Direction.S) {
+      return this.positionMap.distinctYs.reverse();
+    }
+    if (dir === Direction.E) {
+      return this.positionMap.distinctXs.reverse();
+    }
+    if (dir === Direction.W) {
+      return this.positionMap.distinctXs;
+    }
+    return this.positionMap.distinctYs;
+  }
+
+  getAverageDirection() {
+    // get mode of direction
+    const modes = {};
+    // count the # of members in each direction
+    this.members.forEach((m) => {
+      const dir = m.currentState.direction;
+      if (!modes[dir]) {
+        modes[dir] = 0;
+      }
+      modes[dir] = modes[dir] + 1;
     });
 
-    return files;
+    // find the greatest number, assume that direction
+    const dir = Object.keys(modes).reduce((max, k) => {
+      return modes[k] > max ? k : max;
+    }, 0);
+    return Number(dir);
   }
 
   getFollowing(m) {
-    // TODO: do this by projecting member position, rather than fixed intervals?
     for (let i = 2; i <= 6; i += 2) {
       let pos = MemberPositionCalculator.stepForward(m, m.currentState, i);
       let following = this.positionMap.getMemberAtPosition(pos.x, pos.y);

@@ -1,9 +1,10 @@
-import { expect } from 'meteor/practicalmeteor:chai';
+// import { expect } from 'meteor/practicalmeteor:chai';
+import { expect } from 'chai';
 
-import Direction from '/client/lib/Direction';
-import StrideType from '/client/lib/StrideType';
-import StepType from '/client/lib/StepType';
-import StepDelta from '/client/lib/StepDelta';
+import Direction from './Direction';
+import StrideType from './StrideType';
+import StepType from './StepType';
+import StepDelta from './StepDelta';
 
 describe('StepDelta', function () {
 

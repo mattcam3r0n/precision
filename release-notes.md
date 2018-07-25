@@ -188,12 +188,17 @@ Release v0.3.2 - fix undo insert bug, specify tempo on timeline
 * NEW: Countermarch, Illinois, Column, and Texas Turn maneuvers, with "footprints" preview
 * FIX: Sped up chart printing by about 50%.  Still takes about 1.5s per chart.
 
-Release v0.3.3
+Released v0.3.3
 
 * FIX: Save As bug related to Bookmarks
 * NEW: To-The-Rears tool
 
-Release v0.3.4
+Released v0.3.4
 
 * FIX: Playback in the middle of a split audio track started on wrong beat.
 * FIX: To-the-rears window now remembers previous settings.
+
+Released v0.3.5
+
+* FIX: Speed up search box in Open Drill dialog.
+* 

@@ -1,46 +1,55 @@
-
 /**
  * StepType
  */
 class StepType {
-    /** A full step */
-    static get Full() {
-        return 0;
-    }
+  /** A full step */
+  static get Full() {
+    return 0;
+  }
 
-    /** A half step */
-    static get Half() {
-        return 1;
-    }
+  /** A half step */
+  static get Half() {
+    return 1;
+  }
 
-    /** Mark time in place */
-    static get MarkTime() {
-        return 2;
-    }
+  /** Mark time in place */
+  static get MarkTime() {
+    return 2;
+  }
 
-    /** Halted */
-    static get Halt() {
-        return 3;
-    }
+  /** Halted */
+  static get Halt() {
+    return 3;
+  }
 
-    /** A gate/pinwheel step */
-    static get Pinwheel() {
-        return 4;
-    }
+  /** A gate/pinwheel step */
+  static get Pinwheel() {
+    return 4;
+  }
 
-    // No change in direction or position
-    static get DeadStep() {
-        return 5;
-    }
+  // No change in direction or position
+  static get DeadStep() {
+    return 5;
+  }
 
-    // change in direction but not position
-    static get FaceStep() {
-        return 6;
-    }
+  // change in direction but not position
+  static get FaceStep() {
+    return 6;
+  }
 
-    static get DragStep() {
-        return 7;
-    }
-};
+  static get DragStep() {
+    return 7;
+  }
+
+  static isStatic(stepType) {
+    return (
+      stepType === this.MarkTime ||
+      stepType === this.Halt ||
+      stepType === this.DeadStep ||
+      stepType === this.FaceStep ||
+      stepType === this.DragStep
+    );
+  }
+}
 
 export default StepType;

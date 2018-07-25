@@ -1,5 +1,6 @@
-import { expect } from 'meteor/practicalmeteor:chai';
-import Direction from '/client/lib/Direction';
+// import { expect } from 'meteor/practicalmeteor:chai';
+import { expect } from 'chai';
+import Direction from './Direction';
 
 describe('Direction', function () {
 

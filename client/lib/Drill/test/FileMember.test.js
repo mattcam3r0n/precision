@@ -1,4 +1,5 @@
-import { expect } from 'meteor/practicalmeteor:chai';
+// import { expect } from 'meteor/practicalmeteor:chai';
+import { expect } from 'chai';
 
 import MemberFactory from '/client/lib/drill/MemberFactory';
 import FileMember from '/client/lib/drill/FileMember';
