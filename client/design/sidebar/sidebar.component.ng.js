@@ -176,6 +176,10 @@ angular.module('drillApp').component('sidebar', {
       eventService.notify(Events.activateColumnTool);
     };
 
+    $scope.waterfall = function() {
+      eventService.notify(Events.activateWaterfallTool);
+    };
+
     function initGridSwitch() {
       $('[name=\'grid-switch\']').bootstrapSwitch('state', false);
       $('input[name=\'grid-switch\']').on(

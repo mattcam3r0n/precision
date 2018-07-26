@@ -40,8 +40,10 @@ TODO
 * file selection when in halt/marktime state
 * diamond step two tool?
 * waterfall tool
+* rolling parallelogram tool
 * block column tool
 * fast break tool
+* starburst tool
 * assign band members
   * load csv?
   * hover to see member info?

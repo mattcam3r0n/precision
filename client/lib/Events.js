@@ -131,6 +131,10 @@ class Events {
     return 'activateColumnTool';
   }
 
+  static get activateWaterfallTool() {
+    return 'activateWaterfallTool';
+  }
+
   static get activateMarcherColorsTool() {
     return 'activateMarcherColorsTool';
   }
@@ -266,6 +270,10 @@ class Events {
 
   static get columnToolDeactivated() {
     return 'columnToolDeactivated';
+  }
+
+  static get waterfallToolDeactivated() {
+    return 'waterfallToolDeactivated';
   }
 
   static get objectsSelected() {

@@ -14,6 +14,7 @@ import ToTheRears from './drill/maneuvers/ToTheRears';
 import StepTwo from './drill/maneuvers/StepTwo';
 import TexasTurn from './drill/maneuvers/TexasTurn';
 import Column from './drill/maneuvers/Column';
+import Waterfall from './drill/maneuvers/Waterfall';
 
 class DrillEditorService {
   constructor(
@@ -819,6 +820,30 @@ class DrillEditorService {
       }
     );
     column.generate();
+  }
+
+  waterfall(options) {
+    const members = this.drillBuilder.getSelectedMembers();
+    const waterfall = new Waterfall(members);
+    const memberSeqs = waterfall.generate(options);
+    const count = this.drill.count + 1;
+
+    this.makeUndoable(
+      'Waterfall Maneuver',
+      members,
+      count,
+      memberSeqs.maxLength,
+      () => {
+        this.drillBuilder.addSequences(
+          members,
+          memberSeqs,
+          this.drill.count + 1
+        );
+        this.notifyDrillStateChanged();
+        this.save();
+      }
+    );
+    waterfall.generate();
   }
 
   blurActiveElement() {

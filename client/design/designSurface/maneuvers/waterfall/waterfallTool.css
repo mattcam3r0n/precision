@@ -1,0 +1,109 @@
+.waterfall-tool {
+    position: absolute;
+   background-color: gainsboro;
+   width: 110px;
+   left: 150px;
+   top: 100px;
+   z-index: 100;
+}
+
+.waterfall-tool div.panel-heading {
+    font-size: 12px;
+}
+
+.waterfall-tool ul {
+    margin: 0;
+    width: 100%;
+    padding: 0px;
+}
+
+.waterfall-tool li {
+    list-style-type: none;
+    margin-top: 0px;
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.waterfall-tool li.description {
+    font-size: 10px;
+    background-color: #fff;
+    padding: 5px;
+}
+
+.waterfall-tool div.reverse {
+    display: flex;
+    background-color: #fff;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    vertical-align: middle;
+    height: 30px;
+}
+
+.waterfall-tool div.reverse div.reverse-checkbox {
+    margin: 0px;
+    padding: 0px;
+}
+
+.waterfall-tool div.reverse div.reverse-checkbox input[type='checkbox'] {
+    margin-top: 0px;
+    margin-left: 10px;
+}
+
+.waterfall-tool div.reverse div.reverse-label {
+    margin-top: 8px;
+    margin-left: 5px;
+    padding: 0px;
+    font-size: 12px;
+}
+
+.waterfall-tool li span {
+    flex: 1 1 100%;
+    color: black;
+    background-color: #e6e6e6;
+    text-align: center;
+    font-size: 10px;
+}
+
+.waterfall-tool li div.turn-direction {
+    display: flex;
+    width: 100%;
+}
+
+.waterfall-tool li button {
+    flex: 1 1 auto;
+    border-radius: 0;
+    padding: 5px;
+}
+
+.waterfall-tool button.active {
+    background-color: #e6e6e6;
+}
+
+.waterfall-tool input {
+    color: black;
+    text-align: center;
+    height: 32px;
+    padding-left: 16px;
+    padding-right: 8px;
+}
+
+.waterfall-tool .counts button {
+    width: 20px;
+    height: 32px;
+}
+            
+.waterfall-tool .turn-mode-button span {
+    font-size: 12px;
+}
+
+.waterfall-tool .save-button i {
+    color: green;    
+}
+
+.waterfall-tool .cancel-button i {
+    color: red;    
+}
+

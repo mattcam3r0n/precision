@@ -1,0 +1,72 @@
+<div draggable class="waterfall-tool panel panel-default" ng-show="$ctrl.isActivated">
+    <div class="panel-heading text-center drag-handle">
+        <i class="fa fa-bars fa-sm drag-handle"></i> Waterfall
+    </div>
+    <div id="dragStepTool" class="">
+        <ul>
+            <li class="description">
+                <p>Add a Waterfall maneuver at the current count.</p>
+            </li>
+            <li>
+                <span>Turn Direction</span>
+                <div class="turn-direction">
+                    <button ng-click="$ctrl.setTurnDirection('left')" ng-class="{ 'active': $ctrl.turnDirection == 'left' }" class="btn btn-default"
+                        title="Left Turn" data-toggle="tooltip" data-placement="left">
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                    </button>
+                    <button ng-click="$ctrl.setTurnDirection('right')" ng-class="{ 'active': $ctrl.turnDirection == 'right' }" class="btn btn-default"
+                        title="Right Turn" data-toggle="tooltip" data-placement="right">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </button>
+                </div>
+            </li>
+            <li>
+                <span>Delay Files</span>
+                <div class="input-group counts">
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setFileDelay($ctrl.fileDelay - 1)" class="btn btn-default" type="button">-</button>
+                    </span>
+                    <input ng-model="$ctrl.fileDelay" ng-change="$ctrl.setFileDelay()" type="number" class="form-control" />
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setFileDelay($ctrl.fileDelay + 1)" class="btn btn-default" type="button">+</button>
+                    </span>
+                </div>
+            </li>
+            <li>
+                <span>Depth</span>
+                <div class="input-group counts">
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setDepth($ctrl.depth - 1)" class="btn btn-default" type="button">-</button>
+                    </span>
+                    <input ng-model="$ctrl.depth" ng-change="$ctrl.setDepth()" type="number" class="form-control" />
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setDepth($ctrl.depth + 1)" class="btn btn-default" type="button">+</button>
+                    </span>
+                </div>
+            </li>
+            <li>
+                <span>Repeat</span>
+                <div class="input-group counts">
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setRepeat($ctrl.repeat - 1)" class="btn btn-default" type="button">-</button>
+                    </span>
+                    <input ng-model="$ctrl.repeat" ng-change="$ctrl.setRepeat()" type="number" class="form-control" />
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setRepeat($ctrl.repeat + 1)" class="btn btn-default" type="button">+</button>
+                    </span>
+                </div>
+            </li>
+            <li>
+                <button ng-click="save()" id="saveDragStep" class="btn btn-default save-button" data-toggle="tooltip" data-placement="right"
+                    title="Save">
+                    <i class="fa fa-check context-button"></i>
+                </button>
+                <button ng-click="cancel()" id="cancelDragStep" class="btn btn-default cancel-button" data-toggle="tooltip" data-placement="right"
+                    title="Cancel">
+                    <i class="fa fa-times context-button"></i>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+</div>
