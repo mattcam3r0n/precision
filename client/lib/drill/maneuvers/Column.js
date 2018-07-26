@@ -13,7 +13,6 @@ export default class Column {
       this.files,
       this.files[0].leader.direction
     );
-    console.log('files after sort', this.files);
     // this.rankCount = this.files[0].length; // TODO: use max file length?
   }
 
@@ -61,7 +60,6 @@ export default class Column {
         scripts[member.id] = script;
       });
     });
-    console.log(scripts);
     return new MemberSequences(scripts);
   }
 }

@@ -81,7 +81,7 @@ angular.module('drillApp').component('columnTool', {
       if (turnDirection == null) {
         ctrl.turnDirection = getDefaultDirection();
       }
-      ctrl.fileDelay = 2;
+      // ctrl.fileDelay = 2;
       ctrl.reverse = getReverseValue();
       previewFootprints();
     }
