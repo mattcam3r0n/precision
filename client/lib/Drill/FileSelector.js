@@ -92,12 +92,8 @@ class FileSelector {
     const filesArray = this.getFileValues(dir).map((f) => {
       return this.getRankValues(dir)
         .map((r) => {
-          // const x = f;
-          // const y = r;
           const x = useFforX(dir) ? f : r;
           const y = useFforX(dir) ? r : f;
-          console.log('f,r', f, r);
-          //          console.log('getAt', x, y);
           return this.positionMap.getMemberAtPosition(x, y);
         })
         .filter((m) => m !== null);

@@ -29,6 +29,7 @@ export default class StepTwo {
 
     const initialStepType =
       options.initialState == 'halt' ? StepType.Halt : StepType.MarkTime;
+    const subsequentStepType = StepType.Full; // make this an option?
     // fileModifier inverts the file delay, if right-to-left
     const fileModifier =
       options.fileDelayDirection == 'left-to-right' ? 0 : this.files.length - 1;
@@ -43,6 +44,7 @@ export default class StepTwo {
           // member.stepsToLeader * r +
           options.fileDelay * Math.abs(fileModifier - f) +
           options.rankDelay * Math.abs(rankModifier - r);
+        // add initial step (halt, mt, etc)
         script.addStep(
           {
             strideType: member.strideType,
@@ -51,10 +53,11 @@ export default class StepTwo {
           },
           0
         );
+        // add subsequent step
         script.addStep(
           {
             strideType: member.strideType,
-            stepType: member.stepType,
+            stepType: subsequentStepType,
             direction: member.direction,
           },
           count
