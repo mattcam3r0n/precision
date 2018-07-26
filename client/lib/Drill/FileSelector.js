@@ -29,13 +29,14 @@ class FileSelector {
 
   findFiles() {
     // try to find files by path
-    const files = this.findFilesByPath();
+    let files = this.findFilesByPath();
     // if no files returned
     // try to find files by position
     if (files && files.length > 0) {
       return files;
     }
-    return this.findFilesByPosition();
+    files = this.findFilesByPosition();
+    return files;
   }
 
   /**
@@ -61,7 +62,10 @@ class FileSelector {
         fm.following = fileMembers[following.id];
         fm.following.followedBy = fm;
       } else {
-        fileLeaders.push(fm);
+        // don't count leaders who are in a static state (MT, etc)
+        if (!StepType.isStatic(fm.direction)) {
+          fileLeaders.push(fm);
+        }
       }
     });
 

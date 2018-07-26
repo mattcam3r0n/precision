@@ -109,7 +109,6 @@ class PathTool {
                 .map((p) => new StepPoint(f.leader.member.currentState.strideType, // eslint-disable-line max-len
                     p.x, p.y)
                     .toFieldPoint());
-
             let fi = new FileIndicator(points,
                 f.leader.direction);
 

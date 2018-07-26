@@ -29,6 +29,8 @@ class MemberPlayer {
 
     static goToBeginning(member) {
         member.currentState.count = 0;
+        member.currentState.strideType = member.initialState.strideType;
+        member.currentState.stepType = member.initialState.stepType;
         member.currentState.direction = member.initialState.direction;
         member.currentState.x = member.initialState.x;
         member.currentState.y = member.initialState.y;

@@ -847,10 +847,6 @@ class DrillEditorService {
 
   notifyMembersSelected() {
     let memberSelection = this.drillBuilder.getMemberSelection();
-
-console.log('members selected', memberSelection);
-console.log(memberSelection.fileSelector.findFilesByPosition());
-
     this.eventService.notify(Events.membersSelected, { memberSelection });
   }
 

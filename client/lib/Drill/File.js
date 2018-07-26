@@ -19,7 +19,7 @@ class File {
     this.initMembers(leadMember, overrideDirection);
   }
 
-  initMembers(leader) {
+  initMembers(leader, overrideDirection) {
     let m = leader.followedBy;
     while (m) {
       m.overrideDirection =

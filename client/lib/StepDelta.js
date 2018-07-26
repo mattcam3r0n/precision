@@ -195,7 +195,6 @@ class StepDelta {
   }
 
   static getStepsBetweenPoints(strideType, stepType, direction, a, b) {
-    console.log('getstepsbetween', strideType, stepType, direction, a, b);
     if (Direction.isOblique(direction)) {
       a = { x: a.x, y: a.y };
       b = { x: b.x, y: a.y };

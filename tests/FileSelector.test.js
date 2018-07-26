@@ -174,6 +174,14 @@ describe('FileSelector', function() {
           expect(f.fileMembers.length).to.equal(2);
         });
       });
+
+      it('each member should face N', function() {
+        files.forEach((f) => {
+          f.fileMembers.forEach((fm) => {
+            expect(fm.direction).to.equal(Direction.N);
+          });
+        });
+      });
     });
 
     describe('facing S', function() {
@@ -186,6 +194,14 @@ describe('FileSelector', function() {
       it('each file should have 2 ranks', function() {
         files.forEach((f) => {
           expect(f.fileMembers.length).to.equal(2);
+        });
+      });
+
+      it('each member should face S', function() {
+        files.forEach((f) => {
+          f.fileMembers.forEach((fm) => {
+            expect(fm.direction).to.equal(Direction.S);
+          });
         });
       });
     });
