@@ -37,12 +37,10 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
-* file selection when in halt/marktime state
-* diamond step two tool?
-* waterfall tool
-* rolling parallelogram tool
-* block column tool
 * fast break tool
+* rolling parallelogram tool
+* diamond step two tool?
+* block column tool
 * starburst tool
 * assign band members
   * load csv?

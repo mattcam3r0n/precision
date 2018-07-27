@@ -204,3 +204,5 @@ Released v0.3.5
 * FIX: File indicators were sometimes incorrect when at beginning of drill.
 * FIX: Files were not detected when in a halted / mark time state.
 * NEW: Step-two maneuver
+* NEW: Waterfall maneuver
+* 
