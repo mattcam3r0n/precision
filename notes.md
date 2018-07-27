@@ -2,6 +2,21 @@ Color Scheme generator
 https://coolors.co/353535-40703b-ffffff-d9d9d9-284b63 
 
 
+Build Issue
+* A dev dependency on jsom package causes build errors
+* Others have noted this.
+* Caused huge memory usage during minification, which i worked around but...
+* Build eventually crashed with error.
+* Removed the following dev dependencies, which were added to allow mocha tests to work with es6.  The real culprit seems to be jsdom.  These were devDependencies, so unsure why meteor was building them.
+
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-root-slash-import": "^1.1.0",
+    "chai": "^4.1.2",
+    "jsdom": "11.11.0",
+    "jsdom-global": "3.0.2",
+
 Check point in polygon...
 
 From https://stackoverflow.com/questions/22521982/js-check-if-point-inside-a-polygon 
