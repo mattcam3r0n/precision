@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "start": "meteor run",
-    "test": "mocha --compilers js:babel-core/register ./tests/**/*.test.js"
+    "test": "mocha --compilers js:babel-core/register ./tests/**/*.test.js",
+    "mocha": "mocha --compilers js:babel-core/register "
   },
   "dependencies": {
     "babel-runtime": "^6.20.0",

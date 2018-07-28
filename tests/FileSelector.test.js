@@ -3,6 +3,7 @@ import { expect } from 'chai';
 
 import Direction from '/client/lib/Direction';
 import FileSelector from '../client/lib/drill/FileSelector';
+import BlockBuilder from './BlockBuilder';
 
 describe('FileSelector', function() {
   before(function() {});
@@ -12,100 +13,15 @@ describe('FileSelector', function() {
 
     X X X
     X X X
-
   */
-  const members = [
-    {
-      id: 1,
-      initialState: {
-        x: 220,
-        y: 300,
-        direction: 90,
-      },
-      currentState: {
-        x: 220,
-        y: 300,
-        direction: 90,
-        count: 0,
-      },
-      script: [],
-    },
-    {
-      id: 2,
-      initialState: {
-        x: 240,
-        y: 300,
-        direction: 90,
-      },
-      currentState: {
-        x: 240,
-        y: 300,
-        direction: 90,
-        count: 0,
-      },
-      script: [],
-    },
-    {
-      id: 3,
-      initialState: {
-        x: 260,
-        y: 300,
-        direction: 90,
-      },
-      currentState: {
-        x: 260,
-        y: 300,
-        direction: 90,
-        count: 0,
-      },
-      script: [],
-    },
-    {
-      id: 4,
-      initialState: {
-        x: 220,
-        y: 320,
-        direction: 90,
-      },
-      currentState: {
-        x: 220,
-        y: 320,
-        direction: 90,
-        count: 0,
-      },
-      script: [],
-    },
-    {
-      id: 5,
-      initialState: {
-        x: 240,
-        y: 320,
-        direction: 90,
-      },
-      currentState: {
-        x: 240,
-        y: 320,
-        direction: 90,
-        count: 0,
-      },
-      script: [],
-    },
-    {
-      id: 6,
-      initialState: {
-        x: 260,
-        y: 320,
-        direction: 90,
-      },
-      currentState: {
-        x: 260,
-        y: 320,
-        direction: 90,
-        count: 0,
-      },
-      script: [],
-    },
-  ];
+  const builder = new BlockBuilder();
+  const members = builder.build({
+    direction: 90,
+    left: 220,
+    top: 300,
+    files: 3, // files/ranks don't respect direction in builder, yet
+    ranks: 2,
+  });
 
   describe('getAverageDirection', function() {
     it('should be E', function() {
