@@ -51,7 +51,7 @@ export default class Block {
   }
 
   sortFilesLeftToRight(files, direction) {
-    sorted = files.slice();
+    const sorted = files.slice();
     const sortFunc = directionSortFuncs[direction];
     sorted.sort(sortFunc);
     return sorted;

@@ -2,6 +2,7 @@ import FieldDimensions from '/client/lib/FieldDimensions';
 import StepDelta from '/client/lib/StepDelta';
 import StepType from '/client/lib/StepType';
 import StrideType from '/client/lib/StrideType';
+// import Action from './Action';
 
 /**
  * Calculates count/position of a single member, relative to current position,
@@ -25,6 +26,16 @@ class MemberPositionCalculator {
             && pos1.y == pos2.y;
     }
 
+    /**
+     * Get a member's state at a given count.  If there is no Action at that
+     * count in the member's script, look backward to most recent Action to
+     * determine the current state (as of count).
+     *
+     * @param {Member} member A member object.
+     * @param {Number} count  Count in drill.
+     *
+     * @return {Object} state A state object.
+     */
     static getStateAtCount(member, count) {
         let i = count - 1;
         let state = member.script[i];
@@ -45,8 +56,10 @@ class MemberPositionCalculator {
     static getState(member, count) {
         let newState;
 
+        // get state at this count
         newState = this.getStateAtCount(member, count);
 
+        // ensure that we have deltas for this state
         let delta = (newState.deltaX != undefined
             && newState.deltaY != undefined)
             ? { deltaX: newState.deltaX, deltaY: newState.deltaY }
@@ -54,6 +67,7 @@ class MemberPositionCalculator {
                 newState.stepType,
                 newState.direction);
 
+        // return state object
         return {
             strideType: newState.strideType || StrideType.SixToFive,
             stepType: newState.stepType || StepType.Full,
@@ -61,6 +75,49 @@ class MemberPositionCalculator {
             deltaX: delta.deltaX,
             deltaY: delta.deltaY,
             count: count,
+        };
+    }
+
+    /**
+     * Apply an Action to the current state and return new state.
+     * @param {Object} currentState The current state, which will be modified by Action.
+     * @param {Object} action The action to perform.
+     * @return {Object} The new state.
+     */
+    static doAction(currentState, action) {
+        // TODO: need to account for 8/5 adjustment at some point
+        return {
+            strideType: action.strideType || StrideType.SixToFive,
+            stepType: action.stepType || StepType.Full,
+            direction: action.direction,
+            deltaX: action.deltaX,
+            deltaY: action.deltaY,
+            count: currentState.count + 1,
+            x: currentState.x + action.deltaX,
+            y: currentState.y + action.deltaY,
+        };
+    }
+
+    /**
+     * Undo (subtract) an Action from the current state and return new state.
+     * @param {Object} currentState The current state, which will be modified by Action.
+     * @param {Object} previousState The previous state
+     * @param {Object} action The action to perform.
+     * @return {Object} The new state.
+     */
+    static undoAction(currentState, previousState, action) {
+        // TODO: need to account for 8/5 adjustment at some point
+        // NOTE: This requires us to have the previous state, and we're only
+        // changing the position. is there some other way?
+        return {
+            strideType: previousState.strideType || StrideType.SixToFive,
+            stepType: previousState.stepType || StepType.Full,
+            direction: previousState.direction,
+            deltaX: previousState.deltaX,
+            deltaY: previousState.deltaY,
+            count: currentState.count - 1,
+            x: currentState.x - action.deltaX,
+            y: currentState.y - action.deltaY,
         };
     }
 

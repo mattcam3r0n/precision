@@ -145,13 +145,14 @@ class ScriptBuilder {
             return action;
         }
 
-        return new Action({
-            strideType: action.strideType,
-            stepType: action.stepType,
-            direction: Direction.rotate180(action.direction),
-            deltaX: action.deltaX * -1,
-            deltaY: action.deltaY * -1,
-        });
+        return new Action(action).reverse();
+        // return new Action({
+        //     strideType: action.strideType,
+        //     stepType: action.stepType,
+        //     direction: Direction.rotate180(action.direction),
+        //     deltaX: action.deltaX * -1,
+        //     deltaY: action.deltaY * -1,
+        // });
     }
 
     static addReverseAction(member, countToReverse, countToAdd) {

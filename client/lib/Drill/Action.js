@@ -17,6 +17,16 @@ class Action {
         this.deltaX = obj.deltaX === undefined ? delta.deltaX : obj.deltaX;
         this.deltaY = obj.deltaY === undefined ? delta.deltaY : obj.deltaY;
     }
+
+    reverse() {
+        return new Action({
+            strideType: this.strideType,
+            stepType: this.stepType,
+            direction: Direction.rotate180(this.direction),
+            deltaX: this.deltaX * -1,
+            deltaY: this.deltaY * -1,
+        });
+    }
 }
 
 export default Action;
