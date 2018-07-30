@@ -52,7 +52,6 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
-* expand file selector to work up to 8 counts
 * calc drill len and show on status bar
 * fast break tool
 * rolling parallelogram tool

@@ -206,3 +206,8 @@ Released v0.3.5
 * NEW: Step-two maneuver
 * NEW: Waterfall maneuver
 * NEW: Squirrel Cage maneuver
+
+Released v0.3.6
+
+* FIX: Detect files when ranks are spaced up to 8 steps apart.  Previously only allowed up to 6 steps between leader and follower.
+* 
