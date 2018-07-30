@@ -15,6 +15,7 @@ import StepTwo from './drill/maneuvers/StepTwo';
 import TexasTurn from './drill/maneuvers/TexasTurn';
 import Column from './drill/maneuvers/Column';
 import Waterfall from './drill/maneuvers/Waterfall';
+import SquirrelCage from './drill/maneuvers/SquirrelCage';
 
 class DrillEditorService {
   constructor(
@@ -844,6 +845,30 @@ class DrillEditorService {
       }
     );
     waterfall.generate();
+  }
+
+  squirrelCage(options) {
+    const members = this.drillBuilder.getSelectedMembers();
+    const squirrelCage = new SquirrelCage(members);
+    const memberSeqs = squirrelCage.generate(options);
+    const count = this.drill.count + 1;
+
+    this.makeUndoable(
+      'Squirrel Cage Maneuver',
+      members,
+      count,
+      memberSeqs.maxLength,
+      () => {
+        this.drillBuilder.addSequences(
+          members,
+          memberSeqs,
+          this.drill.count + 1
+        );
+        this.notifyDrillStateChanged();
+        this.save();
+      }
+    );
+    squirrelCage.generate();
   }
 
   blurActiveElement() {

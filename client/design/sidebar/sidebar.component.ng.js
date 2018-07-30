@@ -180,6 +180,10 @@ angular.module('drillApp').component('sidebar', {
       eventService.notify(Events.activateWaterfallTool);
     };
 
+    $scope.squirrelCage = function() {
+      eventService.notify(Events.activateSquirrelCageTool);
+    };
+
     function initGridSwitch() {
       $('[name=\'grid-switch\']').bootstrapSwitch('state', false);
       $('input[name=\'grid-switch\']').on(

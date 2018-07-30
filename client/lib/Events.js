@@ -135,6 +135,10 @@ class Events {
     return 'activateWaterfallTool';
   }
 
+  static get activateSquirrelCageTool() {
+    return 'activateSquirrelCageTool';
+  }
+
   static get activateMarcherColorsTool() {
     return 'activateMarcherColorsTool';
   }
@@ -274,6 +278,10 @@ class Events {
 
   static get waterfallToolDeactivated() {
     return 'waterfallToolDeactivated';
+  }
+
+  static get squirrelCageToolDeactivated() {
+    return 'squirrelCageToolDeactivated';
   }
 
   static get objectsSelected() {

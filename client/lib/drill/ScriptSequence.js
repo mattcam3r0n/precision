@@ -155,7 +155,13 @@ export default class ScriptSequence {
    * @return {ScriptSequence} A new, reversed sequence.
    */
   reverse() {
+    const reversed = this.sequence.slice().reverse();
+    return new ScriptSequence(reversed);
+  }
+
+  reverseSequenceAndActions() {
     const reversed = this.sequence
+      .slice()
       .reverse()
       .map((a) => new Action(a).reverse());
     return new ScriptSequence(reversed);

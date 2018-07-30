@@ -29,183 +29,183 @@ import ScriptSequence from '/client/lib/drill/ScriptSequence';
 // }
 
 class ScriptBuilder {
+  static insertActionAtCount(member, action, count) {
+    // insert the action (push existing to the right)
+    member.script.splice(count - 1, 0, action);
+    return true;
+  }
 
-    static insertActionAtCount(member, action, count) {
-        // insert the action (push existing to the right)
-        member.script.splice(count - 1, 0, action);
-        return true;
+  static addActionAtCount(member, action, count) {
+    // overwrites action at count
+    // TODO: ensure action has deltas?
+
+    // don't need to add if member is already in that state
+    let state = MemberPositionCalculator.getStateAtCount(member, count);
+    if (
+      action.stepType != StepType.Halt &&
+      action.stepType != StepType.MarkTime &&
+      MemberPositionCalculator.areStatesSame(state, action)
+    ) {
+      return;
     }
 
-    static addActionAtCount(member, action, count) {
-        // overwrites action at count
-        // TODO: ensure action has deltas?
+    member.script[count - 1] = action;
+    return true;
+  }
 
-        // don't need to add if member is already in that state
-        let state = MemberPositionCalculator.getStateAtCount(member, count);
-        if (action.stepType != StepType.Halt
-            && action.stepType != StepType.MarkTime
-            && MemberPositionCalculator.areStatesSame(state, action)) {
-            return;
-        }
+  static addActionAtPoint(member, action, stepPoint) {
+    // some way to check whether steppoint is in  current path?
+    // calc slope between current and given? ensure that slope is correct for current dir?
+    // problem: member may not currently be facing that dir, but eventually will
+    // var lineDir = Direction.getLineDirection({ x: member.currentState.x, y: member.currentState.y }, stepPoint );
+    // as a temporary solution, calc a rough number of steps and use that as limit?
+    let limit = 100; // (Math.abs(member.currentState.x - stepPoint.x) || Math.abs(member.currentState.y - stepPoint.y)) + 2;
 
-        member.script[count - 1] = action;
-        return true;
+    // advance member until at that point (failsafe to prevent infinite loop?)
+    //  then add action
+    let pos = member.currentState;
+    let arePointsEqual = false;
+    let stepCount = 0;
+    while (stepCount < limit && !arePointsEqual) {
+      arePointsEqual = FieldPoint.arePointsEqual(
+        {
+          x: pos.x,
+          y: pos.y,
+        },
+        stepPoint
+      );
+      pos = MemberPositionCalculator.stepForward(member, pos);
+      stepCount++;
     }
 
-    static addActionAtPoint(member, action, stepPoint) {
-        // some way to check whether steppoint is in  current path?
-            // calc slope between current and given? ensure that slope is correct for current dir?
-            // problem: member may not currently be facing that dir, but eventually will
-        // var lineDir = Direction.getLineDirection({ x: member.currentState.x, y: member.currentState.y }, stepPoint );
-        // as a temporary solution, calc a rough number of steps and use that as limit?
-        let limit = 100; // (Math.abs(member.currentState.x - stepPoint.x) || Math.abs(member.currentState.y - stepPoint.y)) + 2;
+    if (arePointsEqual) {
+      return this.addActionAtCount(
+        member,
+        action,
+        member.currentState.count + stepCount
+      );
+    }
+    console.log('addActionAtPoint failed');
+    return false;
+  }
 
-        // advance member until at that point (failsafe to prevent infinite loop?)
-        //  then add action
-        let pos = member.currentState;
-        let arePointsEqual = false;
-        let stepCount = 0;
-        while (stepCount < limit && !arePointsEqual) {
-            arePointsEqual = FieldPoint.arePointsEqual({
-                x: pos.x,
-                y: pos.y,
-            }, stepPoint);
-            pos = MemberPositionCalculator.stepForward(member, pos);
-            stepCount++;
-        }
+  static insertSequence(member, sequence, count) {
+    // overwrite current script with sequence
+    // if undefined, leave original, otherwise replace
+    sequence.forEach((a, i) => {
+      let index = count - 1 + i;
+      if (a !== undefined) {
+        member.script[index] = a;
+      }
+    });
+    // member.script.splice(count - 1, sequence.length, ...sequence);
+  }
 
-        if (arePointsEqual) {
-            return this.addActionAtCount(member,
-                                        action,
-                                        member.currentState.count + stepCount);
-        }
-        console.log('addActionAtPoint failed');
-        return false;
+  static deleteActionAtCount(member, count) {
+    member.script[count - 1] = null;
+  }
+
+  static clearCount(member, count) {
+    member.script[count - 1] = null;
+  }
+
+  static deleteCount(member, count) {
+    // delete count and shift following counts to the left
+    member.script.splice(count - 1, 1);
+  }
+
+  static deleteForward(member, count) {
+    if (count >= member.script.length) {
+      return;
     }
 
-    static insertSequence(member, sequence, count) {
-        // overwrite current script with sequence
-        // if undefined, leave original, otherwise replace
-        sequence.forEach((a, i) => {
-            let index = count - 1 + i;
-            if (a !== undefined) {
-                member.script[index] = a;
-            }
-        });
-        // member.script.splice(count - 1, sequence.length, ...sequence);
+    for (let i = count; i < member.script.length; i++) {
+      member.script[i] = null;
+    }
+  }
+
+  static deleteBackspace(member, count) {
+    if (count >= member.script.length) {
+      return;
     }
 
-    static deleteActionAtCount(member, count) {
-        member.script[count - 1] = null;
+    member.script[count] = null;
+  }
+
+  static getActionAtCount(member, count) {
+    let i = count - 1;
+    let action = member.script[i];
+    while (!action && i >= 0) {
+      i--;
+      action = member.script[i];
+    }
+    if (!action) {
+      return member.initialState;
+    }
+    return action;
+    //        return member.script[count - 1];
+  }
+
+  static getReverseAction(action) {
+    if (!action) {
+      return action;
     }
 
-    static clearCount(member, count) {
-        member.script[count - 1] = null;
+    return new Action(action).reverse();
+  }
+
+  static addReverseAction(member, countToReverse, countToAdd) {
+    // gets the action at count
+    // const a = new Action(member.currentState);
+    const a = this.getActionAtCount(member, countToReverse);
+    // reverses it
+    const r = this.getReverseAction(a);
+    // adds the reversed action at count + 1 (remember, index of count is count - 1,
+    // so count + 1 is at index count)
+    member.script[countToAdd] = r;
+  }
+
+  // deprecate above?  do this but for 1 count, skip 0?
+  static addReverseCounts(member, count, counts, skip) {
+    // use MemberPosCalc to step thru counts backward
+    // at each count, get state
+    // reverse it
+    const newSeq = new ScriptSequence();
+    // const totalCounts = counts + skip;
+    const startCount = count - skip;
+    for (let i = startCount; i >= startCount - counts; i--) {
+      const state = MemberPositionCalculator.getStateAtCount(member, i);
+      newSeq.addStep(this.getReverseAction(state));
     }
+    this.insertSequence(member, newSeq.getSequence(), count + 1);
+  }
 
-    static deleteCount(member, count) {
-        // delete count and shift following counts to the left
-        member.script.splice(count - 1, 1);
+  static fromShorthand(script) {
+    // expect something like 'E E E E E E S S S S S S'
+
+    let dirs = script.split(' ');
+    let action = {};
+    let newScript = [];
+    for (let i = 0; i < dirs.length; i++) {
+      let dir = Direction[dirs[i]];
+      if (action.direction !== dir) {
+        let delta = StepDelta.getDelta(
+          StrideType.SixToFive,
+          StepType.Full,
+          dir
+        );
+        action = {
+          direction: dir,
+          strideType: StrideType.SixToFive,
+          stepType: StepType.Full,
+          deltaX: delta.deltaX,
+          deltaY: delta.deltaY,
+        };
+        newScript[i] = action;
+      }
     }
-
-    static deleteForward(member, count) {
-        if (count >= member.script.length) {
-            return;
-        }
-
-        for (let i = count; i < member.script.length; i++) {
-            member.script[i] = null;
-        }
-    }
-
-    static deleteBackspace(member, count) {
-        if (count >= member.script.length) {
-            return;
-        }
-
-        member.script[count] = null;
-    }
-
-    static getActionAtCount(member, count) {
-        let i = count - 1;
-        let action = member.script[i];
-        while (!action && i >= 0) {
-            i--;
-            action = member.script[i];
-        }
-        if (!action) {
-            return member.initialState;
-        }
-        return action;
-//        return member.script[count - 1];
-    }
-
-    static getReverseAction(action) {
-        if (!action) {
-            return action;
-        }
-
-        return new Action(action).reverse();
-        // return new Action({
-        //     strideType: action.strideType,
-        //     stepType: action.stepType,
-        //     direction: Direction.rotate180(action.direction),
-        //     deltaX: action.deltaX * -1,
-        //     deltaY: action.deltaY * -1,
-        // });
-    }
-
-    static addReverseAction(member, countToReverse, countToAdd) {
-        // gets the action at count
-        // const a = new Action(member.currentState);
-        const a = this.getActionAtCount(member, countToReverse);
-        // reverses it
-        const r = this.getReverseAction(a);
-        // adds the reversed action at count + 1 (remember, index of count is count - 1,
-        // so count + 1 is at index count)
-        member.script[countToAdd] = r;
-    }
-
-    // deprecate above?  do this but for 1 count, skip 0?
-    static addReverseCounts(member, count, counts, skip) {
-        // use MemberPosCalc to step thru counts backward
-        // at each count, get state
-        // reverse it
-        const newSeq = new ScriptSequence();
-        // const totalCounts = counts + skip;
-        const startCount = count - skip;
-        for (let i = startCount; i >= startCount - counts; i--) {
-            const state = MemberPositionCalculator.getStateAtCount(member, i);
-            newSeq.addStep(this.getReverseAction(state));
-        }
-        this.insertSequence(member, newSeq.getSequence(), count + 1);
-    }
-
-    static fromShorthand(script) {
-        // expect something like 'E E E E E E S S S S S S'
-
-        let dirs = script.split(' ');
-        let action = {};
-        let newScript = [];
-        for (let i = 0; i < dirs.length; i++) {
-            let dir = Direction[dirs[i]];
-            if (action.direction !== dir) {
-                let delta = StepDelta.getDelta(StrideType.SixToFive,
-                                                StepType.Full,
-                                                dir);
-                action = {
-                    direction: dir,
-                    strideType: StrideType.SixToFive,
-                    stepType: StepType.Full,
-                    deltaX: delta.deltaX,
-                    deltaY: delta.deltaY,
-                };
-                newScript[i] = action;
-            }
-        }
-        return newScript;
-    }
-
+    return newScript;
+  }
 }
 
 export default ScriptBuilder;

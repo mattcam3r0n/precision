@@ -1,0 +1,57 @@
+<div draggable class="squirrel-cage-tool panel panel-default" ng-show="$ctrl.isActivated">
+    <div class="panel-heading text-center drag-handle">
+        <i class="fa fa-bars fa-sm drag-handle"></i> Squirrel Cage
+    </div>
+    <div id="dragStepTool" class="">
+        <ul>
+            <li class="description">
+                <p>Add a Squirrel Cage maneuver at the current count.</p>
+            </li>
+            <li>
+                <span>Direction</span>
+                <button ng-click="$ctrl.setClockwise(false)" id="" ng-class="{ 'active': !$ctrl.clockwise }" class="btn btn-default" data-toggle="tooltip"
+                    data-placement="bottom" title="Counter clockwise">
+                    <img src='/icons/counter-clockwise.svg' />
+                </button>
+                <button ng-click="$ctrl.setClockwise(true)" ng-class="{ 'active': $ctrl.clockwise }" class="btn btn-default" data-toggle="tooltip"
+                    data-placement="bottom" title="Clockwise">
+                    <img src='/icons/clockwise.svg' />
+                </button>
+            </li>
+            <li>
+                <span>Alternate Direction</span>
+                <button ng-click="$ctrl.setAlternateDirection(true)" id="" ng-class="{ 'active': $ctrl.alternateDirection }" class="btn btn-default"
+                    data-toggle="tooltip" data-placement="bottom" title="Alternate Direction">
+                    On
+                </button>
+                <button ng-click="$ctrl.setAlternateDirection(false)" ng-class="{ 'active': !$ctrl.alternateDirection }" class="btn btn-default"
+                    data-toggle="tooltip" data-placement="bottom" title="Do Not Alternate">
+                    Off
+                </button>
+            </li>
+            <li>
+                <span>Counts</span>
+                <div class="input-group counts">
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setCounts($ctrl.counts - 1)" class="btn btn-default" type="button">-</button>
+                    </span>
+                    <input ng-model="$ctrl.counts" ng-change="$ctrl.setCounts()" type="number" class="form-control" />
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.setCounts($ctrl.counts + 1)" class="btn btn-default" type="button">+</button>
+                    </span>
+                </div>
+            </li>
+            <li>
+                <button ng-click="save()" id="saveSquirrelCage" class="btn btn-default save-button" data-toggle="tooltip" data-placement="right"
+                    title="Save">
+                    <i class="fa fa-check context-button"></i>
+                </button>
+                <button ng-click="cancel()" id="cancelSquirrelCage" class="btn btn-default cancel-button" data-toggle="tooltip" data-placement="right"
+                    title="Cancel">
+                    <i class="fa fa-times context-button"></i>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+</div>

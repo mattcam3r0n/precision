@@ -150,6 +150,7 @@ describe('SquirrelCage', function() {
     });
 
     describe('getAction', function() {
+      // TODO: add test for canRotate false / MT
       const corners = {
         upperLeft: { x: 0, y: 0 },
         upperRight: { x: 60, y: 0 },
@@ -225,6 +226,7 @@ describe('SquirrelCage', function() {
           24,
           false
         );
+    console.log(seq);
         it('should have 24 counts', function() {
           expect(seq.length).to.equal(24);
         });

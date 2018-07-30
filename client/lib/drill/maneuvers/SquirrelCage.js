@@ -34,7 +34,7 @@ export default class SquirrelCage {
         options.alternateRingDirection && i % 2 > 0
           ? !options.clockwise
           : options.clockwise;
-
+      console.log('ring', ring, shouldRotateClockwise);
       const ringScripts = this.generateRingSequences(
         ring,
         shouldRotateClockwise,
@@ -52,22 +52,32 @@ export default class SquirrelCage {
         member.currentState,
         ring.corners,
         counts,
-        clockwise
+        clockwise,
+        ring.canRotate
       );
     });
-    // reverse script?
-    // add 180 to each dir in script
     return scripts;
   }
 
-  generateMemberSequence(currentState, corners, counts, clockwise = true) {
+  generateMemberSequence(
+    currentState,
+    corners,
+    counts,
+    clockwise = true,
+    canRotate = true
+  ) {
     const script = new ScriptSequence();
     for (let count = 0; count < counts; count++) {
-      const action = this.getAction(currentState, corners);
+      const action = this.getAction(
+        currentState,
+        corners,
+        clockwise,
+        canRotate
+      );
       script.addStep(action);
       currentState = MemberPositionCalculator.doAction(currentState, action);
     }
-    return clockwise ? script : script.reverse();
+    return script;
   }
 
   /**
@@ -75,53 +85,82 @@ export default class SquirrelCage {
    * a clockwise rotation.
    * @param {Object} memberState
    * @param {Object} corners
+   * @param {boolean} clockwise
+   * @param {boolean} canRotate
    * @return {Object} action
    */
-  getAction(memberState, corners) {
-    if (this.isOnTopSide(memberState, corners)) {
+  getAction(memberState, corners, clockwise = true, canRotate = true) {
+    if (!canRotate) {
       return new Action({
-        direction: Direction.E,
+        direction: memberState.direction,
+        stepType: StepType.MarkTime,
+        strideType: memberState.strideType,
+      });
+    }
+    if (this.isOnTopSide(memberState, corners, clockwise)) {
+      return new Action({
+        direction: clockwise ? Direction.E : Direction.W,
         stepType: StepType.Full,
         strideType: memberState.strideType,
       });
     }
-    if (this.isOnRightSide(memberState, corners)) {
+    if (this.isOnRightSide(memberState, corners, clockwise)) {
       return new Action({
-        direction: Direction.S,
+        direction: clockwise ? Direction.S : Direction.N,
         stepType: StepType.Full,
         strideType: memberState.strideType,
       });
     }
-    if (this.isOnBottomSide(memberState, corners)) {
+    if (this.isOnBottomSide(memberState, corners, clockwise)) {
       return new Action({
-        direction: Direction.W,
+        direction: clockwise ? Direction.W : Direction.E,
         stepType: StepType.Full,
         strideType: memberState.strideType,
       });
     }
-    if (this.isOnLeftSide(memberState, corners)) {
+    if (this.isOnLeftSide(memberState, corners, clockwise)) {
       return new Action({
-        direction: Direction.N,
+        direction: clockwise ? Direction.N : Direction.S,
         stepType: StepType.Full,
         strideType: memberState.strideType,
       });
     }
   }
 
-  isOnTopSide(point, corners) {
-    return point.y === corners.upperLeft.y && point.x < corners.upperRight.x;
+  isOnTopSide(point, corners, clockwise = true) {
+    return (
+      point.y === corners.upperLeft.y &&
+      (clockwise
+        ? point.x < corners.upperRight.x
+        : point.x > corners.upperLeft.x)
+    );
   }
 
-  isOnBottomSide(point, corners) {
-    return point.y === corners.bottomLeft.y && point.x > corners.bottomLeft.x;
+  isOnBottomSide(point, corners, clockwise = true) {
+    return (
+      point.y === corners.bottomLeft.y &&
+      (clockwise
+        ? point.x > corners.bottomLeft.x
+        : point.x < corners.bottomRight.x)
+    );
   }
 
-  isOnRightSide(point, corners) {
-    return point.x === corners.upperRight.x && point.y < corners.bottomRight.y;
+  isOnRightSide(point, corners, clockwise = true) {
+    return (
+      point.x === corners.upperRight.x &&
+      (clockwise
+        ? point.y < corners.bottomRight.y
+        : point.y > corners.upperRight.y)
+    );
   }
 
-  isOnLeftSide(point, corners) {
-    return point.x === corners.upperLeft.x && point.y > corners.upperLeft.y;
+  isOnLeftSide(point, corners, clockwise = true) {
+    return (
+      point.x === corners.upperLeft.x &&
+      (clockwise
+        ? point.y > corners.upperLeft.y
+        : point.y < corners.bottomLeft.y)
+    );
   }
 
   getRings(members) {
@@ -145,7 +184,7 @@ export default class SquirrelCage {
     };
     return {
       corners,
-      canRotate: pm.distinctXs.length > 1 || pm.distinctYs.length > 1,
+      canRotate: pm.distinctXs.length > 1 && pm.distinctYs.length > 1,
       members: members.filter((m) => {
         const { x, y } = m.currentState;
         return (
