@@ -1,14 +1,25 @@
-#### Version 0.3.6
+#### Version 0.3.6 - 7/30/18
 
-**NEW**: Added a new **Step-Two** maneuver to make it easier add delayed step offs.
+**NEW**: The **Step-Two** maneuver makes it easier add delayed step offs.
+<img src="./step-two.png" width="75%" />
+
 * The band can start from a Halt or from Mark-Time.
 * Files can be delayed by a given number of counts (defaults to 2), and the delay can start from the left or right guide.
 * Ranks can also be delayed starting from the front or back rank.
 
-**NEW**: Added a new **Waterfall** maneuver.
+**NEW**: **Waterfall** maneuver
+
+<img src="./waterfall.png" width="60%" />
+
 * The file delay is configurable.  Defaults to 6 counts.
 * The "depth" of the waterfall - how far each file proceeds after the initial turn - is configurable.  Defaults to 6 counts.
 * The maneuver can be repeated a specified number of times.
+
+
+**NEW**: **Squirrel Cage** maneuver.  Each "ring" in the selected block will rotate around the block for a given number of counts.
+<img src="./squirrel-cage.png" width="75%" />
+* Clockwise or counter-clockwise rotation
+* Alternate the direction of each "ring"
 
 **FIX**: Sped up searches in the Open Drill dialog. Frequent searches were also putting too much load on the database.
 
