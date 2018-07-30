@@ -34,7 +34,6 @@ export default class SquirrelCage {
         options.alternateRingDirection && i % 2 > 0
           ? !options.clockwise
           : options.clockwise;
-      console.log('ring', ring, shouldRotateClockwise);
       const ringScripts = this.generateRingSequences(
         ring,
         shouldRotateClockwise,
