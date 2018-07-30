@@ -156,7 +156,7 @@ class FileSelector {
   }
 
   getFollowing(m) {
-    for (let i = 2; i <= 6; i += 2) {
+    for (let i = 2; i <= 8; i += 2) {
       let pos = MemberPositionCalculator.stepForward(m, m.currentState, i);
       let following = this.positionMap.getMemberAtPosition(pos.x, pos.y);
       if (following) {
