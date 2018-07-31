@@ -111,13 +111,15 @@ class Timeline {
     let topLabel = count;
     if (this.drillSchedule && this.drillSchedule.steps[count - 1]) {
       const timeInSeconds = this.drillSchedule.steps[count - 1].time;
-      const time = new Date(null);
-      time.setMilliseconds(timeInSeconds * 1000);
-      topLabel = time.toISOString().substring(14, 21);
+      topLabel = this.formatTime(timeInSeconds);
     }
-    // return count + (topLabel ? ' (' + topLabel + ')' : '');
     return this.topAxis ? topLabel : count;
-    // return new Date(date).getTime();
+  }
+
+  formatTime(timeInSeconds) {
+    const time = new Date(null);
+    time.setMilliseconds(timeInSeconds * 1000);
+    return time.toISOString().substring(14, 21);
   }
 
   goToBeginning() {

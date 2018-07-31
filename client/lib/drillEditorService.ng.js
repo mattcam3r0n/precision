@@ -35,11 +35,10 @@ class DrillEditorService {
     this.drill = d;
     this.drillPlayer = new DrillPlayer(this.drill, this.eventService);
     this.drillBuilder = new DrillBuilder(this.drill);
-
     this.goToBeginning();
     this.deselectAll();
     this.showAll();
-
+    this.updateDrillSchedule();
     this.notifyDrillStateChanged();
   }
 
@@ -58,6 +57,7 @@ class DrillEditorService {
     if (this.drillPlayer) {
       this.drillPlayer.setTempo(tempo);
     }
+    this.updateDrillSchedule();
   }
 
   get currentCount() {
@@ -656,7 +656,7 @@ class DrillEditorService {
 
   save(forceSave) {
     if (!forceSave && !this.drill.isDirty) return;
-
+    this.updateDrillSchedule();
     // throttle saves
     if (this.saveTimeout) {
       this.$timeout.cancel(this.saveTimeout);
@@ -872,7 +872,11 @@ class DrillEditorService {
     squirrelCage.generate();
   }
 
-  getDrillSchedule() {
+  updateDrillSchedule() {
+    this.drillSchedule = this.calculateDrillSchedule();
+  }
+
+  calculateDrillSchedule() {
     if (!this.drill) {
       return null;
     }
@@ -882,6 +886,24 @@ class DrillEditorService {
     return new DrillScheduler().createSchedule(clone);
   }
 
+  getDrillSchedule() {
+    return this.drillSchedule;
+  }
+
+  getDrillLengthInCounts() {
+    if (!this.drillSchedule || !this.drillSchedule.steps) {
+      return 0;
+    }
+    return this.drillSchedule.steps.length;
+  }
+
+  getDrillLengthInSeconds() {
+    if (!this.drillSchedule || !this.drillSchedule.steps) {
+      return 0;
+    }
+    return this.drillSchedule.steps[this.drillSchedule.steps.length - 1].time;
+  }
+
   blurActiveElement() {
     if (document.activeElement) {
       document.activeElement.blur();
@@ -889,6 +911,10 @@ class DrillEditorService {
   }
 
   // Events
+
+  notifyDrillUpdated() {
+    this.eventService.notify(Events.drillUpdated);
+  }
 
   notifyDrillStateChanged() {
     // TODO: is memberselection needed for this event? doesn't seem to be used anywhere?

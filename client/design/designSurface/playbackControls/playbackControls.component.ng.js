@@ -49,7 +49,10 @@ angular.module('drillApp').component('playbackControls', {
 
       ctrl.subscriptions.subscribe(Events.drillStateChanged, (evt, args) => {
         ctrl.currentCount = drillEditorService.currentCount;
+        ctrl.updateDrillLength();
       });
+
+      ctrl.subscriptions.subscribe(Events.drillUpdated, (evt, args) => {});
     };
 
     ctrl.$onDestroy = function() {
@@ -155,7 +158,15 @@ angular.module('drillApp').component('playbackControls', {
       $scope.tempo = Number(tempo);
       drillEditorService.setTempo($scope.tempo);
       eventService.notify(Events.tempoChanged);
+      ctrl.updateDrillLength();
       // blurActiveElement();
+    };
+
+    ctrl.updateDrillLength = function() {
+      ctrl.drillLength =
+      formatTime(drillEditorService.getDrillLengthInSeconds()) +
+      '   ' +
+      drillEditorService.getDrillLengthInCounts();
     };
 
     // ctrl.pageForward = function() {
@@ -173,6 +184,12 @@ angular.module('drillApp').component('playbackControls', {
       if (document.activeElement) {
         document.activeElement.blur();
       }
+    }
+
+    function formatTime(timeInSeconds) {
+      const time = new Date(null);
+      time.setMilliseconds(timeInSeconds * 1000);
+      return time.toISOString().substring(14, 19);
     }
   },
 });

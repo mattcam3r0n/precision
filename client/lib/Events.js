@@ -217,6 +217,10 @@ class Events {
     return 'drillStateChanged';
   }
 
+  static get drillUpdated() {
+    return 'drillUpdated';
+  }
+
   static get addStepsToolActivated() {
     return 'addStepsToolActivated';
   }
