@@ -22,8 +22,8 @@ angular.module('drillApp').component('playbackControls', {
 
     $scope.tempo = 120;
     $scope.$watch('tempo', function() {
-      drillEditorService.setTempo($scope.tempo);
-      eventService.notify(Events.tempoChanged);
+      // drillEditorService.setTempo($scope.tempo);
+      // eventService.notify(Events.tempoChanged);
     });
 
     ctrl.$onInit = function() {
@@ -152,8 +152,10 @@ angular.module('drillApp').component('playbackControls', {
     };
 
     ctrl.setTempo = function(tempo) {
-      $scope.tempo = tempo;
-      blurActiveElement();
+      $scope.tempo = Number(tempo);
+      drillEditorService.setTempo($scope.tempo);
+      eventService.notify(Events.tempoChanged);
+      // blurActiveElement();
     };
 
     // ctrl.pageForward = function() {
