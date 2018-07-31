@@ -11,7 +11,6 @@ angular.module('drillApp')
     * if reset token is present in url, show change password form
   */
   $scope.changePassword = () => {
-    console.log($scope.currentPassword, $scope.newPassword);
       userService
         .changePassword($scope.currentPassword, $scope.newPassword)
         .then(() => {

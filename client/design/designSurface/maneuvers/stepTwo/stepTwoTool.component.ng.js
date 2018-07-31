@@ -36,7 +36,6 @@ angular.module('drillApp').component('stepTwoTool', {
 
     ctrl.setInitialState = (state) => {
       ctrl.initialState = state;
-      console.log('setInitialState', state, ctrl.initialState);
       utilService.blurActiveElement();
     };
 

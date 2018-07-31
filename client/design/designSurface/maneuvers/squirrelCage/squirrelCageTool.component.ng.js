@@ -68,7 +68,6 @@ angular.module('drillApp').component('squirrelCageTool', {
     $scope.cancel = deactivate;
 
     function activate(memberSelection) {
-      console.log('activate');
       if (ctrl.isActivated) {
         deactivate();
       }
@@ -117,7 +116,6 @@ angular.module('drillApp').component('squirrelCageTool', {
     }
 
     function save() {
-      console.log('save');
       drillEditorService.squirrelCage(getOptions());
 
       deactivate();

@@ -57,7 +57,6 @@ angular.module('drillApp').component('openDrillDialog', {
     });
 
     $scope.setSearchText = _.debounce(() => {
-      console.log('debounced setSearchText', $scope.searchText);
       $scope.searchOptions.searchText = $scope.searchText;
       $rootScope.$safeApply();
     }, 500, false);

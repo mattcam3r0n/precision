@@ -198,7 +198,7 @@ Released v0.3.4
 * FIX: Playback in the middle of a split audio track started on wrong beat.
 * FIX: To-the-rears window now remembers previous settings.
 
-Released v0.3.5
+^ Released v0.3.5
 
 * FIX: Speed up search box in Open Drill dialog.
 * FIX: File indicators were sometimes incorrect when at beginning of drill.
@@ -207,7 +207,8 @@ Released v0.3.5
 * NEW: Waterfall maneuver
 * NEW: Squirrel Cage maneuver
 
-Released v0.3.6
+^ Released v0.3.6
 
 * FIX: Detect files when ranks are spaced up to 8 steps apart.  Previously only allowed up to 6 steps between leader and follower.
-* 
+* NEW: The length of the drill in minutes & seconds is shown in the button bar above the timeline.  It also shows the length in counts.
+* NEW: The timeline now shows time of each count in minutes & seconds (mm:ss) on the top.  It continues to show the count on the bottom.

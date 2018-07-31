@@ -15,7 +15,6 @@ angular.module('drillApp').component('spinnerBox', {
     };
 
     ctrl.$onChanges = function() {
-      console.log('spinbox onChanges');
     };
 
     ctrl.$onDestroy = function() {

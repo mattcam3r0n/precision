@@ -226,7 +226,6 @@ describe('SquirrelCage', function() {
           24,
           false
         );
-    console.log(seq);
         it('should have 24 counts', function() {
           expect(seq.length).to.equal(24);
         });

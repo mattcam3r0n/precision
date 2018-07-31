@@ -31,7 +31,6 @@ angular
     ctrl.setActiveTool = function(toolName) {
       appStateService.setActiveTool(toolName, () => {
         ctrl.deactivate(false);
-        console.log(toolName + ' deactivated');
       });
     };
 

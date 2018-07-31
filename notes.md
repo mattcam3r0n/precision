@@ -52,7 +52,6 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
-* calc drill len and show on status bar
 * fast break tool
 * rolling parallelogram tool
 * diamond step two tool? (or alternating option step two?)
@@ -61,6 +60,20 @@ TODO
 * assign band members
   * load csv?
   * hover to see member info?
+* read-only link to share drills
+* insert mode
+    * switch to flip between insert/overwrite mode
+* selection tool
+    * switch between block / file /individual mode?
+* file selection tool
+    * user can define unusual files
+* turn editing 
+    * similar to path tool
 * select file/rank/diagonal
     * hover or right click member, then select f/r/d
-* 
+* analytics
+* drill format optimization
+    * use a dictionary based approach for script, so it serializes more compactly?
+    * test this to see what kind of diff it makes
+    * or, use protobuf?
+* 8/5... ugh
