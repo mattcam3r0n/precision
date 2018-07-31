@@ -66,11 +66,11 @@
         <div class="btn-group btn-group-sm" role="group">
             <div id="tempoGroup" class="input-group input-group-sm" data-toggle="tooltip" data-placement="bottom" title="Default Tempo">
                 <span class="input-group-btn">
-                    <button id="tempoMinus" ng-click="tempo = tempo - 1" class="btn btn-default" type="button">-</button>
+                    <button id="tempoMinus" ng-click="$ctrl.setTempo(tempo - 1)" class="btn btn-default" type="button">-</button>
                 </span>
                 <input id="tempo" type="text" class="form-control" aria-label="Tempo" ng-model="tempo">
                 <span class="input-group-btn">
-                    <button id="tempoPlus" ng-click="tempo = tempo + 1" class="btn btn-default" type="button">+</button>
+                    <button id="tempoPlus" ng-click="$ctrl.setTempo(tempo + 1)" class="btn btn-default" type="button">+</button>
                 </span>
             </div>
         </div>

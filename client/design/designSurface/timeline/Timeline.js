@@ -11,6 +11,12 @@ class Timeline {
       music: this.musicItemTemplate.bind(this),
       bookmarks: this.bookmarkItemTemplate.bind(this),
     };
+
+    // the following are a hack used by the minorTickLabels func to
+    // keep track of the top/bottom axis on timeline
+    this.tick = 0;
+    this.topAxis = true;
+
     this.initTimeline();
   }
 
@@ -18,12 +24,12 @@ class Timeline {
     let container = document.getElementById(this.containerId);
 
     let options = {
-      height: '85px',
+      height: '95px',
       // zoomMin: 1000,                    // 1 second
       // zoomMax: 1000 * 60 * 60 * 24,     // 1 day
       verticalScroll: true,
       orientation: {
-        axis: 'bottom',
+        axis: 'both',
       },
       stack: false,
       editable: {
@@ -37,7 +43,7 @@ class Timeline {
         item: 5,
       },
       showMajorLabels: false,
-      maxMinorChars: 4,
+      maxMinorChars: 7,
       // timeAxis: {
       //     scale: 'millisecond',
       //     step: 4
@@ -49,9 +55,7 @@ class Timeline {
       zoomMin: 20,
       zoomMax: 1000,
       format: {
-        minorLabels: function(date, scale, step) {
-          return new Date(date).getTime();
-        },
+        minorLabels: this.axisLabelFormatter.bind(this),
       },
       onMove: this.onMove.bind(this),
       onRemove: this.onRemove.bind(this),
@@ -94,6 +98,28 @@ class Timeline {
     );
   }
 
+  axisLabelFormatter(date, scale, step) {
+    // console.log(new Date(date).getTime(), tick, scale, step);
+    const count = new Date(date).getTime();
+    if (this.tick < count) {
+      this.tick = count;
+    } else {
+      // flip to other axis
+      this.topAxis = !this.topAxis;
+      this.tick = 0;
+    }
+    let topLabel = count;
+    if (this.drillSchedule && this.drillSchedule.steps[count - 1]) {
+      const timeInSeconds = this.drillSchedule.steps[count - 1].time;
+      const time = new Date(null);
+      time.setMilliseconds(timeInSeconds * 1000);
+      topLabel = time.toISOString().substring(14, 21);
+    }
+    // return count + (topLabel ? ' (' + topLabel + ')' : '');
+    return this.topAxis ? topLabel : count;
+    // return new Date(date).getTime();
+  }
+
   goToBeginning() {
     this.timeline.moveTo(new Date(1));
   }
@@ -130,6 +156,10 @@ class Timeline {
   }
 
   setCurrentCount(count) {
+    // reset axis-related variables
+    this.topAxis = true;
+    this.tick = count; // must set to count we're moving to in order to prevent flip/flopping
+
     this.timeline.setCustomTime(new Date(count), this.currentCountBar);
   }
 
@@ -159,6 +189,11 @@ class Timeline {
       start: range.start.valueOf() - interval * percentage,
       end: range.end.valueOf() - interval * percentage,
     });
+  }
+
+  setDrillSchedule(schedule) {
+    this.drillSchedule = schedule;
+    this.timeline.redraw();
   }
 
   setItems(data) {

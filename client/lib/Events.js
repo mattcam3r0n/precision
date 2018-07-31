@@ -149,6 +149,10 @@ class Events {
 
   // Events - notification that something has happened
 
+  static get tempoChanged() {
+    return 'tempoChanged';
+  }
+
   static get bookmarkChanged() {
     return 'bookmarkChanged';
   }

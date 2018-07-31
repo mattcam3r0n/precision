@@ -28,6 +28,7 @@ angular.module('drillApp')
           onMusicChanged);
         ctrl.subscriptions.subscribe(Events.bookmarkChanged,
           onBookmarkChanged);
+        ctrl.subscriptions.subscribe(Events.tempoChanged, onTempoChanged);
         $('[data-toggle="tooltip"]').tooltip();
       };
 
@@ -39,10 +40,11 @@ angular.module('drillApp')
         // if the drill changed, update field
         if (!ctrl.drill) return;
 //        ctrl.timeline.setMusicItems(ctrl.drill.music);
-        ctrl.timeline.setItems({
-          music: ctrl.drill.music,
-          bookmarks: ctrl.drill.bookmarks,
-        });
+        // ctrl.timeline.setItems({
+        //   music: ctrl.drill.music,
+        //   bookmarks: ctrl.drill.bookmarks,
+        // });
+        setItems();
         ctrl.timeline.setCurrentCount(0);
       };
 
@@ -89,10 +91,16 @@ angular.module('drillApp')
       };
 
       function setItems() {
+        updateDrillSchedule();
         ctrl.timeline.setItems({
           music: ctrl.drill.music,
           bookmarks: ctrl.drill.bookmarks,
         });
+      }
+
+      function updateDrillSchedule() {
+        const schedule = drillEditorService.getDrillSchedule();
+        ctrl.timeline.setDrillSchedule(schedule);
       }
 
       function onAudioClipAdded(evt, args) {
@@ -115,6 +123,7 @@ angular.module('drillApp')
         let i = ctrl.drill.music.indexOf(item.music);
         ctrl.drill.music.splice(i, 1);
         drillEditorService.save(true);
+        setItems();
         return true; // continue removal. return false to cancel.
       }
 
@@ -151,6 +160,10 @@ angular.module('drillApp')
 
       function onBookmarkChanged(evt, args) {
         setItems();
+      }
+
+      function onTempoChanged(evt, args) {
+        updateDrillSchedule();
       }
 
       function onMusicChanged(args) {

@@ -145,6 +145,21 @@ class DrillPlayer {
         this.drill.count--;
     }
 
+    getCountsInDrill() {
+        // ugh... need a better way!!!!
+        // clone the drill
+        const clone = JSON.parse(JSON.stringify(this.drill));
+        // create a new player
+        const player = new DrillPlayer(clone);
+        // go to beginning
+        player.goToBeginning();
+        // step thru drill
+        while (!player.isEndOfDrill()) {
+            player.stepForward();
+        }
+        return clone.count;
+    }
+
     isBeginningOfDrill() {
         // true if all members are at 0;
         return this.drill

@@ -16,6 +16,7 @@ import TexasTurn from './drill/maneuvers/TexasTurn';
 import Column from './drill/maneuvers/Column';
 import Waterfall from './drill/maneuvers/Waterfall';
 import SquirrelCage from './drill/maneuvers/SquirrelCage';
+import DrillScheduler from './drill/DrillScheduler';
 
 class DrillEditorService {
   constructor(
@@ -869,6 +870,16 @@ class DrillEditorService {
       }
     );
     squirrelCage.generate();
+  }
+
+  getDrillSchedule() {
+    if (!this.drill) {
+      return null;
+    }
+    const clone = JSON.parse(JSON.stringify(this.drill));
+    const player = new DrillPlayer(clone);
+    player.goToBeginning();
+    return new DrillScheduler().createSchedule(clone);
   }
 
   blurActiveElement() {

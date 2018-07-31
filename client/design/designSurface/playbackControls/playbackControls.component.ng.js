@@ -23,6 +23,7 @@ angular.module('drillApp').component('playbackControls', {
     $scope.tempo = 120;
     $scope.$watch('tempo', function() {
       drillEditorService.setTempo($scope.tempo);
+      eventService.notify(Events.tempoChanged);
     });
 
     ctrl.$onInit = function() {
@@ -148,6 +149,11 @@ angular.module('drillApp').component('playbackControls', {
 
     ctrl.addPrintMark = function() {
       printService.pdfTest();
+    };
+
+    ctrl.setTempo = function(tempo) {
+      $scope.tempo = tempo;
+      blurActiveElement();
     };
 
     // ctrl.pageForward = function() {
