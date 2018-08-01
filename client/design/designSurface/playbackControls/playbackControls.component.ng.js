@@ -161,8 +161,9 @@ angular.module('drillApp').component('playbackControls', {
     ctrl.updateDrillLength = function() {
       ctrl.drillLength =
         formatTime(drillEditorService.getDrillLengthInSeconds()) +
-        '   ' +
-        drillEditorService.getDrillLengthInCounts();
+        ' mm:ss,  ' +
+        drillEditorService.getDrillLengthInCounts()
+        + ' counts';
     };
 
     // ctrl.pageForward = function() {
