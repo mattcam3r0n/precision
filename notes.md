@@ -59,7 +59,6 @@ TODO
 * starburst tool
 * reverse illinois? company fronts to block.  name?
 * override direction of block when adding maneuver? or via selection?
-* space bar to play/pause drill
 * maneuver preview... instead of footprints (or may in addition to), show "ghosts" where band will be in N counts.  Allow them to change N, recalc position.
     * alternatively, animate the ghosts through N counts
 * assign band members

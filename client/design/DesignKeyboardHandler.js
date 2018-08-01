@@ -10,6 +10,14 @@ class DesignKeyboardHandler {
 
     get handlers() {
         return {
+            ' ': (e) => {
+                if (this.drillEditorService.isPlaying()) {
+                    this.drillEditorService.stop();
+                } else {
+                    this.drillEditorService.play();
+                }
+            },
+
             'a': (e) => {
                 if (e.ctrlKey || e.metaKey) {
                     this.drillEditorService.selectAll();
@@ -143,7 +151,8 @@ class DesignKeyboardHandler {
     };
 
     handle(e) {
-        if (e.code == 'Space') return;
+//        console.log(e);
+//        if (e.code == 'Space') return;
         // disregard if keystroke is not on body (or canvas)
         if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
 
@@ -155,8 +164,6 @@ class DesignKeyboardHandler {
 
         // ignore keys we don't have a handler for
         if (!this.handlers[e.key]) return;
-
-        // console.log(e);
 
         // call key handler
         this.handlers[e.key](e);

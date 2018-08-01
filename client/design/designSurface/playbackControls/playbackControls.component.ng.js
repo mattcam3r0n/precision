@@ -1,6 +1,5 @@
 'use strict';
 
-import Audio from '/client/lib/audio/Audio';
 import Events from '/client/lib/Events';
 
 angular.module('drillApp').component('playbackControls', {
@@ -84,22 +83,19 @@ angular.module('drillApp').component('playbackControls', {
 
     ctrl.onPlay = function(playMusic) {
       // Audio.ensureAudioIsInitialized();
-      Audio.init().then(() => {
-        drillEditorService.play(
-          () => {
-            $rootScope.$safeApply();
-          },
-          0,
-          playMusic,
-          ctrl.isMetronomeEnabled
-        );
-        blurActiveElement();
-      });
+      drillEditorService.play(
+        () => {
+          $rootScope.$safeApply();
+        },
+        0,
+        playMusic,
+        ctrl.isMetronomeEnabled
+      );
+      blurActiveElement();
     };
 
     ctrl.onStop = function() {
       drillEditorService.stop();
-      Audio.stop();
       blurActiveElement();
     };
 
@@ -164,9 +160,9 @@ angular.module('drillApp').component('playbackControls', {
 
     ctrl.updateDrillLength = function() {
       ctrl.drillLength =
-      formatTime(drillEditorService.getDrillLengthInSeconds()) +
-      '   ' +
-      drillEditorService.getDrillLengthInCounts();
+        formatTime(drillEditorService.getDrillLengthInSeconds()) +
+        '   ' +
+        drillEditorService.getDrillLengthInCounts();
     };
 
     // ctrl.pageForward = function() {

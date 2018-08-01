@@ -59,11 +59,16 @@ class DrillPlayer {
     }
 
     loadMusic(playMusic) {
-        if (playMusic) {
+        if (this.hasMusic() && playMusic) {
             return Audio.load(this.schedule.music);
         };
 
         return Promise.resolve();
+    }
+
+    hasMusic() {
+        const { schedule } = this;
+        return schedule && schedule.music && schedule.music.length > 0;
     }
 
     startSpinner() {
@@ -81,10 +86,6 @@ class DrillPlayer {
     stop() {
         this.animationLoop.stop();
         this.isPlaying = false;
-    }
-
-    isPlaying() {
-        return this.isPlaying;
     }
 
     isPastStopCount() {

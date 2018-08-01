@@ -67,20 +67,27 @@ class DrillEditorService {
 
   // Playback
 
-  play(cb, playLength, playMusic, playMetronome) {
-    this.drillPlayer.play(
-      () => {
-        this.notifyDrillStateChanged();
-        if (cb) cb();
-      },
-      playLength,
-      playMusic,
-      playMetronome
-    );
+  play(cb, playLength = 0, playMusic = true, playMetronome = false) {
+    Audio.init().then(() => {
+      this.drillPlayer.play(
+        () => {
+          this.notifyDrillStateChanged();
+          if (cb) cb();
+        },
+        playLength,
+        playMusic,
+        playMetronome
+      );
+    });
   }
 
   stop() {
     this.drillPlayer.stop();
+    Audio.stop();
+  }
+
+  isPlaying() {
+    return this.drillPlayer.isPlaying;
   }
 
   goToBeginning() {
