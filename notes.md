@@ -64,6 +64,7 @@ TODO
 * assign band members
   * load csv?
   * hover to see member info?
+* better open dialog
 * read-only link to share drills
 * insert mode
     * switch to flip between insert/overwrite mode
