@@ -18,6 +18,7 @@ import Column from './drill/maneuvers/Column';
 import Waterfall from './drill/maneuvers/Waterfall';
 import SquirrelCage from './drill/maneuvers/SquirrelCage';
 import DrillScheduler from './drill/DrillScheduler';
+import FastBreak from './drill/maneuvers/FastBreak';
 
 class DrillEditorService {
   constructor(
@@ -884,6 +885,30 @@ class DrillEditorService {
       }
     );
     squirrelCage.generate();
+  }
+
+  fastBreak(options) {
+    const members = this.drillBuilder.getSelectedMembers();
+    const fastBreak = new FastBreak(members);
+    const memberSeqs = fastBreak.generate(options);
+    const count = this.drill.count + 1;
+
+    this.makeUndoable(
+      'Fast Break Maneuver',
+      members,
+      count,
+      memberSeqs.maxLength,
+      () => {
+        this.drillBuilder.addSequences(
+          members,
+          memberSeqs,
+          this.drill.count + 1
+        );
+        this.notifyDrillStateChanged();
+        this.save();
+      }
+    );
+    fastBreak.generate();
   }
 
   updateDrillSchedule() {

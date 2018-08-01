@@ -184,6 +184,10 @@ angular.module('drillApp').component('sidebar', {
       eventService.notify(Events.activateSquirrelCageTool);
     };
 
+    $scope.fastBreak = function() {
+      eventService.notify(Events.activateFastBreakTool);
+    };
+
     function initGridSwitch() {
       $('[name=\'grid-switch\']').bootstrapSwitch('state', false);
       $('input[name=\'grid-switch\']').on(

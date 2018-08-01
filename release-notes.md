@@ -214,3 +214,4 @@ Released v0.3.4
 * NEW: The timeline now shows time of each count in minutes & seconds (mm:ss) on the top.  It continues to show the count on the bottom.
 * NEW: Add Music option on timeline right-click menu.
 * NEW: Keyboard shortcut - Press spacebar to play/stop drill (with music).
+* NEW: Fast Break maneuver

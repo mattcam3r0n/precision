@@ -52,7 +52,6 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
-* fast break tool
 * rolling parallelogram tool
 * diamond step two tool? (or alternating option step two?)
 * block column tool
@@ -84,3 +83,6 @@ TODO
     * or, use protobuf?
 * 8/5... ugh
 * BUG: music doesn't stop when reaching end of drill
+* optimize CSS
+* factor out common maneuver tool controller?
+* factor out common controls, like file direction, etc

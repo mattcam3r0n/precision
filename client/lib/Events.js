@@ -139,6 +139,10 @@ class Events {
     return 'activateSquirrelCageTool';
   }
 
+  static get activateFastBreakTool() {
+    return 'activateFastBreakTool';
+  }
+
   static get activateMarcherColorsTool() {
     return 'activateMarcherColorsTool';
   }
@@ -294,6 +298,10 @@ class Events {
 
   static get squirrelCageToolDeactivated() {
     return 'squirrelCageToolDeactivated';
+  }
+
+  static get fastBreakToolDeactivated() {
+    return 'fastBreakToolDeactivated';
   }
 
   static get objectsSelected() {

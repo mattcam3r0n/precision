@@ -17,7 +17,12 @@ export default class Waterfall {
   }
 
   generate(options) {
-    options = options || { turnDirection: 'right', fileDelay: 6, depth: 6, repeat: 1 };
+    options = options || {
+      turnDirection: 'right',
+      fileDelay: 6,
+      depth: 6,
+      repeat: 1,
+    };
     // if turning right, start from leftmost file
     // if turning left, start from rightmost file
     // each member of file turns in turnDirection, but delayed by place in file
@@ -47,14 +52,13 @@ export default class Waterfall {
         // repeat N times based on options.repeat
         for (let iteration = 0; iteration < options.repeat; iteration++) {
           const firstTurnCount =
-            (iteration * (fileDelay + depth)) +
+            iteration * (fileDelay + depth) +
             (fIndex * fileDelay + r * member.stepsToLeader);
           const firstTurnDirection =
             options.turnDirection == 'left'
               ? Direction.leftOf(file.leader.direction)
               : Direction.rightOf(file.leader.direction);
-          const secondTurnCount =
-            (firstTurnCount + depth);
+          const secondTurnCount = firstTurnCount + depth;
           const secondTurnDirection = file.leader.direction;
           // first turn
           script.addStep(
