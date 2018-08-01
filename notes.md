@@ -57,6 +57,11 @@ TODO
 * diamond step two tool? (or alternating option step two?)
 * block column tool
 * starburst tool
+* reverse illinois? company fronts to block.  name?
+* override direction of block when adding maneuver? or via selection?
+* space bar to play/pause drill
+* maneuver preview... instead of footprints (or may in addition to), show "ghosts" where band will be in N counts.  Allow them to change N, recalc position.
+    * alternatively, animate the ghosts through N counts
 * assign band members
   * load csv?
   * hover to see member info?
@@ -65,6 +70,7 @@ TODO
     * switch to flip between insert/overwrite mode
 * selection tool
     * switch between block / file /individual mode?
+    * override direction of selection?
 * file selection tool
     * user can define unusual files
 * turn editing 
@@ -77,3 +83,4 @@ TODO
     * test this to see what kind of diff it makes
     * or, use protobuf?
 * 8/5... ugh
+* BUG: music doesn't stop when reaching end of drill
