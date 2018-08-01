@@ -105,8 +105,8 @@ angular.module('drillApp')
 
       function onAudioClipAdded(evt, args) {
         // ctrl.timeline.setMusicItems(ctrl.drill.music);
-        setItems();
         drillEditorService.save(true);
+        setItems();
       }
 
       function onRemove(item) {
