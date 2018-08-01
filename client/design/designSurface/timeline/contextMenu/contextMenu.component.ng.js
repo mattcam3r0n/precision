@@ -1,5 +1,4 @@
 'use strict';
-
 import Events from '/client/lib/Events';
 
 angular.module('drillApp').component('timelineContextMenu', {
@@ -64,6 +63,10 @@ angular.module('drillApp').component('timelineContextMenu', {
 
     ctrl.addTempo = function() {
       drillEditorService.addTempo();
+    };
+
+    ctrl.addMusic = function() {
+      drillEditorService.addMusic();
     };
 
     ctrl.zoomIn = function() {

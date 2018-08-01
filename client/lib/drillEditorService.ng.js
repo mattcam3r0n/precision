@@ -1,3 +1,4 @@
+import Audio from '/client/lib/audio/Audio';
 import StepType from './StepType';
 import StrideType from './StrideType';
 import Events from './Events';
@@ -671,6 +672,12 @@ class DrillEditorService {
     this.drillBuilder.splitTrack(splitCount, track);
     // this.save();
     this.eventService.notify(Events.audioClipAdded);
+  }
+
+  addMusic() {
+    Audio.init().then(() => {
+      this.eventService.notify(Events.chooseMusicDialogActivated);
+    });
   }
 
   addTempo() {

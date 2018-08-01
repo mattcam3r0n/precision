@@ -212,3 +212,4 @@ Released v0.3.4
 * FIX: Detect files when ranks are spaced up to 8 steps apart.  Previously only allowed up to 6 steps between leader and follower.
 * NEW: The length of the drill in minutes & seconds is shown in the button bar above the timeline.  It also shows the length in counts.
 * NEW: The timeline now shows time of each count in minutes & seconds (mm:ss) on the top.  It continues to show the count on the bottom.
+* NEW: Add Music option on timeline right-click menu.
