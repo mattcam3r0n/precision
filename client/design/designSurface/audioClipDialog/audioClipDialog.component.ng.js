@@ -20,7 +20,8 @@ angular.module('drillApp').component('audioClipDialog', {
     $rootScope,
     $window,
     eventService,
-    appStateService
+    appStateService,
+    drillEditorService
   ) {
     let ctrl = this;
 
@@ -132,9 +133,11 @@ angular.module('drillApp').component('audioClipDialog', {
           ctrl.drill.music = [];
         }
         ctrl.drill.music.push(clip);
+        ctrl.drill.isDirty = true;
         eventService.notify(Events.audioClipAdded, {
           audioClip: clip,
         });
+        drillEditorService.save();
       } catch (ex) {
         const msg = 'addAudioClip: ' + ex.message;
         const ctx = {

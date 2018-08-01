@@ -189,6 +189,10 @@ class Events {
     return 'drillSavedAs';
   }
 
+  static get drillScheduleRecalculated() {
+    return 'drillScheduleRecalculated';
+  }
+
   static get membersAdded() {
     return 'membersAdded';
   }

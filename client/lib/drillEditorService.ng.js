@@ -881,6 +881,7 @@ class DrillEditorService {
 
   updateDrillSchedule() {
     this.drillSchedule = this.calculateDrillSchedule();
+    this.eventService.notify(Events.drillScheduleRecalculated);
   }
 
   calculateDrillSchedule() {
@@ -897,15 +898,22 @@ class DrillEditorService {
     return this.drillSchedule;
   }
 
+  hasDrillSchedule() {
+    const { drillSchedule } = this;
+    return (
+      drillSchedule && drillSchedule.steps && drillSchedule.steps.length > 0
+    );
+  }
+
   getDrillLengthInCounts() {
-    if (!this.drillSchedule || !this.drillSchedule.steps) {
+    if (!this.hasDrillSchedule()) {
       return 0;
     }
     return this.drillSchedule.steps.length;
   }
 
   getDrillLengthInSeconds() {
-    if (!this.drillSchedule || !this.drillSchedule.steps) {
+    if (!this.hasDrillSchedule()) {
       return 0;
     }
     return this.drillSchedule.steps[this.drillSchedule.steps.length - 1].time;
