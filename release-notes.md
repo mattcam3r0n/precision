@@ -215,3 +215,6 @@ Released v0.3.4
 * NEW: Fast Break maneuver
 * NEW: Add Music option on timeline right-click menu.
 * NEW: Keyboard shortcut - Press spacebar to play/stop drill (with music).
+
+^ Released v0.3.7
+
