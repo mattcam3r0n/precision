@@ -52,6 +52,7 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
+* refactor search query to use a method? search is killing db cpu.
 * read-only link to share drills
 * assign band members
   * load csv?
