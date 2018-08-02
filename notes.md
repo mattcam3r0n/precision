@@ -52,6 +52,12 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
+* read-only link to share drills
+* assign band members
+  * load csv?
+  * hover to see member info?
+* analytics
+* cue sheets
 * rolling parallelogram tool
 * diamond step two tool? (or alternating option step two?)
 * block column tool
@@ -60,11 +66,7 @@ TODO
 * override direction of block when adding maneuver? or via selection?
 * maneuver preview... instead of footprints (or may in addition to), show "ghosts" where band will be in N counts.  Allow them to change N, recalc position.
     * alternatively, animate the ghosts through N counts
-* assign band members
-  * load csv?
-  * hover to see member info?
 * better open dialog
-* read-only link to share drills
 * insert mode
     * switch to flip between insert/overwrite mode
 * selection tool
@@ -76,7 +78,6 @@ TODO
     * similar to path tool
 * select file/rank/diagonal
     * hover or right click member, then select f/r/d
-* analytics
 * drill format optimization
     * use a dictionary based approach for script, so it serializes more compactly?
     * test this to see what kind of diff it makes
