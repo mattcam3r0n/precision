@@ -1,3 +1,23 @@
+#### Version 0.3.7 - 8/2/18
+
+**FIX**: File Detection - Followers will be detected up to 8 steps from their leader (previously 6 steps).  Gaps larger than 8 steps will be treated as a new file.
+
+**NEW**: The timeline now shows the time in minutes and seconds (mm:ss) along the top, and the count along the bottom.  In addition, the toolbar above the timeline now displays the length of the drill in mm:ss and counts. The times are re-calculated to take music and tempo changes in to account.
+
+<img src="./timeline-time.png" width="60%" />
+
+
+**NEW**: **Fast Break** maneuver.  Ranks are typically 6 steps apart when applying this maneuver.  Group A continues forward, Group B marks time two counts, and Group C backs up two counts.  The A/B/C groups can start from the left or right guide.  Apply it again in the opposite direction to undo.
+
+<img src="./fast-break.png" width="30%" />
+
+
+**NEW**: You can now **Add Music** from the right-click menu on the timeline.
+
+**NEW**: Keyboard Shortcut - You can start and stop drill playback by tapping the space bar.
+
+-------
+
 #### Version 0.3.6 - 7/30/18
 
 **NEW**: The **Step-Two** maneuver makes it easier add delayed step offs.
