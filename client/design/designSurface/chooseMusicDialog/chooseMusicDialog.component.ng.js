@@ -13,7 +13,7 @@ angular.module('drillApp')
       $scope.searchOptions = { searchText: '', searchFiles: true, searchClips: true };
       $scope.page = 1;
       $scope.perPage = 6;
-      $scope.sort = {}; // { name_sort: 1 };
+      $scope.sort = { title: 1 }; // { name_sort: 1 };
       $scope.orderProperty = '1';
 
       $scope.subscribe('musicFiles', function() {

@@ -219,3 +219,4 @@ Released v0.3.4
 ^ Released v0.3.7
 
 * FIX: Using space bar to tap counts in audio dialog was causing drill to start playing in the background.  Fixed.
+* FIX: Music now sorted alphabetically by title.

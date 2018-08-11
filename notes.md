@@ -54,7 +54,6 @@ function inside(point, vs) {
 TODO
 * multiple montgomery files
     * create drill while offline. reproduce?
-* alphabetize music in chooseMusic dialog
 * undo for path tool and insert count
 * filter nammb music... how to identify?
 * allow admin to make music public
