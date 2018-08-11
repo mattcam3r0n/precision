@@ -336,6 +336,10 @@ class Events {
     return 'audioClipDialogActivated';
   }
 
+  static get audioClipDialogDeactivated() {
+    return 'audioClipDialogDeactivated';
+  }
+
   static get audioClipAdded() {
     return 'audioClipAdded';
   }

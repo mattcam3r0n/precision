@@ -52,17 +52,34 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
+* Space bar bug in audio/drill playback
+* multiple montgomery files
+    * create drill while offline. reproduce?
+* alphabetize music in chooseMusic dialog
+* undo for path tool and insert count
+* filter nammb music... how to identify?
+* allow admin to make music public
+* set up non-block configurations
+    * chevron
+    * diamond
+    * trianglea
+* strange illinois results... more testing
 * refactor search query to use a method? search is killing db cpu.
 * read-only link to share drills
 * assign band members
   * load csv?
   * hover to see member info?
 * analytics
+* option to push music out when counts are inserted
 * cue sheets
 * rolling parallelogram tool
 * diamond step two tool? (or alternating option step two?)
 * block column tool
+* block buster
 * starburst tool
+* bowtie tool - see nammb site
+* queen anne step
+* pass through obliques
 * reverse illinois? company fronts to block.  name?
 * override direction of block when adding maneuver? or via selection?
 * maneuver preview... instead of footprints (or may in addition to), show "ghosts" where band will be in N counts.  Allow them to change N, recalc position.

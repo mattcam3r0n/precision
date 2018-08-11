@@ -1,7 +1,5 @@
 'use strict';
 
-import DesignKeyboardHandler from './DesignKeyboardHandler';
-// import Spinner from '/client/components/spinner/spinner';
 import Events from '/client/lib/Events';
 
 import Logger from '/client/lib/Logger';
@@ -16,13 +14,12 @@ angular
     appStateService,
     drillEditorService,
     spinnerService,
-    eventService
+    eventService,
+    designKeyHandlerService
   ) {
     // eslint-disable-next-line
     let ctrl = this;
     $scope.viewName = 'Design';
-
-    let keyboardHandler;
 
     init();
 
@@ -80,6 +77,20 @@ angular
       ctrl.subscriptions.subscribe(Events.showOpenDrillDialog, (evt, args) => {
         $('#openDrillDialog').modal('show');
       });
+
+      ctrl.subscriptions.subscribe(
+        Events.audioClipDialogActivated,
+        (evt, args) => {
+          designKeyHandlerService.disable();
+        }
+      );
+
+      ctrl.subscriptions.subscribe(
+        Events.audioClipDialogDeactivated,
+        (evt, args) => {
+          designKeyHandlerService.enable();
+        }
+      );
 
       ctrl.subscriptions.subscribe(Events.drillOpened, (evt, args) => {
         onDrillOpened(args.drill);
@@ -179,23 +190,12 @@ angular
       appStateService.drill = drill;
       drillEditorService.setDrill(drill);
       drillEditorService.setTempo($scope.tempo);
-      // eslint-disable-next-line max-len
-      keyboardHandler = new DesignKeyboardHandler(
-        drillEditorService,
-        eventService
-      );
       $scope.$safeApply(); // necessary for field painting?
     }
 
-    // function getDrillId() {
-    //   if (!$scope.drill) return null;
-    //   if (!$scope.drill._id) return 'new';
-    //   return $scope.drill._id;
-    // }
-
     function onKeydown(e) {
-      // console.log(e.code, e);
-      keyboardHandler.handle(e);
+      // console.log('design onKeydown', e.code, e);
+      designKeyHandlerService.handle(e);
       $scope.$safeApply();
     }
 

@@ -21,7 +21,8 @@ angular.module('drillApp').component('audioClipDialog', {
     $window,
     eventService,
     appStateService,
-    drillEditorService
+    drillEditorService,
+    designKeyHandlerService
   ) {
     let ctrl = this;
 
@@ -47,11 +48,11 @@ angular.module('drillApp').component('audioClipDialog', {
 
       $('#audioClipDialog').on('shown.bs.modal', function() {
         loadAudio(ctrl.musicFile);
-        // $(document).on('keydown', onSpacePressed);
         $window.addEventListener('keydown', onSpacePressed);
       });
 
       $('#audioClipDialog').on('hidden.bs.modal', function() {
+        eventService.notify(Events.audioClipDialogDeactivated);
         unloadAudio();
         // $(document).off('keydown');
         $window.removeEventListener('keydown', onSpacePressed);
@@ -67,7 +68,9 @@ angular.module('drillApp').component('audioClipDialog', {
         playMetronome = playMetronome === undefined ? true : playMetronome;
         if (ctrl.wavesurfer.isPlaying()) {
           ctrl.wavesurfer.pause();
-          ctrl.metronome.stop();
+          if (ctrl.metronome) {
+            ctrl.metronome.stop();
+          }
           return;
         }
         if (ctrl.selection) {
