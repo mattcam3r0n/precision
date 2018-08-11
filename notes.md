@@ -52,7 +52,6 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
-* Space bar bug in audio/drill playback
 * multiple montgomery files
     * create drill while offline. reproduce?
 * alphabetize music in chooseMusic dialog
