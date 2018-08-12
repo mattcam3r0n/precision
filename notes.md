@@ -61,7 +61,6 @@ TODO
 * see John's Keep list
   * Path tool not working after left/right face?
   * chart printing not working?
-  * chart still showed footprints even with 0 counts?
   * bookmarks dropdown off screen when too long?
 * multiple montgomery files
     * create drill while offline. reproduce?

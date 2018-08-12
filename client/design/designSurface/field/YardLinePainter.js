@@ -59,7 +59,7 @@ function addYardLines(canvas, options) {
       strokeWidth: 2,
       selectable: false,
       evented: false,
-      opacity: options.opacity || 0.5,
+      opacity: options.opacity || _opacity,
     });
     canvas.add(line);
     line.sendToBack();
