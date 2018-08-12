@@ -52,15 +52,26 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
+* fix field numbers size and spacing
+    * bottom 8.5 steps from sideline
+    * top 12 steps from sideline?
+    * arrow 10 steps?
+* allow admin to make music public
+* filter nammb music... how to identify?
+* see John's Keep list
+  * Path tool not working after left/right face?
+  * chart printing not working?
+  * chart still showed footprints even with 0 counts?
+  * bookmarks dropdown off screen when too long?
 * multiple montgomery files
     * create drill while offline. reproduce?
-* undo for path tool and insert count
-* filter nammb music... how to identify?
-* allow admin to make music public
+* undo 
+  * for path tool and 
+  * insert count
 * set up non-block configurations
     * chevron
     * diamond
-    * trianglea
+    * triangle
 * strange illinois results... more testing
 * refactor search query to use a method? search is killing db cpu.
 * read-only link to share drills
