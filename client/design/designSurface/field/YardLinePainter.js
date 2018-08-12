@@ -138,7 +138,7 @@ function addYardlineNumber(canvas, number, index, isNear, options) {
   const firstX =
     FieldDimensions.goallineX + index * FieldDimensions.fiveYardsX * 2 - 10;
   const secondX =
-    FieldDimensions.goallineX + index * FieldDimensions.fiveYardsX * 2 + 15;
+    FieldDimensions.goallineX + index * FieldDimensions.fiveYardsX * 2 + 12;
   // add first digit
   addDigit(canvas, firstDigit, { left: firstX, top: y }, options);
   // add second digit
