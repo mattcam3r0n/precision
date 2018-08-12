@@ -52,15 +52,11 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
-* fix field numbers size and spacing
-    * bottom 8.5 steps from sideline
-    * top 12 steps from sideline?
-    * arrow 10 steps?
 * allow admin to make music public
 * filter nammb music... how to identify?
 * see John's Keep list
-  * Path tool not working after left/right face?
-  * chart printing not working?
+  * Path tool not working after left/right face? -- seems to be fixed
+  * chart printing not working? -- not seeing issues so far
   * bookmarks dropdown off screen when too long?
 * multiple montgomery files
     * create drill while offline. reproduce?
