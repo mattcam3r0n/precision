@@ -100,7 +100,7 @@ function addHashMarks(canvas, options) {
 
 function addYardLineNumbers(canvas, options) {
   let textOptions = {
-    fontSize: options.fontSize || 46,
+    fontSize: options.fontSize || 32,
     lineHeight: 1,
     originX: 'center',
     originY: 'center',
@@ -126,6 +126,11 @@ function addYardLineNumbers(canvas, options) {
   });
 }
 
+/*
+  - top of number is 27' from sideline (10.8 steps)
+  - numbers are 6' high by 4' wide (2.4 x 1.6)
+  - bottom of number is (8.4 steps)
+*/
 function addYardlineNumber(canvas, number, index, isNear, options) {
   // add each digit
   const firstDigit = number.substring(0, 1);
@@ -133,8 +138,8 @@ function addYardlineNumber(canvas, number, index, isNear, options) {
   const leftOf50 = index < _yardlineMarkers.length / 2;
 
   const y = isNear
-    ? FieldDimensions.nearSidelineY - FieldDimensions.oneStepY_6to5 * 10
-    : FieldDimensions.farSidelineY + FieldDimensions.oneStepY_6to5 * 10;
+    ? FieldDimensions.nearSidelineY - FieldDimensions.oneStepY_6to5 * 9.5
+    : FieldDimensions.farSidelineY + FieldDimensions.oneStepY_6to5 * 9.5;
   const firstX =
     FieldDimensions.goallineX + index * FieldDimensions.fiveYardsX * 2 - 10;
   const secondX =
@@ -145,7 +150,7 @@ function addYardlineNumber(canvas, number, index, isNear, options) {
   if (secondDigit) {
     addDigit(canvas, secondDigit, { left: secondX, top: y }, options);
   }
-  if (number) { // if not Goal line, which is empty number
+  if (number && number != '50') { // if not Goal line, which is empty number
     // add arrow
     addNumberArrow(canvas, {
       left: leftOf50 ? firstX - 15 : secondX + 15,
