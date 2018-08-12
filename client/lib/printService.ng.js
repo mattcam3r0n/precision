@@ -141,25 +141,12 @@ class printService {
 
   drawFootrints(canvas, counts) {
     console.time('drawFootprints');
-    // for each member
-    // for N counts
-    // calc position
-    // add point to pointset
-
+    if (counts < 1) return;
     const drillBuilder = new DrillBuilder(this.appStateService.drill);
     const pointSet = drillBuilder.getFootprintPoints(
       this.appStateService.drill.members,
       counts
     );
-
-    // const pointSet = new PointSet();
-    // this.appStateService.drill.members.forEach((m) => {
-    //   let pos = m.currentState;
-    //   for (let count = 0; count < counts; count++) {
-    //     pos = MemberPositionCalculator.stepForward(m, pos, 1);
-    //     pointSet.add({ x: pos.x, y: pos.y });
-    //   }
-    // });
 
     pointSet.points.forEach((p) => {
       canvas.add(
