@@ -521,6 +521,26 @@ class DrillEditorService {
     this.notifyDrillStateChanged();
   }
 
+  addPath(members, sequences) {
+    members = members || this.drillBuilder.getSelectedMembers();
+    const count = this.drill.count + 1;
+    this.makeUndoable(
+      'Path',
+      members,
+      count,
+      sequences.maxLength,
+      () => {
+        this.drillBuilder.addSequences(
+          members,
+          sequences,
+          this.drill.count + 1
+        );
+        this.notifyDrillStateChanged();
+        this.save();
+      }
+    );
+  }
+
   addMemberSteps(member, steps, atCount) {
     atCount = atCount === undefined ? this.currentCount + 1 : atCount;
     for (let i = 0; i < steps.length; i++) {

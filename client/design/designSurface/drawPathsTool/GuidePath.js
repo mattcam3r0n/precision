@@ -295,7 +295,7 @@ class GuidePath {
             y: evt.e.layerY,
         });
         // var stepPoint = new FieldPoint(adjustedPoint).toStepPoint(this.strideType);
-this.shiftKey = evt.e.shiftKey;
+// this.shiftKey = evt.e.shiftKey;
         if (this.isInPath(adjustedPoint)) {
             let snappedPoint = PathUtils.snapPoint(this.strideType,
                 this.lastPoint, adjustedPoint);
@@ -455,7 +455,6 @@ this.shiftKey = evt.e.shiftKey;
 
     isInPath(point, sourcePoint) {
         sourcePoint = sourcePoint || this.lastPoint;
-
         return PathUtils.isInPath(this.strideType, sourcePoint, point);
     }
 

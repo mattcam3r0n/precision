@@ -12,7 +12,6 @@ angular.module('drillApp').component('drawPathsTool', {
   bindings: {},
   controller: function(
     $scope,
-    $window,
     appStateService,
     drillEditorService,
     eventService,
@@ -227,7 +226,12 @@ angular.module('drillApp').component('drawPathsTool', {
 
       ExceptionHelper.handle(
         () => {
-          ctrl.activePathTool.save();
+          // ctrl.activePathTool.save();
+          const memberSequences = ctrl.activePathTool.getMemberSequences();
+          drillEditorService.addPath(
+            ctrl.memberSelection.members,
+            memberSequences
+          );
           drillEditorService.save(true);
         },
         'drawPathsTool.save',

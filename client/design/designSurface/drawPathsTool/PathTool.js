@@ -9,6 +9,7 @@ import GuidePath from './GuidePath';
 import ScriptBuilder from '/client/lib/drill/ScriptBuilder';
 import Action from '/client/lib/drill/Action';
 import ExceptionHelper from '/client/lib/ExceptionHelper';
+import MemberSequences from '../../../lib/drill/MemberSequences';
 
 class PathTool {
     constructor(field, memberSelection, turnMode, strideType,
@@ -221,11 +222,10 @@ class PathTool {
         let guide = sortedLeaderPositions[0];
         let fi = new FileIndicator([new StepPoint(guide.strideType,
             guide.x, guide.y).toFieldPoint()], guide.direction);
-
         let gp = new GuidePath(this.field, file, {
             strideType: file.leader.member.currentState.strideType,
             stepType: file.leader.member.currentState.stepType,
-            direction: file.direction,
+            direction: file.leader.direction,
             x: file.leader.member.currentState.x,
             y: file.leader.member.currentState.y,
         }, this.strideType);
@@ -285,12 +285,59 @@ class PathTool {
 
     save() {
         if (!this.guidePaths) return;
-
+// make undo-able here?
         if (this.turnMode == 'file') {
             this.saveFileMode();
         } else {
             this.saveBlockMode();
         }
+    }
+
+    getMemberSequences() {
+        if (!this.guidePaths) return;
+// make undo-able here?
+        if (this.turnMode == 'file') {
+            return this.getFileModeSequences();
+        } else {
+            return this.getBlockModeSequences();
+        }
+    }
+
+    getBlockModeSequences() {
+        const sequences = {};
+        this.guidePaths.forEach((gp) => {
+            const gpSeq = gp.getScriptSequence();
+            this.memberSelection.members.forEach((m) => {
+                sequences[m.id] = gpSeq.clone();
+            });
+        });
+        return new MemberSequences(sequences);
+    }
+
+    getFileModeSequences() {
+        const sequences = {};
+        this.guidePaths.forEach((gp) => {
+            const gpSeq = gp.getScriptSequence();
+            let ftlOffset = 0;
+            gp.file.fileMembers.forEach((fm, rank) => {
+                const seq = gpSeq.clone();
+                ftlOffset += fm.getStepsToLeader();
+                // inserting undefined will tell the member to continue
+                // doing whatever is currently in their script for those counts
+                seq.insertUndefined(ftlOffset, 0);
+                if (this.allFiles && this.rankOffset) {
+                    if (this.rankOffset < 0) {
+                        seq.deleteCount(Math.abs(rank * this.rankOffset));
+                    } else {
+                        seq.insertUndefined(rank * this.rankOffset, 1);
+                    }
+                }
+                // ScriptBuilder.insertSequence(fm.member, seq.getSequence(),
+                //     gp.startCount + 1);
+                sequences[fm.id] = seq;
+            });
+        });
+        return new MemberSequences(sequences);
     }
 
     saveBlockMode() {

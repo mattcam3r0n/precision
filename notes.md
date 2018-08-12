@@ -61,8 +61,7 @@ TODO
 * multiple montgomery files
     * create drill while offline. reproduce?
 * undo 
-  * for path tool and 
-  * insert count
+  * for path tool
 * set up non-block configurations
     * chevron
     * diamond

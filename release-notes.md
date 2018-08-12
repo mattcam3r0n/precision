@@ -222,3 +222,5 @@ Released v0.3.4
 * FIX: Music now sorted alphabetically by title.
 * FIX: More accurate size and placement of field numbers.
 * FIX: Charts were forecasting footprints even if counts-to-forecast was zero.  Fixed.
+* FIX: Path tool was not working when in "Block" mode. Fixed.
+* NEW: Can now "Undo" steps added with Path tool. This works for the whole path operation that was saved by click the green check button in the Path tool, not for individual file paths.
