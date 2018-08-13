@@ -1,3 +1,19 @@
+#### Version 0.3.8 - 8/12/18
+
+**NEW**: You can now **Undo** actions added via the Paths tool. 
+
+**FIX**: Music is now sorted alphabetically.
+
+**FIX**: Charts were showing forecasted paths even when "Counts to forecast" was zero.  This is now fixed.
+
+**FIX**: The Path tool was not working in Block mode.  This is fixed.
+
+**FIX**: More accurate sizing and placement of the yard line numbers.  This may need more tweaking.
+
+**FIX**: Using the space bar to tap out counts in audio dialog was causing drill to start playing in the background.  Fixed.
+
+-------
+
 #### Version 0.3.7 - 8/2/18
 
 **FIX**: File Detection - Followers will be detected up to 8 steps from their leader (previously 6 steps).  Gaps larger than 8 steps will be treated as a new file.
@@ -46,20 +62,3 @@
 **FIX**: Files were not detected when the band was halted or marking time, preventing the Path tool and Maneuvers from working.  This now works, but the band must be in a reasonably clean block.
 
 **FIX**: In a few cases, file indicators were drawn incorrectly when at the beginning of the drill.
-
--------
-
-#### Version 0.3.5
-
-**FIX**: Starting playback in the middle of a split audio track started on wrong beat.
-
-**FIX**: To-the-rears window now remembers previous settings.
-
--------
-
-#### Version 0.3.4
-
-**FIX**: Fixed a bug that prevented Save As from working when Bookmarks existed in the drill.
-
-**NEW**: The *To-The-Rears* tool allows you to quickly add to-the-rear based maneuvers.  You can delay files left-to-right or right-to-left, and ranks front-to-back or back-to-front.
-

@@ -60,8 +60,6 @@ TODO
   * bookmarks dropdown off screen when too long?
 * multiple montgomery files
     * create drill while offline. reproduce?
-* undo 
-  * for path tool
 * set up non-block configurations
     * chevron
     * diamond
@@ -108,3 +106,4 @@ TODO
 * optimize CSS
 * factor out common maneuver tool controller?
 * factor out common controls, like file direction, etc
+* get rid of paging on dialogs
