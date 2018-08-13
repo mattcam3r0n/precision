@@ -224,3 +224,7 @@ Released v0.3.4
 * FIX: Charts were forecasting footprints even if counts-to-forecast was zero.  Fixed.
 * FIX: Path tool was not working when in "Block" mode. Fixed.
 * NEW: Can now "Undo" steps added with Path tool. This works for the whole path operation that was saved by click the green check button in the Path tool, not for individual file paths.
+
+^ Released v0.3.8
+
+* FIX: Added a scrollbar to the bookmarks menu.  When there were a lot of bookmarks, the menu was sometimes too large to fit on screen.

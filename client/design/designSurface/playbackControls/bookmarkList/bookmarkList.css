@@ -2,6 +2,11 @@ div.add-bookmark-dialog .modal-lg {
     width: 500px;
 }
 
+ul.bookmark-list {
+    max-height: 400px;
+    overflow: scroll;
+}
+
 .bookmark-list .bookmark img {
     padding: 0;
     height: 16px;

@@ -37,13 +37,11 @@ angular.module('drillApp').component('playbackControls', {
       });
 
       ctrl.subscriptions.subscribe(Events.membersSelected, (evt, args) => {
-        let msg = '';
         if (args.memberSelection && args.memberSelection.members.length > 0) {
-          msg = args.memberSelection.members.length + ' selected marchers.';
+          const msg = args.memberSelection.members.length + ' selected marchers.';
+          $scope.membersSelected = msg;
+          $rootScope.$safeApply();
         }
-
-        $scope.membersSelected = msg;
-        $rootScope.$safeApply();
       });
 
       ctrl.subscriptions.subscribe(Events.drillStateChanged, (evt, args) => {
@@ -162,8 +160,8 @@ angular.module('drillApp').component('playbackControls', {
       ctrl.drillLength =
         formatTime(drillEditorService.getDrillLengthInSeconds()) +
         ' mm:ss,  ' +
-        drillEditorService.getDrillLengthInCounts()
-        + ' counts';
+        drillEditorService.getDrillLengthInCounts() +
+        ' counts';
     };
 
     // ctrl.pageForward = function() {

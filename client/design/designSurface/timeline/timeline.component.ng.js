@@ -99,6 +99,8 @@ angular.module('drillApp').component('timeline', {
     };
 
     function setItems() {
+      if (!ctrl.drill) return;
+
       updateDrillSchedule();
       ctrl.timeline.setItems({
         music: ctrl.drill.music,

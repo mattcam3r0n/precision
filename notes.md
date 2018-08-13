@@ -52,12 +52,12 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
+* Maneuvers and Paths should overwrite everything from first turn on?
+    * followers need to keep doing what they're doing until they reach leader
 * allow admin to make music public
 * filter nammb music... how to identify?
 * see John's Keep list
   * Path tool not working after left/right face? -- seems to be fixed
-  * chart printing not working? -- not seeing issues so far
-  * bookmarks dropdown off screen when too long?
 * multiple montgomery files
     * create drill while offline. reproduce?
 * set up non-block configurations
@@ -65,6 +65,7 @@ TODO
     * diamond
     * triangle
 * strange illinois results... more testing
+  * wrong results with odd number of files
 * refactor search query to use a method? search is killing db cpu.
 * read-only link to share drills
 * assign band members
@@ -107,3 +108,5 @@ TODO
 * factor out common maneuver tool controller?
 * factor out common controls, like file direction, etc
 * get rid of paging on dialogs
+* generate video of drill
+* generate gif of band for next N counts, share it
