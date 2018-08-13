@@ -228,3 +228,4 @@ Released v0.3.4
 ^ Released v0.3.8
 
 * FIX: Added a scrollbar to the bookmarks menu.  When there were a lot of bookmarks, the menu was sometimes too large to fit on screen.
+* FIX: Added a note about pop-up blockers on Print Charts dialog box.
