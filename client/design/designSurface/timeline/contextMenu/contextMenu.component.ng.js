@@ -59,7 +59,10 @@ angular.module('drillApp').component('timelineContextMenu', {
       drillEditorService.splitTrack(ctrl.count, ctrl.item.music);
     };
 
-    ctrl.deleteTrack = function() {};
+    ctrl.deleteTrack = function() {
+      if (!ctrl.item || !ctrl.item.music) return;
+      ctrl.parent.removeMusic(ctrl.item);
+    };
 
     ctrl.addTempo = function() {
       drillEditorService.addTempo();

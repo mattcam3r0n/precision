@@ -98,6 +98,8 @@ angular.module('drillApp').component('timeline', {
       eventService.notify(Events.chooseMusicDialogActivated);
     };
 
+    ctrl.removeMusic = removeMusic;
+
     function setItems() {
       if (!ctrl.drill) return;
 
