@@ -150,11 +150,6 @@ class printService {
       const col = i - row * 6;
       const x = col * 40 + 10;
       const y = (doc.internal.pageSize.height - 40) + (10 * row + 10);
-      // 10 * row + 10;
-      // doc.internal.pageSize.height - 500 + (row * 50);
-      console.log('i', i, 'col', col, 'row', row, 'x', x, 'y', y);
-
-      console.log('inst.hex', inst.hex, inst);
       const rgb = hexToRgb(inst.hex || '#FF0000');
       doc.setDrawColor(0);
       doc.setFillColor(rgb.red, rgb.green, rgb.blue);
