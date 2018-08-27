@@ -1,3 +1,15 @@
+#### Version 0.3.9 - 8/27/18
+
+**NEW**: Show an instruments legend when printing charts in color.
+
+**FIX**: Delete Track on right-click menu was not working.  Fixed.
+
+**FIX**: Added a scrollbar to the bookmarks menu.  When there were a lot of bookmarks, the menu was sometimes too large to fit on screen.
+
+**FIX**: Added a note about pop-up blockers on the Print Charts dialog box.  Pop-up blockers may prevent the application from opening the chart in a new browser tab. You may need to add an exception to your pop-up blocker, disable it, or hold the Ctrl key to bypass it when printing charts.
+
+-------
+
 #### Version 0.3.8 - 8/12/18
 
 **NEW**: You can now **Undo** actions added via the Paths tool. 
