@@ -200,7 +200,8 @@ function createCanvas() {
   return canvas;
 }
 
-function hex2rgb (hex, opacity) {
+// from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+function hex2rgb(hex, opacity) {
   hex = hex.trim();
   hex = hex[0] === '#' ? hex.substr(1) : hex;
   let bigint = parseInt(hex, 16);
