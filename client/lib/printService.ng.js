@@ -4,7 +4,6 @@ import FieldDimensions from '/client/lib/FieldDimensions';
 import MarcherFactory from '../design/designSurface/field/MarcherFactory';
 import DrillPlayer from '/client/lib/drill/DrillPlayer';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
-import hexToRgb from 'hex-rgb';
 
 class printService {
   constructor(appStateService, instrumentService) {
@@ -150,8 +149,8 @@ class printService {
       const col = i - row * 6;
       const x = col * 40 + 10;
       const y = (doc.internal.pageSize.height - 40) + (10 * row + 10);
-      const rgb = hexToRgb(inst.hex || '#FF0000');
-      doc.setDrawColor(0);
+      const rgb = hex2rgb(inst.hex || '#FF0000');
+      doc.setDrawColor(0, 0, 0);
       doc.setFillColor(rgb.red, rgb.green, rgb.blue);
       doc.rect(x, y, 5, 5, 'FD');
 
@@ -199,6 +198,32 @@ function createCanvas() {
   });
   console.timeEnd('createCanvas');
   return canvas;
+}
+
+function hex2rgb (hex, opacity) {
+  hex = hex.trim();
+  hex = hex[0] === '#' ? hex.substr(1) : hex;
+  let bigint = parseInt(hex, 16);
+  let h = [];
+  if (hex.length === 3) {
+      h.push((bigint >> 4) & 255);
+      h.push((bigint >> 2) & 255);
+  } else {
+      h.push((bigint >> 16) & 255);
+      h.push((bigint >> 8) & 255);
+  }
+  h.push(bigint & 255);
+  // if (arguments.length === 2) {
+  //     h.push(opacity);
+  //     return 'rgba('+h.join()+')';
+  // } else {
+  //     return 'rgb('+h.join()+')';
+  // }
+  return {
+    red: h[0],
+    green: h[1],
+    blue: h[2],
+  };
 }
 
 angular
