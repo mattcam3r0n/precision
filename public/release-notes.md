@@ -1,4 +1,4 @@
-#### Version 0.3.9 - 8/27/18
+#### Version 0.3.10 - 8/27/18
 
 **NEW**: Show an instruments legend when printing charts in color.
 
