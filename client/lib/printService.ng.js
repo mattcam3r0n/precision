@@ -4,10 +4,12 @@ import FieldDimensions from '/client/lib/FieldDimensions';
 import MarcherFactory from '../design/designSurface/field/MarcherFactory';
 import DrillPlayer from '/client/lib/drill/DrillPlayer';
 import DrillBuilder from '/client/lib/drill/DrillBuilder';
+import hexToRgb from 'hex-rgb';
 
 class printService {
-  constructor(appStateService) {
+  constructor(appStateService, instrumentService) {
     this.appStateService = appStateService;
+    this.instrumentService = instrumentService;
   }
 
   printBookmarks(bookmarks, options) {
@@ -51,6 +53,7 @@ class printService {
     this.addCounts(doc, bookmark.forecastCounts);
     this.addNotes(doc, bookmark.notes);
     this.drawField(doc, canvas, bookmark.forecastCounts, options);
+    this.drawMarcherLegend(doc, canvas, options);
   }
 
   addDrillName(doc, name) {
@@ -63,8 +66,7 @@ class printService {
     doc.setFontSize(22);
     const leftOffset =
       (doc.internal.pageSize.width -
-        doc.getStringUnitWidth(title) *
-          doc.internal.getFontSize() /
+        (doc.getStringUnitWidth(title) * doc.internal.getFontSize()) /
           doc.internal.scaleFactor) /
       2;
     doc.text(leftOffset, 20, title);
@@ -78,7 +80,7 @@ class printService {
     doc.setFontSize(16);
     const leftOffset =
       doc.internal.pageSize.width -
-      doc.getStringUnitWidth(label) * doc.internal.getFontSize() / 2;
+      (doc.getStringUnitWidth(label) * doc.internal.getFontSize()) / 2;
     doc.text(leftOffset, 20, label);
   }
 
@@ -139,6 +141,30 @@ class printService {
     console.timeEnd('drawMarchers');
   }
 
+  drawMarcherLegend(doc, canvas, options) {
+    if (!options.printInColor) {
+      return;
+    }
+    this.instrumentService.getInstruments().forEach((inst, i) => {
+      const row = Math.floor(i / 6);
+      const col = i - row * 6;
+      const x = col * 40 + 10;
+      const y = (doc.internal.pageSize.height - 40) + (10 * row + 10);
+      // 10 * row + 10;
+      // doc.internal.pageSize.height - 500 + (row * 50);
+      console.log('i', i, 'col', col, 'row', row, 'x', x, 'y', y);
+
+      console.log('inst.hex', inst.hex, inst);
+      const rgb = hexToRgb(inst.hex || '#FF0000');
+      doc.setDrawColor(0);
+      doc.setFillColor(rgb.red, rgb.green, rgb.blue);
+      doc.rect(x, y, 5, 5, 'FD');
+
+      doc.setFontSize(12);
+      doc.text(x + 7, y + 4, inst.name);
+    });
+  }
+
   drawFootrints(canvas, counts) {
     console.time('drawFootprints');
     if (counts < 1) return;
@@ -182,4 +208,8 @@ function createCanvas() {
 
 angular
   .module('drillApp')
-  .service('printService', ['appStateService', printService]);
+  .service('printService', [
+    'appStateService',
+    'instrumentService',
+    printService,
+  ]);

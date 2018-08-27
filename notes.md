@@ -52,10 +52,14 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
-* Maneuvers and Paths should overwrite everything from first turn on?
-    * followers need to keep doing what they're doing until they reach leader
+* Delete Track not working
+* Add member color legend to charts
 * allow admin to make music public
 * filter nammb music... how to identify?
+    * assume public is nammb collection?
+* add tab to ChooseMusic dialog, for NAMMB collection
+* Maneuvers and Paths should overwrite everything from first turn on?
+    * followers need to keep doing what they're doing until they reach leader
 * see John's Keep list
   * Path tool not working after left/right face? -- seems to be fixed
 * multiple montgomery files
@@ -65,7 +69,7 @@ TODO
     * diamond
     * triangle
 * strange illinois results... more testing
-  * wrong results with odd number of files
+  * wrong results when odd number of files
 * refactor search query to use a method? search is killing db cpu.
 * read-only link to share drills
 * assign band members

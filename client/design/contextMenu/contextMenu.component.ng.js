@@ -9,26 +9,13 @@ angular.module('drillApp').component('contextMenu', {
     $scope,
     $rootScope,
     $document,
+    instrumentService,
     confirmationDialogService,
     drillEditorService,
     eventService
   ) {
     let ctrl = this;
 
-    const instrumentColors = {
-      twirler: 'lightblue',
-      flag: 'orchid',
-      flute: 'pink',
-      clarinet: 'gainsboro',
-      lowreed: 'indigo',
-      saxophone: 'lightgreen',
-      trumpet: 'blue',
-      horn: 'gold',
-      trombone: 'fuchsia',
-      baritone: 'purple',
-      tuba: 'orange',
-      percussion: 'gray',
-    };
 
     ctrl.$onInit = function() {
       ctrl.isActivated = false;
@@ -61,6 +48,14 @@ angular.module('drillApp').component('contextMenu', {
       drillEditorService.deleteForward();
     };
 
+    ctrl.instruments = instrumentService.getInstruments();
+
+    ctrl.getColorStyle = function(instrument) {
+      return {
+        color: instrumentService.getInstrumentColor(instrument),
+      };
+    };
+
     ctrl.addMarchers = function() {
       // always go to beginning when adding new marchers
       drillEditorService.goToBeginning();
@@ -87,7 +82,7 @@ angular.module('drillApp').component('contextMenu', {
     ctrl.setColor = function(instrument) {
       const memberSelection = drillEditorService.getMemberSelection();
       memberSelection.members.forEach((member) => {
-        member.color = instrumentColors[instrument];
+        member.color = instrumentService.getInstrumentColor(instrument);
       });
       eventService.notify(Events.membersChanged);
       drillEditorService.deselectAll();

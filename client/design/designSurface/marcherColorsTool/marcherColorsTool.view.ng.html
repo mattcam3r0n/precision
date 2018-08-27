@@ -4,7 +4,14 @@
     </div>
     <div id="marcherColorsTool" class="">
         <ul>
-            <li>
+            <li ng-repeat="instrument in instruments">
+                <button ng-click="setColor(instrument.name)" class="btn btn-default">
+                    <i class="fa fa-stop" ng-style="getColorStyle(instrument.name)"></i> {{instrument.name}}
+                </button>
+            </li>
+
+
+            <!-- <li>
                 <button ng-click="setColor('twirler')" class="btn btn-default">
                     <i class="fa fa-stop twirler-color"></i> Twirlers
                 </button>
@@ -63,7 +70,7 @@
                 <button ng-click="setColor('percussion')" class="btn btn-default">
                     <i class="fa fa-stop percussion-color"></i> Percussion
                 </button>
-            </li>
+            </li> -->
             <li>
                 <button ng-click="cancel()" class="btn btn-default">
                     <i class="fa fa-times"></i> Cancel

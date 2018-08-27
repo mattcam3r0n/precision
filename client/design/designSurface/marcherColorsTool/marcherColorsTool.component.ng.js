@@ -9,26 +9,11 @@ angular.module('drillApp')
     bindings: {
     },
     controller: function($scope,
-                        $window,
+                        instrumentService,
                         appStateService,
                         drillEditorService,
                         eventService) {
       let ctrl = this;
-
-      const instrumentColors = {
-        twirler: 'lightblue',
-        flag: 'orchid',
-        flute: 'pink',
-        clarinet: 'gainsboro',
-        lowreed: 'indigo',
-        saxophone: 'lightgreen',
-        trumpet: 'blue',
-        horn: 'gold',
-        trombone: 'darkred',
-        baritone: 'purple',
-        tuba: 'orange',
-        percussion: 'gray',
-      };
 
       ctrl.$onInit = function() {
         $('[data-toggle="tooltip"]').tooltip();
@@ -53,9 +38,17 @@ angular.module('drillApp')
 
       $scope.cancel = deactivate;
 
+      $scope.instruments = instrumentService.getInstruments();
+
+      $scope.getColorStyle = function(instrument) {
+        return {
+          color: instrumentService.getInstrumentColor(instrument),
+        };
+      };
+
       $scope.setColor = function(instrument) {
         ctrl.memberSelection.members.forEach((member) => {
-          member.color = instrumentColors[instrument];
+          member.color = instrumentService.getInstrumentColor(instrument);
         });
         eventService.notify(Events.membersChanged);
         drillEditorService.deselectAll();
