@@ -237,3 +237,5 @@ Released v0.3.4
 ^ Release v0.3.10 -- Release all features intended for 0.3.9.  Removed offending package.
 
 * NEW: The "Choose Music" dialog box now has "My Music" and "NAMMB Music" tabs. Admins can upload music to the shared NAMMB library so that it can be used by all users.
+
+^ Release v0.3.11 - My Music tabs
