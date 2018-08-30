@@ -10,7 +10,7 @@ angular.module('drillApp')
     templateUrl: 'client/design/designSurface/uploadMusicDialog/uploadMusicDialog.view.ng.html',
     bindings: {
     },
-    controller: function($rootScope, $scope, eventService, appStateService) {
+    controller: function($rootScope, $scope, eventService, appStateService, userService) {
       let ctrl = this;
 
       ctrl.activate = function() {
@@ -20,6 +20,10 @@ angular.module('drillApp')
 
       ctrl.deactivate = function() {
         $('#uploadMusicDialog').modal('hide');
+      };
+
+      ctrl.isAdmin = function() {
+        return userService.isAdmin();
       };
 
       ctrl.isValid = function() {

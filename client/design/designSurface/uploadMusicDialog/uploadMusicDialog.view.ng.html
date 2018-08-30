@@ -44,8 +44,8 @@
                 <div class="row">
                     <div class="col-md-12">
                             <label class="control-label checkbox-inline" ng-class="{ required: !$ctrl.licenseConfirmed }"><input ng-model="$ctrl.licenseConfirmed" ng-required="true" type="checkbox" class=""/>By checking this box, you confirm that you are licensed to use this recording.</label>
-                            <!-- <br/>
-                            <label class="control-label checkbox-inline"><input ng-model="$ctrl.isPublic" type="checkbox" class=""/>Allow other Precision users to use this music.</label> -->
+                            <br/>
+                            <label ng-show="$ctrl.isAdmin()" class="control-label checkbox-inline"><input ng-model="$ctrl.isPublic" type="checkbox" class=""/>Add this to the shared NAMMB music library.</label>
                     </div>
                 </div>
             </div>
