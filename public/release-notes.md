@@ -10,6 +10,11 @@
 
 -------
 
+#### Version 0.3.9 - 8/27/18
+I ran in to a few technical problems while attempting to release v0.3.9, resulting in a couple hours of down time.  I apologize if this inconvenienced anyone.
+
+-------
+
 #### Version 0.3.8 - 8/12/18
 
 **NEW**: You can now **Undo** actions added via the Paths tool. 
