@@ -231,3 +231,9 @@ Released v0.3.4
 * FIX: Delete Track on right-click menu was not working.  Fixed.
 * FIX: Added a scrollbar to the bookmarks menu.  When there were a lot of bookmarks, the menu was sometimes too large to fit on screen.
 * FIX: Added a note about pop-up blockers on Print Charts dialog box.
+
+^ Release v0.3.9 -- Failed release, due a hex-rgb package note minifying properly.  Aborted.
+
+^ Release v0.3.10 -- Release all features intended for 0.3.9.  Removed offending package.
+
+* NEW: The "Choose Music" dialog box now has "My Music" and "NAMMB Music" tabs. Admins can upload music to the shared NAMMB library so that it can be used by all users.

@@ -1,3 +1,13 @@
+#### Version 0.3.11 - 8/30/18
+
+<img src="./nammb-library-tabs.png" width="60%" />
+
+**NEW**: The **Choose Music** dialog now has two tabs:  **My Music** and **NAMMB Music**.  Music that you have uploaded, as well as any clips that you have saved, will be found under My Music.  
+
+Music in the **NAMMB Music** library can be used by all users.  Only the administrator can add music to the NAMMB library.  However, users can create clips from music in the NAMMB library and save them to their personal library.
+
+-------
+
 #### Version 0.3.10 - 8/27/18
 
 **NEW**: Show an instruments legend when printing charts in color.

@@ -1,20 +1,20 @@
 'use strict';
 
-Meteor.publish('musicFiles', function(options, searchText, searchFiles, searchClips) {
+Meteor.publish('musicFiles', function(options, searchText, searchFiles, searchClips, searchNammb) {
   let where = {
     'title': {
       '$regex': searchText || '',
       '$options': 'i',
     },
-    // limit to users musicFiles. TODO: add publicly shared musicFiles?
-    // 'userId': Meteor.userId(),
-    '$or': [
-      { 'userId': Meteor.userId() },
-      { 'isPublic': true },
-    ],
     // limit to files and/or clips
     'type': { $in: getTypes(searchFiles, searchClips) },
   };
+
+  if (searchNammb) {
+    where.isPublic = true;
+  } else {
+    where.userId = Meteor.userId();
+  }
 
 // console.log(where);
 

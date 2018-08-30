@@ -24,3 +24,14 @@
     color: red;
     cursor: pointer;
 }
+
+.choose-music-dialog .tab {
+    padding: 10px;
+    border-left: solid 1px silver;
+    border-right: solid 1px silver;
+    border-bottom: solid 1px silver;
+}
+
+.choose-music-dialog .nav-tabs {
+    margin-top: 10px;
+}
