@@ -31,11 +31,19 @@
     padding-left: 5px;
     padding-right: 5px;
 }
+/* .timeline .vis-time-axis .vis-grid.vis-odd {
+    background: #f5f5f5;
+}
+.timeline div.vis-bottom div.vis-time-axis div.vis-text.vis-minor.vis-odd {
+    background: #f5f5f5;
+} */
 
 .timeline div.vis-bottom div.vis-time-axis div.vis-text.vis-minor {
     text-align: left;
     border-left: solid 1px silver;
     --margin-left: -12px;
+    margin-left: 0px;
+    padding-left: 1px;
 }
 
 .timeline .vis-item.tempo {

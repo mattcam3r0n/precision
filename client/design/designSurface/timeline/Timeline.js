@@ -183,7 +183,8 @@ class Timeline {
     // reset axis-related variables
     this.topAxis = true;
     this.tick = count; // must set to count we're moving to in order to prevent flip/flopping
-    // this.timeline.setCustomTime(new Date(count), this.currentCountBar);
+
+    this.timeline.setCustomTime(new Date(count), this.currentCountBar);
   }
 
   highlightCurrentCount() {
@@ -196,7 +197,8 @@ class Timeline {
     }
     self.currentAxisCountEl = $(selector).filter(function() {
       return $(this).text() == count.toString() // eslint-disable-line no-invalid-this
-       || $(this).text() == self.getCountTime(count); // eslint-disable-line no-invalid-this
+      || (count == 0 && $(this).text() == 'Start') // eslint-disable-line no-invalid-this
+      || $(this).text() == self.getCountTime(count); // eslint-disable-line no-invalid-this
     });
     if (self.currentAxisCountEl) {
       self.currentAxisCountEl.addClass('current-count');
