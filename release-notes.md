@@ -239,3 +239,5 @@ Released v0.3.4
 * NEW: The "Choose Music" dialog box now has "My Music" and "NAMMB Music" tabs. Admins can upload music to the shared NAMMB library so that it can be used by all users.
 
 ^ Release v0.3.11 - My Music tabs
+
+* NEW: The current count on the timeline is now shaded to make it more obvious.  The blue line was causing some confusion about which count (to the left or right of the line) was current.

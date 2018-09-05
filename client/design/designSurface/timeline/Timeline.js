@@ -3,11 +3,13 @@ import shortid from 'shortid';
 
 class Timeline {
   constructor(containerId, eventService) {
+    this.currentCount = 0;
     this.eventService = eventService;
     this.containerId = containerId;
     this.items = new vis.DataSet();
     this.groups = new vis.DataSet();
     this.templates = {
+      currentCount: this.currentCountTemplate.bind(this),
       music: this.musicItemTemplate.bind(this),
       bookmarks: this.bookmarkItemTemplate.bind(this),
     };
@@ -39,7 +41,7 @@ class Timeline {
         remove: true,
       },
       margin: {
-        axis: 5,
+        axis: 3,
         item: 5,
       },
       showMajorLabels: false,
@@ -92,6 +94,8 @@ class Timeline {
 
     this.timeline.on('contextmenu', this.onContextMenu.bind(this));
 
+    this.timeline.on('changed', this.onChanged.bind(this));
+
     this.currentCountBar = this.timeline.addCustomTime(
       new Date(0),
       'currentCountBar'
@@ -99,7 +103,6 @@ class Timeline {
   }
 
   axisLabelFormatter(date, scale, step) {
-    // console.log(new Date(date).getTime(), tick, scale, step);
     const count = new Date(date).getTime();
     if (this.tick < count) {
       this.tick = count;
@@ -108,12 +111,24 @@ class Timeline {
       this.topAxis = !this.topAxis;
       this.tick = 0;
     }
-    let topLabel = count;
+    // let topLabel = count;
+    // if (this.drillSchedule && this.drillSchedule.steps[count - 1]) {
+    //   const timeInSeconds = this.drillSchedule.steps[count - 1].time;
+    //   topLabel = this.formatTime(timeInSeconds);
+    // }
+    if (count == 0) {
+      return 'Start';
+    }
+    const topLabel = this.getCountTime(count); // + '<br>test';
+    return this.topAxis ? topLabel : count;
+  }
+
+  getCountTime(count) {
     if (this.drillSchedule && this.drillSchedule.steps[count - 1]) {
       const timeInSeconds = this.drillSchedule.steps[count - 1].time;
-      topLabel = this.formatTime(timeInSeconds);
+      return this.formatTime(timeInSeconds);
     }
-    return this.topAxis ? topLabel : count;
+    return count;
   }
 
   formatTime(timeInSeconds) {
@@ -158,11 +173,34 @@ class Timeline {
   }
 
   setCurrentCount(count) {
+    this.currentCount = count;
+    // update current count background item
+    if (this.currentCountBackgroundItem) {
+      this.currentCountBackgroundItem.start = new Date(count);
+      this.currentCountBackgroundItem.end = new Date(count + 1);
+      this.items.update(this.currentCountBackgroundItem);
+    }
     // reset axis-related variables
     this.topAxis = true;
     this.tick = count; // must set to count we're moving to in order to prevent flip/flopping
+    // this.timeline.setCustomTime(new Date(count), this.currentCountBar);
+  }
 
-    this.timeline.setCustomTime(new Date(count), this.currentCountBar);
+  highlightCurrentCount() {
+    const self = this;
+    const count = self.currentCount || 0;
+
+    const selector = 'div.vis-bottom div.vis-time-axis div.vis-text.vis-minor';
+    if (self.currentAxisCountEl) {
+      $(self.currentAxisCountEl).removeClass('current-count');
+    }
+    self.currentAxisCountEl = $(selector).filter(function() {
+      return $(this).text() == count.toString() // eslint-disable-line no-invalid-this
+       || $(this).text() == self.getCountTime(count); // eslint-disable-line no-invalid-this
+    });
+    if (self.currentAxisCountEl) {
+      self.currentAxisCountEl.addClass('current-count');
+    }
   }
 
   isCountVisible(count) {
@@ -202,8 +240,20 @@ class Timeline {
     // expects an object with groups of items as properties
     this.items.clear();
 
+    this.addCurrentCountItem();
     this.addMusicItems(data.music);
     this.addBookmarkItems(data.bookmarks);
+  }
+
+  addCurrentCountItem() {
+    this.currentCountBackgroundItem = {
+      id: 'current-count',
+      start: new Date(0),
+      end: new Date(1),
+      type: 'background',
+      className: 'current-count',
+    };
+    this.items.add(this.currentCountBackgroundItem);
   }
 
   addMusicItems(musicList) {
@@ -274,6 +324,10 @@ class Timeline {
       start: new Date(bookmark.count),
       bookmark: bookmark,
     };
+  }
+
+  onChanged() {
+    this.highlightCurrentCount();
   }
 
   onMove(item, callback) {
@@ -353,8 +407,13 @@ class Timeline {
   }
 
   itemTemplate(item, element, data) {
-    const template = this.templates[item.group];
+    const templateKey = item.type == 'background' ? 'currentCount' : item.group;
+    const template = this.templates[templateKey];
     return template(item, element, data);
+  }
+
+  currentCountTemplate(item, element, data) {
+    return '';
   }
 
   musicItemTemplate(item, element, data) {

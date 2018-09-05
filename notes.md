@@ -52,12 +52,19 @@ function inside(point, vs) {
 * what would this do to obliques?  would it work the same?
 
 TODO
-* Delete Track not working
-* Add member color legend to charts
-* allow admin to make music public
-* filter nammb music... how to identify?
-    * assume public is nammb collection?
-* add tab to ChooseMusic dialog, for NAMMB collection
+* RESTORE POINTS? or some other way of recovering
+* Advanced Undo: see history of edits and restore to a certain point.
+* Highlight count on timeline differently to make more obvious
+* make auto-save optional, and let user specify time interval
+    * need a way to detect unsaved when leaving tab
+* embolden grid lines on even counts, eg 2/4, etc
+* print grid lines in pdf? option?
+* play with other ways of highlighting current count on timeline
+    * highlight whole block?
+    * is it possible to draw the numbers exactly on the line, rather than just after?
+    * rectangle around count #?
+* insert mode
+    * switch to flip between insert/overwrite mode
 * Maneuvers and Paths should overwrite everything from first turn on?
     * followers need to keep doing what they're doing until they reach leader
 * see John's Keep list
@@ -76,23 +83,23 @@ TODO
   * load csv?
   * hover to see member info?
 * analytics
+* get rid of paging on dialogs
 * option to push music out when counts are inserted
 * cue sheets
-* rolling parallelogram tool
-* diamond step two tool? (or alternating option step two?)
-* block column tool
-* block buster
-* starburst tool
-* bowtie tool - see nammb site
-* queen anne step
-* pass through obliques
-* reverse illinois? company fronts to block.  name?
+* maneuvers
+  * rolling parallelogram tool
+  * diamond step two tool? (or alternating option step two?)
+  * block column tool
+  * block buster
+  * starburst tool
+  * bowtie tool - see nammb site* queen anne step
+  * pass through obliques
+  * reverse illinois? company fronts to block.  name?
+* queen anne
 * override direction of block when adding maneuver? or via selection?
 * maneuver preview... instead of footprints (or may in addition to), show "ghosts" where band will be in N counts.  Allow them to change N, recalc position.
     * alternatively, animate the ghosts through N counts
 * better open dialog
-* insert mode
-    * switch to flip between insert/overwrite mode
 * selection tool
     * switch between block / file /individual mode?
     * override direction of selection?
@@ -111,6 +118,5 @@ TODO
 * optimize CSS
 * factor out common maneuver tool controller?
 * factor out common controls, like file direction, etc
-* get rid of paging on dialogs
 * generate video of drill
 * generate gif of band for next N counts, share it

@@ -22,10 +22,20 @@
     background-color: white;
 }
 
+.current-count {
+    background-color: rgba(213,221,246,.4);
+}
+
 .timeline .vis-item {
     color: white;
     padding-left: 5px;
     padding-right: 5px;
+}
+
+.timeline div.vis-bottom div.vis-time-axis div.vis-text.vis-minor {
+    text-align: left;
+    border-left: solid 1px silver;
+    --margin-left: -12px;
 }
 
 .timeline .vis-item.tempo {
