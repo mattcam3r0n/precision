@@ -54,15 +54,9 @@ function inside(point, vs) {
 TODO
 * RESTORE POINTS? or some other way of recovering
 * Advanced Undo: see history of edits and restore to a certain point.
-* Highlight count on timeline differently to make more obvious
+    * double check... are all edits undoable?
 * make auto-save optional, and let user specify time interval
     * need a way to detect unsaved when leaving tab
-* embolden grid lines on even counts, eg 2/4, etc
-* print grid lines in pdf? option?
-* play with other ways of highlighting current count on timeline
-    * highlight whole block?
-    * is it possible to draw the numbers exactly on the line, rather than just after?
-    * rectangle around count #?
 * insert mode
     * switch to flip between insert/overwrite mode
 * Maneuvers and Paths should overwrite everything from first turn on?

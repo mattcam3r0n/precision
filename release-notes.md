@@ -241,3 +241,5 @@ Released v0.3.4
 ^ Release v0.3.11 - My Music tabs
 
 * NEW: The current count on the timeline is now shaded to make it more obvious.  The blue line was causing some confusion about which count (to the left or right of the line) was current.
+* NEW: On the grid, lines on every 2 paces are accented slightly.
+* NEW: "Print Grid" option when printing charts.

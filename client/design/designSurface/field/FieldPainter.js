@@ -6,7 +6,7 @@ class FieldPainter {
   constructor(canvas, options) {
     this.canvas = canvas;
     this.options = options || {};
-    this.gridPainter = new GridPainter(canvas);
+    this.gridPainter = new GridPainter(canvas, options);
     this.strideType = 0;
     this._isGridVisible = false;
     this._isLogoVisible = false;

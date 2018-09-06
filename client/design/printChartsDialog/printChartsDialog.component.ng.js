@@ -99,6 +99,7 @@ angular.module('drillApp').component('printChartsDialog', {
     function printBookmarks() {
       printService.printBookmarks(ctrl.selectedBookmarks, {
         printInColor: ctrl.printInColor,
+        showGrid: ctrl.printGrid,
       });
       $('#printChartsDialog').modal('hide');
     }
@@ -112,6 +113,7 @@ angular.module('drillApp').component('printChartsDialog', {
       };
       printService.printCurrentCount(bookmark, {
         printInColor: ctrl.printInColor,
+        showGrid: ctrl.printGrid,
       });
       $('#printChartsDialog').modal('hide');
     }

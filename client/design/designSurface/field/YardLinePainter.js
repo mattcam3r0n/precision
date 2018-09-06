@@ -9,7 +9,7 @@ class YardLinePainter {
   }
 }
 
-let _opacity = 0.7;
+let _opacity = 0.8;
 let _yardlineMarkers = [
   '', // no longer showing G line, but leaving for calcs
   '10',
@@ -109,7 +109,7 @@ function addYardLineNumbers(canvas, options) {
     fontWeight: 'normal',
     stroke: options.stroke || 'white',
     fill: options.fill || 'white',
-    opacity: options.opacity || 0.5,
+    opacity: options.opacity || _opacity,
     statefullCache: true,
     selectable: false,
     evented: false,
@@ -174,7 +174,7 @@ function addNumberArrow(canvas, position, leftOf50) {
     height: 10,
     width: 10,
     fill: 'white',
-    opacity: 0.5,
+    opacity: _opacity,
     angle: leftOf50 ? 270 : 90,
   });
   canvas.add(arrow);

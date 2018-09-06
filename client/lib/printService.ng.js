@@ -101,8 +101,12 @@ class printService {
     const painter = new FieldPainter(canvas, {
       // fill: 'black',
       stroke: 'gray',
+      gridColor: 'gray',
+      oddGridLinesOpacity: 0.3,
+      evenGridLinesOpacity: 0.6,
     });
     console.time('field paint');
+    painter.isGridVisible = options.showGrid;
     painter.paint();
     console.timeEnd('field paint');
 

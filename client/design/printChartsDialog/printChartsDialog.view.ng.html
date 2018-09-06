@@ -82,7 +82,15 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="checkbox" ng-model="$ctrl.printInColor" /> Print marchers in color.
+                            </div>
+                            <div class="col-md-6">
+                                <input type="checkbox" ng-model="$ctrl.printGrid" /> Print grid.            
+                            </div>
+                        </div>
+                </div>
                 </div>
             </div>
             <div class="modal-footer button-row">
@@ -93,7 +101,6 @@
                     </div>
                 </div>
                 <div class="col-md-8 text-left">
-                    <input type="checkbox" ng-model="$ctrl.printInColor" /> Print marchers in color.
                 </div>
                 <div class="col-md-4">
                     <button ng-click="$ctrl.print()" type="button" class="btn btn-primary" data-dismiss="modal">Print</button>
