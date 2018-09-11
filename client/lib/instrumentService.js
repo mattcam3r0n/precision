@@ -51,7 +51,7 @@ const instruments = [
     key: 'horn',
     name: 'Horns',
     color: 'gold',
-    hex: '#0000FF',
+    hex: '#FFD700',
   },
   {
     key: 'trombone',
@@ -63,7 +63,7 @@ const instruments = [
     key: 'baritone',
     name: 'Baritones',
     color: 'purple',
-    hex: '#8B0000',
+    hex: '#800080',
   },
   {
     key: 'tuba',
