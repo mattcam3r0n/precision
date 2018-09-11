@@ -1,3 +1,17 @@
+#### Version 0.3.12 - 9/11/18
+
+<img src="./timeline-changes.png" width="90%" />
+
+**NEW**: Formatting changes to the timeline to make it clearer which count is the current count.
+
+**NEW**: When showing the grid on the field, lines on every 2 paces are accented slightly.
+
+**NEW**: **Print Grid** option to show the grid when printing charts.
+
+**FIX**: The color legend on charts showed wrong colors for a few instruments. Fixed.
+
+-------
+
 #### Version 0.3.11 - 8/30/18
 
 <img src="./nammb-library-tabs.png" width="60%" />
