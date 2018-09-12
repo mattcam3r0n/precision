@@ -251,4 +251,6 @@ Released v0.3.4
   * Chart titles now wrap lines when very long
   * Spacing and placement of field, color legend
 
+^ Release v0.3.13
+
 

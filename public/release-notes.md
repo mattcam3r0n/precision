@@ -1,3 +1,12 @@
+#### Version 0.3.13 - 9/12/18
+
+**FIX**: A few minor chart updates:
+
+  * Long titles will wrap
+  * Spacing and placement of field and color legend
+
+-------
+
 #### Version 0.3.12 - 9/11/18
 
 <img src="./timeline-changes.png" width="90%" />
