@@ -247,4 +247,8 @@ Released v0.3.4
 
 ^ Release v0.3.12 - Timeline changes
 
-* FIX: Chart titles now wrap lines when very long
+* FIX: Chart updates:
+  * Chart titles now wrap lines when very long
+  * Spacing and placement of field, color legend
+
+
