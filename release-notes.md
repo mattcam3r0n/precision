@@ -244,3 +244,7 @@ Released v0.3.4
 * NEW: On the grid, lines on every 2 paces are accented slightly.
 * NEW: "Print Grid" option when printing charts.
 * FIX: The color legend on charts showed wrong colors for a few instruments. Fixed.
+
+^ Release v0.3.12 - Timeline changes
+
+* FIX: Chart titles now wrap lines when very long

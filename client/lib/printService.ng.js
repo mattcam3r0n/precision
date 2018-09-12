@@ -56,19 +56,21 @@ class printService {
   }
 
   addDrillName(doc, name) {
-    doc.setFontSize(22);
-    doc.text(10, 20, name);
+    doc.setFontSize(14);
+    const splitName = doc.splitTextToSize(name, 80);
+    doc.text(10, 10, splitName);
   }
 
   addTitle(doc, title) {
     title = title || '';
-    doc.setFontSize(22);
+    const splitTitle = doc.splitTextToSize(title, 80);
+    doc.setFontSize(14);
     const leftOffset =
       (doc.internal.pageSize.width -
-        (doc.getStringUnitWidth(title) * doc.internal.getFontSize()) /
+        (doc.getStringUnitWidth(splitTitle[0]) * doc.internal.getFontSize()) /
           doc.internal.scaleFactor) /
       2;
-    doc.text(leftOffset, 20, title);
+    doc.text(leftOffset, 10, splitTitle);
   }
 
   addCounts(doc, counts) {
@@ -76,11 +78,11 @@ class printService {
     counts = counts || 0;
     // const left = doc.internal.pageSize.width * .75;
     const label = 'Counts ' + count + ' - ' + (count + counts);
-    doc.setFontSize(16);
+    doc.setFontSize(14);
     const leftOffset =
       doc.internal.pageSize.width -
       (doc.getStringUnitWidth(label) * doc.internal.getFontSize()) / 2;
-    doc.text(leftOffset, 20, label);
+    doc.text(leftOffset, 10, label);
   }
 
   addNotes(doc, notes) {
@@ -90,7 +92,7 @@ class printService {
       notes,
       doc.internal.pageSize.width - 20
     );
-    doc.text(10, 30, splitText);
+    doc.text(10, 25, splitText);
   }
 
   drawField(doc, canvas, counts, options) {
@@ -127,7 +129,7 @@ class printService {
     // const imgData = getResizedImage(doc, canvas);
     console.timeEnd('toDataUrl');
     console.time('addImage');
-    doc.addImage(imgData, 'PNG', 0, 50, width, height);
+    doc.addImage(imgData, 'PNG', 0, 35, width, height);
     console.timeEnd('addImage');
     console.timeEnd('drawField');
   }
@@ -152,7 +154,7 @@ class printService {
       const row = Math.floor(i / 6);
       const col = i - row * 6;
       const x = col * 40 + 10;
-      const y = (doc.internal.pageSize.height - 40) + (10 * row + 10);
+      const y = (doc.internal.pageSize.height - 45) + (10 * row + 10);
       const rgb = hex2rgb(inst.hex || '#FF0000');
       doc.setDrawColor(0, 0, 0);
       doc.setFillColor(rgb.red, rgb.green, rgb.blue);
