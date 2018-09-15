@@ -258,5 +258,5 @@ Released v0.3.4
 ^ Release v0.3.14
 
 * FIX: Cleaner grid lines
-
+* FIX: Optimize how drills are loaded.
 
