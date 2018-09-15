@@ -117,6 +117,11 @@ angular.module('drillApp').component('contextMenu', {
       drillEditorService.showAll();
     };
 
+    ctrl.insertHalt = function(counts) {
+      eventService.notify(Events.activateInsertTool);
+      // drillEditorService.insertHalt(counts);
+    };
+
     function activate(args) {
       if (ctrl.isActivated) {
         deactivate();

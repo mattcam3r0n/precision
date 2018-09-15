@@ -105,6 +105,44 @@ class DrillBuilder {
     });
   }
 
+  insertHalt(members, counts) {
+    // if step is null, use current state
+    members.forEach((m) => {
+      let action = new Action({
+        strideType: m.currentState.strideType,
+        stepType: StepType.Halt,
+        direction: m.currentState.direction,
+      });
+      ScriptBuilder.insertActionAndResume(
+        m,
+        action,
+        this.drill.count + 1,
+        this.drill.count + counts + 1
+      );
+    });
+
+    this.drill.isDirty = true;
+  }
+
+  insertMarkTime(members, counts) {
+    // if step is null, use current state
+    members.forEach((m) => {
+      let action = new Action({
+        strideType: m.currentState.strideType,
+        stepType: StepType.MarkTime,
+        direction: m.currentState.direction,
+      });
+      ScriptBuilder.insertActionAndResume(
+        m,
+        action,
+        this.drill.count + 1,
+        this.drill.count + counts + 1
+      );
+    });
+
+    this.drill.isDirty = true;
+  }
+
   insertStep(members, step) {
     // if step is null, use current state
     let defaultValue = (a, b) => (a === null || a === undefined ? b : a);
@@ -456,6 +494,16 @@ class DrillBuilder {
 
     members.forEach((m) => {
       ScriptBuilder.deleteCount(m, count - 1);
+    });
+
+    this.drill.isDirty = true;
+  }
+
+  deleteCounts(count, counts) {
+    let members = this.getSelectedMembers();
+
+    members.forEach((m) => {
+      ScriptBuilder.deleteCounts(m, count, counts);
     });
 
     this.drill.isDirty = true;

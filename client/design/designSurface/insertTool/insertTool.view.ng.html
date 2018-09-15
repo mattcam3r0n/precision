@@ -1,0 +1,27 @@
+<tool-window window-title="'Insert Halt / Mark Time'" is-activated="$ctrl.isActivated()" on-save="$ctrl.save()" on-cancel="$ctrl.cancel()">
+  <ul>
+    <li class="description">
+      Insert Halt or Mark Time for a given number of counts.
+    </li>
+    <li class="section-header">
+      <span>Initial State</span>
+    </li>
+    <li>
+      <button ng-click="$ctrl.setInitialState('halt')" ng-class="{ 'active': $ctrl.initialState == 'halt' }" class="btn btn-default"
+        title="Halt" data-toggle="tooltip" data-placement="bottom">
+        <i class="fa fa-stop"></i>
+      </button>
+      <button ng-click="$ctrl.setInitialState('mark-time')" ng-class="{ 'active': $ctrl.initialState == 'mark-time' }" class="btn btn-default"
+        title="Mark Time" data-toggle="tooltip" data-placement="bottom">
+        <i class="fa fa-long-arrow-alt-up context-button"></i>
+        <i class="fa fa-long-arrow-alt-down context-button"></i>
+      </button>
+    </li>
+    <li class="section-header">
+      <span>Counts</span>
+    </li>
+    <li>
+      <spinner-box ng-model="$ctrl.counts"></spinner-box>
+    </li>
+  </ul>
+</tool-window>

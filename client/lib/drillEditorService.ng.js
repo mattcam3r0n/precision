@@ -313,6 +313,13 @@ class DrillEditorService {
     this.save();
   }
 
+  deleteCounts(count, counts) {
+    this.goToCount(count - 1);
+    this.drillBuilder.deleteCounts(count, counts);
+    this.notifyDrillStateChanged();
+    this.save();
+  }
+
   clearCount() {
     const count = this.drill.count;
     this.drillPlayer.stepBackward();
@@ -370,6 +377,60 @@ class DrillEditorService {
 
   doInsertStep(step, members) {
     this.drillBuilder.insertStep(members, step);
+    this.drillPlayer.stepForward();
+    this.notifyDrillStateChanged();
+    this.save();
+  }
+
+  insertHalt(counts, members) {
+    const self = this;
+    members = members || this.drillBuilder.getSelectedMembers();
+    const count = this.drill.count + 1;
+
+    self.doInsertHalt(counts, members);
+
+    UndoManager.add({
+      label: 'Insert Halt',
+      undo: () => {
+        // inserting a halt inserts N counts + 1, so delete counts + 1
+        self.deleteCounts(count, counts);
+        this.goToCount(count - 1);
+      },
+      redo: () => {
+        self.insertHalt(counts, members);
+      },
+    });
+  }
+
+  doInsertHalt(counts, members) {
+    this.drillBuilder.insertHalt(members, counts);
+    this.drillPlayer.stepForward();
+    this.notifyDrillStateChanged();
+    this.save();
+  }
+
+  insertMarkTime(counts, members) {
+    const self = this;
+    members = members || this.drillBuilder.getSelectedMembers();
+    const count = this.drill.count + 1;
+
+    self.doInsertMarkTime(counts, members);
+
+    UndoManager.add({
+      label: 'Insert Mark Time',
+      undo: () => {
+        // inserting a MT inserts N counts + 1, so delete counts + 1
+        self.deleteCounts(count, counts);
+        this.goToCount(count - 1);
+      },
+      redo: () => {
+        self.insertMarkTime(counts, members);
+      },
+    });
+  }
+
+  doInsertMarkTime(counts, members) {
+    this.drillBuilder.insertMarkTime(members, counts);
     this.drillPlayer.stepForward();
     this.notifyDrillStateChanged();
     this.save();
