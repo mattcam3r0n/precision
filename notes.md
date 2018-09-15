@@ -114,3 +114,5 @@ TODO
 * factor out common controls, like file direction, etc
 * generate video of drill
 * generate gif of band for next N counts, share it
+
+* git test
