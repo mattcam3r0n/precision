@@ -1,3 +1,13 @@
+#### Version 0.3.14 - 9/15/18
+
+**NEW**: **Insert Halt / Mark Time...** option on the right-click menu. This option will let you specify how many counts of halt or mark time.  The band will then continue with any actions that were there prior to inserting the halt.
+
+The inserted halt / mark time steps can be undone via the Undo menu.
+
+NOTE: This feature is experimental and may move to the Steps menu in the future.
+
+-------
+
 #### Version 0.3.13 - 9/12/18
 
 **FIX**: A few minor chart updates:
