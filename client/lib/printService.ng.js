@@ -104,7 +104,7 @@ class printService {
       // fill: 'black',
       stroke: 'gray',
       gridColor: 'gray',
-      oddGridLinesOpacity: 0.3,
+      oddGridLinesOpacity: 0.2,
       evenGridLinesOpacity: 0.6,
     });
     console.time('field paint');

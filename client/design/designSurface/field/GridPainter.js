@@ -5,7 +5,7 @@ class GridPainter {
         this.canvas = canvas;
         this.options = Object.assign({
             gridColor: 'white',
-            oddGridLinesOpacity: 0.4,
+            oddGridLinesOpacity: 0.2,
             evenGridLinesOpacity: 0.6,
         }, options);
     }
