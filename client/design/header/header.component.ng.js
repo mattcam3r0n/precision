@@ -61,6 +61,7 @@ angular.module('drillApp').component('designHeader', {
     };
 
     ctrl.openDrill = function(id) {
+      // console.log('header.openDrill');
       eventService.notify(Events.showSpinner);
       appStateService.openDrill(id).then((drill) => {
         eventService.notify(Events.hideSpinner);

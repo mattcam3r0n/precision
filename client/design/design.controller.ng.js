@@ -52,7 +52,7 @@ angular
 
         if ($scope.currentUser === undefined) return; // user not available yet
 
-        // if (newValue && oldValue && newValue._id === oldValue._id) return; // phantom change
+        if (newValue && oldValue && newValue._id === oldValue._id) return; // phantom change
 
         appStateService.userChanged();
 
@@ -143,6 +143,7 @@ angular
     });
 
     function openLastDrillOrNew() {
+      // console.log('design.openLastDrillOrNew');
       return appStateService.getLastDrillId().then((drillId) => {
         if (!drillId) {
           eventService.notify(Events.hideSpinner);

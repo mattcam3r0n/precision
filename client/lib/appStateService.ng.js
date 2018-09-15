@@ -144,6 +144,7 @@ class appStateService {
   }
 
   openDrill(id) {
+    // console.log('openDrill', id);
     const start = performance.now();
     return this.getDrillZipped(id).then((drill) => {
       if (shouldUpgradeDrill(drill)) {

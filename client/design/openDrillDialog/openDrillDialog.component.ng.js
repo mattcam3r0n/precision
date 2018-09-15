@@ -62,6 +62,7 @@ angular.module('drillApp').component('openDrillDialog', {
     }, 500, false);
 
     $scope.open = function(selectedDrill) {
+      // console.log('openDrillDialog.open');
       eventService.notify(Events.showSpinner);
       appStateService.openDrill(selectedDrill._id).then((drill) => {
         eventService.notify(Events.hideSpinner);
