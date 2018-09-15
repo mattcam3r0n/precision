@@ -255,4 +255,8 @@ Released v0.3.4
 
 * NEW: Insert Halt / Mark Timeu option on right-click menu.
 
+^ Release v0.3.14
+
+* FIX: Cleaner grid lines
+
 
