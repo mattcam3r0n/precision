@@ -46,7 +46,6 @@ class ScriptBuilder {
   }
 
   static insertActionAndResume(member, action, insertCount, resumeCount) {
-console.log('insertActinoAndResume', action, insertCount, resumeCount);
     // get action at resumeCount
     let nextAction = member.script[insertCount - 1];
     if (nextAction == null) {
