@@ -155,7 +155,13 @@ class DrillBuilder {
         deltaX: step.deltaX,
         deltaY: step.deltaY,
       });
-      ScriptBuilder.insertActionAtCount(m, action, this.drill.count + 1);
+      // ScriptBuilder.insertActionAtCount(m, action, this.drill.count + 1);
+      ScriptBuilder.insertActionAndResume(
+        m,
+        action,
+        this.drill.count + 1,
+        this.drill.count + 1 + 1
+      );
     });
 
     this.drill.isDirty = true;
