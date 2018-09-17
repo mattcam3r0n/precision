@@ -257,6 +257,6 @@ Released v0.3.4
 
 ^ Release v0.3.14
 
-* FIX: Cleaner grid lines
+* FIX: Cleaner grid lines on screen and chart.  Even lines are accentuated and odd lines are slightly faded.
 * FIX: Optimize how drills are loaded.
-
+* FIX: Changes to Insert Step button to better handle upcoming turns.
