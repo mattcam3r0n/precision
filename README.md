@@ -3,7 +3,7 @@ Drill writing software for military marching bands.
 
 This software is under development for the [National Association of Military Marching Bands](HTTP://NAMMB.ORG). It will be available via their website when complete.
 
-![Precision Demo](/public/Precision.mov?raw=true "Demo")
+![Precision Screenshot](/public/precision.png?raw=true "Screenshot")
 
 # Features
 * Create drills using software designed specifically for military style marching.
