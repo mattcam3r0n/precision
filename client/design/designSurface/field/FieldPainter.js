@@ -39,7 +39,7 @@ class FieldPainter {
 
   showFieldLogo() {
     let self = this;
-    let scaleFactor = 0.75;
+    let scaleFactor = 0.75; // 0.2; // 0.75;
     fabric.Image.fromURL('/field-logo.png', function(img) {
       // destroy logo is already exists
       if (self.logo) self.canvas.remove(self.logo);

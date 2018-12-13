@@ -51,6 +51,8 @@ function inside(point, vs) {
   * cons - adds more work to playback (slower)
 * what would this do to obliques?  would it work the same?
 
+
+
 TODO
 * RESTORE POINTS? or some other way of recovering
 * Advanced Undo: see history of edits and restore to a certain point.
@@ -115,4 +117,20 @@ TODO
 * generate video of drill
 * generate gif of band for next N counts, share it
 
-* git test
+
+
+Drill Storage changes
+======================
+* create a Drills bucket in s3
+* store zipped json representation of drill
+* 1st step - move to new drillIndex strategy?
+* insertDrill
+    * creates index record
+    * uploads to s3 bucket
+    * who creates id? index record?
+* updateDrill
+    * update index record
+    * update s3 bucket (versioning?)
+* removeDrill
+    * delete index record
+    * delete from bucket
