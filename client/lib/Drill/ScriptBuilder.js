@@ -30,22 +30,24 @@ import ScriptSequence from '/client/lib/drill/ScriptSequence';
 
 class ScriptBuilder {
   static insertActionAtCount(member, action, count) {
+    console.log('insertActionAtCount');
     // get next count
-    if (member.script[count] == null) {
-      member.script[count] = {
-        strideType: member.currentState.strideType,
-        stepType: member.currentState.stepType,
-        direction: member.currentState.direction,
-        deltaX: member.currentState.deltaX,
-        deltaY: member.currentState.deltaY,
-      };
-    }
+    // if (member.script[count] == null) {
+    //   member.script[count] = {
+    //     strideType: member.currentState.strideType,
+    //     stepType: member.currentState.stepType,
+    //     direction: member.currentState.direction,
+    //     deltaX: member.currentState.deltaX,
+    //     deltaY: member.currentState.deltaY,
+    //   };
+    // }
     // insert the action (push existing to the right)
     member.script.splice(count - 1, 0, action);
     return true;
   }
 
   static insertActionAndResume(member, action, insertCount, resumeCount) {
+    console.log('insertActionAndResume');
     // get action at resumeCount
     let nextAction = member.script[insertCount - 1];
     if (nextAction == null) {

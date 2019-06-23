@@ -155,13 +155,15 @@ class DrillBuilder {
         deltaX: step.deltaX,
         deltaY: step.deltaY,
       });
-      // ScriptBuilder.insertActionAtCount(m, action, this.drill.count + 1);
-      ScriptBuilder.insertActionAndResume(
-        m,
-        action,
-        this.drill.count + 1,
-        this.drill.count + 1 + 1
-      );
+      ScriptBuilder.insertActionAtCount(m, action, this.drill.count + 1);
+      // insertActionAndResume seems to have broken insertStep. The "resume"
+      // part is helpful for inserting halts/mt, but not turns.
+      // ScriptBuilder.insertActionAndResume(
+      //   m,
+      //   action,
+      //   this.drill.count + 1,
+      //   this.drill.count + 1 + 1
+      // );
     });
 
     this.drill.isDirty = true;
