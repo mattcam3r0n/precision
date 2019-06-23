@@ -253,10 +253,14 @@ Released v0.3.4
 
 ^ Release v0.3.13
 
-* NEW: Insert Halt / Mark Timeu option on right-click menu.
+* NEW: Insert Halt / Mark Time option on right-click menu.
 
 ^ Release v0.3.14
 
 * FIX: Cleaner grid lines on screen and chart.  Even lines are accentuated and odd lines are slightly faded.
 * FIX: Optimize how drills are loaded.
 * FIX: Changes to Insert Step button to better handle upcoming turns.
+
+^ Release v0.3.15
+
+*FIX: Insert Step button was not working properly since v0.3.14.

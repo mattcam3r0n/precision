@@ -1,3 +1,7 @@
+#### Version 0.3.14 - 6/23/19
+
+**FIX**: Fixed Insert Step button. A bug was introduced in v0.3.14 that caused incorrect behavior when inserting steps immediatey before a turn.
+
 #### Version 0.3.14 - 9/15/18
 
 **NEW**: **Insert Halt / Mark Time...** option on the right-click menu. This option will let you specify how many counts of halt or mark time.  The band will then continue with any actions that were there prior to inserting the halt.
