@@ -138,12 +138,18 @@ class ScriptBuilder {
   }
 
   static clearCount(member, count) {
-    member.script[count - 1] = null;
+    if (count >= member.script.length) {
+      return;
+    }
+    member.script[count] = null;
   }
 
   static deleteCount(member, count) {
+    if (count >= member.script.length) {
+      return;
+    }
     // delete count and shift following counts to the left
-    member.script.splice(count - 1, 1);
+    member.script.splice(count, 1);
   }
 
   static deleteCounts(member, count, counts) {

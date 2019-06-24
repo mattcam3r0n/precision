@@ -305,8 +305,27 @@ class DrillEditorService {
       });
   }
 
-  deleteCount() {
+  deleteCount(members) {
+    members = members || this.drillBuilder.getSelectedMembers();
     const count = this.drill.count;
+    const counts = 1;
+    this.makeUndoable(
+      'Delete Step',
+      members,
+      count,
+      counts,
+      () => {
+        this.doDeleteCount(count);
+      },
+      null,
+      () => {
+        this.goToCount(count);
+        this.doDeleteCount(count);
+      }
+    );
+  }
+
+  doDeleteCount(count) {
     this.drillPlayer.stepBackward();
     this.drillBuilder.deleteCount(count);
     this.notifyDrillStateChanged();
@@ -320,8 +339,27 @@ class DrillEditorService {
     this.save();
   }
 
-  clearCount() {
+  clearCount(members) {
+    members = members || this.drillBuilder.getSelectedMembers();
     const count = this.drill.count;
+    const counts = 1;
+    this.makeUndoable(
+      'Clear Step',
+      members,
+      count,
+      counts,
+      () => {
+        this.doClearCount(this.drill.count);
+      },
+      null,
+      () => {
+        this.goToCount(count);
+        this.doClearCount(this.drill.count);
+      }
+    );
+  }
+
+  doClearCount(count) {
     this.drillPlayer.stepBackward();
     this.drillBuilder.clearCount(count);
     this.notifyDrillStateChanged();
