@@ -264,3 +264,7 @@ Released v0.3.4
 ^ Release v0.3.15
 
 *FIX: Insert Step button was not working properly since v0.3.14.
+
+^ Release v0.3.16
+
+*FIX: Fixes to Delete and Clear step buttons. You can now undo these actions.

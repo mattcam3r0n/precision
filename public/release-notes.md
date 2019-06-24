@@ -1,4 +1,8 @@
-#### Version 0.3.14 - 6/23/19
+#### Version 0.3.16 - 6/23/19
+
+**FIX**: Fixes to Delete and Clear step buttons. You can now undo these actions.
+
+#### Version 0.3.15 - 6/23/19
 
 **FIX**: Fixed Insert Step button. A bug was introduced in v0.3.14 that caused incorrect behavior when inserting steps immediatey before a turn.
 
