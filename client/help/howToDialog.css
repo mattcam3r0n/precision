@@ -1,0 +1,22 @@
+.how-to-dialog .modal-lg {
+    width: 600px;
+}
+
+.how-to-dialog .modal-body {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.how-to-dialog .button-row {
+    padding: 10px;
+}
+
+.how-to-dialog .button-row div {
+    height: 50px;
+}
+
+.how-to-dialog .video {
+    cursor: pointer;
+    padding: 5px;
+}
+

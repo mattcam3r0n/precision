@@ -51,6 +51,10 @@ class Events {
     return 'showReleaseNotesDialog';
   }
 
+  static get showHowToDialog() {
+    return 'showHowToDialog';
+  }
+
   static get showSaveAsDialog() {
     return 'showSaveAsDialog';
   }

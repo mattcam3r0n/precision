@@ -101,6 +101,10 @@ angular.module('drillApp').component('designHeader', {
       eventService.notify(Events.showReleaseNotesDialog);
     };
 
+    ctrl.showHowTo = function() {
+      eventService.notify(Events.showHowToDialog);
+    };
+
     ctrl.focusDrillName = function() {
       angular.element('#txtDrillName').focus();
     };

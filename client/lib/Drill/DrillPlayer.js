@@ -44,6 +44,7 @@ class DrillPlayer {
         this.loadMusic(playMusic)
             .then(() => {
                 this.stopSpinner();
+                console.log('schedule', self.schedule);
                 self.animationLoop = new AnimationLoop(self.animate.bind(self));
                 self.isPlaying = true;
                 self.animationLoop.start();
