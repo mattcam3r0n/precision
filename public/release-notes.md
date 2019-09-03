@@ -1,3 +1,7 @@
+#### Version 0.3.17 - 9/3/19
+
+**New**: New "How To Videos" on the Help menu.
+
 #### Version 0.3.16 - 6/23/19
 
 **FIX**: Fixes to Delete and Clear step buttons. You can now undo these actions.

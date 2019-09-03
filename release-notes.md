@@ -268,3 +268,7 @@ Released v0.3.4
 ^ Release v0.3.16
 
 *FIX: Fixes to Delete and Clear step buttons. You can now undo these actions.
+
+^ Release v0.3.17
+
+* NEW: How To Videos dialog
