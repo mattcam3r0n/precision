@@ -1,3 +1,7 @@
+#### Version 0.3.18 - 9/4/19
+
+**New**: New "How To Videos" for _Using Bookmarks_, _Uploading Music_, _Adding Music_, _Adding Music: Manual Tempo_.
+
 #### Version 0.3.17 - 9/3/19
 
 **New**: New "How To Videos" on the Help menu.

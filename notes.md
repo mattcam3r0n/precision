@@ -134,3 +134,20 @@ Drill Storage changes
 * removeDrill
     * delete index record
     * delete from bucket
+
+How To Video Ideas
+==================
+* using bookmarks
+* adding music - fixed tempo
+* adding music - variable tempo
+* adding music - creating clips
+* uploading music
+* deleting counts
+* Maneuvers
+* Paths
+* Gates and Pinwheels
+* Mark time, Halt
+* Inserting steps
+* Marcher Colors
+* Undo
+* Building a simple drill walkthru
