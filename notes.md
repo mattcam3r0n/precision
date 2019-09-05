@@ -151,3 +151,14 @@ How To Video Ideas
 * Marcher Colors
 * Undo
 * Building a simple drill walkthru
+
+Music Editor Notes
+==================
+* click a point in music and choose "Set Start" and "Set End" rather than using click and drag selection?
+  * easier for long pieces
+* visualize beats on sound wave? 
+  * drag individual beats?
+* how can we handle pickup notes?
+  * some way to align downbeats but still allow pickups?
+  * 
+* change tempo of just a section?
