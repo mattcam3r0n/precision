@@ -20,7 +20,7 @@ A modern browser like Chrome, Safari, or Firefox.
 
 Precision is built with open source frameworks, libraries and tools, including:
 
-* [Meteor](https://www.meteor.com/) - general app framework for client- and server-side javascript
+* [Meteor](https://www.meteor.com/) - general app framework for client- and server-side javascript, MongoDB storage, authentication, etc.
 * [Bootstrap](https://getbootstrap.com/) 
 * [Angular JS](https://angularjs.org/) - SPA framework
 * [Angular-Meteor](https://angular-meteor.com/) - Angular JS integration with Meteor
