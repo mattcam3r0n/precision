@@ -12,13 +12,13 @@ This software is an ongoing project for the [National Association of Military Ma
 * Upload music files and create "clips" that can be easily re-used in new drills.
 * Supports 6-to-5 and 8-to-5 strides, countermarches, obliques, gates, pinwheels and more.
 
-[Adding Marcher](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Add%20Marchers.mp4)
-[Selecting Marchers](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Selecting%20Marchers.mp4)
-[Stepping Through The Drill](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Stepping%20Thru.mp4)
-[Adding Steps](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Adding%20Steps.mp4)
-[Countermarch Tool](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Countermarch%20Maneuver.mp4)
-[Adding Music](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Adding%20Music.mp4)
-[Zooming](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Zoom.mp4)
+* [Adding Marcher](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Add%20Marchers.mp4)
+* [Selecting Marchers](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Selecting%20Marchers.mp4)
+* [Stepping Through The Drill](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Stepping%20Thru.mp4)
+* [Adding Steps](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Adding%20Steps.mp4)
+* [Countermarch Tool](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Countermarch%20Maneuver.mp4)
+* [Adding Music](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Adding%20Music.mp4)
+* [Zooming](https://precision-video.s3.us-east-2.amazonaws.com/Precision%20-%20Zoom.mp4)
 
 # System Requirements
 A modern browser like Chrome, Safari, or Firefox.
