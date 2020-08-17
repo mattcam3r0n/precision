@@ -51,6 +51,17 @@
                 </div>
             </li>
             <li>
+                <span>Step Type</span>
+                <div class="step-type">
+                    <button ng-click="$ctrl.setStepType(1)" ng-class="{ 'active': $ctrl.stepType == 1 }" class="btn btn-default">
+                        Half
+                    </button>
+                    <button ng-click="$ctrl.setStepType(0)" ng-class="{ 'active': $ctrl.stepType == 0 }" class="btn btn-default">
+                        Full
+                    </button>
+                </div>
+            </li>
+            <li>
                 <button ng-click="save()" id="saveDragStep" class="btn btn-default save-button" data-toggle="tooltip" data-placement="right"
                     title="Save">
                     <i class="fa fa-check context-button"></i>

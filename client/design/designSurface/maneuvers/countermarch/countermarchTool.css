@@ -45,6 +45,11 @@
     width: 100%;
 }
 
+.countermarch-tool div.step-type {
+    display: flex;
+    width: 100%;
+}
+
 .countermarch-tool div.countermarch-direction button {
     flex: 1 1 50%;
 }

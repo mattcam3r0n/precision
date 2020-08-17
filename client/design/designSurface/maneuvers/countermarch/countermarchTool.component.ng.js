@@ -2,6 +2,7 @@
 
 import Events from '/client/lib/Events';
 import Countermarch from '../../../../lib/drill/maneuvers/Countermarch';
+import StepType from '/client/lib/StepType';
 
 angular.module('drillApp').component('countermarchTool', {
   // eslint-disable-next-line max-len
@@ -35,6 +36,7 @@ angular.module('drillApp').component('countermarchTool', {
       ctrl.fileDelayDirection = 'left-to-right';
       ctrl.fileDelay = 0;
       ctrl.rankDelay = 0;
+      ctrl.stepType = StepType.Half;
     };
 
     ctrl.$onDestroy = function() {
@@ -66,6 +68,12 @@ angular.module('drillApp').component('countermarchTool', {
 
     ctrl.setRankDelay = function(counts) {
       ctrl.rankDelay = counts;
+      activate(drillEditorService.getMemberSelection());
+    };
+
+    ctrl.setStepType = function(type) {
+      ctrl.stepType = type;
+      utilService.blurActiveElement();
       activate(drillEditorService.getMemberSelection());
     };
 
@@ -121,6 +129,7 @@ angular.module('drillApp').component('countermarchTool', {
         fileDelayDirection: ctrl.fileDelayDirection,
         fileDelay: ctrl.fileDelay,
         rankDelay: ctrl.rankDelay,
+        stepType: ctrl.stepType,
       };
     }
 
@@ -130,6 +139,7 @@ angular.module('drillApp').component('countermarchTool', {
         fileDelay: ctrl.fileDelay,
         fileDelayDirection: ctrl.fileDelayDirection,
         rankDelay: ctrl.rankDelay,
+        stepType: ctrl.stepType,
       });
 
       deactivate();

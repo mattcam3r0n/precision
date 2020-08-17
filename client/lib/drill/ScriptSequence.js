@@ -93,21 +93,21 @@ export default class ScriptSequence {
     }
   }
 
-  addCountermarch(leftOrRight, currentState, at) {
+  addCountermarch(leftOrRight, currentState, at, stepType = StepType.Half) {
     if (leftOrRight == 'left') {
-      this.addLeftCountermarch(currentState, at);
+      this.addLeftCountermarch(currentState, at, stepType);
     } else {
-      this.addRightCountermarch(currentState, at);
+      this.addRightCountermarch(currentState, at, stepType);
     }
   }
 
-  addLeftCountermarch(currentState, at) {
+  addLeftCountermarch(currentState, at, stepType = StepType.Half) {
     let firstTurnDirection = Direction.leftOf(currentState.direction);
     let secondTurnDirection = Direction.leftOf(firstTurnDirection);
 
     let firstTurn = new Action({
       strideType: currentState.strideType,
-      stepType: StepType.Half,
+      stepType: stepType,
       direction: firstTurnDirection,
     });
 
@@ -122,13 +122,13 @@ export default class ScriptSequence {
     this.addStep(secondTurn, at + 2);
   }
 
-  addRightCountermarch(currentState, at) {
+  addRightCountermarch(currentState, at, stepType = StepType.Half) {
     let firstTurnDirection = Direction.rightOf(currentState.direction);
     let secondTurnDirection = Direction.rightOf(firstTurnDirection);
 
     let firstTurn = new Action({
       strideType: currentState.strideType,
-      stepType: StepType.Half,
+      stepType: stepType,
       direction: firstTurnDirection,
     });
 
