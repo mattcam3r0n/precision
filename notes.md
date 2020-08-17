@@ -162,3 +162,35 @@ Music Editor Notes
   * some way to align downbeats but still allow pickups?
   * 
 * change tempo of just a section?
+
+Turn Editor Notes
+=================
+* Enter Turn Editor Mode by selecting it from menu?
+  * Show a tool window
+  * Fade (hide) the entire band
+  * User indicates how many counts to forecast. Default to 24?
+  * option to shift following actions (or not)
+    * if true, when applied, the selected turns and all following actions will be moved by N counts in the script.
+  * option to shift music and bookmarks, too?
+* For each selected member...
+  * Find all turns that occur in those 24 counts
+    * Step forward 24 counts.
+    * Save each turn/action that occurs
+      * Add the member/action to a Position Map
+      * essentially group them by position
+  * For each unique position, create a turn marker
+    * determine what each turn is... eg, a flank, CM, etc
+    * if they're all the same, show that icon
+      * what to show if they're not the same?
+* User can select turn markers by clicking or click and drag
+* User can move turn markers forward or backward in time by using +/- buttons in tool window. 
+  * debounce? for speed?
+  * calculate new position of each selected marker
+    * copy the 24 count sequence into a new, transient sequence for each member
+    * shift the marker to new count
+    * recalc positions
+  * make undo-able
+    * copy/restore changed sequence?
+    * this could be nearly whole drill in a worst-case scenario
+* User clicks Save to apply changes
+* System exits turn editor mode, unhides band
