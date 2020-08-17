@@ -272,3 +272,6 @@ Released v0.3.4
 ^ Release v0.3.17
 
 * NEW: How To Videos dialog
+
+^ Release v0.3.19
+* NEW: Half/Full step type option for countermarch maneuver

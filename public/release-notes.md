@@ -1,3 +1,7 @@
+#### Version 0.3.19 - 8/16/20
+
+**New**: In the countermarch maneuver, there is a new option that will allow you to specify  _Half_ steps or _Full_ steps during a countermarch. 
+
 #### Version 0.3.18 - 9/4/19
 
 **New**: New "How To Videos" for _Using Bookmarks_, _Uploading Music_, _Adding Music_, _Adding Music: Manual Tempo_.
