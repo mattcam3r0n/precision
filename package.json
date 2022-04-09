@@ -14,7 +14,7 @@
     "lodash": "^4.17.11",
     "marked": "^0.4.0",
     "meteor-node-stubs": "~0.2.4",
-    "moment": "^2.20.1",
+    "moment": "^2.29.2",
     "shortid": "^2.2.8",
     "undo-manager": "^1.0.5",
     "wavesurfer.js": "^2.0.0-beta02"
