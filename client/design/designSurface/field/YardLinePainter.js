@@ -176,6 +176,8 @@ function addNumberArrow(canvas, position, leftOf50) {
     fill: 'white',
     opacity: _opacity,
     angle: leftOf50 ? 270 : 90,
+    selectable: false,
+    evented: false,
   });
   canvas.add(arrow);
   arrow.sendToBack();
