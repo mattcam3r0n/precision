@@ -1,3 +1,7 @@
+#### Release v0.3.20 (6-18-2023)
+
+**FIX**: Triangle (direction) field markers should not be selectable, movable, etc.
+
 #### Version 0.3.19 - 8/16/20
 
 **New**: In the countermarch maneuver, there is a new option that will allow you to specify  _Half_ steps or _Full_ steps during a countermarch. 

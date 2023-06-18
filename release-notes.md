@@ -275,3 +275,6 @@ Released v0.3.4
 
 ^ Release v0.3.19
 * NEW: Half/Full step type option for countermarch maneuver
+
+^ Release v0.3.20
+* FIX: Triangle (direction) markers should not be selectable, movable, etc.
