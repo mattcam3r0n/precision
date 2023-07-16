@@ -461,6 +461,15 @@ class DrillBuilder {
     this.drill.isDirty = true;
   }
 
+  setDirectionOverride(direction) {
+    let members = this.getSelectedMembers();
+    members.forEach((m) => {
+      ScriptBuilder.setDirectionOverride(m, direction, this.drill.count - 1);
+    });
+
+    this.drill.isDirty = true;
+  }
+
   /**
    * Delete all state changes from current count forward
    */

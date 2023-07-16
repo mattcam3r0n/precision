@@ -84,6 +84,10 @@
                     title="Insert Step in Current Direction">
                     <i class="fa fa-arrow-circle-right context-button" style="color: green"></i>
                 </button>
+                <button ng-click="setDirectionTool()" id="insertStepButton" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                    title="Change Direction">
+                    <img src='/icons/change-direction.svg' />
+                </button>
             </li>
             <li>
                 <button ng-click="deleteCount()" id="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Delete Count (backs up following actions by one count)">

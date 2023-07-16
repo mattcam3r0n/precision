@@ -146,6 +146,10 @@ angular.module('drillApp').component('addStepsTool', {
       drillEditorService.deleteForward();
     };
 
+    $scope.setDirectionTool = function() {
+      eventService.notify(Events.activateSetDirectionTool);
+    };
+
     function activate(memberSelection) {
       if (ctrl.isActivated) {
         deactivate();

@@ -248,6 +248,11 @@ class DrillEditorService {
     this.notifyDrillStateChanged();
   }
 
+  setDirectionOverride(direction) {
+    this.drillBuilder.setDirectionOverride(direction);
+    this.notifyDrillStateChanged();
+  }
+
   // preview paths for a set of members and a set of scripts
   // that have not been applied yet.
   previewFootprints(members, memberSequences, counts) {

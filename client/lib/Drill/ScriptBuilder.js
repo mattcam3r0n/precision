@@ -188,6 +188,38 @@ class ScriptBuilder {
     //        return member.script[count - 1];
   }
 
+  static setDirectionOverride(member, direction, count) {
+    // get the current action at count
+    const currentAction = this.getActionAtCount(member, count);
+
+    // set the override direction at that count
+    const overrideDirectionAction = new Action(currentAction);
+    overrideDirectionAction.directionOverride = direction;
+    member.script[count] = overrideDirectionAction;
+
+    // at next count, continue on in new direction
+    const continueAction = new Action(currentAction);
+    const delta = StepDelta.getDelta(currentAction.strideType, currentAction.stepType, direction);
+    continueAction.direction = direction;
+    continueAction.deltaX = delta.deltaX;
+    continueAction.deltaY = delta.deltaY;
+    member.script[count + 1] = continueAction;
+
+    // strideType: member.currentState.strideType,
+    // stepType: member.currentState.stepType,
+    // direction: member.currentState.direction,
+    // deltaX: member.currentState.deltaX,
+    // deltaY: member.currentState.deltaY,
+  }
+
+  // TODO: is this used?
+  static setDirectionAtCount(member, direction, count) {
+    const currentAction = this.getActionAtCount(member, count);
+    const newAction = new Action(currentAction);
+    newAction.direction = direction;
+    member.script[count] = newAction;
+  }
+
   static getReverseAction(action) {
     if (!action) {
       return action;

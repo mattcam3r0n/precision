@@ -20,7 +20,7 @@ class DesignKeyHandlerService {
 
   handle(e) {
     if (!this.enabled) return;
-    //        console.log(e);
+    console.log(e);
     //        if (e.code == 'Space') return;
     // disregard if keystroke is not on body (or canvas)
     if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
@@ -228,6 +228,10 @@ class DesignKeyHandlerService {
         if (e.ctrlKey || e.metaKey) {
           this.drillEditorService.hideUnselected();
         }
+      },
+
+      'i': (e) => {
+        console.log(this.drillEditorService.drill);
       },
     };
   }

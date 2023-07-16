@@ -1,3 +1,6 @@
+#### Release v0.3.21 (6-18-2023)
+
+**NEW**: **Change Direction** button allows you to override the current direction of the selected group.
 #### Release v0.3.20 (6-18-2023)
 
 **FIX**: Triangle (direction) field markers should not be selectable, movable, etc.

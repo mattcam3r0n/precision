@@ -1,0 +1,22 @@
+.set-direction-tool ul {
+    margin: 0;
+    width: 100%;
+    padding: 0px;
+}
+
+.set-direction-tool li {
+    list-style-type: none;
+    margin-top: 5px;
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.set-direction-tool li button {
+    flex: 1 1 33%;
+    border-radius: 0;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+}

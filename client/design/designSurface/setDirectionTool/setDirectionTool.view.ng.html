@@ -1,0 +1,94 @@
+<tool-window
+  window-title="'Set Direction'"
+  is-activated="$ctrl.isActivated()"
+  on-save="$ctrl.save()"
+  on-cancel="$ctrl.cancel()"
+  class="set-direction-tool"
+>
+  <ul>
+    <li class="description" ng-click="$ctrl.log()">Set Direction</li>
+    <li class="direction-buttons">
+      <button
+        ng-disabled="true"
+        id=""
+        class="btn btn-default"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title=""
+      ></button>
+      <button
+        ng-click="$ctrl.setDirection('N')"
+        id=""
+        class="btn btn-default"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title=""
+      >
+        <i class="fa fa-caret-up fa-lg"></i>
+      </button>
+      <button
+        ng-disabled="true"
+        id=""
+        class="btn btn-default"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title=""
+      ></button>
+      <button
+        ng-click="$ctrl.setDirection('W')"
+        id=""
+        class="btn btn-default"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title=""
+      >
+        <i class="fa fa-caret-left fa-lg"></i>
+      </button>
+      <button
+        ng-disabled="true"
+        id=""
+        ng-class="{ 'active': isCurrentDirection('SW') }"
+        class="btn btn-default"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title="Mark time"
+      ></button>
+      <button
+        ng-click="$ctrl.setDirection('E')"
+        id=""
+        class="btn btn-default"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title=""
+      >
+        <i class="fa fa-caret-right fa-lg"></i>
+      </button>
+      <button
+        ng-disabled="true"
+        id=""
+        class="btn btn-default"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title=""
+      ></button>
+      <button
+        ng-click="$ctrl.setDirection('S')"
+        id=""
+        class="btn btn-default"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title=""
+      >
+        <i class="fa fa-caret-down fa-lg"></i>
+      </button>
+      <button
+        ng-disabled="true"
+        id=""
+        class="btn btn-default"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title=""
+      ></button>
+    </li>
+  </ul>
+</tool-window>

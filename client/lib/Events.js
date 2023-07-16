@@ -123,6 +123,10 @@ class Events {
     return 'activateInsertTool';
   }
 
+  static get activateSetDirectionTool() {
+    return 'activateSetDirectionTool';
+  }
+
   static get activateStepTwoTool() {
     return 'activateStepTwoTool';
   }
@@ -239,6 +243,14 @@ class Events {
 
   static get addStepsToolActivated() {
     return 'addStepsToolActivated';
+  }
+
+  static get setDirectionToolActivated() {
+    return 'setDirectionToolActivated';
+  }
+
+  static get setDirectionToolDeactivated() {
+    return 'setDirectionToolDeactivated';
   }
 
   static get drawPathsToolActivated() {
